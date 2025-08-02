@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -63,7 +63,7 @@
 
         h1 { font-size: 2.5rem; margin-bottom: 0.25rem; }
         h2 { font-size: 1.8rem; border-bottom: 2px solid var(--light-gray); padding-bottom: 0.5rem; margin-top: 2.5rem; margin-bottom: 1.5rem; }
-        h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        h3 { font-size: 1.2rem; margin-bottom: 0.25rem; }
 
         a { color: var(--secondary-color); text-decoration: none; transition: color 0.2s ease-in-out; }
         a:hover { text-decoration: underline; color: var(--primary-color); }
@@ -94,8 +94,9 @@
         .header-profile .pronouns { color: #777; font-size: 0.9rem; font-style: italic; }
         .header-profile .bio { font-size: 1.1rem; color: #555; margin: 0.5rem 0; }
         
-        .contact-links { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 15px; }
-        .contact-links a { font-weight: 500; }
+        .contact-links { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
+        .contact-links a, .contact-links span { font-weight: 500; }
+        .contact-links span { font-size: 0.95em; color: var(--text-color); }
 
         .cv-button { display: inline-block; background-color: var(--secondary-color); color: #ffffff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 1.5rem; transition: background-color 0.2s ease-in-out; }
         .cv-button:hover { background-color: var(--primary-color); color: #ffffff; text-decoration: none; }
@@ -114,6 +115,11 @@
         .item .subtitle { font-style: italic; color: #555; margin-top: -5px; }
         .item ul { list-style-type: disc; padding-left: 20px; margin-top: 0.5rem; }
         .item ul li { margin-bottom: 0.5rem; }
+        
+        /* --- Publication Specific Styling --- */
+        .publication-links { margin: 0.25rem 0 0.5rem 0; }
+        .publication-links a { font-weight: bold; font-size: 0.9em; margin-right: 1rem; }
+
 
         /* --- Education Section with Logos --- */
         #education .item { display: flex; align-items: flex-start; gap: 20px; }
@@ -165,12 +171,14 @@
                 <h1>Yinuo Xu</h1>
                 <div class="pronouns">She/Her</div>
                 <div class="bio">Tech Enthusiast | M.S. Student at University of Pennsylvania</div>
+                <span>Email: <b>xuyinuo@cis.upenn.edu</b></span>
+
                 <div class="contact-links">
-                    <a href="mailto:xuyinuo@cis.upenn.edu">Email</a>
                     <a href="https://github.com/YinoXu" target="_blank" rel="noopener noreferrer">GitHub</a>
                     <a href="https://www.linkedin.com/in/yinuo-xu-430b0b203/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                     <a href="https://www.kaggle.com/yinoxu" target="_blank" rel="noopener noreferrer">Kaggle</a>
                 </div>
+                
                 <a href="files/Yinuo-Xu.pdf" class="cv-button" target="_blank">Download CV</a>
             </div>
             <div class="header-photo">
@@ -190,7 +198,7 @@
             <section id="about">
                 <h2>About Me</h2>
                 <p>
-                    I am a first-year Master’s student at the University of Pennsylvania, specializing in Artificial Intelligence. My research is centered on advancing AI for medical applications, with a particular focus on pathology, to help clinicians improve diagnostic precision. My work involves computer vision for medical image segmentation and classification. I am passionate about developing AI systems that are not only high-performing but also interpretable, robust, and ethically aligned for meaningful real-world impact. I am actively seeking a Ph.D. program to continue this research.
+                    I am a second-year Master’s student at the University of Pennsylvania, specializing in Artificial Intelligence. My research is centered on advancing AI for medical applications, with a particular focus on pathology, to help clinicians improve <b>diagnostic precision</b>. My work involves computer vision for medical image segmentation and classification. I am passionate about developing AI systems that are not only high-performing but also <b>interpretable, robust, and ethically</b> aligned for meaningful real-world impact. 
                 </p>
             </section>
             
@@ -289,6 +297,9 @@
                 <h2>Publications</h2>
                 <div class="item publication">
                     <h3>NuClass: An ontology-driven vision–language foundation model for zero-shot nuclei classification</h3>
+                    <div class="publication-links">
+                        <a href="files/cvpr25_poster_Yinuo_ZH_edited.pdf" target="_blank" rel="noopener noreferrer">[Poster]</a>
+                    </div>
                     <div class="authors">
                         <strong>Yinuo Xu</strong>, Jina Kim, Zijie Zhao, Zhi Huang
                     </div>
@@ -312,7 +323,7 @@
                 <div class="wins-box">
                     <h3>NYU Women in Science (WINS) Scholar</h3>
                     <p>
-                        As a WINS Scholar, I was part of a cohort selected for academic achievement and commitment to making STEM fields more inclusive. The program aims to nurture talent through individualized research and mentoring. We met regularly with instructors and eminent scientists, offered peer support, and worked to raise campus awareness of the enormous contributions women have made to the sciences. <a href="https://cas.nyu.edu/wins/applytoWINS.html" target="_blank" rel="noopener noreferrer">Apply Here</a>.
+                        As a WINS Scholar, I was part of a cohort selected for academic achievement and a commitment to making STEM fields more inclusive. The program nurtures talent through individualized research opportunities and mentoring. We met regularly with instructors and leading scientists, offered peer support, and worked to raise campus awareness of the <b>profound contributions women</b> have made to the sciences. If you'd like to learn more, please don’t hesitate to reach out to me. <a href="https://cas.nyu.edu/wins/applytoWINS.html" target="_blank" rel="noopener noreferrer">Apply Here</a>.
                     </p>
                 </div>
             </section>
