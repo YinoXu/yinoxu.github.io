@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yinuo Xu | Personal Homepage</title>
+    <style>
+        /* --- Basic Setup & Typography --- */
+        :root {
+            --primary-color: #2c3e50; /* Dark Blue/Gray */
+            --secondary-color: #3498db; /* Professional Blue */
+            --text-color: #333333;
+            --light-gray: #f2f2f2;
+            --background-color: #ffffff;
+            --border-color: #e0e0e0;
+            --nyu-violet-bg: #f3e5f5; /* Light Violet for WINS box */
+            --nyu-violet-text: #5a2d82; /* Darker Violet for WINS box */
+            --selection-violet: #57068c; /* Main Violet for highlight */
+        }
+
+        /* --- Custom Highlight Color --- */
+        ::selection {
+            background-color: var(--selection-violet);
+            color: #ffffff;
+        }
+        ::-moz-selection { /* For Firefox */
+            background-color: var(--selection-violet);
+            color: #ffffff;
+        }
+
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1100px; /* Increased from 900px for a wider layout */
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* --- Headings and Links --- */
+        h1, h2, h3 {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 0.25rem; }
+        h2 { font-size: 1.8rem; border-bottom: 2px solid var(--light-gray); padding-bottom: 0.5rem; margin-top: 2.5rem; margin-bottom: 1.5rem; }
+        h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+
+        a { color: var(--secondary-color); text-decoration: none; transition: color 0.2s ease-in-out; }
+        a:hover { text-decoration: underline; color: var(--primary-color); }
+
+        /* --- Header Profile Section --- */
+        .header-profile {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .header-text { flex-grow: 1; }
+        .header-photo { flex-shrink: 0; }
+        .header-photo img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--background-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .header-profile .pronouns { color: #777; font-size: 0.9rem; font-style: italic; }
+        .header-profile .bio { font-size: 1.1rem; color: #555; margin: 0.5rem 0; }
+        
+        .contact-links { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 15px; }
+        .contact-links a { font-weight: 500; }
+
+        .cv-button { display: inline-block; background-color: var(--secondary-color); color: #ffffff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 1.5rem; transition: background-color 0.2s ease-in-out; }
+        .cv-button:hover { background-color: var(--primary-color); color: #ffffff; text-decoration: none; }
+
+        /* --- Navigation Bar --- */
+        nav { text-align: center; padding: 0.5rem 0; margin-bottom: 2rem; background-color: rgba(255, 255, 255, 0.9); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); }
+        nav a { margin: 0 15px; font-weight: 500; color: var(--primary-color); }
+
+        /* --- General Item Styling (Education, Experience) --- */
+        .item { margin-bottom: 1.5rem; }
+        .item-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; }
+        .item-header .title { font-weight: bold; }
+        .item-header .title a { color: inherit; text-decoration: none; }
+        .item-header .title a:hover { color: var(--secondary-color); text-decoration: underline;}
+        .item-header .date { color: #666; font-style: italic; white-space: nowrap; margin-left: 1rem; }
+        .item .subtitle { font-style: italic; color: #555; margin-top: -5px; }
+        .item ul { list-style-type: disc; padding-left: 20px; margin-top: 0.5rem; }
+        .item ul li { margin-bottom: 0.5rem; }
+
+        /* --- Education Section with Logos --- */
+        #education .item { display: flex; align-items: flex-start; gap: 20px; }
+        .school-logo { width: 50px; height: 50px; border-radius: 8px; flex-shrink: 0; margin-top: 5px; }
+        .education-content { flex-grow: 1; }
+
+        /* --- Highlight Boxes (WINS & Miscellaneous) --- */
+        .wins-box { background-color: var(--nyu-violet-bg); border-left: 5px solid var(--nyu-violet-text); padding: 1.5rem; margin: 1rem 0; border-radius: 5px; }
+        .wins-box h3 { color: var(--nyu-violet-text); margin-top: 0; }
+        .wins-box p { color: #444; }
+        .wins-box a { color: var(--nyu-violet-text); font-weight: bold; }
+
+        #misc h3 { display: flex; align-items: center; gap: 10px; }
+
+        /* --- Footer --- */
+        footer { text-align: center; margin-top: 3rem; padding: 1.5rem; border-top: 1px solid var(--border-color); color: #888; }
+        footer p { margin: 0; }
+        .footer-note {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+
+            .header-profile { flex-direction: column-reverse; text-align: center; }
+            .header-text { width: 100%; }
+            .contact-links { justify-content: center; }
+            
+            nav { position: static; }
+            nav a { display: block; margin: 10px 0; }
+
+            .item-header { flex-direction: column; align-items: flex-start; }
+            .item-header .date { margin-left: 0; margin-top: 0.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <header class="header-profile">
+            <div class="header-text">
+                <h1>Yinuo Xu</h1>
+                <div class="pronouns">She/Her</div>
+                <div class="bio">Tech Enthusiast | M.S. Student at University of Pennsylvania</div>
+                <div class="contact-links">
+                    <a href="mailto:xuyinuo@cis.upenn.edu">Email</a>
+                    <a href="https://github.com/YinoXu" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <a href="https://www.linkedin.com/in/yinuo-xu-430b0b203/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                    <a href="https://www.kaggle.com/yinoxu" target="_blank" rel="noopener noreferrer">Kaggle</a>
+                </div>
+                <a href="files/Yinuo-Xu.pdf" class="cv-button" target="_blank">Download CV</a>
+            </div>
+            <div class="header-photo">
+                <img src="images/me.jpg" alt="Photo of Yinuo Xu">
+            </div>
+        </header>
+
+        <nav>
+            <a href="#about">About</a>
+            <a href="#experience">Experience</a>
+            <a href="#publications">Publications</a>
+            <a href="#community">Community</a>
+            <a href="#misc">Miscellaneous</a>
+        </nav>
+        
+        <main>
+            <section id="about">
+                <h2>About Me</h2>
+                <p>
+                    I am a first-year Master’s student at the University of Pennsylvania, specializing in Artificial Intelligence. My research is centered on advancing AI for medical applications, with a particular focus on pathology, to help clinicians improve diagnostic precision. My work involves computer vision for medical image segmentation and classification. I am passionate about developing AI systems that are not only high-performing but also interpretable, robust, and ethically aligned for meaningful real-world impact. I am actively seeking a Ph.D. program to continue this research.
+                </p>
+            </section>
+            
+            <section id="education">
+                <h2>Education</h2>
+                <div class="item">
+                    <img src="images/upenn.jpeg" alt="University of Pennsylvania Logo" class="school-logo">
+                    <div class="education-content">
+                        <div class="item-header">
+                            <span class="title"><a href="https://www.cis.upenn.edu/" target="_blank" rel="noopener noreferrer">University of Pennsylvania</a></span>
+                            <span class="date">Aug 2024 – May 2026</span>
+                        </div>
+                        <div class="subtitle">M.S. in Computer and Information Science, AI Concentration</div>
+                        <ul>
+                            <li>GPA: 4.0/4.0</li>
+                            <li>Relevant Coursework: Machine Learning, NLP, Deep Learning, Bayesian Optimization</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="images/nyu.jpeg" alt="New York University Logo" class="school-logo">
+                    <div class="education-content">
+                        <div class="item-header">
+                            <span class="title"><a href="https://cims.nyu.edu/dynamic/" target="_blank" rel="noopener noreferrer">New York University</a></span>
+                            <span class="date">Feb 2021 – May 2024</span>
+                        </div>
+                        <div class="subtitle">B.A. in Computer Science and Mathematics, Courant Institute of Mathematical Sciences</div>
+                         <ul>
+                            <li>GPA: 3.88/4.0, Cum Laude</li>
+                            <li>Honors: University Honors Scholar, Dean’s List</li>
+                            <li>Relevant Coursework: Algorithms, Machine Learning, Computer Graphics, Computer Systems Organization, Computer Simulation, Data Management and Analysis, Parallel Computing, Numerical Analysis, Real Analysis, Ordinary Differential Equations</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="experience">
+                <h2>Experience</h2>
+                <h3>Research</h3>
+                <div class="item">
+                    <div class="item-header">
+                        <span class="title">Research Assistant, Perelman School of Medicine</span>
+                        <span class="date">Feb 2025 – Present</span>
+                    </div>
+                    <div class="subtitle">University of Pennsylvania | Advisor: Prof. Zhi Huang</div>
+                    <ul>
+                        <li>Developed NuClass, a ViT-based vision–language model for zero-shot nuclei classification using ontology-guided prompts.</li>
+                    </ul>
+                </div>
+                 <div class="item">
+                    <div class="item-header">
+                        <span class="title">Research Assistant</span>
+                         <span class="date">Aug 2024 – Present</span>
+                    </div>
+                    <div class="subtitle">University of Pennsylvania | Advisor: Prof. Dan Roth</div>
+                     <ul>
+                        <li>Co-developed DeepTraceReward, a reward model benchmark for video fakeness that surpassed GPT-4.1 by 20.5% on fake clue detection.</li>
+                    </ul>
+                </div>
+                <div class="item">
+                    <div class="item-header">
+                        <span class="title">Research Assistant</span>
+                         <span class="date">Summer 2024</span>
+                    </div>
+                    <div class="subtitle">Microsoft Research NYC</div>
+                     <ul>
+                        <li>Utilized machine learning and data analytics to guide CitiBike station deployment decisions in the SoHo neighborhood of New York City.</li>
+                    </ul>
+                </div>
+                <div class="item">
+                    <div class="item-header">
+                        <span class="title">Research Assistant</span>
+                         <span class="date">Summer 2023</span>
+                    </div>
+                    <div class="subtitle">Capital Normal University</div>
+                     <ul>
+                        <li>Improved segmentation of small abdominal organs, including the adrenal glands, by fine-tuning MedSAM on 8,000 radiology images.</li>
+                    </ul>
+                </div>
+
+                <h3>Teaching</h3>
+                <div class="item">
+                    <div class="item-header">
+                        <span class="title">Teaching Assistant</span>
+                        <span class="date">Feb 2022 – May 2024</span>
+                    </div>
+                    <div class="subtitle">New York University</div>
+                    <ul>
+                        <li>Courses: Data Structures (Prof. Joanna Klukowska) & Calculus I (Prof. Silvia Espinosa Gútiez)</li>
+                        <li>Led review sessions, designed quizzes, graded assignments, and provided feedback to over 100 students per semester.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="publications">
+                <h2>Publications</h2>
+                <div class="item publication">
+                    <h3>NuClass: An ontology-driven vision–language foundation model for zero-shot nuclei classification</h3>
+                    <div class="authors">
+                        <strong>Yinuo Xu</strong>, Jina Kim, Zijie Zhao, Zhi Huang
+                    </div>
+                    <div class="venue">
+                        CVPR 2025, MMFM-BIOMED Workshop
+                    </div>
+                </div>
+                <div class="item publication">
+                    <h3>Learning Fine-grained Rewards on Video Generation Fakeness via Multimodal Language Models</h3>
+                    <div class="authors">
+                        Xingyu Fu*, Siyi Liu*, <strong>Yinuo Xu</strong>, Pan Lu, et al.
+                    </div>
+                    <div class="venue">
+                        Under Review at NeurIPS 2025
+                    </div>
+                </div>
+            </section>
+            
+            <section id="community">
+                <h2>Community Involvement</h2>
+                <div class="wins-box">
+                    <h3>NYU Women in Science (WINS) Scholar</h3>
+                    <p>
+                        As a WINS Scholar, I was part of a cohort selected for academic achievement and commitment to making STEM fields more inclusive. The program aims to nurture talent through individualized research and mentoring. We met regularly with instructors and eminent scientists, offered peer support, and worked to raise campus awareness of the enormous contributions women have made to the sciences. <a href="https://cas.nyu.edu/wins/applytoWINS.html" target="_blank" rel="noopener noreferrer">Apply Here</a>.
+                    </p>
+                </div>
+            </section>
+
+            <section id="misc">
+                <h2>Miscellaneous</h2>
+                <h3>🌊 My Hometown: Qingdao</h3>
+                <p>I was raised in Qingdao (青岛), a beautiful coastal city in China known for its red roofs and sea breeze. It’s where my love for the ocean and a slower pace of life began.</p>
+
+                <h3>🎶 My Favorite Artist: Lana Del Rey</h3>
+                <p>I am drawn to the cinematic melancholy and poetic storytelling of Lana Del Rey. Her music feels both nostalgic and dreamlike. Over the years, I’ve collected many of her vinyl records, and they remain some of my most cherished possessions.</p>
+
+                <h3>📷 My Hobby: Film Photography</h3>
+                <p>I’m a beginner film camera collector. I love how film captures imperfections and quiet details that digital often misses, helping me freeze time in its most delicate form.</p>
+                
+                <h3>🌟 Why I Keep These Things</h3>
+                <p>These passions help me find peace in slow, intentional experiences. They inspire me to approach technical work with creativity and emotion, reminding me of who I am outside of academics and research.</p>
+            </section>
+            
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Yinuo Xu</p>
+            <p class="footer-note">Crafted with care using only HTML & CSS, all on one page for simplicity.</p><p>💜</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
