@@ -10,7 +10,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-PPNS243X95');
     </script>
     
@@ -38,7 +37,6 @@
             color: #ffffff;
         }
 
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.7;
@@ -50,7 +48,7 @@
         }
 
         .container {
-            max-width: 1100px; /* Increased from 900px for a wider layout */
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
@@ -60,7 +58,6 @@
             color: var(--primary-color);
             font-weight: 600;
         }
-
         h1 { font-size: 2.5rem; margin-bottom: 0.25rem; }
         h2 { font-size: 1.8rem; border-bottom: 2px solid var(--light-gray); padding-bottom: 0.5rem; margin-top: 2.5rem; margin-bottom: 1.5rem; }
         h3 { font-size: 1.2rem; margin-bottom: 0.25rem; }
@@ -76,11 +73,17 @@
             gap: 2rem;
             padding: 2rem;
             background-color: #f8f9fa;
-            border-radius: 8px;
+            border-radius: 12px;
             margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        .header-text { flex-grow: 1; }
+        .header-text { 
+            flex-grow: 1; 
+            position: relative;
+            z-index: 2;
+        }
         
         .header-profile .pronouns { color: #777; font-size: 0.9rem; font-style: italic; }
         .header-profile .bio { font-size: 1.1rem; color: #555; margin: 0.5rem 0; }
@@ -91,6 +94,64 @@
 
         .cv-button { display: inline-block; background-color: var(--secondary-color); color: #ffffff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 1.5rem; transition: background-color 0.2s ease-in-out; }
         .cv-button:hover { background-color: var(--primary-color); color: #ffffff; text-decoration: none; }
+
+        /* --- Decorative Header Blobs --- */
+        .header-blobs {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 500px;
+            height: 400px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .header-blobs svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* --- [NEW] Blob Animation Setup --- */
+        .header-blobs path {
+            mix-blend-mode: multiply;
+            opacity: 0; /* Start transparent */
+            animation-duration: 2.0s; /* How long the animation takes */
+            animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); /* A fun "bouncy" easing */
+            animation-fill-mode: forwards; /* Keeps the final state of the animation */
+        }
+        .blob-blue { fill: #8ec8ef; }
+        .blob-pink { fill: #f397b5; }
+        .blob-yellow { fill: #f4de85; }
+        
+        /* Apply a specific animation and delay to each blob */
+        #blob-blue {
+            animation-name: slideInBlue;
+            animation-delay: 0.3s;
+        }
+        #blob-pink {
+            animation-name: slideInPink;
+            animation-delay: 0.4s;
+        }
+        #blob-yellow {
+            animation-name: slideInYellow;
+            animation-delay: 0.5s;
+        }
+        
+        /* --- [NEW] Keyframe Animations for Blob Entrance --- */
+        @keyframes slideInBlue {
+            from { opacity: 0; transform: translate(220px, 60px) scale(1.3) rotate(10deg); }
+            to { opacity: 0.75; transform: translate(140px, 60px) scale(1.2) rotate(10deg); }
+        }
+        @keyframes slideInPink {
+            from { opacity: 0; transform: translate(180px, 80px) scale(1.1) rotate(-15deg); }
+            to { opacity: 0.75; transform: translate(80px, 80px) scale(1.2) rotate(-15deg); }
+        }
+        @keyframes slideInYellow {
+            from { opacity: 0; transform: translate(230px, 150px) scale(1.2) rotate(30deg); }
+            to { opacity: 0.75; transform: translate(150px, 150px) scale(1.4) rotate(30deg); }
+        }
 
         /* --- Navigation Bar --- */
         nav { text-align: center; padding: 0.5rem 0; margin-bottom: 2rem; background-color: rgba(255, 255, 255, 0.9); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); }
@@ -121,25 +182,19 @@
         .wins-box h3 { color: var(--nyu-violet-text); margin-top: 0; }
         .wins-box p { color: #444; }
         .wins-box a { color: var(--nyu-violet-text); font-weight: bold; }
-
         #misc h3 { display: flex; align-items: center; gap: 10px; }
 
         /* --- Footer --- */
         footer { text-align: center; margin-top: 3rem; padding: 1.5rem; border-top: 1px solid var(--border-color); color: #888; }
         footer p { margin: 0; }
-        .footer-note {
-            font-size: 0.85rem;
-            color: #aaa;
-            margin-top: 0.75rem;
-            font-style: italic;
-        }
+        .footer-note { font-size: 0.85rem; color: #aaa; margin-top: 0.75rem; font-style: italic; }
         
-        /* --- Animation for Profile Photo --- */
+        /* --- Profile Photo Styling --- */
         .header-photo {
-            position: relative; /* This is the container for the particles */
+            position: relative; 
             flex-shrink: 0;
+            z-index: 2;
         }
-        
         .header-photo img {
             width: 150px;
             height: 150px;
@@ -147,44 +202,7 @@
             object-fit: cover;
             border: 3px solid var(--background-color);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            position: relative; /* To keep it above the particles */
-            z-index: 2;
         }
-
-        .particle {
-            position: absolute;
-            background-color: rgba(87, 6, 140, 0.4); /* Use selection-violet with opacity */
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-            z-index: 1;
-            transition: transform 0.4s ease-out; /* For smooth hover effect */
-        }
-
-        /* Defining different sizes, positions, and animation delays for each particle */
-        .particle:nth-child(2) { width: 40px; height: 40px; top: 10%; left: -15%; animation-delay: -1s; }
-        .particle:nth-child(3) { width: 50px; height: 50px; top: 20%; left: 80%; animation-delay: -2.5s; }
-        .particle:nth-child(4) { width: 50px; height: 50px; top: 75%; left: 85%; animation-delay: -4s; }
-        .particle:nth-child(5) { width: 60px; height: 60px; top: 80%; left: -10%; animation-delay: -1.5s; }
-        .particle:nth-child(6) { width: 50px; height: 50px; top: 40%; left: -20%; animation-delay: -3s; }
-        .particle:nth-child(7) { width: 45px; height: 45px; top: -10%; left: 30%; animation-delay: -3s; }
-
-        /* The floating animation */
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-            100% { transform: translateY(0px) rotate(360deg); }
-        }
-
-        /* The interactive hover effect */
-        .header-photo:hover .particle {
-            animation-play-state: paused;
-        }
-        .header-photo:hover .particle:nth-child(2) { transform: translate(-30px, -30px) scale(1.5); }
-        .header-photo:hover .particle:nth-child(3) { transform: translate(40px, -20px) scale(1.5); }
-        .header-photo:hover .particle:nth-child(4) { transform: translate(35px, 35px) scale(1.5); }
-        .header-photo:hover .particle:nth-child(5) { transform: translate(-40px, 25px) scale(1.5); }
-        .header-photo:hover .particle:nth-child(6) { transform: translate(-30px, 0px) scale(1.5); }
-        .header-photo:hover .particle:nth-child(7) { transform: translate(0px, -40px) scale(1.5); }
         
         /* --- Responsive Design --- */
         @media (max-width: 768px) {
@@ -195,6 +213,10 @@
             .header-profile { flex-direction: column-reverse; text-align: center; }
             .header-text { width: 100%; }
             .contact-links { justify-content: center; }
+            
+            .header-blobs {
+                display: none;
+            }
             
             nav { position: static; }
             nav a { display: block; margin: 10px 0; }
@@ -209,28 +231,28 @@
     <div class="container">
 
         <header class="header-profile">
+            <div class="header-blobs" aria-hidden="true">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <path id="blob-yellow" class="blob-yellow" d="M44.7,-48.9C57.3,-34.6,66.5,-17.3,68.8,2.3C71.1,21.9,66.5,43.8,52.8,55.5C39.1,67.2,16.3,68.7,-5.7,69.5C-27.7,70.3,-54.6,70.4,-67.5,58.3C-80.4,46.2,-79.3,22.1,-73.4,2.5C-67.5,-17,-56.7,-34.1,-43.3,-48.1C-29.9,-62.1,-14.9,-73.1,2.8,-75.8C20.5,-78.5,41,-73.2,44.7,-48.9Z" />
+                    <path id="blob-pink" class="blob-pink" d="M53.1,-54.9C68.9,-43.3,82,-28.3,84.4,-11.5C86.8,5.4,78.5,24.1,66.1,38.2C53.7,52.3,37.2,61.8,19.7,68.1C2.3,74.3,-16,77.3,-32.1,71.1C-48.2,64.9,-62.1,49.5,-70.3,32C-78.5,14.5,-81,-5.1,-75.4,-21.9C-69.8,-38.7,-56.1,-52.7,-40.5,-63.3C-24.9,-73.9,-7.4,-81.1,9.8,-82.1C27,-83.1,41.4,-70.9,53.1,-54.9Z" />
+                    <path id="blob-blue" class="blob-blue" d="M52.9,-61.4C69.4,-51.7,84.4,-38.8,88.3,-22.9C92.2,-7,85,11.9,75.1,27.1C65.2,42.2,52.5,53.6,38.1,62.7C23.7,71.8,7.6,78.6,-9.3,79.1C-26.2,79.7,-44,73.9,-56.9,62.8C-69.8,51.7,-77.8,35.3,-79.8,18.3C-81.8,1.3,-77.9,-16.2,-67.9,-30.7C-57.9,-45.2,-41.8,-56.6,-26.3,-65.4C-10.8,-74.1,-6,-80.2,1.3,-82.3C8.6,-84.5,23.3,-83,36.4,-76.3C49.5,-69.6,52.9,-61.4,52.9,-61.4Z" />
+                </svg>
+            </div>
+            
             <div class="header-text">
                 <h1>Yinuo Xu</h1>
                 <div class="pronouns">She/Her</div>
                 <div class="bio">Tech Enthusiast | M.S. Student at University of Pennsylvania</div>
                 <span>Email: <b>xuyinuo@cis.upenn.edu</b></span>
-
                 <div class="contact-links">
                     <a href="https://github.com/YinoXu" target="_blank" rel="noopener noreferrer">GitHub</a>
                     <a href="https://www.linkedin.com/in/yinuo-xu-430b0b203/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                     <a href="https://www.kaggle.com/yinoxu" target="_blank" rel="noopener noreferrer">Kaggle</a>
                 </div>
-                
                 <a href="files/Yinuo-Xu.pdf" class="cv-button" target="_blank">Download CV</a>
             </div>
             <div class="header-photo">
                 <img src="images/me.jpg" alt="Photo of Yinuo Xu">
-                <span class="particle"></span>
-                <span class="particle"></span>
-                <span class="particle"></span>
-                <span class="particle"></span>
-                <span class="particle"></span>
-                <span class="particle"></span>
             </div>
         </header>
 
