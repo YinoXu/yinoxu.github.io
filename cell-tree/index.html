@@ -132,9 +132,11 @@
 
 <h1>Cell-type trees: integrated taxonomy, human labels, and Xenium panels</h1>
 <p style="max-width: 950px;">
-Use the three trees on the left to explore how all human annotations (histopathology datasets) and Xenium cell types fit into a coherent biological hierarchy.
-Tree 1 is a biological taxonomy, Tree 2 harmonises human annotator labels, and Tree 3 organises Xenium labels (after mapping).
-Click any node to see its lineage and a morphological / functional description on the right.
+Tree&nbsp;1 combines all human histopathology labels and Xenium cell types into a biologically detailed taxonomy, with explicit tumour vs non-tumour separation.
+Tree&nbsp;2 focuses only on human annotator labels from the table.
+Tree&nbsp;3 focuses only on Xenium cell labels from all panels.
+The same label is allowed to appear under multiple parents (multi-class semantics).
+Click any node to see its lineage and description on the right.
 </p>
 
 <div class="search-bar" style="max-width: 420px; margin: 8px 0 12px 0;">
@@ -296,7 +298,7 @@ Click any node to see its lineage and a morphological / functional description o
 <table class="mapping-table">
   <tr>
     <th>Xenium dataset</th>
-    <th>Cell labels (before or after your mapping, as used per dataset)</th>
+    <th>Cell labels (as used per dataset)</th>
   </tr>
   <tr>
     <td>Breast_Entire-Sample-Area-S1</td>
@@ -418,122 +420,136 @@ Click any node to see its lineage and a morphological / functional description o
 const treeData = {
   "tree1": {
     "name": "Tree 1 – Integrated cell taxonomy",
-    "desc": "Conceptual cell taxonomy that integrates human histopathology labels and Xenium cell types into biologically meaningful lineages.",
+    "desc": "Combined biological taxonomy covering all human histopathology labels and Xenium cell types, explicitly separating non-tumour vs tumour and allowing multi-parent semantics for some labels.",
     "children": [
       {
         "name": "Epithelial lineage",
-        "desc": "Cells derived from epithelial lineages that line surfaces and form glands (e.g. breast ducts, colonic crypts, gastric mucosa, airway epithelium).",
+        "desc": "Cells derived from epithelial lineages lining surfaces and glands (breast ducts, colonic crypts, gastric mucosa, airway epithelium, pancreatic ducts/acini, ovarian surface/follicles).",
         "children": [
           {
-            "name": "Normal epithelial cell",
-            "desc": "Healthy epithelial cell forming a continuous lining or gland. Morphologically these cells form cohesive sheets or tubules with round to oval nuclei, moderate eosinophilic cytoplasm and preserved polarity. This concept covers labels such as 'healthy epithelial' (CoNSeP), 'NormalEpithelium' (PanopTILs), non-neoplastic 'Epithelial' (PanNuke, MoNuSAC), 'epithelial' (Lizard), 'Non-neoplastic' epithelium (nuclei.io CRC) and many 'non-tumor nuclei' in BreCaHAD.",
-            "children": []
+            "name": "Non-neoplastic epithelial cells",
+            "desc": "Benign epithelial cells with preserved polarity, relatively uniform nuclei and no clear invasion. Includes surface mucosal epithelium, normal glands and benign ductal/acinar structures.",
+            "children": [
+              { "name": "healthy epithelial", "desc": "Human label 'healthy epithelial' (CoNSeP): benign colorectal epithelium with preserved crypt architecture and bland nuclei.", "children": [] },
+              { "name": "epithelial", "desc": "Human label 'epithelial' (Lizard): colonic epithelial cells lining glands and crypts; non-neoplastic when away from tumours.", "children": [] },
+              { "name": "Epithelial", "desc": "Human label 'Epithelial' (MoNuSAC, PanNuke): nuclei judged epithelial but not necessarily specified as benign or malignant; the benign subset belongs here.", "children": [] },
+              { "name": "NormalEpithelium", "desc": "Human label 'NormalEpithelium' (PanopTILs): normal breast epithelium adjacent to invasive tumour.", "children": [] },
+              { "name": "non-tumor nuclei", "desc": "Human label 'non-tumor nuclei' (BreCaHAD): nuclei judged non-neoplastic (either benign epithelium or stroma).", "children": [] },
+              { "name": "Non-neoplastic", "desc": "Human label 'Non-neoplastic' (nuclei.io CRC tumor): nuclei in CRC patches that are not tumour, including benign epithelium and stroma.", "children": [] },
+              { "name": "tubule (lumen)", "desc": "Human label 'tubule (lumen)' (BreCaHAD): epithelial nuclei lining luminal glandular structures, a hallmark of well-differentiated adenocarcinoma but also present in benign glands.", "children": [] },
+              { "name": "Airway_epithelium", "desc": "Xenium label 'Airway_epithelium' (lung panel): pseudostratified ciliated and secretory cells lining bronchial airways, non-malignant in origin.", "children": [] },
+              { "name": "Alveolar", "desc": "Xenium label 'Alveolar' (lung panel): type I and type II pneumocytes lining alveolar spaces, delicate epithelial barrier for gas exchange.", "children": [] },
+              { "name": "Ciliated Epithelial Cells", "desc": "Xenium ovarian label 'Ciliated Epithelial Cells': ciliated epithelium with apical cilia and elongated nuclei, e.g. fimbrial/tubal epithelium.", "children": [] },
+              { "name": "Fallopian Tube Epithelium", "desc": "Xenium ovarian label 'Fallopian Tube Epithelium': specialised ciliated and secretory epithelium lining the fallopian tube.", "children": [] },
+              { "name": "Ductal", "desc": "Xenium pancreas label 'Ductal': epithelial cells lining exocrine ducts, forming a single layer around the lumen.", "children": [] },
+              { "name": "Acinar", "desc": "Xenium pancreas label 'Acinar': exocrine acinar cells arranged in grape-like clusters around a tiny lumen, producing digestive enzymes.", "children": [] },
+              { "name": "Granulosa Cells", "desc": "Xenium ovarian label 'Granulosa Cells': ovarian follicular cells that support the oocyte and secrete hormones; epithelial/mesenchymal-like, typically benign in non-neoplastic follicles.", "children": [] }
+            ]
           },
           {
-            "name": "Myoepithelial cell",
-            "desc": "Contractile epithelial-derived cell located between luminal epithelium and basement membrane in glands such as the breast. It typically shows an elongated, basally placed nucleus hugging ducts or acini. This corresponds to 'myoepithelium' in NuCLS.",
-            "children": []
+            "name": "Pre-malignant / dysplastic epithelial cells",
+            "desc": "Epithelial cells showing architectural crowding and nuclear atypia but not clearly invasive; lie on the spectrum between benign and malignant.",
+            "children": [
+              { "name": "dysplastic/malignant epithelial", "desc": "Human label from CoNSeP: mixed class of dysplastic and malignant colorectal epithelial nuclei, often used for high-grade dysplasia and early carcinoma. Appears both here (pre-malignant) and under malignant contexts.", "children": [] }
+            ]
           },
           {
-            "name": "Airway epithelial cell",
-            "desc": "Epithelial cell lining bronchial airways, often pseudostratified with ciliated and secretory cells. In Xenium it appears as 'Airway_epithelium' in the lung panel.",
-            "children": []
+            "name": "Malignant epithelial / tumour cells",
+            "desc": "Frankly malignant epithelial cells (carcinoma) with nuclear pleomorphism, hyperchromasia, abnormal mitoses and invasion through the basement membrane.",
+            "children": [
+              {
+                "name": "Generic carcinoma nuclei",
+                "desc": "Core malignant epithelial populations, independent of special morphology or molecular subtype.",
+                "children": [
+                  { "name": "tumor nuclei", "desc": "Human label 'tumor nuclei' (BreCaHAD): malignant nuclei in breast invasive ductal carcinoma.", "children": [] },
+                  { "name": "tumor", "desc": "Human label 'tumor' (NuCLS): malignant epithelial nuclei in TCGA-BRCA H&E slides.", "children": [] },
+                  { "name": "Neoplastic", "desc": "Human label 'Neoplastic' (PanNuke, nuclei.io CRC tumor): tumour nuclei in multi-organ patches and colorectal cancer patches.", "children": [] },
+                  { "name": "CancerEpithelium", "desc": "Human label 'CancerEpithelium' (PanopTILs): invasive breast carcinoma epithelium.", "children": [] },
+                  { "name": "Tumor_epithelial", "desc": "Xenium multi-cancer label 'Tumor_epithelial' (kidney, liver, lung): epithelial tumour cells defined at panel level.", "children": [] },
+                  { "name": "Malignant", "desc": "Xenium label 'Malignant' (breast, colon panels): generic malignant tumour population defined by expression-based clustering.", "children": [] },
+                  { "name": "Tumor Cells", "desc": "Xenium ovarian / pancreas label 'Tumor Cells': main malignant cluster of tumour epithelial cells.", "children": [] },
+                  { "name": "CFTR- Tumor Cells", "desc": "Xenium pancreas label 'CFTR- Tumor Cells': malignant cells lacking CFTR expression, representing a specific transcriptomic subtype.", "children": [] }
+                ]
+              },
+              {
+                "name": "State-specific malignant subtypes",
+                "desc": "Malignant epithelial cells with additional functional programmes such as proliferation, angiogenesis or inflammatory signalling.",
+                "children": [
+                  { "name": "Proliferative Tumor Cells", "desc": "Xenium ovarian label 'Proliferative Tumor Cells': malignant cells enriched for cell-cycle and proliferation genes; also appears under the cell-state branch.", "children": [] },
+                  { "name": "VEGFA+ Tumor Cells", "desc": "Xenium ovarian label 'VEGFA+ Tumor Cells': malignant cells overexpressing VEGFA, driving tumour angiogenesis; also conceptually linked to tumour-associated endothelium.", "children": [] },
+                  { "name": "Inflammatory Tumor Cells", "desc": "Xenium ovarian label 'Inflammatory Tumor Cells': tumour cells with interferon/inflammatory signatures, often at immune–tumour interfaces.", "children": [] },
+                  { "name": "SOX2-OT+ Tumor Cells", "desc": "Xenium ovarian label 'SOX2-OT+ Tumor Cells': malignant cells expressing SOX2-OT lncRNA, associated with stemness and neural-like programmes.", "children": [] },
+                  { "name": "Malignant Cells Lining Cyst", "desc": "Xenium ovarian label 'Malignant Cells Lining Cyst': malignant epithelial cells lining cystic spaces within the tumour.", "children": [] }
+                ]
+              },
+              {
+                "name": "Special carcinoma morphology",
+                "desc": "Distinct morphologic carcinoma variants.",
+                "children": [
+                  { "name": "ring_cell_cancer", "desc": "DigestPath2019 label 'ring_cell_cancer': signet-ring cell carcinoma cells with large mucin vacuoles displacing crescent-shaped nuclei.", "children": [] }
+                ]
+              },
+              {
+                "name": "Dysplastic label in malignant context",
+                "desc": "Same dysplastic class but considered in its malignant portion.",
+                "children": [
+                  { "name": "dysplastic/malignant epithelial", "desc": "CoNSeP 'dysplastic/malignant epithelial' when used to represent frankly invasive carcinoma; multi-parent label appearing under both pre-malignant and malignant nodes.", "children": [] }
+                ]
+              }
+            ]
           },
           {
-            "name": "Alveolar epithelial cell",
-            "desc": "Delicate type I and type II pneumocytes lining alveolar spaces. Type II cells are cuboidal with foamy cytoplasm; type I cells are extremely attenuated. Xenium lung data uses the label 'Alveolar' for this population.",
-            "children": []
+            "name": "Tumour-associated / metaplastic epithelial cells",
+            "desc": "Epithelial cells that undergo reprogramming in proximity to tumour, including metaplasia and other non-classical differentiation patterns.",
+            "children": [
+              { "name": "Metaplastic Cells", "desc": "Xenium pancreas label 'Metaplastic Cells': epithelial cells showing metaplastic change in the carcinoma microenvironment, often considered tumour-associated epithelial.", "children": [] }
+            ]
           },
           {
-            "name": "Acinar exocrine epithelial cell",
-            "desc": "Pyramidal secretory epithelial cell that forms serous or mucinous acini (for example in pancreas or salivary glands). Nuclei are basally located, with apical granules. This corresponds to 'Acinar' in the pancreas Xenium panel and acinar glands in histology.",
-            "children": []
-          },
-          {
-            "name": "Ductal epithelial cell",
-            "desc": "Epithelial cell lining the lumen of glandular ducts, such as breast ducts or pancreatic ducts. Usually cuboidal to columnar with round nuclei arranged in a single or double layer. This includes the Xenium label 'Ductal'.",
-            "children": []
-          },
-          {
-            "name": "Ciliated epithelial cell",
-            "desc": "Epithelial cell with a brush border of cilia at the luminal surface, responsible for moving mucus or gametes. In Xenium this includes 'Ciliated Epithelial Cells' and 'Fallopian Tube Epithelium'.",
-            "children": []
-          },
-          {
-            "name": "Granulosa cell",
-            "desc": "Ovarian follicular cell type that supports the oocyte and produces steroid hormones. Morphologically granulosa cells form layers around follicles with pale cytoplasm and round to oval nuclei. Xenium prime ovarian data includes 'Granulosa Cells'.",
-            "children": []
-          },
-          {
-            "name": "Tubular / gland-forming epithelial cell",
-            "desc": "Epithelial cell forming well-organised tubules or acini with a central lumen, an important component of histologic grading. BreCaHAD captures this as 'tubule (lumen)'; similar nuclei appear in many adenocarcinomas.",
-            "children": []
-          },
-          {
-            "name": "Dysplastic / pre-malignant epithelial cell",
-            "desc": "Epithelial cell with architectural crowding and nuclear atypia (enlarged, hyperchromatic, loss of polarity) that has not yet clearly invaded. CoNSeP’s 'dysplastic/malignant epithelial' class spans this spectrum, especially in colorectal neoplasia.",
-            "children": []
-          },
-          {
-            "name": "Malignant epithelial cell (carcinoma cell)",
-            "desc": "Epithelial cell that has acquired invasive behaviour. Nuclei are pleomorphic, hyperchromatic, often with coarse chromatin, prominent nucleoli and abnormal mitoses. This concept includes 'tumor nuclei' (BreCaHAD), 'tumor' (NuCLS), 'Neoplastic' (PanNuke, nuclei.io CRC tumor), 'CancerEpithelium' (PanopTILs) and the Xenium mapped class 'Malignant', which summarises clusters such as Tumor Cells, Proliferative Tumor Cells, VEGFA+ Tumor Cells, Inflammatory Tumor Cells, SOX2-OT+ Tumor Cells, Malignant Cells Lining Cyst and CFTR- Tumor Cells.",
-            "children": []
-          },
-          {
-            "name": "Tumor epithelial (generic)",
-            "desc": "Tumour epithelial cells in multi-cancer Xenium panels, labelled as 'Tumor_epithelial'. Morphologically they resemble malignant epithelial cells, but the label emphasises epithelial origin rather than specific molecular subtype.",
-            "children": []
-          },
-          {
-            "name": "Signet-ring carcinoma cell",
-            "desc": "Highly malignant mucin-producing epithelial cell with a large intracellular mucin vacuole displacing the crescent-shaped nucleus to the periphery, giving a signet-ring appearance. This is the target of DigestPath2019 ('ring_cell_cancer').",
-            "children": []
-          },
-          {
-            "name": "Metaplastic epithelial cell (tumour-associated)",
-            "desc": "Epithelial cell that has undergone metaplasia in the tumour microenvironment, for example squamous or mucinous change in a glandular tumour. In Xenium, 'Metaplastic Cells' are mapped to Tumor_Associated_Epithelial.",
-            "children": []
-          },
-          {
-            "name": "Endocrine epithelial cell",
-            "desc": "Hormone-producing epithelial cell with 'salt-and-pepper' finely granular chromatin and moderate cytoplasm, often organised in nests or trabeculae. In Xenium pancreas data, this corresponds to the mapped 'Endocrine' class, which merges the original 'Endocrine 1' and 'Endocrine 2' clusters.",
-            "children": []
-          },
-          {
-            "name": "Unspecified epithelial nucleus",
-            "desc": "Epithelial nucleus where benign vs malignant status is not specified or mixed, often annotated simply as 'Epithelial'. This includes MoNuSAC 'Epithelial' and some 'non-tubule (non-lumen)' nuclei from BreCaHAD.",
-            "children": []
+            "name": "Endocrine epithelial cells",
+            "desc": "Epithelial-derived cells with hormone-secreting function, often with 'salt-and-pepper' chromatin and nested architecture.",
+            "children": [
+              { "name": "Endocrine 1", "desc": "Xenium pancreas label 'Endocrine 1': one endocrine islet cell subtype, likely corresponding to a specific hormone-producing population.", "children": [] },
+              { "name": "Endocrine 2", "desc": "Xenium pancreas label 'Endocrine 2': a second endocrine islet cell subtype, distinct from Endocrine 1 in transcriptomic profile.", "children": [] }
+            ]
           }
         ]
       },
       {
         "name": "Stromal / connective lineage",
-        "desc": "Non-epithelial structural cells including fibroblasts, CAFs and other connective tissue elements.",
+        "desc": "Supportive cells producing extracellular matrix and shaping stromal architecture, including fibroblasts and connective tissue cells.",
         "children": [
           {
-            "name": "Quiescent fibroblast",
-            "desc": "Slender spindle-shaped stromal cell with elongated nucleus and pale cytoplasm, responsible for maintaining collagen and extracellular matrix. Examples: 'fibroblast' (CoNSeP, NuCLS), 'connective tissue' (Lizard), 'Connective / soft tissue' (PanNuke), 'StromalCellNOS' (PanopTILs), Xenium 'Fibroblast'.",
-            "children": []
+            "name": "Non-tumour fibroblast / connective tissue cells",
+            "desc": "Quiescent or weakly activated fibroblasts and generic connective tissue nuclei in benign stroma.",
+            "children": [
+              { "name": "fibroblast", "desc": "Human label 'fibroblast' (CoNSeP, NuCLS): stromal fibroblasts with spindle-shaped nuclei and scant cytoplasm.", "children": [] },
+              { "name": "connective tissue", "desc": "Human label 'connective tissue' (Lizard): fibroblast-like and other stromal nuclei in colonic lamina propria.", "children": [] },
+              { "name": "Connective / soft tissue", "desc": "Human label 'Connective / soft tissue' (PanNuke): stromal nuclei including fibroblasts and soft tissue cells.", "children": [] },
+              { "name": "StromalCellNOS", "desc": "Human label 'StromalCellNOS' (PanopTILs): stromal cells not otherwise specified, mostly fibroblasts.", "children": [] },
+              { "name": "Fibroblast", "desc": "Xenium label 'Fibroblast' (heart panel): generic cardiac fibroblasts maintaining myocardial matrix.", "children": [] },
+              { "name": "Fibroblasts", "desc": "Xenium label 'Fibroblasts' (pancreas): stromal fibroblasts in the pancreas specimen.", "children": [] },
+              { "name": "Stromal Associated Fibroblasts", "desc": "Xenium label 'Stromal Associated Fibroblasts' (ovarian): fibroblasts associated with non-tumour stroma.", "children": [] },
+              { "name": "Non-neoplastic", "desc": "Human label 'Non-neoplastic' (CRC tumour patches) also includes non-neoplastic stroma; appears both under epithelial and stromal contexts.", "children": [] }
+            ]
           },
           {
-            "name": "Fibroblast / CAF (combined labels)",
-            "desc": "Fibroblast populations that include both resting and activated (CAF) states, labelled as 'Fibroblast/CAF' or 'Fibroblast_PDGFRA_CAF' in kidney, liver and lung Xenium panels.",
-            "children": []
+            "name": "Tumour-associated fibroblasts (CAF-like)",
+            "desc": "Fibroblasts activated by tumour-derived signals (CAF), with plumper nuclei and strong secretory activity that remodels the tumour microenvironment.",
+            "children": [
+              { "name": "ActiveStromalCellNOS", "desc": "Human label 'ActiveStromalCellNOS' (PanopTILs): activated stromal cells, often CAF-like around invasive breast carcinoma.", "children": [] },
+              { "name": "Tumor_Associated_Fibroblast", "desc": "Xenium label 'Tumor_Associated_Fibroblast' (breast, colon panels): fibroblasts physically and transcriptionally associated with tumour regions.", "children": [] },
+              { "name": "Tumor Associated Fibroblasts", "desc": "Xenium label 'Tumor Associated Fibroblasts' (ovarian): CAFs in the ovarian tumour microenvironment.", "children": [] },
+              { "name": "Fibroblast/CAF", "desc": "Xenium label 'Fibroblast/CAF' (kidney, liver panels): combined class including fibroblasts and CAFs.", "children": [] },
+              { "name": "Fibroblast_PDGFRA_CAF", "desc": "Xenium label 'Fibroblast_PDGFRA_CAF' (lung): PDGFRA-high fibroblast/CAF cluster strongly associated with tumour stroma.", "children": [] }
+            ]
           },
           {
-            "name": "Cancer-associated fibroblast (CAF)",
-            "desc": "Activated fibroblast in tumour stroma, often plumper with more abundant cytoplasm and large nuclei. CAFs secrete growth factors, cytokines and matrix proteins that promote tumour progression. Labels include 'ActiveStromalCellNOS' (PanopTILs), Xenium 'Tumor_Associated_Fibroblast', and CAF-enriched clusters in multi-cancer panels.",
-            "children": []
-          },
-          {
-            "name": "Stromal-associated fibroblast",
-            "desc": "Fibroblasts clearly associated with non-tumour stroma, maintaining organ structure. Xenium uses 'Stromal_Associated_Fibroblast' and 'Stromal Associated Fibroblasts' for these populations.",
-            "children": []
-          },
-          {
-            "name": "Generic stromal cell",
-            "desc": "Stromal nucleus that is clearly non-epithelial but not further subtyped, including interstitial cells, perivascular stromal cells and poorly distinguishable fibroblast-like cells. Many 'non-tubule (non-lumen)' nuclei (BreCaHAD) and portions of 'Non-neoplastic' (nuclei.io CRC) fall here.",
-            "children": []
+            "name": "Non-lumen / solid stromal regions",
+            "desc": "Regions that are clearly non-luminal and may contain a mixture of stromal and tumour nuclei.",
+            "children": [
+              { "name": "non-tubule (non-lumen)", "desc": "Human label 'non-tubule (non-lumen)' (BreCaHAD): regions without glandular lumen, often solid tumour and stromal admixture; appears here and under epithelial structural context.", "children": [] }
+            ]
           }
         ]
       },
@@ -542,169 +558,202 @@ const treeData = {
         "desc": "Endothelial cells lining blood and lymphatic vessels, including normal and tumour-associated vasculature.",
         "children": [
           {
-            "name": "Vascular endothelial cell (blood vessel)",
-            "desc": "Flat endothelial cell lining blood vessels, with elongated nuclei aligned along the vessel axis and a thin rim of cytoplasm. Includes 'endothelial' (CoNSeP), 'vascular_endothelium' (NuCLS), and Xenium 'Endothelial' in multiple panels.",
-            "children": []
+            "name": "Non-tumour vascular endothelial cells",
+            "desc": "Endothelial cells in normal or non-tumour vessels, maintaining barrier and transport functions.",
+            "children": [
+              { "name": "endothelial", "desc": "Human label 'endothelial' (CoNSeP): vascular endothelium in colorectal tissue.", "children": [] },
+              { "name": "vascular_endothelium", "desc": "Human label 'vascular_endothelium' (NuCLS): blood vessel endothelium in TCGA breast slides.", "children": [] },
+              { "name": "Endothelial", "desc": "Xenium label 'Endothelial' (colon, heart, lung, pancreas): generic vascular endothelial cells in those organs.", "children": [] },
+              { "name": "Lymphatic Endothelial Cells", "desc": "Xenium pancreas label 'Lymphatic Endothelial Cells': lymphatic channel endothelium with thin-walled, irregular lumina.", "children": [] },
+              { "name": "Stromal Associated Endothelial Cells", "desc": "Xenium ovarian label 'Stromal Associated Endothelial Cells': endothelial cells in vessels of the non-tumour stroma.", "children": [] }
+            ]
           },
           {
-            "name": "Lymphatic endothelial cell",
-            "desc": "Endothelial cell lining lymphatic channels, often with more irregular calibre and thinner walls. Xenium pancreas data contains 'Lymphatic Endothelial Cells'.",
-            "children": []
-          },
-          {
-            "name": "Stromal-associated endothelial cell",
-            "desc": "Endothelial cell predominantly associated with non-tumour stromal vasculature. Xenium ovarian data uses 'Stromal_Associated_Endothelial' or 'Stromal Associated Endothelial Cells'.",
-            "children": []
-          },
-          {
-            "name": "Tumour-associated endothelial cell",
-            "desc": "Endothelial cell in tumour-induced neovessels, forming irregular, tortuous or leaky microvessels. In Xenium panels this is 'Tumor_Associated_Endothelial' or 'Tumor Associated Endothelial Cells', and is strongly influenced by VEGFA+ malignant cells.",
-            "children": []
+            "name": "Tumour-associated endothelial cells",
+            "desc": "Endothelial cells forming irregular tumour neovessels, often influenced by VEGFA+ tumour cells and hypoxia.",
+            "children": [
+              { "name": "Tumor_Associated_Endothelial", "desc": "Xenium label 'Tumor_Associated_Endothelial' (breast, colon panels): endothelial cells in tumour-associated neovessels.", "children": [] },
+              { "name": "Tumor Associated Endothelial Cells", "desc": "Xenium ovarian label 'Tumor Associated Endothelial Cells': endothelial cells intimately associated with ovarian tumour tissue.", "children": [] }
+            ]
           }
         ]
       },
       {
         "name": "Immune lineage",
-        "desc": "Adaptive and innate immune cells including lymphoid and myeloid lineages in both histology and Xenium panels.",
+        "desc": "Adaptive and innate immune cells, including lymphoid and myeloid lineages across human datasets and Xenium panels.",
         "children": [
           {
-            "name": "Generic inflammatory cell",
-            "desc": "Nucleus annotated simply as inflammatory, usually small round cells with dense chromatin and scant cytoplasm. This corresponds to 'inflammatory' (CoNSeP) and 'Inflammatory' (PanNuke) and typically mixes lymphocytes, plasma cells and granulocytes.",
-            "children": []
+            "name": "Generic inflammatory cell classes",
+            "desc": "Labels that deliberately mix different immune subsets into an 'inflammatory' bucket.",
+            "children": [
+              { "name": "inflammatory", "desc": "Human label 'inflammatory' (CoNSeP): mixed inflammatory infiltrate around colorectal glands.", "children": [] },
+              { "name": "Inflammatory", "desc": "Human label 'Inflammatory' (PanNuke): mixed inflammatory nuclei in multi-organ patches.", "children": [] }
+            ]
           },
           {
-            "name": "T cell / T_cells / T_Cell",
-            "desc": "T lymphocyte mediating cell-mediated immunity. Morphology: small round cell with dense clumped chromatin and minimal cytoplasm; activated forms can be larger and more blast-like. Histology labels: 'lymphocyte' (MoNuSAC, Lizard, NuCLS) and 'TILsCell' / 'ActiveTILsCell' (PanopTILs). Xenium panels use 'T_cells' (multi-cancer) and the mapped label 'T_Cell' (combining 'T Cells' and 'T and NK Cells').",
-            "children": []
+            "name": "T lymphocytes and TILs",
+            "desc": "T cells mediating cell-mediated immunity and tumour-infiltrating lymphocytes.",
+            "children": [
+              { "name": "lymphocyte", "desc": "Human label 'lymphocyte' (Lizard, NuCLS): small round T/B cells with dense chromatin and scant cytoplasm.", "children": [] },
+              { "name": "Lymphocyte", "desc": "Human label 'Lymphocyte' (MoNuSAC): multi-organ lymphocytes infiltrating tumours.", "children": [] },
+              { "name": "TILsCell", "desc": "Human label 'TILsCell' (PanopTILs): tumour-infiltrating lymphocytes inside or adjacent to cancer epithelium.", "children": [] },
+              { "name": "ActiveTILsCell", "desc": "Human label 'ActiveTILsCell' (PanopTILs): functionally activated TILs with high activation or exhaustion marker expression.", "children": [] },
+              { "name": "T_cells", "desc": "Xenium multi-cancer label 'T_cells' (kidney, liver, lung): bulk T cell compartment in these panels.", "children": [] },
+              { "name": "T Cells", "desc": "Xenium pancreas label 'T Cells': T cell cluster in pancreatic tumour microenvironment.", "children": [] },
+              { "name": "T and NK Cells", "desc": "Xenium ovarian label 'T and NK Cells': mixed cluster of T cells and NK cells.", "children": [] }
+            ]
           },
           {
-            "name": "B cell / B_lineage / B Cells",
-            "desc": "B-lineage lymphocyte, ranging from naive B cells to plasmablasts. Morphologically similar to small lymphocytes but may have more cytoplasm in activated states. Xenium uses 'B_lineage' (kidney, liver, lung) and 'B Cells' (pancreas); histology datasets represent the terminal stage as 'plasma' (Lizard), 'plasma_cell' (NuCLS) and 'Plasma cell' (nuclei.io).",
-            "children": []
+            "name": "B lineage and plasma cells",
+            "desc": "B cells, B-lineage cells and terminally differentiated plasma cells.",
+            "children": [
+              { "name": "B_lineage", "desc": "Xenium label 'B_lineage' (kidney, lung): B-lineage cells including naive and memory B cells.", "children": [] },
+              { "name": "B Cells", "desc": "Xenium pancreas label 'B Cells': B lymphocytes in the pancreas panel.", "children": [] },
+              { "name": "plasma", "desc": "Human label 'plasma' (Lizard): plasma cells with eccentric nuclei and perinuclear hof.", "children": [] },
+              { "name": "plasma_cell", "desc": "Human label 'plasma_cell' (NuCLS): plasma cells in TCGA breast.", "children": [] },
+              { "name": "Plasma cell", "desc": "Human label 'Plasma cell' (nuclei.io plasma cells): plasma cells in a dedicated dataset.", "children": [] }
+            ]
           },
           {
-            "name": "Plasma cell",
-            "desc": "Terminally differentiated B cell producing antibodies. Typical morphology: eccentric round nucleus with 'clock-face' chromatin and perinuclear hof. Appears as 'plasma' (Lizard), 'plasma_cell' (NuCLS) and 'Plasma cell' (nuclei.io plasma cell dataset).",
-            "children": []
+            "name": "Myeloid lineage and macrophages",
+            "desc": "Monocytes, macrophages, dendritic cells and other myeloid-derived cells.",
+            "children": [
+              { "name": "Macrophage", "desc": "Human label 'Macrophage' (MoNuSAC): tissue macrophages in multiple organs.", "children": [] },
+              { "name": "macrophage", "desc": "Human label 'macrophage' (NuCLS): macrophages / histiocytes in breast cancer FOVs.", "children": [] },
+              { "name": "Macrophage (Xenium)", "desc": "Xenium label 'Macrophage' (breast, colon panels): tumour-associated macrophages; conceptual node for Xenium context.", "children": [] },
+              { "name": "Macrophages", "desc": "Xenium labels 'Macrophages' (ovarian, pancreas): macrophage populations in those organs.", "children": [] },
+              { "name": "Myeloid", "desc": "Xenium label 'Myeloid' (heart, kidney, liver, lung): composite myeloid compartment including monocytes, DCs and some granulocytes.", "children": [] }
+            ]
           },
           {
-            "name": "Myeloid cell",
-            "desc": "Broad myeloid lineage including monocytes, dendritic cells and some immature granulocytes. In Xenium multi-cancer panels this is labelled 'Myeloid'. Morphology can range from monocytoid cells with kidney-shaped nuclei to more dendritic forms.",
-            "children": []
+            "name": "Neutrophils and eosinophils",
+            "desc": "Granulocytes involved in acute inflammation and allergic/parasitic responses.",
+            "children": [
+              { "name": "neutrophil", "desc": "Human label 'neutrophil' (Lizard, NuCLS): polymorphonuclear neutrophils with multilobed nuclei.", "children": [] },
+              { "name": "Neutrophil", "desc": "Human label 'Neutrophil' (MoNuSAC): neutrophils across several organs.", "children": [] },
+              { "name": "eosinophil", "desc": "Human label 'eosinophil' (Lizard, NuCLS): bilobed nuclei and bright eosinophilic granules.", "children": [] }
+            ]
           },
           {
-            "name": "Macrophage",
-            "desc": "Large phagocytic myeloid cell with abundant pale cytoplasm, sometimes vacuolated, and an oval or kidney-shaped nucleus. Histology labels include 'Macrophage' (MoNuSAC, NuCLS). Xenium uses 'Macrophage' and 'Macrophages' across multiple panels; many are tumour-associated macrophages.",
-            "children": []
-          },
-          {
-            "name": "Neutrophil",
-            "desc": "Polymorphonuclear granulocyte with multilobed (3–5-lobed) nucleus and coarse neutral cytoplasmic granules. Important in acute inflammation. Labeled as 'Neutrophil' in MoNuSAC and 'neutrophil' in Lizard and NuCLS.",
-            "children": []
-          },
-          {
-            "name": "Eosinophil",
-            "desc": "Granulocyte with bilobed nucleus and bright eosinophilic cytoplasmic granules, involved in allergic and parasitic responses. Occurs as 'eosinophil' in Lizard and NuCLS.",
-            "children": []
-          },
-          {
-            "name": "Mast cell / Mast_Cell / Mast Cells",
-            "desc": "Tissue-resident granulocyte with round nucleus and abundant basophilic granules containing histamine and other mediators. In Xenium breast data it is labelled 'Mast_Cell', and in pancreas 'Mast Cells'. Mast cells cluster around vessels and mucosal surfaces and participate in allergic and inflammatory reactions.",
-            "children": []
-          },
-          {
-            "name": "CXCL9/10-high immune cell",
-            "desc": "CXCL9/10 chemokine-high immune cell cluster, often representing activated T cells or myeloid cells in inflamed or immunologically 'hot' tumour regions. In Xenium pancreas data this appears as 'CXCL9/10 Cells'.",
-            "children": []
-          },
-          {
-            "name": "Tumour-infiltrating lymphocyte (TIL)",
-            "desc": "Lymphocyte located inside tumour cell nests or immediately adjacent, often hugging malignant cells. PanopTILs distinguishes 'TILsCell' and 'ActiveTILsCell'. These are central to TIL scoring in breast cancer.",
-            "children": []
+            "name": "Mast cells and CXCL9/10-high cells",
+            "desc": "Mast cells with granules and chemokine-high activated immune clusters.",
+            "children": [
+              { "name": "Mast_Cell", "desc": "Xenium breast label 'Mast_Cell': tissue mast cells with granulated cytoplasm.", "children": [] },
+              { "name": "Mast Cells", "desc": "Xenium pancreas label 'Mast Cells': mast cells in pancreatic tumour tissue.", "children": [] },
+              { "name": "CXCL9/10 Cells", "desc": "Xenium pancreas label 'CXCL9/10 Cells': CXCL9/10 chemokine-high immune cells, often activated T or myeloid cells.", "children": [] }
+            ]
           }
         ]
       },
       {
         "name": "Muscle / perivascular lineage",
-        "desc": "Contractile cells including smooth muscle and pericytes, as well as cardiomyocytes.",
+        "desc": "Contractile cells including smooth muscle, pericytes and cardiomyocytes.",
         "children": [
           {
-            "name": "Smooth muscle cell / Smooth_Muscle",
-            "desc": "Spindle-shaped contractile cell with cigar-shaped nuclei and eosinophilic cytoplasm. Found in vessel walls and organ smooth muscle layers. Histology: 'muscle' (CoNSeP). Xenium mapping uses 'Smooth_Muscle' and 'Smooth Muscle Cells', and lung/colon panels contain smooth muscle-rich clusters.",
-            "children": []
+            "name": "Smooth muscle cells",
+            "desc": "Smooth muscle cells with elongated, cigar-shaped nuclei in vessel walls or organ muscularis layers.",
+            "children": [
+              { "name": "muscle", "desc": "Human label 'muscle' (CoNSeP): smooth muscle or myofibroblast-like nuclei in colorectal specimens.", "children": [] },
+              { "name": "Smooth_Muscle", "desc": "Xenium label 'Smooth_Muscle' (colon panel): mapped smooth muscle/perivascular smooth muscle cells.", "children": [] },
+              { "name": "Smooth Muscle Cells", "desc": "Xenium labels 'Smooth Muscle Cells' (ovarian, pancreas): smooth muscle fibres in ovarian stroma and pancreatic vessels.", "children": [] }
+            ]
           },
           {
-            "name": "Pericyte / SMC/Pericyte / Pericytes",
-            "desc": "Perivascular mural cell wrapped around microvessels, with elongated nuclei hugging endothelial cells. Xenium panels use 'SMC/Pericyte' (heart, lung) and 'Pericytes' (ovarian). These cells regulate capillary tone and endothelial stability.",
-            "children": []
+            "name": "Pericytes and SMC/Pericyte",
+            "desc": "Perivascular mural cells that wrap around capillaries and small vessels.",
+            "children": [
+              { "name": "SMC/Pericyte", "desc": "Xenium labels 'SMC/Pericyte' (heart, lung): combined smooth muscle cell and pericyte cluster around vessels.", "children": [] },
+              { "name": "Pericytes", "desc": "Xenium ovarian label 'Pericytes': perivascular cells stabilising tumour microvessels.", "children": [] }
+            ]
           },
           {
-            "name": "Cardiomyocyte",
-            "desc": "Striated cardiac muscle cell with abundant eosinophilic cytoplasm and centrally placed nuclei; often captured in heart Xenium panels as 'Cardiomyocyte'.",
-            "children": []
+            "name": "Cardiomyocytes",
+            "desc": "Striated cardiac muscle cells with abundant eosinophilic cytoplasm and central nuclei.",
+            "children": [
+              { "name": "Cardiomyocyte", "desc": "Xenium heart label 'Cardiomyocyte': working myocardial cells responsible for contraction.", "children": [] }
+            ]
           }
         ]
       },
       {
         "name": "Endocrine / secretory lineage",
-        "desc": "Hormone-producing and specialised secretory epithelial cells (endocrine and some exocrine).",
+        "desc": "Hormone-producing and specialised secretory cells, many of which are also epithelial-derived.",
         "children": [
           {
-            "name": "Endocrine cell",
-            "desc": "Hormone-secreting epithelial cell with round nucleus, finely granular ('salt-and-pepper') chromatin and modest cytoplasm, forming nests, cords or islets. In Xenium pancreas data this corresponds to the mapped 'Endocrine' class, which merges the original transcriptomic clusters 'Endocrine 1' and 'Endocrine 2'.",
-            "children": []
+            "name": "Endocrine cells (Xenium)",
+            "desc": "Pancreatic islet endocrine cells and hormone-producing epithelial cells in Xenium data.",
+            "children": [
+              { "name": "Endocrine 1", "desc": "Xenium pancreas 'Endocrine 1': endocrine islet subtype; also appears under the epithelial lineage.", "children": [] },
+              { "name": "Endocrine 2", "desc": "Xenium pancreas 'Endocrine 2': second endocrine subtype with distinct hormone profile.", "children": [] },
+              { "name": "Granulosa Cells", "desc": "Xenium ovarian 'Granulosa Cells': steroidogenic follicular cells with endocrine function; appears both under epithelial and endocrine lineages.", "children": [] }
+            ]
           },
           {
-            "name": "Acinar exocrine cell",
-            "desc": "Enzyme-secreting epithelial cell forming acini; see also the node under epithelial lineage. Acinar cells in pancreas are labelled 'Acinar' in Xenium and appear as basophilic cells with granular apical cytoplasm.",
-            "children": []
+            "name": "Exocrine acinar cells",
+            "desc": "Enzyme-secreting acinar cells in the pancreas and similar glands.",
+            "children": [
+              { "name": "Acinar", "desc": "Xenium pancreas 'Acinar': exocrine acinar cells forming lobules that secrete digestive enzymes; also listed under the epithelial lineage.", "children": [] }
+            ]
           }
         ]
       },
       {
         "name": "Cell state / fate",
-        "desc": "Dynamic states such as proliferation and cell death that can overlay any lineage.",
+        "desc": "Dynamic states (proliferation, apoptosis, necrosis) that overlay any lineage and are often especially relevant in tumours.",
         "children": [
           {
-            "name": "Mitotic cell",
-            "desc": "Cell captured in mitosis with condensed chromosomes forming metaphase plates or anaphase/telophase figures. In BreCaHAD this is 'mitosis'; in NuCLS, 'mitotic_figure'. Many mitoses occur in tumour epithelium but can also occur in reactive or stromal cells.",
-            "children": []
+            "name": "Mitotic and non-mitotic states",
+            "desc": "Labels that explicitly describe whether a cell is in mitosis.",
+            "children": [
+              { "name": "mitosis", "desc": "Human label 'mitosis' (BreCaHAD): mitotic figures with condensed chromosomes; often tumour nuclei. Also linked to malignant epithelial nodes.", "children": [] },
+              { "name": "mitotic_figure", "desc": "Human label 'mitotic_figure' (NuCLS): mitotic nuclei highlighted for cell cycle analysis.", "children": [] },
+              { "name": "non-mitosis", "desc": "Human label 'non-mitosis' (BreCaHAD): nuclei explicitly annotated as not in mitosis, used as negative examples.", "children": [] },
+              { "name": "Proliferative Tumor Cells", "desc": "Xenium ovarian label 'Proliferative Tumor Cells': malignant cells with a strong proliferation signature; appears both here (cell state) and under malignant epithelial lineage.", "children": [] }
+            ]
           },
           {
-            "name": "Non-mitotic cell",
-            "desc": "Nucleus explicitly annotated as non-mitotic, used as a negative reference class for mitosis detection. BreCaHAD provides this as 'non-mitosis'.",
-            "children": []
+            "name": "Apoptosis and cell death",
+            "desc": "Labels for apoptotic cells, apoptotic bodies and dead nuclei.",
+            "children": [
+              { "name": "apoptosis", "desc": "Human label 'apoptosis' (BreCaHAD): apoptotic nuclei with condensed chromatin and nuclear fragmentation.", "children": [] },
+              { "name": "apoptotic_body", "desc": "Human label 'apoptotic_body' (NuCLS): small membrane-bound apoptotic fragments.", "children": [] },
+              { "name": "Dead", "desc": "Human label 'Dead' (PanNuke): dead or necrotic nuclei with karyorrhexis or karyolysis.", "children": [] }
+            ]
           },
           {
-            "name": "Apoptotic cell / apoptotic body",
-            "desc": "Cell undergoing programmed cell death, with nuclear condensation, fragmentation and formation of membrane-bound apoptotic bodies. Labels: 'apoptosis' (BreCaHAD) and 'apoptotic_body' (NuCLS).",
-            "children": []
-          },
-          {
-            "name": "Dead cell / necrotic nucleus",
-            "desc": "Terminally damaged nucleus showing karyorrhexis, karyolysis or ghost-cell morphology. PanNuke marks these as 'Dead'.",
-            "children": []
+            "name": "Functional tumour states (angiogenic / inflammatory)",
+            "desc": "Transcriptional states of tumour cells related to angiogenesis or inflammatory signalling.",
+            "children": [
+              { "name": "VEGFA+ Tumor Cells", "desc": "Xenium ovarian 'VEGFA+ Tumor Cells': highly angiogenic malignant cells; also under malignant epithelial branch.", "children": [] },
+              { "name": "Inflammatory Tumor Cells", "desc": "Xenium ovarian 'Inflammatory Tumor Cells': tumour cells with strong inflammatory/IFN signatures.", "children": [] }
+            ]
           }
         ]
       },
       {
-        "name": "Unknown / ambiguous / background",
-        "desc": "Labels indicating uncertainty, mixed morphology or non-nuclear regions.",
+        "name": "Ambiguous / unknown / background",
+        "desc": "Labels encoding uncertainty, low confidence or non-nuclear / background regions.",
         "children": [
           {
-            "name": "Ambiguous / unknown nucleus",
-            "desc": "Nuclei that annotators could not confidently assign to a specific type or that fall into a generic 'other' bucket. Includes 'Ambiguous' (MoNuSAC), 'UnknownOrAmbiguousCell' and 'OtherCell' (PanopTILs), 'other' (CoNSeP), 'Other' (nuclei.io plasma), and 'unlabeled' (NuCLS). In Xenium multi-cancer kidney/liver data the class 'Ambiguous/Low_confidence' plays a similar role.",
-            "children": []
+            "name": "Ambiguous / unknown nuclei",
+            "desc": "Nuclei that annotators could not confidently assign to any canonical type.",
+            "children": [
+              { "name": "Ambiguous", "desc": "Human label 'Ambiguous' (MoNuSAC): nuclei not clearly epithelial, lymphocyte, macrophage or neutrophil.", "children": [] },
+              { "name": "UnknownOrAmbiguousCell", "desc": "Human label 'UnknownOrAmbiguousCell' (PanopTILs): uncertain cell types in breast tumour ROIs.", "children": [] },
+              { "name": "OtherCell", "desc": "Human label 'OtherCell' (PanopTILs): cells that do not fit tumour, stromal or immune classes.", "children": [] },
+              { "name": "other", "desc": "Human label 'other' (CoNSeP): miscellaneous nuclei not fitting main phenotypes.", "children": [] },
+              { "name": "Other", "desc": "Human label 'Other' (nuclei.io plasma cells): non-plasma nuclei grouped into an 'Other' bin.", "children": [] },
+              { "name": "unlabeled", "desc": "Human label 'unlabeled' (NuCLS): nuclei without a consensus label.", "children": [] },
+              { "name": "Ambiguous/Low_confidence", "desc": "Xenium label 'Ambiguous/Low_confidence' (kidney, liver panels): cells with low-confidence assignment or mixed signatures.", "children": [] },
+              { "name": "Unassigned", "desc": "Xenium ovarian label 'Unassigned': cells that could not be robustly assigned to any cell type cluster.", "children": [] }
+            ]
           },
           {
-            "name": "Unassigned Xenium cell",
-            "desc": "Cells that could not be confidently assigned to any Xenium cluster or mapped class, labelled as 'Unassigned' in the ovarian panel. Often borderline or low-quality profiles.",
-            "children": []
-          },
-          {
-            "name": "Background / non-nuclear region",
-            "desc": "Regions deliberately labelled as non-nuclear tissue, lumen, necrosis or artefact. PanNuke uses 'Background (non-nuclei)' for this purpose.",
-            "children": []
+            "name": "Background / non-nuclear regions",
+            "desc": "Areas explicitly annotated as not containing any nucleus or used to represent background tissue.",
+            "children": [
+              { "name": "Background (non-nuclei)", "desc": "Human label 'Background (non-nuclei)' (PanNuke): pixels with no nuclei (tissue, lumen, artifacts).", "children": [] }
+            ]
           }
         ]
       }
@@ -713,208 +762,200 @@ const treeData = {
 
   "tree2": {
     "name": "Tree 2 – Human annotator label hierarchy",
-    "desc": "Hierarchy that focuses on how human annotator labels from different datasets relate to shared biological concepts. Leaf names include dataset context so you can see naming differences; a label may appear under multiple conceptual parents (multi-class semantics).",
+    "desc": "Hierarchy built purely from human annotator labels in the table, organised by biological concept (epithelial, stromal, immune, endothelial, cell state, ambiguous). Node names are exactly the label strings (no dataset prefixes).",
     "children": [
       {
         "name": "Epithelial-related labels",
-        "desc": "Human labels for benign, dysplastic and malignant epithelium or epithelial structures.",
+        "desc": "All human labels referring to epithelial cells, glands, or epithelial structures, grouped by tumour vs non-tumour context.",
         "children": [
           {
-            "name": "Normal / non-neoplastic epithelium (concept)",
-            "desc": "Labels intended to represent clearly benign epithelial nuclei.",
+            "name": "Non-neoplastic epithelium",
+            "desc": "Labels intended to reflect clearly benign epithelium or nuclear compartments of benign glands.",
             "children": [
-              { "name": "CoNSeP: healthy epithelial", "desc": "Morphologically normal colorectal epithelium without dysplasia or malignancy.", "children": [] },
-              { "name": "PanopTILs: NormalEpithelium", "desc": "Normal breast epithelium adjacent to invasive carcinoma.", "children": [] },
-              { "name": "PanNuke: Epithelial", "desc": "Non-neoplastic epithelial nuclei in PanNuke.", "children": [] },
-              { "name": "BreCaHAD: non-tumor nuclei", "desc": "Nuclei in breast biopsies judged non-neoplastic.", "children": [] },
-              { "name": "Lizard: epithelial", "desc": "Colonic epithelial nuclei in Lizard.", "children": [] },
-              { "name": "nuclei.io CRC tumor: Non-neoplastic", "desc": "Non-neoplastic nuclei (benign epithelium and stroma) in CRC tumour patches.", "children": [] },
-              { "name": "NuCLS: myoepithelium", "desc": "Myoepithelial nuclei in breast ducts and lobules.", "children": [] }
+              { "name": "healthy epithelial", "desc": "Benign colorectal epithelium in CoNSeP.", "children": [] },
+              { "name": "epithelial", "desc": "Colonic epithelial nuclei in Lizard.", "children": [] },
+              { "name": "Epithelial", "desc": "Epithelial nuclei class in MoNuSAC or PanNuke (benign subset).", "children": [] },
+              { "name": "NormalEpithelium", "desc": "Benign breast epithelium in PanopTILs.", "children": [] },
+              { "name": "non-tumor nuclei", "desc": "Non-tumour nuclei in BreCaHAD (often benign epithelium or stroma).", "children": [] },
+              { "name": "Non-neoplastic", "desc": "Non-neoplastic nuclei in nuclei.io CRC tumour patches.", "children": [] },
+              { "name": "tubule (lumen)", "desc": "Nuclei lining glandular lumina in BreCaHAD.", "children": [] }
             ]
           },
           {
-            "name": "Dysplastic / pre-malignant epithelium (concept)",
-            "desc": "Epithelial atypia between benign and malignant.",
+            "name": "Dysplastic / pre-malignant epithelium",
+            "desc": "Labels reflecting epithelial atypia between benign and malignant.",
             "children": [
-              { "name": "CoNSeP: dysplastic/malignant epithelial", "desc": "Mixed dysplastic and malignant epithelial nuclei in colorectal tissue.", "children": [] }
+              { "name": "dysplastic/malignant epithelial", "desc": "Mixed dysplastic and malignant epithelial nuclei class in CoNSeP; appears here and under malignant concepts.", "children": [] }
             ]
           },
           {
-            "name": "Malignant / tumour epithelium (concept)",
-            "desc": "Labels clearly denoting carcinoma nuclei.",
+            "name": "Malignant / tumour epithelium",
+            "desc": "Labels that the annotator uses for carcinoma nuclei.",
             "children": [
-              { "name": "BreCaHAD: tumor nuclei", "desc": "Malignant nuclei in breast cancer biopsies.", "children": [] },
-              { "name": "NuCLS: tumor", "desc": "Tumour nuclei in TCGA breast slides.", "children": [] },
-              { "name": "PanNuke: Neoplastic", "desc": "Tumour nuclei across 19 tissue types.", "children": [] },
-              { "name": "nuclei.io CRC tumor: Neoplastic", "desc": "Neoplastic colorectal carcinoma nuclei.", "children": [] },
-              { "name": "PanopTILs: CancerEpithelium", "desc": "Invasive cancer epithelium in breast.", "children": [] },
-              { "name": "DigestPath2019: ring_cell_cancer", "desc": "Signet-ring cell carcinoma nuclei in gastric/intestinal biopsies.", "children": [] },
-              { "name": "CoNSeP: dysplastic/malignant epithelial", "desc": "Same label viewed from its malignant end of the spectrum.", "children": [] },
-              { "name": "BreCaHAD: mitosis", "desc": "Mitotic figures, often within tumour epithelium.", "children": [] },
-              { "name": "NuCLS: mitotic_figure", "desc": "Mitotic nuclei in breast cancer slides.", "children": [] }
+              { "name": "tumor nuclei", "desc": "Malignant nuclei in breast biopsies (BreCaHAD).", "children": [] },
+              { "name": "tumor", "desc": "Tumour nuclei in NuCLS (TCGA breast).", "children": [] },
+              { "name": "Neoplastic", "desc": "Neoplastic nuclei class in PanNuke and nuclei.io CRC tumour patches.", "children": [] },
+              { "name": "CancerEpithelium", "desc": "Cancer epithelial nuclei in PanopTILs.", "children": [] },
+              { "name": "ring_cell_cancer", "desc": "Signet-ring carcinoma nuclei in DigestPath2019.", "children": [] },
+              { "name": "dysplastic/malignant epithelial", "desc": "CoNSeP dysplastic/malignant epithelial class considered from its malignant side.", "children": [] }
             ]
           },
           {
-            "name": "Structural epithelial compartments (concept)",
-            "desc": "Labels for tubular vs non-tubular epithelial organisation.",
+            "name": "Glandular structure / lumen vs non-lumen",
+            "desc": "Labels describing whether nuclei are in tubular lumina or solid regions.",
             "children": [
-              { "name": "BreCaHAD: tubule (lumen)", "desc": "Nuclei lining glandular lumina (tubule formation).", "children": [] },
-              { "name": "BreCaHAD: non-tubule (non-lumen)", "desc": "Nuclei not forming clear lumina; may be solid tumour or stroma.", "children": [] }
+              { "name": "tubule (lumen)", "desc": "Nuclei lining glandular lumina (also under non-neoplastic epithelium).", "children": [] },
+              { "name": "non-tubule (non-lumen)", "desc": "Nuclei not forming clear lumina, including solid tumour and stroma.", "children": [] }
+            ]
+          },
+          {
+            "name": "Myoepithelium",
+            "desc": "Specialised basal epithelial cell in breast glands.",
+            "children": [
+              { "name": "myoepithelium", "desc": "Basal myoepithelial nuclei in NuCLS.", "children": [] }
             ]
           }
         ]
       },
       {
-        "name": "Stromal / connective concepts",
-        "desc": "Labels for fibroblasts, stroma and non-epithelial background cells.",
+        "name": "Stromal / connective labels",
+        "desc": "Labels for fibroblasts, connective tissue and generic stromal nuclei.",
         "children": [
           {
-            "name": "Fibroblasts / connective tissue (concept)",
-            "desc": "Stromal fibroblast and connective tissue labels.",
+            "name": "Fibroblast / connective tissue",
+            "desc": "Stromal fibroblasts and generic connective tissue categories.",
             "children": [
-              { "name": "CoNSeP: fibroblast", "desc": "Fibroblast nuclei in colorectal stroma.", "children": [] },
-              { "name": "NuCLS: fibroblast", "desc": "Breast stromal fibroblasts.", "children": [] },
-              { "name": "PanNuke: Connective / soft tissue", "desc": "Connective tissue and fibroblast-like nuclei.", "children": [] },
-              { "name": "Lizard: connective tissue", "desc": "Stromal cells in colonic biopsies.", "children": [] },
-              { "name": "PanopTILs: StromalCellNOS", "desc": "Stromal cells not otherwise specified.", "children": [] },
-              { "name": "PanopTILs: ActiveStromalCellNOS", "desc": "Activated stromal cells (CAF-like).", "children": [] }
+              { "name": "fibroblast", "desc": "Stromal fibroblast nuclei (CoNSeP, NuCLS).", "children": [] },
+              { "name": "connective tissue", "desc": "Connective tissue nuclei (Lizard).", "children": [] },
+              { "name": "Connective / soft tissue", "desc": "Connective/soft tissue nuclei (PanNuke).", "children": [] },
+              { "name": "StromalCellNOS", "desc": "Stromal cell not otherwise specified (PanopTILs).", "children": [] },
+              { "name": "ActiveStromalCellNOS", "desc": "Activated stromal cell class, often CAF-like (PanopTILs).", "children": [] }
             ]
           },
           {
-            "name": "Generic stromal / non-lumen nuclei (concept)",
-            "desc": "Stromal and solid regions not forming tubules.",
+            "name": "Non-lumen / solid regions",
+            "desc": "Labels where stromal and tumour nuclei are mixed in non-luminal regions.",
             "children": [
-              { "name": "BreCaHAD: non-tubule (non-lumen)", "desc": "Non-luminal nuclei including solid tumour and stroma.", "children": [] },
-              { "name": "nuclei.io CRC tumor: Non-neoplastic", "desc": "Non-neoplastic nuclei including benign stroma.", "children": [] }
+              { "name": "non-tubule (non-lumen)", "desc": "Non-lumen nuclei in BreCaHAD; appears here and under epithelial structural concepts.", "children": [] }
             ]
           }
         ]
       },
       {
-        "name": "Endothelial concepts",
-        "desc": "Human labels for vascular endothelium.",
+        "name": "Endothelial labels",
+        "desc": "Labels used for vascular endothelial nuclei.",
         "children": [
           {
-            "name": "Vascular endothelial nuclei (concept)",
-            "desc": "Endothelial nuclei lining blood vessels.",
+            "name": "Blood vessel endothelium",
+            "desc": "Endothelial cells lining blood vessels.",
             "children": [
-              { "name": "CoNSeP: endothelial", "desc": "Colorectal endothelial nuclei.", "children": [] },
-              { "name": "NuCLS: vascular_endothelium", "desc": "Breast vascular endothelium.", "children": [] }
+              { "name": "endothelial", "desc": "Endothelial nuclei in CoNSeP.", "children": [] },
+              { "name": "vascular_endothelium", "desc": "Vascular endothelium in NuCLS.", "children": [] }
             ]
           }
         ]
       },
       {
-        "name": "Immune concepts",
+        "name": "Immune labels",
         "desc": "Human labels for lymphoid and myeloid cells and mixed inflammatory infiltrates.",
         "children": [
           {
-            "name": "Generic inflammatory cell (concept)",
-            "desc": "Non-specific inflammatory classes.",
+            "name": "Generic inflammatory classes",
+            "desc": "Non-specific inflammatory labels.",
             "children": [
-              { "name": "CoNSeP: inflammatory", "desc": "Mixed inflammatory infiltrate in colorectal stroma.", "children": [] },
-              { "name": "PanNuke: Inflammatory", "desc": "Mixed inflammatory nuclei in PanNuke.", "children": [] }
+              { "name": "inflammatory", "desc": "Mixed inflammatory cells in CoNSeP.", "children": [] },
+              { "name": "Inflammatory", "desc": "Mixed inflammatory nuclei in PanNuke.", "children": [] }
             ]
           },
           {
-            "name": "Lymphocytes and TILs (concept)",
-            "desc": "Lymphocytic infiltrates inside and around tumours.",
+            "name": "Lymphocytes and TILs",
+            "desc": "T and B cells infiltrating tissue and tumours.",
             "children": [
-              { "name": "MoNuSAC: Lymphocyte", "desc": "Multi-organ lymphocyte class.", "children": [] },
-              { "name": "NuCLS: lymphocyte", "desc": "Lymphocytes in TCGA breast.", "children": [] },
-              { "name": "Lizard: lymphocyte", "desc": "Colonic lymphocytes.", "children": [] },
-              { "name": "PanopTILs: TILsCell", "desc": "Tumour-infiltrating lymphocytes.", "children": [] },
-              { "name": "PanopTILs: ActiveTILsCell", "desc": "Activated tumour-infiltrating lymphocytes.", "children": [] }
+              { "name": "lymphocyte", "desc": "Lymphocytes in Lizard and NuCLS.", "children": [] },
+              { "name": "Lymphocyte", "desc": "Lymphocytes in MoNuSAC.", "children": [] },
+              { "name": "TILsCell", "desc": "Tumour-infiltrating lymphocytes in PanopTILs.", "children": [] },
+              { "name": "ActiveTILsCell", "desc": "Activated tumour-infiltrating lymphocytes in PanopTILs.", "children": [] }
             ]
           },
           {
-            "name": "Macrophages / histiocytes (concept)",
-            "desc": "Mononuclear phagocytes in tissue.",
-            "children": [
-              { "name": "MoNuSAC: Macrophage", "desc": "Tissue macrophages in breast, kidney, lung and prostate.", "children": [] },
-              { "name": "NuCLS: macrophage", "desc": "Macrophages in TCGA breast.", "children": [] }
-            ]
-          },
-          {
-            "name": "Neutrophils (concept)",
-            "desc": "Neutrophil granulocytes.",
-            "children": [
-              { "name": "MoNuSAC: Neutrophil", "desc": "Neutrophils in MoNuSAC.", "children": [] },
-              { "name": "NuCLS: neutrophil", "desc": "Neutrophils in NuCLS.", "children": [] },
-              { "name": "Lizard: neutrophil", "desc": "Neutrophils in colonic biopsies.", "children": [] }
-            ]
-          },
-          {
-            "name": "Eosinophils (concept)",
-            "desc": "Eosinophilic granulocytes.",
-            "children": [
-              { "name": "NuCLS: eosinophil", "desc": "Eosinophils in breast slides (rare).", "children": [] },
-              { "name": "Lizard: eosinophil", "desc": "Eosinophils in colon.", "children": [] }
-            ]
-          },
-          {
-            "name": "Plasma / B-lineage cells (concept)",
+            "name": "Plasma / B-lineage cells",
             "desc": "Plasma cells and related B-lineage labels.",
             "children": [
-              { "name": "NuCLS: plasma_cell", "desc": "Plasma cells in TCGA breast.", "children": [] },
-              { "name": "Lizard: plasma", "desc": "Plasma cells in colonic lamina propria.", "children": [] },
-              { "name": "nuclei.io plasma cells: Plasma cell", "desc": "Plasma cell class in the nuclei.io plasma dataset.", "children": [] },
-              { "name": "nuclei.io plasma cells: Other", "desc": "Non-plasma nuclei in the plasma dataset.", "children": [] }
+              { "name": "plasma", "desc": "Plasma cells in Lizard.", "children": [] },
+              { "name": "plasma_cell", "desc": "Plasma cells in NuCLS.", "children": [] },
+              { "name": "Plasma cell", "desc": "Plasma cells in nuclei.io plasma cell dataset.", "children": [] }
+            ]
+          },
+          {
+            "name": "Macrophages / histiocytes",
+            "desc": "Mononuclear phagocytes.",
+            "children": [
+              { "name": "Macrophage", "desc": "Macrophages in MoNuSAC.", "children": [] },
+              { "name": "macrophage", "desc": "Macrophages in NuCLS.", "children": [] }
+            ]
+          },
+          {
+            "name": "Neutrophils",
+            "desc": "Neutrophil granulocytes.",
+            "children": [
+              { "name": "neutrophil", "desc": "Neutrophils in Lizard and NuCLS.", "children": [] },
+              { "name": "Neutrophil", "desc": "Neutrophils in MoNuSAC.", "children": [] }
+            ]
+          },
+          {
+            "name": "Eosinophils",
+            "desc": "Eosinophil granulocytes.",
+            "children": [
+              { "name": "eosinophil", "desc": "Eosinophils in Lizard and NuCLS.", "children": [] }
             ]
           }
         ]
       },
       {
-        "name": "Cell state / fate concepts",
-        "desc": "Labels that mark proliferation or cell death.",
+        "name": "Cell state / fate labels",
+        "desc": "Labels that describe proliferation or cell death rather than lineage.",
         "children": [
           {
-            "name": "Mitotic cells (concept)",
-            "desc": "Mitotic figures in histology.",
+            "name": "Mitotic state",
+            "desc": "Mitotic vs non-mitotic nuclei.",
             "children": [
-              { "name": "BreCaHAD: mitosis", "desc": "Mitotic figures for benchmarking.", "children": [] },
-              { "name": "NuCLS: mitotic_figure", "desc": "Mitotic nuclei in NuCLS.", "children": [] }
+              { "name": "mitosis", "desc": "Mitotic figures in BreCaHAD.", "children": [] },
+              { "name": "mitotic_figure", "desc": "Mitotic figures in NuCLS.", "children": [] },
+              { "name": "non-mitosis", "desc": "Non-mitotic nuclei in BreCaHAD.", "children": [] }
             ]
           },
           {
-            "name": "Apoptotic / dead nuclei (concept)",
-            "desc": "Nuclear features of cell death.",
+            "name": "Apoptosis / death",
+            "desc": "Apoptotic and dead nuclei.",
             "children": [
-              { "name": "BreCaHAD: apoptosis", "desc": "Apoptotic nuclei in breast cancer.", "children": [] },
-              { "name": "NuCLS: apoptotic_body", "desc": "Apoptotic bodies in TCGA breast.", "children": [] },
-              { "name": "PanNuke: Dead", "desc": "Dead nuclei in PanNuke.", "children": [] }
-            ]
-          },
-          {
-            "name": "Non-mitotic reference nuclei (concept)",
-            "desc": "Explicitly non-mitotic examples.",
-            "children": [
-              { "name": "BreCaHAD: non-mitosis", "desc": "Non-mitotic nuclei in BreCaHAD.", "children": [] }
+              { "name": "apoptosis", "desc": "Apoptotic nuclei in BreCaHAD.", "children": [] },
+              { "name": "apoptotic_body", "desc": "Apoptotic bodies in NuCLS.", "children": [] },
+              { "name": "Dead", "desc": "Dead nuclei in PanNuke.", "children": [] }
             ]
           }
         ]
       },
       {
-        "name": "Ambiguous / unknown / background concepts",
-        "desc": "Labels encoding uncertainty or non-nuclear regions.",
+        "name": "Ambiguous / unknown / background labels",
+        "desc": "Labels encoding uncertainty, mixed types or non-nuclear regions.",
         "children": [
           {
-            "name": "Ambiguous / unknown nucleus (concept)",
-            "desc": "Human labels for uncertain or other nuclei.",
+            "name": "Ambiguous / other nuclei",
+            "desc": "Human labels where the annotator was unsure or collapsed rare types.",
             "children": [
-              { "name": "MoNuSAC: Ambiguous", "desc": "Nuclei not clearly lymphocyte, epithelial, macrophage or neutrophil.", "children": [] },
-              { "name": "PanopTILs: UnknownOrAmbiguousCell", "desc": "Unknown or ambiguous cells in breast TIL regions.", "children": [] },
-              { "name": "PanopTILs: OtherCell", "desc": "Other cells outside canonical classes.", "children": [] },
-              { "name": "NuCLS: unlabeled", "desc": "Nuclei without a consensus type in NuCLS.", "children": [] },
-              { "name": "CoNSeP: other", "desc": "Catch-all 'other' label in CoNSeP.", "children": [] },
-              { "name": "nuclei.io plasma cells: Other", "desc": "Non-plasma nuclei in the plasma dataset.", "children": [] }
+              { "name": "Ambiguous", "desc": "Ambiguous nuclei in MoNuSAC.", "children": [] },
+              { "name": "UnknownOrAmbiguousCell", "desc": "Unknown or ambiguous cells in PanopTILs.", "children": [] },
+              { "name": "OtherCell", "desc": "Other cells in PanopTILs.", "children": [] },
+              { "name": "other", "desc": "Other nuclei in CoNSeP.", "children": [] },
+              { "name": "Other", "desc": "Other nuclei in nuclei.io plasma cell dataset.", "children": [] },
+              { "name": "unlabeled", "desc": "Unlabeled nuclei in NuCLS.", "children": [] }
             ]
           },
           {
-            "name": "Background / non-nuclear (concept)",
-            "desc": "Pixels annotated as not containing nuclei.",
+            "name": "Background / non-nuclei",
+            "desc": "Explicit non-nuclear pixels.",
             "children": [
-              { "name": "PanNuke: Background (non-nuclei)", "desc": "Background class in PanNuke.", "children": [] }
+              { "name": "Background (non-nuclei)", "desc": "Non-nuclear background in PanNuke.", "children": [] }
             ]
           }
         ]
@@ -924,206 +965,205 @@ const treeData = {
 
   "tree3": {
     "name": "Tree 3 – Xenium label hierarchy",
-    "desc": "Hierarchy built from Xenium cell-type labels across all listed panels. For ovarian and pancreas data, cell clusters are mapped to broader labels (e.g. Malignant, Endocrine), and those mapped labels are used as leaves. For multi-cancer panels, the provided class names are used directly as leaves.",
+    "desc": "Hierarchy built purely from Xenium cell labels across all listed panels. Leaf node names are exactly the Xenium label strings. Parents encode lineage, tumour vs non-tumour status and functional states; some labels appear under multiple parents.",
     "children": [
       {
         "name": "Epithelial and tumour lineage (Xenium)",
-        "desc": "All epithelial-derived and tumour-epithelial classes captured by Xenium panels after mapping.",
+        "desc": "All Xenium epithelial-derived and tumour-epithelial classes, split into non-malignant, malignant and tumour-associated groups.",
         "children": [
           {
-            "name": "Epithelial",
-            "desc": "Non-malignant epithelial cells with preserved polarity and relatively uniform nuclei. This mapped label includes Xenium clusters such as 'Ciliated Epithelial Cells', 'Fallopian Tube Epithelium' and 'Ductal' in the ovarian and pancreas panels.",
-            "children": []
+            "name": "Non-malignant epithelial cells (Xenium)",
+            "desc": "Epithelial cells without clear malignant behaviour, including airway, alveolar, ductal, acinar and tubal epithelium.",
+            "children": [
+              { "name": "Airway_epithelium", "desc": "Lung panel: airway mucosal epithelium lining bronchi and bronchioles.", "children": [] },
+              { "name": "Alveolar", "desc": "Lung panel: type I and II pneumocytes forming the alveolar lining.", "children": [] },
+              { "name": "Ciliated Epithelial Cells", "desc": "Ovarian panel: ciliated epithelial cells with apical cilia.", "children": [] },
+              { "name": "Fallopian Tube Epithelium", "desc": "Ovarian panel: specialised fallopian tube epithelium, often implicated in HGSC origins.", "children": [] },
+              { "name": "Ductal", "desc": "Pancreas panel: ductal epithelial cells lining exocrine ducts.", "children": [] },
+              { "name": "Acinar", "desc": "Pancreas panel: acinar exocrine cells producing digestive enzymes.", "children": [] },
+              { "name": "Granulosa Cells", "desc": "Ovarian panel: granulosa cells in ovarian follicles, hormonally active but not malignant by default.", "children": [] }
+            ]
           },
           {
-            "name": "Airway_epithelium",
-            "desc": "Airway mucosal epithelium from the lung Xenium panel, comprising ciliated, secretory and basal cells that line bronchi and bronchioles.",
-            "children": []
+            "name": "Malignant epithelial tumour cells (Xenium)",
+            "desc": "Epithelial tumour cells across Xenium panels, including multi-cancer tumour_epithelial classes and ovarian/pancreas tumour clusters.",
+            "children": [
+              {
+                "name": "Core malignant tumour populations",
+                "desc": "Tumour-epithelial classes defined at the panel or cluster level.",
+                "children": [
+                  { "name": "Malignant", "desc": "Breast and colon panels: bulk malignant tumour cell cluster defined by gene expression.", "children": [] },
+                  { "name": "Tumor_epithelial", "desc": "Kidney, liver, lung panels: tumour epithelial class at multi-cancer panel level.", "children": [] },
+                  { "name": "Tumor Cells", "desc": "Ovarian and pancreas panels: main tumour epithelial cluster.", "children": [] },
+                  { "name": "CFTR- Tumor Cells", "desc": "Pancreas panel: CFTR-negative tumour cells representing a specific malignant subtype.", "children": [] }
+                ]
+              },
+              {
+                "name": "State-specific malignant subtypes",
+                "desc": "Ovarian tumour clusters with proliferative, inflammatory, angiogenic or cyst-lining signatures.",
+                "children": [
+                  { "name": "Proliferative Tumor Cells", "desc": "Ovarian: malignant cells with high expression of cell-cycle and proliferation genes.", "children": [] },
+                  { "name": "VEGFA+ Tumor Cells", "desc": "Ovarian: VEGFA-high malignant cells that drive tumour angiogenesis.", "children": [] },
+                  { "name": "Inflammatory Tumor Cells", "desc": "Ovarian: tumour cells activated by inflammatory/IFN pathways, often at immune interfaces.", "children": [] },
+                  { "name": "SOX2-OT+ Tumor Cells", "desc": "Ovarian: tumour cells with SOX2-OT lncRNA expression, associated with stem-like features.", "children": [] },
+                  { "name": "Malignant Cells Lining Cyst", "desc": "Ovarian: malignant cells forming the lining of cystic spaces.", "children": [] }
+                ]
+              }
+            ]
           },
           {
-            "name": "Alveolar",
-            "desc": "Alveolar epithelial cells (type I and type II pneumocytes) from the lung Xenium panel, lining gas-exchange surfaces with very thin cytoplasmic processes or cuboidal secretory morphology.",
-            "children": []
+            "name": "Tumour-associated / metaplastic epithelial cells (Xenium)",
+            "desc": "Epithelial cells with strong tumour influence that are not simply generic malignant tumour cells.",
+            "children": [
+              { "name": "Metaplastic Cells", "desc": "Pancreas panel: metaplastic epithelial cells within or near tumour regions.", "children": [] }
+            ]
           },
           {
-            "name": "Tumor_epithelial",
-            "desc": "Tumour epithelial cells in kidney, liver and lung multi-cancer Xenium panels. These are malignant epithelial cells, but the label emphasises epithelial identity rather than a specific transcriptional subtype.",
-            "children": []
-          },
-          {
-            "name": "Malignant",
-            "desc": "Mapped malignant tumour cells with pleomorphic, hyperchromatic nuclei and increased mitotic activity. In ovarian and pancreas Xenium data this label aggregates multiple tumour clusters (Tumor Cells, Proliferative Tumor Cells, VEGFA+ Tumor Cells, Inflammatory Tumor Cells, SOX2-OT+ Tumor Cells, Malignant Cells Lining Cyst, CFTR- Tumor Cells). It also covers the 'Malignant' class in breast and colon Xenium panels.",
-            "children": []
-          },
-          {
-            "name": "Tumor_Associated_Epithelial",
-            "desc": "Mapped tumour-associated epithelial cells that show phenotype switching or metaplasia in response to the tumour microenvironment. In the pancreas Xenium panel this arises mainly from 'Metaplastic Cells'.",
-            "children": []
-          },
-          {
-            "name": "Acinar",
-            "desc": "Acinar exocrine epithelial cells in the pancreas Xenium panel. These cells are enzyme-secreting parenchymal cells arranged in acini around small lumina.",
-            "children": []
-          },
-          {
-            "name": "Endocrine",
-            "desc": "Endocrine epithelial cells in the pancreas Xenium dataset, representing hormone-secreting islet cells. This mapped label merges the original clusters 'Endocrine 1' and 'Endocrine 2'.",
-            "children": []
-          },
-          {
-            "name": "Granulosa Cells",
-            "desc": "Granulosa cells from the ovarian Xenium panel, supporting the oocyte and producing sex hormones in ovarian follicles. They are endocrine-active mesenchymal/epithelial-like cells surrounding follicles.",
-            "children": []
+            "name": "Endocrine epithelial cells (Xenium)",
+            "desc": "Hormone-secreting epithelial cells and related endocrine populations.",
+            "children": [
+              { "name": "Endocrine 1", "desc": "Pancreas: first endocrine islet subtype.", "children": [] },
+              { "name": "Endocrine 2", "desc": "Pancreas: second endocrine islet subtype with different hormone profile.", "children": [] },
+              { "name": "Granulosa Cells", "desc": "Ovarian: granulosa cells with endocrine functions; duplicated here and under non-malignant epithelium.", "children": [] }
+            ]
           }
         ]
       },
       {
         "name": "Fibroblast and stromal lineage (Xenium)",
-        "desc": "Stromal fibroblasts and cancer-associated fibroblasts (CAF) across Xenium panels.",
+        "desc": "Fibroblasts, fibroblast/CAF mixtures and CAFs across Xenium panels, separated into normal stromal vs tumour-associated categories.",
         "children": [
           {
-            "name": "Fibroblast",
-            "desc": "Fibroblasts with spindle-shaped morphology and elongated nuclei, producing extracellular matrix. Present in heart ('Fibroblast') and pancreas ('Fibroblasts') Xenium panels and as the mapped 'Fibroblast' class in your ovarian/pancreas mapping.",
-            "children": []
+            "name": "Non-tumour fibroblasts",
+            "desc": "Fibroblasts in normal stroma or distant from the tumour core.",
+            "children": [
+              { "name": "Fibroblast", "desc": "Heart panel: generic cardiac fibroblasts maintaining myocardial ECM.", "children": [] },
+              { "name": "Fibroblasts", "desc": "Pancreas panel: fibroblasts in pancreatic stroma.", "children": [] },
+              { "name": "Stromal Associated Fibroblasts", "desc": "Ovarian: fibroblasts tightly associated with non-tumour stroma.", "children": [] }
+            ]
           },
           {
-            "name": "Fibroblast/CAF",
-            "desc": "Fibroblast and CAF mixture labels from kidney and liver Xenium panels ('Fibroblast/CAF'), where fibroblasts and activated CAFs are not separated into distinct classes.",
-            "children": []
-          },
-          {
-            "name": "Fibroblast_PDGFRA_CAF",
-            "desc": "Fibroblast / CAF cluster enriched for PDGFRA expression in the lung Xenium panel, representing a more strongly activated CAF phenotype.",
-            "children": []
-          },
-          {
-            "name": "Stromal_Associated_Fibroblast",
-            "desc": "Mapped stromal-associated fibroblasts that reside primarily in non-tumour stroma. Derived from 'Stromal Associated Fibroblasts' in the ovarian Xenium dataset.",
-            "children": []
-          },
-          {
-            "name": "Tumor_Associated_Fibroblast",
-            "desc": "Mapped tumour-associated fibroblasts (CAF) driven by tumour-derived signals. This includes 'Tumor_Associated_Fibroblast' in breast and colon Xenium panels and 'Tumor Associated Fibroblasts' in ovarian data.",
-            "children": []
+            "name": "Cancer-associated fibroblasts (CAF) and CAF-like clusters",
+            "desc": "Fibroblasts activated by tumour; remodel matrix and secrete pro-tumour factors.",
+            "children": [
+              { "name": "Tumor_Associated_Fibroblast", "desc": "Breast and colon panels: tumour-associated fibroblasts adjacent to malignant regions.", "children": [] },
+              { "name": "Tumor Associated Fibroblasts", "desc": "Ovarian panel: CAFs in ovarian carcinoma stroma.", "children": [] },
+              { "name": "Fibroblast/CAF", "desc": "Kidney and liver panels: merged fibroblast and CAF population.", "children": [] },
+              { "name": "Fibroblast_PDGFRA_CAF", "desc": "Lung panel: PDGFRA-high fibroblast/CAF compartment associated with fibrotic and tumour stroma.", "children": [] }
+            ]
           }
         ]
       },
       {
         "name": "Endothelial and vascular lineage (Xenium)",
-        "desc": "Endothelial cells forming blood and lymphatic vasculature in Xenium datasets.",
+        "desc": "Endothelial cells from normal and tumour-associated vessels, plus lymphatic endothelium.",
         "children": [
           {
-            "name": "Endothelial",
-            "desc": "Generic vascular endothelial cells from multiple Xenium panels (colon, heart, lung, pancreas). These cells line blood vessels and display elongated flattened nuclei and a thin rim of cytoplasm.",
-            "children": []
+            "name": "Blood vessel endothelium (non-tumour)",
+            "desc": "Endothelial cells lining physiologic blood vessels.",
+            "children": [
+              { "name": "Endothelial", "desc": "Colon, heart, lung, pancreas, breast multi-cancer panels: generic vascular endothelial cells.", "children": [] },
+              { "name": "Stromal Associated Endothelial Cells", "desc": "Ovarian: endothelial cells associated with stromal vasculature.", "children": [] }
+            ]
           },
           {
-            "name": "Lymphatic Endothelial Cells",
-            "desc": "Endothelial cells lining lymphatic vessels in the pancreas Xenium panel, typically forming thinner-walled channels with more irregular lumina.",
-            "children": []
+            "name": "Lymphatic endothelium",
+            "desc": "Endothelial cells lining lymphatic vessels.",
+            "children": [
+              { "name": "Lymphatic Endothelial Cells", "desc": "Pancreas: lymphatic endothelial cells draining tumour regions.", "children": [] }
+            ]
           },
           {
-            "name": "Stromal_Associated_Endothelial",
-            "desc": "Mapped endothelial cells associated primarily with stromal vasculature in ovarian Xenium data ('Stromal Associated Endothelial Cells').",
-            "children": []
-          },
-          {
-            "name": "Tumor_Associated_Endothelial",
-            "desc": "Mapped tumour-associated endothelial cells that form angiogenic neovessels within tumour tissue. Present in breast, colon and ovarian Xenium panels as 'Tumor_Associated_Endothelial' or 'Tumor Associated Endothelial Cells'.",
-            "children": []
+            "name": "Tumour-associated endothelium",
+            "desc": "Endothelial cells in tumour-induced neovessels.",
+            "children": [
+              { "name": "Tumor_Associated_Endothelial", "desc": "Breast and colon: tumour-associated endothelial cells in angiogenic neovessels near malignant clusters.", "children": [] },
+              { "name": "Tumor Associated Endothelial Cells", "desc": "Ovarian: tumour-associated endothelial cells in ovarian carcinoma.", "children": [] }
+            ]
           }
         ]
       },
       {
         "name": "Immune lineage (Xenium)",
-        "desc": "Lymphoid and myeloid immune cells captured by Xenium panels.",
+        "desc": "Lymphoid and myeloid immune cells across all Xenium panels.",
         "children": [
           {
-            "name": "T_Cell",
-            "desc": "Mapped T cell lineage combining Xenium 'T Cells' and 'T and NK Cells' from pancreas and ovarian data. These are small lymphocytes with dense chromatin and scant cytoplasm, mediating adaptive cellular immunity and cytotoxic responses.",
-            "children": []
+            "name": "T and NK cell lineage",
+            "desc": "CD4/CD8 T cells, NK cells and tumour-infiltrating T cell populations.",
+            "children": [
+              { "name": "T_cells", "desc": "Kidney, liver, lung panels: panel-level T cells.", "children": [] },
+              { "name": "T Cells", "desc": "Pancreas: T cell cluster in pancreatic tumour microenvironment.", "children": [] },
+              { "name": "T and NK Cells", "desc": "Ovarian: mixed T and NK cell cluster representing cytotoxic lymphocytes.", "children": [] }
+            ]
           },
           {
-            "name": "T_cells",
-            "desc": "T cell class in kidney, liver and lung multi-cancer Xenium panels. Functionally similar to the mapped T_Cell class but defined at a higher level of abstraction.",
-            "children": []
+            "name": "B lineage and CXCL9/10-high immune cells",
+            "desc": "B cells and chemokine-high immune clusters.",
+            "children": [
+              { "name": "B_lineage", "desc": "Kidney and lung: B-lineage cells including naive/memory B cells.", "children": [] },
+              { "name": "B Cells", "desc": "Pancreas: B cells in pancreatic tumour tissue.", "children": [] },
+              { "name": "CXCL9/10 Cells", "desc": "Pancreas: CXCL9/10 chemokine-high immune cells, often activated T or myeloid cells in inflamed regions.", "children": [] }
+            ]
           },
           {
-            "name": "B_lineage",
-            "desc": "B-lineage cells including naive and memory B cells in kidney and lung Xenium panels. These cells have round nuclei and modest cytoplasm and can differentiate into plasma cells.",
-            "children": []
+            "name": "Myeloid and macrophage lineage",
+            "desc": "Monocytes, macrophages and other myeloid populations.",
+            "children": [
+              { "name": "Myeloid", "desc": "Heart, kidney, liver, lung: broad myeloid compartment including monocytes and DCs.", "children": [] },
+              { "name": "Macrophage", "desc": "Breast and colon: tumour-associated macrophages in those panels.", "children": [] },
+              { "name": "Macrophages", "desc": "Ovarian and pancreas: macrophage populations in those organs.", "children": [] }
+            ]
           },
           {
-            "name": "B Cells",
-            "desc": "B cells in the pancreas Xenium panel. Together with 'B_lineage', they cover B-cell populations across Xenium datasets.",
-            "children": []
-          },
-          {
-            "name": "Myeloid",
-            "desc": "Myeloid compartment in heart, kidney, liver and lung Xenium panels, including monocytes, dendritic cells and some granulocytes. These cells are important for innate immunity and antigen presentation.",
-            "children": []
-          },
-          {
-            "name": "Macrophage",
-            "desc": "Mapped macrophage class from ovarian and pancreas panels (derived from 'Macrophages'), as well as 'Macrophage' in breast and colon Xenium panels. Morphologically: large cells with abundant cytoplasm and oval to kidney-shaped nuclei.",
-            "children": []
-          },
-          {
-            "name": "Mast_Cell",
-            "desc": "Mast cells in the breast Xenium panel ('Mast_Cell'), characterised by round nuclei and granule-rich cytoplasm packed with histamine and other mediators.",
-            "children": []
-          },
-          {
-            "name": "Mast Cells",
-            "desc": "Mast cells in the pancreas Xenium addition panel ('Mast Cells'), similar to Mast_Cell but defined in an organ-specific panel.",
-            "children": []
-          },
-          {
-            "name": "CXCL9/10 Cells",
-            "desc": "CXCL9/10 chemokine-high immune cells in the pancreas Xenium dataset, representing activated T cells and/or myeloid cells in inflamed or immune-active tumour regions.",
-            "children": []
+            "name": "Mast cells",
+            "desc": "Granule-rich tissue-resident immune cells involved in allergic and inflammatory responses.",
+            "children": [
+              { "name": "Mast_Cell", "desc": "Breast: mast cells in mammary tissue.", "children": [] },
+              { "name": "Mast Cells", "desc": "Pancreas: mast cells in pancreatic tumour stroma.", "children": [] }
+            ]
           }
         ]
       },
       {
         "name": "Muscle and perivascular lineage (Xenium)",
-        "desc": "Contractile smooth muscle and pericyte-like cells in Xenium panels.",
+        "desc": "Smooth muscle, pericytes and cardiomyocytes in the Xenium panels.",
         "children": [
           {
-            "name": "Smooth_Muscle",
-            "desc": "Mapped smooth muscle cells from colon, ovarian and pancreas Xenium panels (from 'Smooth Muscle Cells' and the mapped 'Smooth_Muscle' class). They have elongated cigar-shaped nuclei and form vascular or mural smooth muscle layers.",
-            "children": []
+            "name": "Smooth muscle cells",
+            "desc": "Smooth muscle cells in vessel walls and organ muscularis.",
+            "children": [
+              { "name": "Smooth_Muscle", "desc": "Colon panel: smooth muscle cells around vessels and muscularis mucosae.", "children": [] },
+              { "name": "Smooth Muscle Cells", "desc": "Ovarian and pancreas panels: smooth muscle cells in ovarian stroma and pancreatic vessels.", "children": [] }
+            ]
           },
           {
-            "name": "SMC/Pericyte",
-            "desc": "Combined smooth muscle cell / pericyte class from heart and lung Xenium panels ('SMC/Pericyte'), representing perivascular contractile cells that wrap around microvessels.",
-            "children": []
+            "name": "Pericytes and SMC/Pericyte",
+            "desc": "Perivascular mural cells around capillaries and venules.",
+            "children": [
+              { "name": "SMC/Pericyte", "desc": "Heart and lung: combined smooth muscle cell / pericyte class around small vessels.", "children": [] },
+              { "name": "Pericytes", "desc": "Ovarian: pericytes stabilising tumour microvessels.", "children": [] }
+            ]
           },
           {
-            "name": "Pericytes",
-            "desc": "Pericytes from the ovarian Xenium panel ('Pericytes'), mural cells that stabilise and regulate capillaries and small venules.",
-            "children": []
-          },
-          {
-            "name": "Cardiomyocyte",
-            "desc": "Cardiac muscle cells from the heart Xenium panel ('Cardiomyocyte'), with abundant eosinophilic cytoplasm and central nuclei, responsible for myocardial contraction.",
-            "children": []
+            "name": "Cardiomyocytes",
+            "desc": "Working myocardial cells in heart tissue.",
+            "children": [
+              { "name": "Cardiomyocyte", "desc": "Heart panel: cardiomyocytes with abundant contractile apparatus.", "children": [] }
+            ]
           }
         ]
       },
       {
-        "name": "Ambiguous / unassigned lineage (Xenium)",
+        "name": "Ambiguous / unassigned (Xenium)",
         "desc": "Xenium classes that explicitly encode uncertainty or incomplete assignment.",
         "children": [
           {
-            "name": "Ambiguous/Low_confidence",
-            "desc": "Cells in kidney and liver Xenium panels labelled 'Ambiguous/Low_confidence', typically representing low-quality profiles or borderline phenotypes between major classes.",
-            "children": []
-          },
-          {
-            "name": "Unassigned",
-            "desc": "Cells in the ovarian Xenium panel that could not be confidently assigned to any cluster at the time of analysis, labelled 'Unassigned'.",
-            "children": []
+            "name": "Low-confidence or ambiguous assignments",
+            "desc": "Cells that could not be confidently assigned to a canonical type.",
+            "children": [
+              { "name": "Ambiguous/Low_confidence", "desc": "Kidney and liver panels: low-confidence cells in ambiguous regions.", "children": [] },
+              { "name": "Unassigned", "desc": "Ovarian panel: unassigned cells without a strong cluster membership.", "children": [] }
+            ]
           }
         ]
       }
