@@ -25,6 +25,11 @@
             --nyu-violet-bg: #f3e5f5; /* Light Violet for WINS box */
             --nyu-violet-text: #5a2d82; /* Darker Violet for WINS box */
             --selection-violet: #57068c; /* Main Violet for highlight */
+            --dna-ink: #35539b;
+            --dna-ink-soft: rgba(53, 83, 155, 0.3);
+            --dna-cyan: #2f8ad2;
+            --dna-teal: #79c2b1;
+            --dna-gold: #f0c14e;
         }
 
         /* --- Custom Highlight Color --- */
@@ -45,12 +50,69 @@
             margin: 0;
             padding: 0;
             font-size: 16px;
+            overflow-x: hidden;
+            position: relative;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .floating-cells-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .floating-cells-column {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: clamp(0px, calc((100vw - 1280px) / 2 + 42px), 220px);
+        }
+        .floating-cells-column.left {
+            left: 0;
+        }
+        .floating-cells-column.right {
+            right: 0;
+        }
+        .floating-cell {
+            position: absolute;
+            width: var(--cell-size);
+            height: var(--cell-size);
+            opacity: var(--cell-opacity);
+        }
+        .floating-cell-float {
+            width: 100%;
+            height: 100%;
+            animation: cellFloat var(--float-duration) ease-in-out infinite;
+            animation-delay: var(--float-delay);
+        }
+        .floating-cell-art {
+            width: 100%;
+            height: 100%;
+            transform-origin: center;
+            animation: cellWobble var(--wobble-duration) ease-in-out infinite,
+                cellPulseGlow var(--pulse-duration) ease-in-out infinite;
+            filter: drop-shadow(0 10px 18px rgba(105, 135, 191, 0.16));
+        }
+        .floating-cell svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+        .floating-cell .cell-stroke {
+            stroke-width: 2.6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .floating-cell .cell-grain {
+            opacity: 0.8;
         }
 
         /* --- Headings and Links --- */
@@ -59,8 +121,39 @@
             font-weight: 600;
         }
         h1 { font-size: 2.5rem; margin-bottom: 0.25rem; }
-        h2 { font-size: 1.8rem; border-bottom: 2px solid var(--light-gray); padding-bottom: 0.5rem; margin-top: 2.5rem; margin-bottom: 1.5rem; }
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--light-gray);
+            padding-bottom: 0.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: visible;
+        }
         h3 { font-size: 1.2rem; margin-bottom: 0.25rem; }
+
+        .section-cat-shadow {
+            position: absolute;
+            bottom: -1px;
+            width: 50px;
+            height: 28px;
+            pointer-events: none;
+            opacity: 0.82;
+            filter: drop-shadow(0 8px 14px rgba(77, 96, 132, 0.08));
+        }
+        .section-cat-shadow svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            display: block;
+        }
+        .section-cat-shadow path {
+            fill: var(--cat-fill, rgba(198, 223, 216, 0.88));
+            stroke: var(--cat-stroke, rgba(132, 157, 196, 0.78));
+            stroke-width: 1.9;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
 
         a { color: var(--secondary-color); text-decoration: none; transition: color 0.2s ease-in-out; }
         a:hover { text-decoration: underline; color: var(--primary-color); }
@@ -70,19 +163,36 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 2rem;
-            padding: 2rem;
-            background-color: #f8f9fa;
-            border-radius: 12px;
+            gap: 2.5rem;
+            padding: 2.4rem 2.5rem;
+            background: linear-gradient(135deg, #fbfdff 0%, #f4f8fc 42%, #eef4fb 100%);
+            border: 1px solid #e3ebf4;
+            border-radius: 20px;
+            box-shadow: 0 24px 60px rgba(21, 42, 75, 0.08);
             margin-bottom: 2rem;
             position: relative;
             overflow: hidden;
+            min-height: 320px;
+            isolation: isolate;
+        }
+        .header-profile::before {
+            content: "";
+            position: absolute;
+            right: 9%;
+            bottom: -50px;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(117, 166, 214, 0.18) 0%, rgba(117, 166, 214, 0) 72%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .header-text { 
-            flex-grow: 1; 
+            flex: 0 1 54%;
+            max-width: 570px;
             position: relative;
-            z-index: 2;
+            z-index: 3;
         }
         
         .header-profile .pronouns { color: #777; font-size: 0.9rem; font-style: italic; }
@@ -95,154 +205,1071 @@
         .cv-button { display: inline-block; background-color: var(--secondary-color); color: #ffffff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 1.5rem; transition: background-color 0.2s ease-in-out; }
         .cv-button:hover { background-color: var(--primary-color); color: #ffffff; text-decoration: none; }
 
-        /* --- Decorative Header Blobs --- */
-        .header-blobs {
+        /* Original three-blob header art intentionally disabled in favor of the DNA motif. */
+
+        /* --- Interactive DNA Header Motif --- */
+        .header-dna {
             position: absolute;
-            top: 0;
-            right: 0;
-            width: 500px;
-            height: 400px;
-            pointer-events: none;
+            left: 62%;
+            right: -640px;
+            top: -58px;
+            bottom: -30px;
             z-index: 1;
+            pointer-events: auto;
         }
-        .header-blobs svg {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .header-dna svg {
             width: 100%;
             height: 100%;
+            overflow: visible;
+            animation: dnaDrift 14s ease-in-out infinite alternate;
         }
-        
-        /* --- [NEW] Blob Animation Setup --- */
-        .header-blobs path {
-            mix-blend-mode: multiply;
-            opacity: 0; /* Start transparent */
-            animation-duration: 1.3s; /* How long the animation takes */
-            animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); /* A fun "bouncy" easing */
-            animation-fill-mode: forwards; /* Keeps the final state of the animation */
+        .dna-guide,
+        .dna-axis,
+        .dna-segment {
+            display: none;
         }
-        .blob-blue { fill: #0691ee; }
-        .blob-pink { fill: #f33b78; }
-        .blob-yellow { fill: #f7ce2d; }
-        
-        /* Apply a specific animation and delay to each blob */
-        #blob-blue {
-            animation-name: slideInBlue;
-            animation-delay: 0.2s;
+        .dna-rung-bond {
+            stroke: rgba(72, 102, 170, 0.2);
+            stroke-width: 1.25;
+            stroke-linecap: round;
+            vector-effect: non-scaling-stroke;
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: bondPulse 1.75s ease-in-out infinite;
         }
-        #blob-pink {
-            animation-name: slideInPink;
-            animation-delay: 0.3s;
+        .dna-rung-half {
+            stroke-width: 4.2;
+            stroke-linecap: round;
+            vector-effect: non-scaling-stroke;
+            transform-box: fill-box;
+            transform-origin: center;
+            animation-duration: var(--rung-duration), var(--rung-color-duration);
+            animation-timing-function: ease-in-out, linear;
+            animation-iteration-count: infinite, infinite;
+            animation-delay: var(--rung-delay), var(--rung-color-delay);
         }
-        #blob-yellow {
-            animation-name: slideInYellow;
-            animation-delay: 0.4s;
+        .dna-rung-half.base-a {
+            animation-name: rungPulse, baseAFlux;
         }
-        
-        /* --- [NEW] Keyframe Animations for Blob Entrance --- */
-        @keyframes slideInBlue {
-            from { opacity: 0; transform: translate(220px, 60px) scale(1.2) rotate(10deg); }
-            to { opacity: 0.75; transform: translate(140px, 60px) scale(1.2) rotate(10deg); }
+        .dna-rung-half.base-t {
+            animation-name: rungPulse, baseTFlux;
         }
-        @keyframes slideInPink {
-            from { opacity: 0; transform: translate(180px, 80px) scale(1.1) rotate(-15deg); }
-            to { opacity: 0.75; transform: translate(80px, 80px) scale(1.2) rotate(-15deg); }
+        .dna-rung-half.base-g {
+            animation-name: rungPulse, baseGFlux;
         }
-        @keyframes slideInYellow {
-            from { opacity: 0; transform: translate(230px, 150px) scale(1.2) rotate(30deg); }
-            to { opacity: 0.75; transform: translate(150px, 150px) scale(1.4) rotate(30deg); }
+        .dna-rung-half.base-c {
+            animation-name: rungPulse, baseCFlux;
+        }
+        .dna-node {
+            pointer-events: all;
+            cursor: pointer;
+        }
+        .dna-node.is-back .node-float {
+            opacity: 0.64;
+        }
+        .dna-node.is-front .node-float {
+            opacity: 0.96;
+        }
+        .node-float {
+            transform-origin: center;
+            transform-box: fill-box;
+            animation: nodeFloat var(--node-drift) ease-in-out infinite;
+            animation-delay: var(--node-delay);
+        }
+        .node-body {
+            transform-origin: center;
+            transform-box: fill-box;
+            transition: transform 0.28s ease, filter 0.28s ease, opacity 0.28s ease;
+            animation: nodeBreathe var(--node-breathe) ease-in-out infinite;
+            animation-delay: var(--node-delay);
+        }
+        .node-hit {
+            fill: rgba(255, 255, 255, 0.001);
+        }
+        .node-halo {
+            fill: var(--node-glow);
+            opacity: 0;
+            transform-origin: center;
+            transform-box: fill-box;
+            transition: transform 0.28s ease, opacity 0.28s ease;
+        }
+        .node-ring {
+            fill: none;
+            stroke: var(--node-accent);
+            stroke-width: 0.9;
+            opacity: 0.08;
+            transition: opacity 0.28s ease;
+        }
+        .node-center {
+            fill: var(--node-accent);
+            opacity: 0.92;
+        }
+        .node-branch {
+            stroke: var(--node-accent);
+            stroke-width: 1.05;
+            stroke-linecap: round;
+            opacity: 0.62;
+            transition: opacity 0.28s ease, stroke-width 0.28s ease;
+        }
+        .node-dot {
+            fill: var(--node-accent);
+        }
+        .node-orbit {
+            transform-origin: center;
+            transform-box: fill-box;
+        }
+        .dna-node:hover .node-body {
+            transform: scale(1.14) rotate(var(--hover-tilt));
+            filter: drop-shadow(0 0 12px var(--node-glow-strong));
+        }
+        .dna-node:hover .node-orbit {
+            animation: nodeSpin var(--node-spin) linear infinite;
+        }
+        .dna-node:hover .node-halo {
+            opacity: 0.4;
+            transform: scale(1.22);
+        }
+        .dna-node:hover .node-ring,
+        .dna-node:hover .node-branch {
+            opacity: 1;
+        }
+        .dna-node:hover .node-branch {
+            stroke-width: 1.3;
         }
 
-        /* --- Navigation Bar --- */
-        nav { text-align: center; padding: 0.5rem 0; margin-bottom: 2rem; background-color: rgba(255, 255, 255, 0.9); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(5px); }
-        nav a { margin: 0 15px; font-weight: 500; color: var(--primary-color); }
-        
-        /* --- General Item Styling (Education, Experience) --- */
-        .item { margin-bottom: 1.5rem; }
-        .item-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; }
-        .item-header .title { font-weight: bold; }
-        .item-header .title a { color: inherit; text-decoration: none; }
-        .item-header .title a:hover { color: var(--secondary-color); text-decoration: underline;}
-        .item-header .date { color: #666; font-style: italic; white-space: nowrap; margin-left: 1rem; }
-        .item .subtitle { font-style: italic; color: #555; margin-top: -5px; }
-        .item ul { list-style-type: disc; padding-left: 20px; margin-top: 0.5rem; }
-        .item ul li { margin-bottom: 0.5rem; }
-        
-        /* --- Publication Specific Styling --- */
-        .publication-links { margin: 0.25rem 0 0.5rem 0; }
-        .publication-links a { font-weight: bold; font-size: 0.9em; margin-right: 1rem; }
+        @keyframes dnaDrift {
+            from { transform: translate3d(0, 5px, 0) rotate(-1deg); }
+            to { transform: translate3d(0, -5px, 0) rotate(1deg); }
+        }
+        @keyframes rungPulse {
+            0%, 100% { opacity: 0.42; transform: scale(1); }
+            50% { opacity: 0.98; transform: scale(1.04); }
+        }
+        @keyframes bondPulse {
+            0%, 100% { opacity: 0.18; }
+            50% { opacity: 0.42; }
+        }
+        @keyframes baseAFlux {
+            0%, 100% { stroke: #f44336; }
+            50% { stroke: #ff7267; }
+        }
+        @keyframes baseTFlux {
+            0%, 100% { stroke: #f4c430; }
+            50% { stroke: #ffe06b; }
+        }
+        @keyframes baseGFlux {
+            0%, 100% { stroke: #4f6fd6; }
+            50% { stroke: #7f9cff; }
+        }
+        @keyframes baseCFlux {
+            0%, 100% { stroke: #4caf50; }
+            50% { stroke: #79d57b; }
+        }
+        @keyframes nodeFloat {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(var(--float-x), var(--float-y)); }
+        }
+        @keyframes nodeBreathe {
+            0%, 100% { opacity: 0.86; }
+            50% { opacity: 1; }
+        }
+        @keyframes nodeSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes cellFloat {
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(var(--float-x), var(--float-y), 0); }
+        }
+        @keyframes cellWobble {
+            0%, 100% { transform: rotate(var(--cell-rot-start)); }
+            50% { transform: rotate(var(--cell-rot-end)); }
+        }
+        @keyframes cellPulseGlow {
+            0%, 100% { opacity: 0.86; }
+            50% { opacity: 1; }
+        }
 
-        /* --- Education Section with Logos --- */
-        #education .item { display: flex; align-items: flex-start; gap: 20px; }
-        .school-logo { width: 50px; height: 50px; border-radius: 8px; flex-shrink: 0; margin-top: 5px; }
-        .education-content { flex-grow: 1; }
+        .hero-note {
+            max-width: 520px;
+            margin: 0.8rem 0 0.95rem;
+            color: #55677f;
+            font-size: 1.03rem;
+        }
+        .hero-pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin-top: 1rem;
+        }
+        .hero-pill,
+        .project-tag,
+        .status-chip,
+        .project-links a,
+        .publication-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.38rem 0.76rem;
+            border-radius: 999px;
+            background: #edf4fb;
+            border: 1px solid #d6e4f2;
+            color: #44617f;
+            font-size: 0.92rem;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .hero-pill {
+            background: rgba(255, 255, 255, 0.72);
+            border-color: #dbe8f4;
+        }
+        .project-links a:hover,
+        .publication-links a:hover {
+            text-decoration: none;
+            background: #e6f0fb;
+            color: #36506b;
+        }
 
-        /* --- Highlight Boxes (WINS & Miscellaneous) --- */
-        .wins-box { background-color: var(--nyu-violet-bg); border-left: 5px solid var(--nyu-violet-text); padding: 1.5rem; margin: 1rem 0; border-radius: 5px; }
-        .wins-box h3 { color: var(--nyu-violet-text); margin-top: 0; }
-        .wins-box p { color: #444; }
-        .wins-box a { color: var(--nyu-violet-text); font-weight: bold; }
-        #misc h3 { display: flex; align-items: center; gap: 10px; }
+        /* --- Navigation & Academic Sections --- */
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+            padding: 0.85rem 0;
+            margin-bottom: 2.3rem;
+            background-color: rgba(255, 255, 255, 0.88);
+            border-top: 1px solid #e2ebf4;
+            border-bottom: 1px solid #e2ebf4;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+        nav a {
+            padding: 0.42rem 0.86rem;
+            border-radius: 999px;
+            font-weight: 600;
+            color: #3a4d66;
+        }
+        nav a:hover {
+            text-decoration: none;
+            background: #eef4fb;
+            color: var(--primary-color);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 2.8rem;
+        }
+        main section {
+            scroll-margin-top: 92px;
+        }
+        .section-lead {
+            margin: -0.55rem 0 1.3rem;
+            max-width: 1120px;
+            color: #60728a;
+            font-size: 1.05rem;
+        }
+        #about .section-lead {
+            max-width: 100%;
+        }
+        .panel {
+            background: #ffffff;
+            border: 1px solid #dce7f3;
+            border-radius: 20px;
+            padding: 1.35rem 1.45rem;
+            box-shadow: 0 18px 40px rgba(28, 56, 93, 0.06);
+        }
+        .about-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.95fr);
+            gap: 1.3rem;
+        }
+        .about-layout p {
+            margin: 0;
+            color: #52647c;
+        }
+        .about-panel p {
+            margin: 0;
+            color: #52647c;
+        }
+        .about-panel p + p {
+            margin-top: 1rem;
+        }
+        .about-focus-inline {
+            margin-top: 1.2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5edf7;
+        }
+        .about-focus-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: #2f4258;
+            font-weight: 700;
+        }
+        .focus-panel h3,
+        .service-card h3,
+        .education-card h3,
+        .misc-card h3,
+        .publication h3,
+        .project-card h3 {
+            margin-top: 0;
+        }
+        .focus-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem;
+            display: grid;
+            gap: 0.85rem;
+        }
+        .focus-list li {
+            color: #55687f;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .focus-list li::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0.7rem;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+        }
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+        }
+
+        .highlights-list,
+        .project-grid,
+        .publication-list,
+        .journey-list,
+        .education-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        .highlight-bullets {
+            margin: 0;
+            padding-left: 1.35rem;
+            color: #455a74;
+        }
+        .highlight-bullets li {
+            margin-bottom: 0.62rem;
+            padding-left: 0.2rem;
+        }
+        .highlight-bullets strong {
+            color: #2f4258;
+        }
+        .highlights-archive {
+            margin-top: 0.95rem;
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            box-shadow: none;
+        }
+        .highlights-archive summary {
+            cursor: pointer;
+            list-style: none;
+            font-weight: 700;
+            color: #5c7da0;
+            margin-bottom: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+            padding: 0;
+        }
+        .highlights-archive summary::-webkit-details-marker {
+            display: none;
+        }
+        .highlights-archive[open] summary {
+            margin-bottom: 0.7rem;
+        }
+        .highlights-archive .highlight-bullets {
+            padding-left: 1.15rem;
+            margin-top: 0;
+        }
+        .archive-label-open {
+            display: none;
+        }
+        .highlights-archive[open] .archive-label-closed {
+            display: none;
+        }
+        .highlights-archive[open] .archive-label-open {
+            display: inline;
+        }
+        .highlight-item,
+        .publication,
+        .journey-card,
+        .education-card,
+        .service-card {
+            background: #ffffff;
+            border: 1px solid #dbe6f2;
+            border-radius: 18px;
+            box-shadow: 0 16px 36px rgba(28, 56, 93, 0.05);
+        }
+        .highlight-item {
+            overflow: hidden;
+        }
+        .highlight-item summary,
+        .journey-card summary {
+            list-style: none;
+            cursor: pointer;
+        }
+        .highlight-item summary::-webkit-details-marker,
+        .journey-card summary::-webkit-details-marker {
+            display: none;
+        }
+        .highlight-item summary {
+            display: grid;
+            grid-template-columns: 106px 1fr;
+            gap: 1rem;
+            align-items: start;
+            padding: 1rem 1.2rem;
+            font-weight: 600;
+            color: #2f4258;
+        }
+        .highlight-item[open] summary {
+            background: linear-gradient(180deg, #fbfdff 0%, #f5f9fd 100%);
+        }
+        .highlight-date {
+            color: #7487a0;
+            font-size: 0.86rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+        .highlight-body {
+            padding: 0 1.2rem 1.05rem calc(106px + 2.2rem);
+            color: #5a6c84;
+        }
+        .highlight-body p {
+            margin: 0;
+        }
+
+        .project-card {
+            display: grid;
+            grid-template-columns: minmax(290px, 34%) 1fr;
+            gap: 1.1rem;
+            padding: 1rem;
+            background: #ffffff;
+            border: 1px solid #dbe7f3;
+            border-radius: 18px;
+            box-shadow: 0 14px 30px rgba(28, 56, 93, 0.05);
+        }
+        .project-visual {
+            min-height: 158px;
+            aspect-ratio: 2.22 / 1;
+            border-radius: 16px;
+            background: linear-gradient(140deg, #f5f9ff 0%, #edf4fb 52%, #f8fbff 100%);
+            border: 1px solid #d9e6f3;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-visual img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        .project-visual.has-image::before {
+            display: none;
+        }
+        .project-visual.has-image .project-visual-inner {
+            justify-content: flex-end;
+            align-items: flex-start;
+            text-align: left;
+            color: #ffffff;
+            background: linear-gradient(180deg, rgba(16, 31, 53, 0) 24%, rgba(16, 31, 53, 0.72) 100%);
+        }
+        .project-visual.has-image .project-visual-inner span {
+            color: rgba(255, 255, 255, 0.84);
+        }
+        .project-visual::before {
+            content: "";
+            position: absolute;
+            inset: 18px;
+            border-radius: 16px;
+            border: 1.5px dashed #9fbde0;
+            background:
+                linear-gradient(135deg, rgba(91, 142, 196, 0.12) 0%, rgba(91, 142, 196, 0) 58%),
+                radial-gradient(circle at top right, rgba(116, 194, 176, 0.14) 0%, rgba(116, 194, 176, 0) 52%);
+        }
+        .project-visual-inner {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 1.5rem;
+            color: #57708d;
+            font-weight: 700;
+        }
+        .project-visual-inner span {
+            display: block;
+            margin-top: 0.35rem;
+            color: #8295ac;
+            font-size: 0.84rem;
+            font-weight: 500;
+        }
+        .project-meta {
+            margin-bottom: 0.3rem;
+            color: #7a8da6;
+            font-size: 0.88rem;
+        }
+        .project-card h3 {
+            margin-bottom: 0.38rem;
+            font-size: 1.28rem;
+            line-height: 1.34;
+        }
+        .project-authors {
+            margin: 0.08rem 0 0.55rem;
+            color: #5a6d85;
+            line-height: 1.55;
+            font-size: 0.95rem;
+        }
+        .project-venue {
+            color: #7a8ca3;
+            margin-bottom: 0.55rem;
+            font-size: 0.92rem;
+        }
+        .project-card p {
+            margin: 0 0 0.7rem;
+            color: #55677f;
+        }
+        .project-points {
+            margin: 0 0 1rem;
+            padding-left: 1.15rem;
+            color: #55677f;
+        }
+        .project-points li {
+            margin-bottom: 0.45rem;
+        }
+        .project-links,
+        .publication-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin-top: 0.55rem;
+        }
+        .project-tag {
+            margin-bottom: 0.8rem;
+        }
+
+        .publication {
+            padding: 1.15rem 1.2rem;
+        }
+        .publication h3 {
+            margin-bottom: 0.35rem;
+            font-size: 1.18rem;
+        }
+        .publication .authors {
+            color: #5a6d85;
+        }
+        .publication .venue {
+            margin-top: 0.4rem;
+            color: #7a8ca3;
+        }
+
+        .education-grid {
+            position: relative;
+            gap: 1.45rem;
+            padding-left: 0.35rem;
+        }
+        .education-grid::before {
+            content: "";
+            position: absolute;
+            left: 1.12rem;
+            top: 0.35rem;
+            bottom: 0.6rem;
+            width: 2px;
+            background: linear-gradient(180deg, #cfe0f2 0%, #dbe8f5 100%);
+        }
+        .education-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0 0 0 1.85rem;
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+            position: relative;
+        }
+        .education-card::before {
+            content: "";
+            position: absolute;
+            left: 0.62rem;
+            top: 0.85rem;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 3px solid #84a7d6;
+            box-shadow: 0 0 0 4px #f3f8fd;
+        }
+        .school-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            margin-top: 0;
+            border: 1px solid #dbe6f2;
+            background: #ffffff;
+        }
+        .education-content {
+            flex-grow: 1;
+            padding-bottom: 0.15rem;
+        }
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.4rem 1rem;
+        }
+        .item-header .title {
+            font-weight: 700;
+        }
+        .item-header .title a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .item-header .title a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+        .item-header .date {
+            color: #6f8199;
+            font-style: italic;
+            white-space: nowrap;
+        }
+        .item .subtitle,
+        .education-meta {
+            color: #6f8199;
+            font-style: italic;
+            margin: 0.25rem 0 0.65rem;
+        }
+        .education-note {
+            margin: 0;
+            color: #55677f;
+            font-size: 0.98rem;
+        }
+
+        .journey-card {
+            overflow: hidden;
+        }
+        .journey-card summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem 1.2rem;
+            font-weight: 600;
+            color: #2f4258;
+        }
+        .journey-card[open] summary {
+            background: #f8fbff;
+            border-bottom: 1px solid #e8eff7;
+        }
+        .journey-dates {
+            color: #7a8da4;
+            font-size: 0.93rem;
+            white-space: nowrap;
+        }
+        .journey-body {
+            padding: 1rem 1.2rem 1.15rem;
+            color: #55677f;
+        }
+        .journey-body p {
+            margin: 0 0 0.75rem;
+        }
+        .journey-body ul {
+            margin: 0;
+            padding-left: 1.15rem;
+        }
+        .journey-body li {
+            margin-bottom: 0.45rem;
+        }
+
+        .service-card {
+            padding: 1.25rem 1.3rem;
+            background: var(--nyu-violet-bg);
+            border-left: 5px solid var(--nyu-violet-text);
+            border-color: #dfcbea;
+        }
+        .service-card h3 {
+            color: var(--nyu-violet-text);
+        }
+        .service-card p {
+            margin: 0.55rem 0 0;
+            color: #444;
+        }
+        .service-card a {
+            color: var(--nyu-violet-text);
+            font-weight: 700;
+        }
+        .misc-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+        }
+        .misc-card {
+            background: #ffffff;
+            border: 1px solid #dbe6f2;
+            border-radius: 18px;
+            padding: 1rem;
+            box-shadow: 0 16px 36px rgba(28, 56, 93, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 0.95rem;
+        }
+        .misc-card-media {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1.14 / 1;
+            border-radius: 14px;
+            overflow: hidden;
+            background: linear-gradient(140deg, #f5f9ff 0%, #edf4fb 100%);
+            border: 1px solid #d9e6f3;
+        }
+        .misc-card-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .misc-card h3 {
+            margin-bottom: 0;
+        }
+        .misc-card p {
+            margin: 0;
+            color: #55677f;
+        }
 
         /* --- Footer --- */
-        footer { text-align: center; margin-top: 3rem; padding: 1.5rem; border-top: 1px solid var(--border-color); color: #888; }
-        footer p { margin: 0; }
-        .footer-note { font-size: 0.85rem; color: #aaa; margin-top: 0.75rem; font-style: italic; }
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1.3rem 0 0;
+            border-top: 1px solid var(--border-color);
+            color: #8799af;
+        }
+        footer p {
+            margin: 0;
+        }
+        .footer-note {
+            font-size: 0.92rem;
+            color: #95a7bb;
+            margin-top: 0.35rem;
+            font-style: normal;
+        }
         
         /* --- Profile Photo Styling --- */
         .header-photo {
             position: relative; 
             flex-shrink: 0;
-            z-index: 2;
+            z-index: 3;
+            width: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
         .header-photo img {
-            width: 150px;
-            height: 150px;
+            width: 260px;
+            height: 260px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--background-color);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 4px solid rgba(255, 255, 255, 0.96);
+            box-shadow: 0 14px 30px rgba(40, 60, 104, 0.18);
         }
         
         /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            .container { padding: 1rem; }
-            h1 { font-size: 2rem; }
-            h2 { font-size: 1.5rem; }
+        @media (max-width: 1180px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .header-profile {
+                gap: 1.8rem;
+                padding: 2.05rem;
+                min-height: 300px;
+            }
+            .header-text {
+                flex-basis: 50%;
+                max-width: 500px;
+            }
+            .header-dna {
+                left: 54%;
+                right: -690px;
+                top: -36px;
+                bottom: -92px;
+            }
+            .header-photo {
+                width: 160px;
+            }
+            .header-photo img {
+                width: 228px;
+                height: 228px;
+            }
+            .project-card {
+                grid-template-columns: minmax(250px, 36%) 1fr;
+                gap: 1rem;
+            }
+            .project-card h3 {
+                font-size: 1.2rem;
+            }
+            .misc-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
 
-            .header-profile { flex-direction: column-reverse; text-align: center; }
-            .header-text { width: 100%; }
-            .contact-links { justify-content: center; }
-            
-            .header-blobs {
+        @media (max-width: 960px) {
+            .container {
+                padding: 1.2rem;
+            }
+            nav {
+                justify-content: flex-start;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding: 0.8rem 0.25rem;
+                gap: 0.55rem;
+                scrollbar-width: none;
+            }
+            nav::-webkit-scrollbar {
                 display: none;
             }
-            
-            nav { position: static; }
-            nav a { display: block; margin: 10px 0; }
+            nav a {
+                flex: 0 0 auto;
+                display: inline-flex;
+            }
+            main {
+                gap: 2.15rem;
+            }
+            .header-profile {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.35rem;
+                padding: 1.7rem;
+                min-height: auto;
+            }
+            .header-profile::before {
+                right: -48px;
+                bottom: -92px;
+                width: 240px;
+                height: 240px;
+            }
+            .header-text {
+                order: 1;
+                width: 100%;
+                max-width: none;
+                flex: 1 1 auto;
+            }
+            .header-photo {
+                order: 2;
+                width: 100%;
+                justify-content: center;
+            }
+            .header-photo img {
+                width: 204px;
+                height: 204px;
+            }
+            .header-dna {
+                order: 3;
+                position: relative;
+                left: auto;
+                right: auto;
+                top: auto;
+                bottom: auto;
+                width: calc(100% + 4.25rem);
+                height: 230px;
+                margin: -0.15rem -2.1rem -0.85rem -0.8rem;
+            }
+            .contact-links {
+                gap: 0.75rem 1rem;
+            }
+            .project-card,
+            .misc-grid {
+                grid-template-columns: 1fr;
+            }
+            .project-visual {
+                min-height: 210px;
+            }
+            .journey-card summary,
+            .item-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .education-grid::before {
+                left: 1rem;
+            }
+            .education-card {
+                padding-left: 1.55rem;
+            }
+            .education-card::before {
+                left: 0.5rem;
+            }
+            .item-header .date {
+                margin-left: 0;
+                margin-top: 0.15rem;
+            }
+        }
 
-            .item-header { flex-direction: column; align-items: flex-start; }
-            .item-header .date { margin-left: 0; margin-top: 0.25rem; }
+        @media (max-width: 640px) {
+            body {
+                font-size: 15px;
+            }
+            .container {
+                padding: 0.9rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+                margin-top: 2rem;
+                margin-bottom: 1.15rem;
+            }
+            .header-profile {
+                padding: 1.2rem;
+                gap: 1rem;
+                border-radius: 18px;
+            }
+            .header-profile::before {
+                display: none;
+            }
+            .hero-note {
+                margin-top: 0.6rem;
+                font-size: 0.98rem;
+            }
+            .contact-links {
+                gap: 0.65rem 0.95rem;
+            }
+            .cv-button {
+                display: block;
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+            }
+            .header-photo img {
+                width: 176px;
+                height: 176px;
+            }
+            .header-dna {
+                display: none;
+            }
+            nav {
+                position: static;
+                margin-bottom: 1.55rem;
+                border-radius: 14px;
+            }
+            main {
+                gap: 1.75rem;
+            }
+            .section-lead {
+                margin-bottom: 1rem;
+                font-size: 1rem;
+            }
+            .panel,
+            .project-card,
+            .service-card,
+            .misc-card {
+                padding: 1rem;
+            }
+            .highlights-archive {
+                padding: 0;
+            }
+            .highlight-item summary {
+                grid-template-columns: 1fr;
+                gap: 0.45rem;
+                padding: 0.95rem 1rem;
+            }
+            .highlight-body {
+                padding: 0 1rem 1rem;
+            }
+            .project-card h3 {
+                font-size: 1.1rem;
+            }
+            .project-links,
+            .publication-links,
+            .pill-row {
+                gap: 0.45rem;
+            }
+            .hero-pill,
+            .project-tag,
+            .status-chip,
+            .project-links a,
+            .publication-links a {
+                font-size: 0.85rem;
+                padding: 0.34rem 0.68rem;
+            }
+            .project-visual {
+                min-height: 156px;
+                aspect-ratio: 1.95 / 1;
+            }
+            .education-grid {
+                gap: 1.15rem;
+                padding-left: 0.1rem;
+            }
+            .education-grid::before {
+                left: 0.88rem;
+            }
+            .education-card {
+                padding: 0 0 0 1.35rem;
+                gap: 0.8rem;
+            }
+            .education-card::before {
+                left: 0.34rem;
+                top: 0.72rem;
+                width: 10px;
+                height: 10px;
+            }
+            .school-logo {
+                width: 44px;
+                height: 44px;
+            }
+            .item-header .date {
+                white-space: normal;
+            }
+            .misc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 1440px) {
+            .floating-cells-layer {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!--
+    <div class="floating-cells-layer" aria-hidden="true">
+        <div class="floating-cells-column left" id="floating-cells-left"></div>
+        <div class="floating-cells-column right" id="floating-cells-right"></div>
+    </div>
+    -->
+
     <div class="container">
 
         <header class="header-profile">
-            <div class="header-blobs" aria-hidden="true">
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <path id="blob-yellow" class="blob-yellow" d="M44.7,-48.9C57.3,-34.6,66.5,-17.3,68.8,2.3C71.1,21.9,66.5,43.8,52.8,55.5C39.1,67.2,16.3,68.7,-5.7,69.5C-27.7,70.3,-54.6,70.4,-67.5,58.3C-80.4,46.2,-79.3,22.1,-73.4,2.5C-67.5,-17,-56.7,-34.1,-43.3,-48.1C-29.9,-62.1,-14.9,-73.1,2.8,-75.8C20.5,-78.5,41,-73.2,44.7,-48.9Z" />
-                    <path id="blob-pink" class="blob-pink" d="M53.1,-54.9C68.9,-43.3,82,-28.3,84.4,-11.5C86.8,5.4,78.5,24.1,66.1,38.2C53.7,52.3,37.2,61.8,19.7,68.1C2.3,74.3,-16,77.3,-32.1,71.1C-48.2,64.9,-62.1,49.5,-70.3,32C-78.5,14.5,-81,-5.1,-75.4,-21.9C-69.8,-38.7,-56.1,-52.7,-40.5,-63.3C-24.9,-73.9,-7.4,-81.1,9.8,-82.1C27,-83.1,41.4,-70.9,53.1,-54.9Z" />
-                    <path id="blob-blue" class="blob-blue" d="M52.9,-61.4C69.4,-51.7,84.4,-38.8,88.3,-22.9C92.2,-7,85,11.9,75.1,27.1C65.2,42.2,52.5,53.6,38.1,62.7C23.7,71.8,7.6,78.6,-9.3,79.1C-26.2,79.7,-44,73.9,-56.9,62.8C-69.8,51.7,-77.8,35.3,-79.8,18.3C-81.8,1.3,-77.9,-16.2,-67.9,-30.7C-57.9,-45.2,-41.8,-56.6,-26.3,-65.4C-10.8,-74.1,-6,-80.2,1.3,-82.3C8.6,-84.5,23.3,-83,36.4,-76.3C49.5,-69.6,52.9,-61.4,52.9,-61.4Z" />
-                </svg>
-            </div>
+            <!-- Original three-color blob header art commented out for the DNA motif. -->
             
             <div class="header-text">
                 <h1>Yinuo Xu</h1>
                 <div class="pronouns">She/Her</div>
-                <div class="bio">Tech Enthusiast | M.S. Student at University of Pennsylvania</div>
+                <div class="bio">Incoming Ph.D. Student in Computer and Information Science at Penn</div>
                 <span>Email: <b>xuyinuo@cis.upenn.edu</b></span>
                 <div class="contact-links">
                     <a href="https://github.com/YinoXu" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -250,194 +1277,929 @@
                     <a href="https://www.linkedin.com/in/yinuo-xu-430b0b203/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                     <a href="https://www.kaggle.com/yinoxu" target="_blank" rel="noopener noreferrer">Kaggle</a>
                 </div>
-                <a href="files/Yinuo-Xu.pdf" class="cv-button" target="_blank">Download CV</a>
+                <a href="files/Yinuo_Xu.pdf" class="cv-button" target="_blank">Download CV</a>
+            </div>
+            <div class="header-dna" aria-hidden="true">
+                <svg id="dna-hero" viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="dna-axis-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#f0c14e"></stop>
+                            <stop offset="45%" stop-color="#2f8ad2"></stop>
+                            <stop offset="100%" stop-color="#79c2b1"></stop>
+                        </linearGradient>
+                        <filter id="dna-soft-glow" x="-30%" y="-30%" width="160%" height="160%">
+                            <feGaussianBlur stdDeviation="3.5" result="blur"></feGaussianBlur>
+                            <feMerge>
+                                <feMergeNode in="blur"></feMergeNode>
+                                <feMergeNode in="SourceGraphic"></feMergeNode>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <path id="dna-guide" class="dna-guide"></path>
+                    <path id="dna-axis" class="dna-axis"></path>
+                    <g id="dna-hover-layer">
+                        <g id="dna-scene">
+                            <g id="dna-rungs-back"></g>
+                            <g id="dna-strands-back"></g>
+                            <g id="dna-nodes-back"></g>
+                            <g id="dna-rungs-front"></g>
+                            <g id="dna-strands-front"></g>
+                            <g id="dna-nodes-front"></g>
+                        </g>
+                    </g>
+                </svg>
             </div>
             <div class="header-photo">
-                <img src="images/me.jpg" alt="Photo of Yinuo Xu">
+                <img src="images/me.JPG" alt="Photo of Yinuo Xu">
             </div>
         </header>
 
         <nav>
             <a href="#about">About</a>
-            <a href="#experience">Experience</a>
-            <a href="#publications">Publications</a>
-            <a href="#community">Community</a>
-            <a href="#misc">Miscellaneous</a>
+            <a href="#education">Education</a>
+            <a href="#highlights">Recent Highlights</a>
+            <a href="#projects">Research Projects</a>
+            <a href="#service">Service</a>
+            <a href="#misc">Misc</a>
+
         </nav>
         
         <main>
             <section id="about">
-                <h2>About Me</h2>
-                <p>
-                    I am a second-year Master’s student at the University of Pennsylvania, specializing in Artificial Intelligence. My research is centered on advancing AI for medical applications, with a particular focus on pathology, to help clinicians improve <b>diagnostic precision</b>. My work involves computer vision for medical image segmentation and classification. I am passionate about developing AI systems that are not only high-performing but also <b>interpretable, robust, and ethically</b> aligned for meaningful real-world impact. 
-                </p>
-            </section>
-            
-            <section id="education">
-                <h2>Education</h2>
-                <div class="item">
-                    <img src="images/upenn.jpeg" alt="University of Pennsylvania Logo" class="school-logo">
-                    <div class="education-content">
-                        <div class="item-header">
-                            <span class="title"><a href="https://www.cis.upenn.edu/" target="_blank" rel="noopener noreferrer">University of Pennsylvania</a></span>
-                            <span class="date">Aug 2024 – May 2026</span>
+                <h2>About</h2>
+                    <p>I am an incoming Ph.D. student in CIS at the University of Pennsylvania, where I will be advised by <a href="https://www.med.upenn.edu/apps/faculty/index.php/g275/p8939931" target="_blank" rel="noopener noreferrer">Prof. Qi Long</a>. During my M.S. at Penn in <a href="https://www.zhihuang.ai/" target="_blank" rel="noopener noreferrer">Prof. Zhi Huang</a>'s lab, my research focused on computational pathology and machine learning methods for cell-level analysis in histopathology and spatial imaging data.</p>
+                    I am interested in <strong>foundation models</strong> that align spatial transcriptomics, spatial proteomics, and biomedical semantics, and in world models that can simulate cell states, microenvironmental perturbations, and gene or protein dynamics.</p>
+                    
+                    <div class="about-focus-inline">
+                        <span class="about-focus-label">Current Focus</span>
+                        <div class="pill-row">
+                            <span class="hero-pill">Cell-centric multimodal foundation models</span>
+                            <span class="hero-pill">Cell-level world models</span>
+                            <span class="hero-pill">Xenium / Visium / CosMX supervision</span>
+                            <span class="hero-pill">Computational pathology</span>
                         </div>
-                        <div class="subtitle">M.S. in Computer and Information Science, AI Concentration</div>
-                        <ul>
-                            <li>GPA: 4.0/4.0</li>
-                            <li>Relevant Coursework: Machine Learning, NLP, Deep Learning, Bayesian Optimization</li>
-                        </ul>
                     </div>
-                </div>
-                <div class="item">
-                    <img src="images/nyu.jpeg" alt="New York University Logo" class="school-logo">
-                    <div class="education-content">
-                        <div class="item-header">
-                            <span class="title"><a href="https://cims.nyu.edu/dynamic/" target="_blank" rel="noopener noreferrer">New York University</a></span>
-                            <span class="date">Feb 2021 – May 2024</span>
-                        </div>
-                        <div class="subtitle">B.A. in Computer Science and Mathematics, Courant Institute of Mathematical Sciences</div>
-                         <ul>
-                            <li>GPA: 3.88/4.0, Cum Laude</li>
-                            <li>Honors: University Honors Scholar, Dean’s List</li>
-                            <li>Relevant Coursework: Algorithms, Machine Learning, Computer Graphics, Computer Systems Organization, Computer Simulation, Data Management and Analysis, Parallel Computing, Numerical Analysis, Real Analysis, Ordinary Differential Equations</li>
-                        </ul>
-                    </div>
-                </div>
             </section>
 
-            <section id="experience">
-                <h2>Experience</h2>
-                <h3>Research</h3>
-                <div class="item">
-                    <div class="item-header">
-                        <span class="title">Research Assistant, Perelman School of Medicine</span>
-                        <span class="date">Feb 2025 – Present</span>
-                    </div>
-                    <div class="subtitle">University of Pennsylvania | Advisor: Prof. Zhi Huang</div>
-                    <ul>
-                        <li>Developed NuClass, a ViT-based vision–language model for zero-shot nuclei classification using ontology-guided prompts.</li>
-                    </ul>
-                </div>
-                 <div class="item">
-                    <div class="item-header">
-                        <span class="title">Research Assistant</span>
-                         <span class="date">Aug 2024 – Present</span>
-                    </div>
-                    <div class="subtitle">University of Pennsylvania | Advisor: Prof. Dan Roth</div>
-                     <ul>
-                        <li>Co-developed DeepTraceReward, a reward model benchmark for video fakeness that surpassed GPT-4.1 by 20.5% on fake clue detection.</li>
-                    </ul>
-                </div>
-                <div class="item">
-                    <div class="item-header">
-                        <span class="title">Research Assistant</span>
-                         <span class="date">Summer 2024</span>
-                    </div>
-                    <div class="subtitle">Microsoft Research NYC</div>
-                     <ul>
-                        <li>Utilized machine learning and data analytics to guide CitiBike station deployment decisions in the SoHo neighborhood of New York City.</li>
-                    </ul>
-                </div>
-                <div class="item">
-                    <div class="item-header">
-                        <span class="title">Research Assistant</span>
-                         <span class="date">Summer 2023</span>
-                    </div>
-                    <div class="subtitle">Capital Normal University</div>
-                     <ul>
-                        <li>Improved segmentation of small abdominal organs, including the adrenal glands, by fine-tuning MedSAM on 8,000 radiology images.</li>
-                    </ul>
-                </div>
-
-                <h3>Teaching</h3>
-                <div class="item">
-                    <div class="item-header">
-                        <span class="title">Teaching Assistant</span>
-                        <span class="date">Feb 2022 – May 2024</span>
-                    </div>
-                    <div class="subtitle">New York University</div>
-                    <ul>
-                        <li>Courses: Data Structures (Prof. Joanna Klukowska) & Calculus I (Prof. Silvia Espinosa Gútiez)</li>
-                        <li>Led review sessions, designed quizzes, graded assignments, and provided feedback to over 100 students per semester.</li>
-                    </ul>
-                </div>
-            </section>
-
-            <section id="publications">
-                <h2>Publications</h2>
-                <div class="item publication">
-                    <h3>NuClass: An ontology-driven vision–language foundation model for zero-shot nuclei classification</h3>
-                    <div class="publication-links">
-                        <a href="files/cvpr25_poster_Yinuo_ZH_edited.pdf" target="_blank" rel="noopener noreferrer">[Poster]</a>
-                    </div>
-                    <div class="authors">
-                        <strong>Yinuo Xu</strong>, Jina Kim, Zijie Zhao, Zhi Huang
-                    </div>
-                    <div class="venue">
-                        CVPR 2025, MMFM-BIOMED Workshop
-                    </div>
-                </div>
-                <div class="item publication">
-                    <h3>Learning Human-Perceived Fakeness in AI-Generated Videos via Multimodal LLMs</h3>
-                    <div class="publication-links">
-                        <a href="https://arxiv.org/abs/2509.22646" target="_blank" rel="noopener noreferrer">[Preprint]</a>
-                    </div>
-                    <div class="authors">
-                        Xingyu Fu, Siyi Liu, <strong>Yinuo Xu</strong> , Pan Lu, Guangqiuse Hu, Tianbo Yang, Taran Anantasagar, Christopher Shen, Yikai Mao, Yuanzhe Liu, Keyush Shah, Chung Un Lee, Yejin Choi, James Zou, Dan Roth, Chris Callison-Burch
-                    </div>
-                    <div class="venue">
-                        Under Review at ICLR 2025
-                    </div>
-                </div>
-                <div class="item publication">
-                    <h3>A co-evolving agentic AI system for medical imaging analysis</h3>
-                    <div class="publication-links">
-                        <a href="https://arxiv.org/abs/2509.20279" target="_blank" rel="noopener noreferrer">[Preprint]</a>
-                    </div>
-                    <div class="authors">
-                        Songhao Li, Jonathan Xu, Tiancheng Bao, Yuxuan Liu, Yuchen Liu, Yihang Liu, Lilin Wang, Wenhui Lei, Sheng Wang, <strong>Yinuo Xu</strong>, Yan Cui, Jialu Yao, Shunsuke Koga, Zhi Huang
-                    </div>
-                    <div class="venue">
-                        Nature, under review
-                    </div>
-                </div>
+            <section id="highlights">
+                <h2>Recent Highlights🌟</h2>
+                <ul class="highlight-bullets">
+                    <li><strong>[Feb 2026]</strong> Co-authored <a href="https://www.nature.com/articles/d41586-026-00288-3" target="_blank" rel="noopener noreferrer">AI offers way to image and assess clinical cell samples</a> in <em>Nature</em> News &amp; Views.
+                    <li><strong>[Nov 2025]</strong> Released <a href="https://arxiv.org/abs/2511.13586" target="_blank" rel="noopener noreferrer">Adaptive Multi-Scale Integration Unlocks Robust Cell Annotation in Histopathology Images</a> and 7M+ single-cell labels.</li>
+                    <li><strong>[Sep 2025]</strong> Co-led <a href="https://deeptracereward.github.io/" target="_blank" rel="noopener noreferrer">DeepTraceReward</a> for fine-grained AI-video fakeness analysis with multimodal LLMs.</li>
+                    <li><strong>[Jun 2025]</strong> Presented <em>NuClass</em> at the <a href="https://sites.google.com/view/mmfm-biomed-2025/"target="_blank" rel="noopener noreferrer">CVPR 2025 MMFM-BIOMED Workshop</a>.</li>
+                        <li><strong>[Feb 2025]</strong> Joined the <a href="https://www.med.upenn.edu/"target="_blank" rel="noopener noreferrer">Perelman School of Medicine</a> research team to work on multimodal cell annotation and computational pathology.</li>
+                </ul>
+                <details class="highlights-archive">
+                    <summary>Earlier updates</summary>
+                    <ul class="highlight-bullets">
+        
+                        <li><strong>[Aug 2024]</strong> Started my M.S. in <a href="https://www.cis.upenn.edu/"target="_blank" rel="noopener noreferrer">Computer and Information Science</a> at Penn and began research collaborations there.</li>
+                        <li><strong>[Jun 2024]</strong> Joined <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-new-york/"target="_blank" rel="noopener noreferrer"> Microsoft Research NYC </a>for an intensive data science research program on real-world data acquisition and analysis.</li>
                 
+                    </ul>
+                </details>
             </section>
-            
-            <section id="community">
-                <h2>Community Involvement</h2>
-                <div class="wins-box">
-                    <h3>NYU Women in Science (WINS) Scholar</h3>
-                    <p>
-                        As a WINS Scholar, I was part of a cohort selected for academic achievement and a commitment to making STEM fields more inclusive. The program nurtures talent through individualized research opportunities and mentoring. We met regularly with instructors and leading scientists, offered peer support, and worked to raise campus awareness of the <b>profound contributions women</b> have made to the sciences. If you'd like to learn more, please don’t hesitate to reach out to me. <a href="https://cas.nyu.edu/wins/applytoWINS.html" target="_blank" rel="noopener noreferrer">Apply Here</a>.
-                    </p>
+
+            <section id="education">
+                <h2>Education🏫</h2>
+                <div class="education-grid">
+                    <div class="education-card item">
+                        <img src="images/upenn.jpeg" alt="University of Pennsylvania Logo" class="school-logo">
+                        <div class="education-content">
+                            <div class="item-header">
+                                <span class="title"><a href="https://www.cis.upenn.edu/" target="_blank" rel="noopener noreferrer">University of Pennsylvania</a></span>
+                                <span class="date">Aug 2026 – Incoming</span>
+                            </div>
+                            <div class="education-meta">Ph.D. in Computer and Information Science</div>
+                        </div>
+                    </div>
+                    <div class="education-card item">
+                        <img src="images/upenn.jpeg" alt="University of Pennsylvania Logo" class="school-logo">
+                        <div class="education-content">
+                            <div class="item-header">
+                                <span class="title"><a href="https://www.cis.upenn.edu/" target="_blank" rel="noopener noreferrer">University of Pennsylvania</a></span>
+                                <span class="date">Aug 2024 – May 2026</span>
+                            </div>
+                            <div class="education-meta">M.S. in Computer and Information Science</div>
+                            <p class="education-note">Research assistant in the <a href="https://www.zhihuang.ai/" target="_blank" rel="noopener noreferrer">Zhi Huang Lab</a> working on multimodal cell annotation, spatial omics, and computational pathology.</p>
+                        </div>
+                    </div>
+                    <div class="education-card item">
+                        <img src="images/nyu.jpeg" alt="New York University Logo" class="school-logo">
+                        <div class="education-content">
+                            <div class="item-header">
+                                <span class="title"><a href="https://cims.nyu.edu/dynamic/" target="_blank" rel="noopener noreferrer">New York University</a></span>
+                                <span class="date">Feb 2021 – May 2024</span>
+                            </div>
+                            <div class="education-meta">B.A. in Computer Science and Mathematics, Courant Institute</div>
+                            <p class="education-note">Cum Laude, University Golden Scholar and Dean's List honoree with training across machine learning, algorithms, systems, graphics, and analysis.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+ 
+
+            <section id="projects">
+                <h2>Research Projects and Publications📚</h2>
+                <p class="section-lead">Selected papers and projects.</p>
+                <div class="project-grid">
+                    <article class="project-card">
+                        <div class="project-visual has-image">
+                            <img src="images/Nuclass.png" alt="TissueLab project preview" style="object-position: center 48%;">
+                            <div class="project-visual-inner">
+                                NuClass v2
+                                <span>Cell annotation across histopathology and spatial imaging data.</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="project-meta">2025</div>
+                            <h3>NuClass v2: Adaptive Multi-Scale Integration Unlocks Robust Cell Annotation in Histopathology Images</h3>
+                            <div class="project-authors"><strong>Yinuo Xu</strong>, Yan Cui, Mingyao Li, Zhi Huang</div>
+                            <div class="project-venue">Preprint, 2025</div>
+                            <div class="project-links">
+                                <a href="https://arxiv.org/abs/2511.13586" target="_blank" rel="noopener noreferrer">Preprint</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-visual has-image">
+                            <img src="images/Nuclass_workshop.png" alt="NuClass workshop preview" style="object-position: center center;">
+                            <div class="project-visual-inner">
+                                NuClass
+                                <span>Ontology-guided zero-shot nuclei understanding.</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="project-meta">2024–2025</div>
+                            <h3>NuClass: Ontology-Driven Zero-Shot Nuclei Classification</h3>
+                            <div class="project-authors"><strong>Yinuo Xu</strong>, Jina Kim, Zijie Zhao, Zhi Huang</div>
+                            <div class="project-venue">CVPR 2025, MMFM-BIOMED Workshop</div>
+                            <div class="project-links">
+                                <a href="files/cvpr25_poster_Yinuo_ZH_edited.pdf" target="_blank" rel="noopener noreferrer">Poster</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-visual has-image">
+                            <img src="images/Nature_review.png" alt="Nature News and Views preview" style="object-position: center center;">
+                            <div class="project-visual-inner">
+                                Nature News &amp; Views
+                                <span>Perspective on AI for imaging and assessing clinical cell samples.</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="project-meta">2026</div>
+                            <h3>AI offers way to image and assess clinical cell samples</h3>
+                            <div class="project-authors"><strong>Yinuo Xu</strong>, Zhi Huang</div>
+                            <div class="project-venue">Nature, News &amp; Views, 2026</div>
+                            <div class="project-links">
+                                <a href="https://www.nature.com/articles/d41586-026-00288-3" target="_blank" rel="noopener noreferrer">Article</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                          <div class="project-visual has-image">
+                            <img src="images/tissuelab.jpeg" alt="Nature News and Views preview" style="object-position: center center;">
+                            <div class="project-visual-inner">
+                                Tissuelab
+                                <span>An agentic AI platform for medical image analysis.</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="project-meta">2025</div>
+                            <h3>A co-evolving agentic AI system for medical imaging analysis</h3>
+                            <div class="project-authors">Songhao Li, Jonathan Xu, Tiancheng Bao, Yuxuan Liu, Yuchen Liu, Yihang Liu, Lilin Wang, Wenhui Lei, Sheng Wang, <strong>Yinuo Xu</strong>, Yan Cui, Jialu Yao, Shunsuke Koga, Zhi Huang</div>
+                            <div class="project-venue">Under revision at Nature</div>
+                            <div class="project-links">
+                                <a href="https://arxiv.org/abs/2509.20279" target="_blank" rel="noopener noreferrer">Preprint</a>
+                             <a href="https://tissuelab.org/" target="_blank" rel="noopener noreferrer">Website</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card">
+                        <div class="project-visual has-image">
+                            <img src="images/DeeptraceReward.png" alt="DeepTraceReward project preview" style="object-position: center center;">
+                            <div class="project-visual-inner">
+                                DeepTraceReward
+                                <span>Localized reward modeling for AI-generated video fakeness.</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="project-meta">2024–2025</div>
+                            <h3>DeepTraceReward for AI-Generated Video Fakeness</h3>
+                            <div class="project-authors">Xingyu Fu, Siyi Liu, <strong>Yinuo Xu</strong>, Pan Lu, Guangqiuse Hu, Tianbo Yang, Taran Anantasagar, Christopher Shen, Yikai Mao, Yuanzhe Liu, Keyush Shah, Chung Un Lee, Yejin Choi, James Zou, Dan Roth, Chris Callison-Burch</div>
+                            <div class="project-venue">Preprint, 2025</div>
+                            <div class="project-links">
+                                <a href="https://arxiv.org/abs/2509.22646" target="_blank" rel="noopener noreferrer">Preprint</a>
+                                <a href="https://deeptracereward.github.io/" target="_blank" rel="noopener noreferrer">Website</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section id="service">
+                <h2>Service💜</h2>
+                <div class="service-card">
+                    <h3>STEM Outreach and Mentorship Coordinator, NYU Women in Science (WINS)</h3>
+                    <p>From 2022 to 2024, I mentored NYC high school students in STEM learning and competitions, organized events connecting students with scientists, and supported WINS Scholars in academics and research. <a href="https://cas.nyu.edu/wins/applytoWINS.html" target="_blank" rel="noopener noreferrer">Learn more about WINS</a>.</p>
                 </div>
             </section>
 
             <section id="misc">
-                <h2>Miscellaneous</h2>
-                <h3>🌊 My Hometown: Qingdao</h3>
-                <p>I was raised in Qingdao (青岛), a beautiful coastal city in China known for its red roofs and sea breeze. It’s where my love for the ocean and a slower pace of life began.</p>
-
-                <h3>🎶 My Favorite Artist: Lana Del Rey</h3>
-                <p>I am drawn to the cinematic melancholy and poetic storytelling of Lana Del Rey. Her music feels both nostalgic and dreamlike. Over the years, I’ve collected many of her vinyl records, and they remain some of my most cherished possessions.</p>
-
-                <h3>📷 My Hobby: Film Photography</h3>
-                <p>I’m a beginner film camera collector. I love how film captures imperfections and quiet details that digital often misses, helping me freeze time in its most delicate form.</p>
-                
-                <h3>🌟 Why I Keep These Things</h3>
-                <p>These passions help me find peace in slow, intentional experiences. They inspire me to approach technical work with creativity and emotion, reminding me of who I am outside of academics and research.</p>
+                <h2>Miscellaneous🌊</h2>
+                <div class="misc-grid">
+                    <div class="misc-card">
+                        <div class="misc-card-media">
+                            <img src="images/qingdao.jpg" alt="Qingdao coastline and city view" style="object-position: center 52%;">
+                        </div>
+                        <h3>Qingdao</h3>
+                        <p>I grew up in Qingdao, a coastal city that shaped my love for the ocean, long walks, and quieter rhythms outside the lab.</p>
+                    </div>
+                    <div class="misc-card">
+                        <div class="misc-card-media">
+                            <img src="images/lana_vinyls.jpg" alt="Lana Del Rey vinyl collection" style="object-position: center 42%;">
+                        </div>
+                        <h3>Lana Del Rey</h3>
+                        <p>I am drawn to cinematic songwriting and melancholic storytelling, and I have slowly built a small collection of Lana Del Rey vinyl records.</p>
+                    </div>
+                    <div class="misc-card">
+                        <div class="misc-card-media">
+                            <img src="images/film_cameras.jpg" alt="A collection of film cameras" style="object-position: center 46%;">
+                        </div>
+                        <h3>Film Photography</h3>
+                        <p>I like film cameras for the same reason I like careful research: they reward patience, texture, and attention to detail.</p>
+                    </div>
+                </div>
             </section>
-            
         </main>
 
         <footer>
-            <p>&copy; 2025 Yinuo Xu</p>
-            <p class="footer-note">Crafted with care using only HTML & CSS, all on one page for simplicity.</p><p>💜</p>
+            <p>&copy; 2026 Yinuo Xu💜</p>
+            <p class="footer-note">Built as a concise academic homepage focused on research, projects, and publications.</p>
         </footer>
 
     </div>
+
+    <script>
+        (function () {
+            const svg = document.getElementById("dna-hero");
+            if (!svg) {
+                return;
+            }
+
+            const NS = "http://www.w3.org/2000/svg";
+            const guide = document.getElementById("dna-guide");
+            const axis = document.getElementById("dna-axis");
+            const rungsBack = document.getElementById("dna-rungs-back");
+            const strandsBack = document.getElementById("dna-strands-back");
+            const nodesBack = document.getElementById("dna-nodes-back");
+            const rungsFront = document.getElementById("dna-rungs-front");
+            const strandsFront = document.getElementById("dna-strands-front");
+            const nodesFront = document.getElementById("dna-nodes-front");
+            const sampleCount = 178;
+            const turns = 3.46;
+            const baseRadius = 88;
+            const palette = [
+                { accent: "#3c63b8", glow: "rgba(60, 99, 184, 0.25)", strong: "rgba(60, 99, 184, 0.5)" },
+                { accent: "#2f8ad2", glow: "rgba(47, 138, 210, 0.22)", strong: "rgba(47, 138, 210, 0.46)" },
+                { accent: "#4eaec7", glow: "rgba(78, 174, 199, 0.22)", strong: "rgba(78, 174, 199, 0.44)" },
+                { accent: "#7dbc84", glow: "rgba(125, 188, 132, 0.22)", strong: "rgba(125, 188, 132, 0.46)" },
+                { accent: "#e0b84c", glow: "rgba(224, 184, 76, 0.22)", strong: "rgba(224, 184, 76, 0.46)" }
+            ];
+            const rungPairs = [
+                { leftClass: "base-a", rightClass: "base-t" },
+                { leftClass: "base-g", rightClass: "base-c" },
+                { leftClass: "base-t", rightClass: "base-a" },
+                { leftClass: "base-c", rightClass: "base-g" }
+            ];
+
+            function round(value) {
+                return Number(value.toFixed(2));
+            }
+
+            function seeded(index, salt) {
+                const value = Math.sin(index * 12.9898 + salt * 78.233) * 43758.5453;
+                return value - Math.floor(value);
+            }
+
+            function createSvgElement(tagName, attributes) {
+                const element = document.createElementNS(NS, tagName);
+                Object.entries(attributes || {}).forEach(function (entry) {
+                    element.setAttribute(entry[0], entry[1]);
+                });
+                return element;
+            }
+
+            function axisPoint(t) {
+                return {
+                    x: -118 + 505 * t,
+                    y: 320 - 214 * t - 36 * Math.sin((t * 1.22 + 0.06) * Math.PI * 2) + 42 * Math.exp(-t * 6.1)
+
+                };
+            }
+
+            function tangentAt(t) {
+                const delta = 0.001;
+                const prev = axisPoint(Math.max(0, t - delta));
+                const next = axisPoint(Math.min(1, t + delta));
+                const dx = next.x - prev.x;
+                const dy = next.y - prev.y;
+                const length = Math.hypot(dx, dy) || 1;
+
+                return {
+                    x: dx / length,
+                    y: dy / length
+                };
+            }
+
+            function strandPoint(t, phaseOffset) {
+                const center = axisPoint(t);
+                const tangent = tangentAt(t);
+                const normal = { x: -tangent.y, y: tangent.x };
+                const phase = t * Math.PI * 2 * turns + phaseOffset;
+                const radius = baseRadius * (0.9 + 0.12 * Math.sin((t * 1.1 + 0.15) * Math.PI * 2));
+                const lateral = radius * Math.sin(phase);
+
+                return {
+                    x: center.x + normal.x * lateral,
+                    y: center.y + normal.y * lateral,
+                    phase: phase,
+                    depth: Math.cos(phase)
+                };
+            }
+
+            function buildSmoothPath(points) {
+                if (!points.length) {
+                    return "";
+                }
+
+                if (points.length === 1) {
+                    return "M " + round(points[0].x) + " " + round(points[0].y);
+                }
+
+                if (points.length === 2) {
+                    return "M " + round(points[0].x) + " " + round(points[0].y) +
+                        " L " + round(points[1].x) + " " + round(points[1].y);
+                }
+
+                let path = "M " + round(points[0].x) + " " + round(points[0].y);
+
+                for (let index = 1; index < points.length - 1; index += 1) {
+                    const next = points[index + 1];
+                    const midX = round((points[index].x + next.x) / 2);
+                    const midY = round((points[index].y + next.y) / 2);
+                    path += " Q " + round(points[index].x) + " " + round(points[index].y) + " " + midX + " " + midY;
+                }
+
+                const last = points[points.length - 1];
+                path += " T " + round(last.x) + " " + round(last.y);
+                return path;
+            }
+
+            function lerpPoint(p1, p2, ratio) {
+                return {
+                    x: p1.x + (p2.x - p1.x) * ratio,
+                    y: p1.y + (p2.y - p1.y) * ratio
+                };
+            }
+
+            function addRung(pointA, pointB, index, depth) {
+                const pair = rungPairs[Math.floor(index / 2) % rungPairs.length];
+                const outerA = lerpPoint(pointA, pointB, 0.09);
+                const innerA = lerpPoint(pointA, pointB, 0.48);
+                const innerB = lerpPoint(pointA, pointB, 0.52);
+                const outerB = lerpPoint(pointA, pointB, 0.91);
+                const layer = depth >= 0 ? rungsFront : rungsBack;
+                const left = createSvgElement("line", {
+                    class: "dna-rung-half " + pair.leftClass,
+                    x1: String(round(outerA.x)),
+                    y1: String(round(outerA.y)),
+                    x2: String(round(innerA.x)),
+                    y2: String(round(innerA.y))
+                });
+                const right = createSvgElement("line", {
+                    class: "dna-rung-half " + pair.rightClass,
+                    x1: String(round(innerB.x)),
+                    y1: String(round(innerB.y)),
+                    x2: String(round(outerB.x)),
+                    y2: String(round(outerB.y))
+                });
+                const bond = createSvgElement("line", {
+                    class: "dna-rung-bond",
+                    x1: String(round(innerA.x)),
+                    y1: String(round(innerA.y)),
+                    x2: String(round(innerB.x)),
+                    y2: String(round(innerB.y))
+                });
+                const rungOpacity = round(0.36 + 0.42 * Math.abs(depth));
+
+                left.style.setProperty("--rung-duration", (1.45 + (index % 4) * 0.14) + "s");
+                left.style.setProperty("--rung-color-duration", (2.05 + (index % 5) * 0.12) + "s");
+                left.style.setProperty("--rung-delay", (index * 0.045) + "s");
+                left.style.setProperty("--rung-color-delay", (index * 0.035) + "s");
+                left.style.opacity = String(rungOpacity);
+
+                right.style.setProperty("--rung-duration", (1.45 + (index % 4) * 0.14) + "s");
+                right.style.setProperty("--rung-color-duration", (2.05 + (index % 5) * 0.12) + "s");
+                right.style.setProperty("--rung-delay", (index * 0.045 + 0.025) + "s");
+                right.style.setProperty("--rung-color-delay", (index * 0.035 + 0.08) + "s");
+                right.style.opacity = String(rungOpacity);
+
+                bond.style.opacity = String(round(0.22 + 0.24 * Math.abs(depth)));
+
+                layer.appendChild(left);
+                layer.appendChild(right);
+                layer.appendChild(bond);
+            }
+
+            function appendNodeCenter(body, variant, scaleFactor) {
+                if (variant === 0) {
+                    body.appendChild(createSvgElement("circle", {
+                        class: "node-center",
+                        r: String(round(1.05 * scaleFactor))
+                    }));
+                    return;
+                }
+
+                if (variant === 1) {
+                    body.appendChild(createSvgElement("rect", {
+                        class: "node-center",
+                        x: String(round(-1.1 * scaleFactor)),
+                        y: String(round(-1.1 * scaleFactor)),
+                        width: String(round(2.2 * scaleFactor)),
+                        height: String(round(2.2 * scaleFactor)),
+                        rx: String(round(0.42 * scaleFactor)),
+                        transform: "rotate(45)"
+                    }));
+                    return;
+                }
+
+                if (variant === 2) {
+                    body.appendChild(createSvgElement("rect", {
+                        class: "node-center",
+                        x: String(round(-1.7 * scaleFactor)),
+                        y: String(round(-0.7 * scaleFactor)),
+                        width: String(round(3.4 * scaleFactor)),
+                        height: String(round(1.4 * scaleFactor)),
+                        rx: String(round(0.7 * scaleFactor))
+                    }));
+                    return;
+                }
+
+                body.appendChild(createSvgElement("polygon", {
+                    class: "node-center",
+                    points: [
+                        [0, round(-1.45 * scaleFactor)],
+                        [round(1.35 * scaleFactor), 0],
+                        [0, round(1.45 * scaleFactor)],
+                        [round(-1.35 * scaleFactor), 0]
+                    ].map(function (point) { return point[0] + "," + point[1]; }).join(" ")
+                }));
+            }
+
+            function addNode(point, pairPoint, tangent, normal, index, depth, scaleFactor) {
+                const style = palette[index % palette.length];
+                const anchorPoint = lerpPoint(point, pairPoint, 0.08);
+                const group = createSvgElement("g", {
+                    class: "dna-node " + (depth >= 0 ? "is-front" : "is-back"),
+                    transform: "translate(" + round(anchorPoint.x) + " " + round(anchorPoint.y) + ")"
+                });
+                const floater = createSvgElement("g", { class: "node-float" });
+                const body = createSvgElement("g", { class: "node-body" });
+                const orbit = createSvgElement("g", { class: "node-orbit" });
+                const ringRadius = 1.5 * scaleFactor;
+                const haloRadius = 2.25 * scaleFactor;
+                const tangentAngle = Math.atan2(tangent.y, tangent.x);
+                const inwardAngle = Math.atan2(pairPoint.y - point.y, pairPoint.x - point.x);
+                const branchCount = 2 + Math.floor(seeded(index, 61) * 2);
+
+                group.style.setProperty("--hover-tilt", (index % 2 === 0 ? 1 : -1) * (8 + (index % 4)) + "deg");
+                group.style.setProperty("--node-drift", (4.1 + (index % 7) * 0.35) + "s");
+                group.style.setProperty("--node-delay", (index % 19 * 0.06) + "s");
+                group.style.setProperty("--node-breathe", (2.25 + (index % 5) * 0.24) + "s");
+                group.style.setProperty("--node-spin", (1.05 + (index % 4) * 0.12) + "s");
+                group.style.setProperty("--float-x", round((normal.x * (seeded(index, 71) - 0.5) * 5.2)) + "px");
+                group.style.setProperty("--float-y", round((normal.y * (seeded(index, 73) - 0.5) * 5.2)) + "px");
+                group.style.setProperty("--node-accent", style.accent);
+                group.style.setProperty("--node-glow", style.glow);
+                group.style.setProperty("--node-glow-strong", style.strong);
+
+                body.appendChild(createSvgElement("circle", {
+                    class: "node-halo",
+                    r: String(round(haloRadius))
+                }));
+                body.appendChild(createSvgElement("circle", {
+                    class: "node-ring",
+                    r: String(round(ringRadius))
+                }));
+                appendNodeCenter(body, index % 4, scaleFactor);
+
+                for (let branch = 0; branch < branchCount; branch += 1) {
+                    const armAngle = branch === 0
+                        ? inwardAngle + (seeded(index, 79 + branch) - 0.5) * 0.18
+                        : tangentAngle +
+                            (branch - branchCount / 2) * 0.78 +
+                            (seeded(index, 79 + branch) - 0.5) * 0.28;
+                    const armLength = (branch === 0 ? 2.7 : 2.1) * scaleFactor +
+                        seeded(index, 83 + branch) * (branch === 0 ? 1.4 : 2.05) * scaleFactor;
+                    const endPoint = {
+                        x: round(Math.cos(armAngle) * armLength),
+                        y: round(Math.sin(armAngle) * armLength)
+                    };
+
+                    orbit.appendChild(createSvgElement("line", {
+                        class: "node-branch",
+                        x1: "0",
+                        y1: "0",
+                        x2: String(endPoint.x),
+                        y2: String(endPoint.y)
+                    }));
+                    orbit.appendChild(createSvgElement("circle", {
+                        class: "node-dot",
+                        cx: String(endPoint.x),
+                        cy: String(endPoint.y),
+                        r: String(round((0.48 + seeded(index, 89 + branch) * 0.28) * scaleFactor))
+                    }));
+
+                    if (branch > 0 && seeded(index, 97 + branch) > 0.7) {
+                        const sideAngle = armAngle +
+                            (seeded(index, 101 + branch) > 0.5 ? 1 : -1) *
+                            (0.7 + seeded(index, 103 + branch) * 0.26);
+                        const sideLength = 1.1 * scaleFactor + seeded(index, 107 + branch) * 1.2 * scaleFactor;
+                        const sidePoint = {
+                            x: round(endPoint.x + Math.cos(sideAngle) * sideLength),
+                            y: round(endPoint.y + Math.sin(sideAngle) * sideLength)
+                        };
+
+                        orbit.appendChild(createSvgElement("line", {
+                            class: "node-branch",
+                            x1: String(endPoint.x),
+                            y1: String(endPoint.y),
+                            x2: String(sidePoint.x),
+                            y2: String(sidePoint.y)
+                        }));
+                        orbit.appendChild(createSvgElement("circle", {
+                            class: "node-dot",
+                            cx: String(sidePoint.x),
+                            cy: String(sidePoint.y),
+                            r: String(round((0.34 + seeded(index, 109 + branch) * 0.18) * scaleFactor))
+                        }));
+                    }
+                }
+
+                body.appendChild(orbit);
+                floater.appendChild(body);
+                group.appendChild(floater);
+                group.appendChild(createSvgElement("circle", {
+                    class: "node-hit",
+                    r: String(round(4.8 * scaleFactor))
+                }));
+
+                (depth >= 0 ? nodesFront : nodesBack).appendChild(group);
+            }
+
+            const axisPoints = [];
+            const guidePoints = [];
+            const strandA = [];
+            const strandB = [];
+
+            strandsBack.innerHTML = "";
+            strandsFront.innerHTML = "";
+            nodesBack.innerHTML = "";
+            nodesFront.innerHTML = "";
+            rungsBack.innerHTML = "";
+            rungsFront.innerHTML = "";
+
+            for (let index = 0; index <= sampleCount; index += 1) {
+                const t = index / sampleCount;
+                const center = axisPoint(t);
+                const tangent = tangentAt(t);
+                const normal = { x: -tangent.y, y: tangent.x };
+                const drift = (index % 2 === 0 ? 1 : -1) * (4 + (index % 3));
+
+                axisPoints.push(center);
+                guidePoints.push({
+                    x: center.x + normal.x * drift,
+                    y: center.y + normal.y * drift
+                });
+                strandA.push(strandPoint(t, 0));
+                strandB.push(strandPoint(t, Math.PI));
+            }
+
+            guide.setAttribute("d", buildSmoothPath(guidePoints));
+            axis.setAttribute("d", buildSmoothPath(axisPoints));
+
+            for (let index = 0; index < sampleCount; index += 2) {
+                const a0 = strandA[index];
+                const b0 = strandB[index];
+                const rungDepth = Math.sin(a0.phase);
+
+                addRung(a0, b0, index, rungDepth);
+            }
+
+            for (let index = 0; index <= sampleCount; index += 1) {
+                if (index % 2 !== 0 || Math.floor(index / 2) % 5 === 4) {
+                    continue;
+                }
+
+                const a = strandA[index];
+                const b = strandB[index];
+                const tangent = tangentAt(index / sampleCount);
+                const normal = { x: -tangent.y, y: tangent.x };
+
+                addNode(a, b, tangent, normal, index, a.depth,2.7);
+                addNode(b, a, tangent, normal, index + sampleCount + 1, b.depth, 2.5);
+            }
+        }());
+    </script>
+
+    <script>
+        (function () {
+            const leftColumn = document.getElementById("floating-cells-left");
+            const rightColumn = document.getElementById("floating-cells-right");
+            if (!leftColumn || !rightColumn) {
+                return;
+            }
+
+            const cellColors = {
+                t: { shell: "#9fd8f4", core: "#6b98d1", stroke: "#5f8eb5", accent: "#5b83c2" },
+                b: { shell: "#bfd0ff", core: "#869be8", stroke: "#6a7fd1", accent: "#5068c3" },
+                nk: { shell: "#a9c6ff", core: "#6d8fd8", stroke: "#5d78be", accent: "#4765ac" },
+                macro: { shell: "#c7b7f0", core: "#9682d1", stroke: "#856fc1", accent: "#775fb4" },
+                stromal: { shell: "#cfe6cf", core: "#8caf8b", stroke: "#7a9f79", accent: "#678d67" },
+                plasma: { shell: "#ffd7e9", core: "#f39ac2", stroke: "#dc7ba8", accent: "#f6b9d7" },
+                dendritic: { shell: "#d7ecff", core: "#8fc0f2", stroke: "#729ed8", accent: "#5f86cf" },
+                fibro: { shell: "#ddf2c9", core: "#9ed284", stroke: "#7fb56b", accent: "#b8df78" },
+                neutro: { shell: "#fff0b6", core: "#f2c76a", stroke: "#d8aa4e", accent: "#f7d774" }
+            };
+
+            const placements = {
+                left: [
+                    { type: "t", top: 8, left: 10, size: 90, floatX: 16, floatY: -18, wobbleStart: -8, wobbleEnd: 7, opacity: 0.92 },
+                    { type: "b", top: 21, left: 42, size: 74, floatX: -12, floatY: 18, wobbleStart: 5, wobbleEnd: -6, opacity: 0.84 },
+                    { type: "stromal", top: 37, left: 8, size: 108, floatX: 20, floatY: -12, wobbleStart: -14, wobbleEnd: 10, opacity: 0.78 },
+                    { type: "macro", top: 57, left: 46, size: 92, floatX: -16, floatY: 20, wobbleStart: 6, wobbleEnd: -8, opacity: 0.88 },
+                    { type: "nk", top: 74, left: 14, size: 96, floatX: 18, floatY: -16, wobbleStart: -9, wobbleEnd: 8, opacity: 0.9 },
+                    { type: "stromal", top: 85, left: 44, size: 102, floatX: -14, floatY: -14, wobbleStart: 12, wobbleEnd: -10, opacity: 0.74 }
+                ],
+                right: [
+                    { type: "plasma", top: 10, left: 30, size: 86, floatX: -14, floatY: 16, wobbleStart: 8, wobbleEnd: -7, opacity: 0.86 },
+                    { type: "fibro", top: 24, left: 36, size: 118, floatX: -20, floatY: -10, wobbleStart: 15, wobbleEnd: -11, opacity: 0.78 },
+                    { type: "dendritic", top: 43, left: 10, size: 102, floatX: 14, floatY: 18, wobbleStart: -7, wobbleEnd: 8, opacity: 0.88 },
+                    { type: "neutro", top: 61, left: 42, size: 96, floatX: -18, floatY: -14, wobbleStart: 8, wobbleEnd: -8, opacity: 0.9 },
+                    { type: "plasma", top: 77, left: 12, size: 96, floatX: 15, floatY: 16, wobbleStart: -10, wobbleEnd: 9, opacity: 0.92 },
+                    { type: "fibro", top: 87, left: 38, size: 108, floatX: -16, floatY: -18, wobbleStart: 13, wobbleEnd: -9, opacity: 0.76 }
+                ]
+            };
+
+            function svgWrap(inner) {
+                return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">' + inner + "</svg>";
+            }
+
+            function tCellSvg(color) {
+                const receptors = [0, 60, 120, 180, 240, 300].map(function (angle) {
+                    return '<g transform="translate(50 50) rotate(' + angle + ')">' +
+                        '<line class="cell-stroke" x1="0" y1="-31" x2="0" y2="-41" stroke="' + color.stroke + '"/>' +
+                        '<circle cx="-3" cy="-44" r="2.5" fill="' + color.shell + '" stroke="' + color.stroke + '" stroke-width="1.6"/>' +
+                        '<circle cx="3" cy="-44" r="2.5" fill="' + color.shell + '" stroke="' + color.stroke + '" stroke-width="1.6"/>' +
+                        "</g>";
+                }).join("");
+
+                return svgWrap(
+                    '<circle cx="50" cy="50" r="31" fill="' + color.shell + '" stroke="' + color.stroke + '" stroke-width="3"/>' +
+                    '<circle cx="50" cy="50" r="16" fill="' + color.core + '" opacity="0.95"/>' +
+                    receptors
+                );
+            }
+
+            function bCellSvg(color) {
+                const antibodies = [25, 115, 205, 295].map(function (angle) {
+                    return '<g transform="translate(50 50) rotate(' + angle + ')">' +
+                        '<line class="cell-stroke" x1="0" y1="-30" x2="0" y2="-42" stroke="' + color.stroke + '"/>' +
+                        '<line class="cell-stroke" x1="0" y1="-42" x2="-6" y2="-50" stroke="' + color.accent + '"/>' +
+                        '<line class="cell-stroke" x1="0" y1="-42" x2="6" y2="-50" stroke="' + color.accent + '"/>' +
+                        "</g>";
+                }).join("");
+
+                return svgWrap(
+                    '<circle cx="50" cy="50" r="30" fill="' + color.shell + '" stroke="' + color.stroke + '" stroke-width="3"/>' +
+                    '<circle cx="50" cy="50" r="15" fill="' + color.core + '" opacity="0.94"/>' +
+                    antibodies
+                );
+            }
+
+            function nkCellSvg(color) {
+                const spikes = [0, 45, 90, 135, 180, 225, 270, 315].map(function (angle) {
+                    return '<g transform="translate(50 50) rotate(' + angle + ')">' +
+                        '<line class="cell-stroke" x1="0" y1="-32" x2="0" y2="-40" stroke="' + color.stroke + '"/>' +
+                        '<circle cx="0" cy="-43" r="2.8" fill="' + color.accent + '"/>' +
+                        "</g>";
+                }).join("");
+
+                const granules = [
+                    [38, 36], [64, 39], [34, 57], [60, 63], [48, 29]
+                ].map(function (point) {
+                    return '<circle class="cell-grain" cx="' + point[0] + '" cy="' + point[1] + '" r="2.5" fill="' + color.accent + '"/>';
+                }).join("");
+
+                return svgWrap(
+                    '<circle cx="50" cy="50" r="29" fill="' + color.shell + '" stroke="' + color.stroke + '" stroke-width="3"/>' +
+                    '<circle cx="50" cy="50" r="14" fill="' + color.core + '" opacity="0.94"/>' +
+                    granules + spikes
+                );
+            }
+
+            function macrophageSvg(color) {
+                return svgWrap(
+                    '<path d="M18 51 C16 34 27 20 42 18 C54 8 76 16 82 30 C93 39 92 60 79 69 C77 84 58 92 42 85 C28 87 14 73 18 51 Z" fill="' + color.shell + '" stroke="' + color.stroke + '" stroke-width="3"/>' +
+                    '<path d="M42 53 C42 41 52 33 61 35 C71 37 74 49 69 57 C65 66 53 69 46 64 C43 61 42 57 42 53 Z" fill="' + color.core + '" opacity="0.96"/>' +
+                    '<circle class="cell-grain" cx="29" cy="39" r="2.5" fill="' + color.accent + '"/>' +
+                    '<circle class="cell-grain" cx="69" cy="28" r="2.3" fill="' + color.accent + '"/>' +
+                    '<circle class="cell-grain" cx="73" cy="63" r="2.1" fill="' + color.accent + '"/>' +
+                    '<circle class="cell-grain" cx="27" cy="66" r="2.4" fill="' + color.accent + '"/>'
+                );
+            }
+
+            function stromalSvg(color) {
+                return svgWrap(
+                    '<g transform="translate(50 50) rotate(-18)">' +
+                        '<path d="M8 50 C26 18 74 18 92 50 C74 82 26 82 8 50 Z" fill="' + color.shell + '" stroke="' + color.stroke + '" stroke-width="3"/>' +
+                        '<ellipse cx="50" cy="50" rx="14" ry="8" fill="' + color.core + '" opacity="0.94"/>' +
+                    "</g>"
+                );
+            }
+
+            function plasmaCellSvg(color) {
+                return svgWrap(
+                    '<path d="M23 50 C23 33 35 20 51 20 C67 20 79 32 79 48 C79 64 67 78 49 78 C31 78 20 65 23 50 Z" fill="' + color.shell + '" stroke="' + color.stroke + '" stroke-width="3"/>' +
+                    '<path d="M52 33 C61 33 67 39 67 48 C67 56 60 62 51 62 C42 62 36 56 36 48 C36 39 42 33 52 33 Z" fill="' + color.core + '" opacity="0.95"/>' +
+                    '<path d="M26 47 C18 50 17 59 23 65" fill="none" stroke="' + color.accent + '" stroke-width="3" stroke-linecap="round"/>' +
+                    '<circle class="cell-grain" cx="33" cy="35" r="2.5" fill="' + color.accent + '"/>' +
+                    '<circle class="cell-grain" cx="64" cy="30" r="2.2" fill="' + color.accent + '"/>'
+                );
+            }
+
+            function dendriticSvg(color) {
+                const branches = [8, 62, 128, 202, 276, 336].map(function (angle) {
+                    return '<g transform="translate(50 50) rotate(' + angle + ')">' +
+                        '<path d="M0 -24 C1 -34 3 -42 8 -49" fill="none" stroke="' + color.stroke + '" stroke-width="3" stroke-linecap="round"/>' +
+                        '<path d="M8 -49 L3 -54" fill="none" stroke="' + color.accent + '" stroke-width="2.4" stroke-linecap="round"/>' +
+                        '<path d="M8 -49 L14 -54" fill="none" stroke="' + color.accent + '" stroke-width="2.4" stroke-linecap="round"/>' +
+                    "</g>";
+                }).join("");
+
+                return svgWrap(
+                    '<path d="M25 50 C24 34 34 22 47 22 C59 15 77 24 80 39 C88 47 86 64 74 70 C67 81 49 84 37 78 C26 76 20 63 25 50 Z" fill="' + color.shell + '" stroke="' + color.stroke + '" stroke-width="3"/>' +
+                    '<circle cx="54" cy="48" r="13" fill="' + color.core + '" opacity="0.94"/>' +
+                    branches
+                );
+            }
+
+            function fibroSvg(color) {
+                return svgWrap(
+                    '<g transform="translate(50 50) rotate(-14)">' +
+                        '<path d="M6 50 C24 19 76 20 94 50 C76 80 24 81 6 50 Z" fill="' + color.shell + '" stroke="' + color.stroke + '" stroke-width="3"/>' +
+                        '<ellipse cx="38" cy="50" rx="13" ry="7" fill="' + color.core + '" opacity="0.94"/>' +
+                        '<ellipse cx="63" cy="50" rx="12" ry="6.5" fill="' + color.accent + '" opacity="0.82"/>' +
+                    "</g>"
+                );
+            }
+
+            function neutroSvg(color) {
+                return svgWrap(
+                    '<path d="M22 50 C20 36 31 23 45 21 C58 14 78 22 82 37 C89 45 88 63 76 70 C69 81 49 84 36 79 C25 76 18 63 22 50 Z" fill="' + color.shell + '" stroke="' + color.stroke + '" stroke-width="3"/>' +
+                    '<circle cx="40" cy="49" r="8.5" fill="' + color.core + '" opacity="0.94"/>' +
+                    '<circle cx="55" cy="41" r="7.8" fill="' + color.core + '" opacity="0.9"/>' +
+                    '<circle cx="62" cy="55" r="8.2" fill="' + color.core + '" opacity="0.88"/>' +
+                    '<circle class="cell-grain" cx="31" cy="37" r="2.1" fill="' + color.accent + '"/>' +
+                    '<circle class="cell-grain" cx="70" cy="34" r="2.2" fill="' + color.accent + '"/>' +
+                    '<circle class="cell-grain" cx="73" cy="64" r="2.1" fill="' + color.accent + '"/>'
+                );
+            }
+
+            function cellMarkup(type) {
+                const color = cellColors[type];
+                if (type === "t") {
+                    return tCellSvg(color);
+                }
+                if (type === "b") {
+                    return bCellSvg(color);
+                }
+                if (type === "nk") {
+                    return nkCellSvg(color);
+                }
+                if (type === "macro") {
+                    return macrophageSvg(color);
+                }
+                if (type === "plasma") {
+                    return plasmaCellSvg(color);
+                }
+                if (type === "dendritic") {
+                    return dendriticSvg(color);
+                }
+                if (type === "fibro") {
+                    return fibroSvg(color);
+                }
+                if (type === "neutro") {
+                    return neutroSvg(color);
+                }
+                return stromalSvg(color);
+            }
+
+            function createFloatingCell(spec, index) {
+                const cell = document.createElement("div");
+                const floater = document.createElement("div");
+                const art = document.createElement("div");
+                const sizeBoost = 1.14;
+
+                cell.className = "floating-cell";
+                floater.className = "floating-cell-float";
+                art.className = "floating-cell-art";
+
+                cell.style.top = spec.top + "%";
+                cell.style.left = spec.left + "%";
+                cell.style.setProperty("--cell-size", Math.round(spec.size * sizeBoost) + "px");
+                cell.style.setProperty("--cell-opacity", String(spec.opacity));
+                cell.style.setProperty("--float-x", spec.floatX + "px");
+                cell.style.setProperty("--float-y", spec.floatY + "px");
+                cell.style.setProperty("--float-duration", (12.5 + (index % 4) * 1.8) + "s");
+                cell.style.setProperty("--float-delay", (index * 0.9) + "s");
+                cell.style.setProperty("--wobble-duration", (7.5 + (index % 3) * 1.4) + "s");
+                cell.style.setProperty("--pulse-duration", (5.8 + (index % 5) * 0.7) + "s");
+                cell.style.setProperty("--cell-rot-start", spec.wobbleStart + "deg");
+                cell.style.setProperty("--cell-rot-end", spec.wobbleEnd + "deg");
+
+                art.innerHTML = cellMarkup(spec.type);
+                floater.appendChild(art);
+                cell.appendChild(floater);
+                return cell;
+            }
+
+            placements.left.forEach(function (spec, index) {
+                leftColumn.appendChild(createFloatingCell(spec, index));
+            });
+            placements.right.forEach(function (spec, index) {
+                rightColumn.appendChild(createFloatingCell(spec, index + placements.left.length));
+            });
+        }());
+    </script>
+
+    <!--
+    <script>
+        (function () {
+            const headings = document.querySelectorAll("main section h2");
+            if (!headings.length) {
+                return;
+            }
+
+            const catStrokes = [
+                "rgba(123, 170, 209, 0.82)",
+                "rgba(123, 194, 151, 0.8)",
+                "rgba(233, 180, 111, 0.82)",
+                "rgba(227, 150, 184, 0.8)"
+            ];
+            const catFills = [
+                "rgba(205, 228, 241, 0.9)",
+                "rgba(206, 235, 217, 0.9)",
+                "rgba(247, 223, 177, 0.9)",
+                "rgba(243, 205, 222, 0.9)"
+            ];
+
+            function hashText(text) {
+                return Array.from(text).reduce(function (acc, char, index) {
+                    return acc + char.charCodeAt(0) * (index + 17);
+                }, 0);
+            }
+
+            headings.forEach(function (heading, index) {
+                const seed = hashText(heading.textContent || "") + index * 97;
+                const cat = document.createElement("span");
+                const width = 45 + (seed % 18);
+                const left = 20 + (seed % 58);
+
+                cat.className = "section-cat-shadow";
+                cat.style.left = left + "%";
+                cat.style.width = width + "px";
+                cat.style.height = Math.round(width * 0.55) + "px";
+                cat.style.transform = "translateX(-50%)";
+                cat.style.setProperty("--cat-stroke", catStrokes[index % catStrokes.length]);
+                cat.style.setProperty("--cat-fill", catFills[index % catFills.length]);
+                cat.innerHTML =
+                    '<svg viewBox="0 0 52 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+                        '<path d="M4 28 V18 C4 12.8 4.9 9 6.7 6.1 C8 4 10.3 3.5 12 5.2 L14.6 7.8 C16.4 9.7 19.3 9.9 21.8 8.8 C24.9 7.4 28 7.1 31 7.1 C34 7.1 37.1 7.3 40.2 8.7 C42.7 9.8 45.6 9.5 47.4 7.7 L50 5.1 C51.7 3.3 54 3.8 55.3 6 C57.1 8.9 58 12.8 58 18 V28 Z" transform="translate(-5 0)" />' +
+                    '</svg>';
+                heading.appendChild(cat);
+            });
+        }());
+    </script>
+    -->
 
 </body>
 </html>
