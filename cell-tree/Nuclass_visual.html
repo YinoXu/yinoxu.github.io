@@ -1,0 +1,2446 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NuClass v2 | Tree Explorer and Theorem Notes</title>
+    <script src="https://assets.pyecharts.org/assets/v5/echarts.min.js"></script>
+    <style>
+      :root {
+        --primary-color: #2c3e50;
+        --secondary-color: #3c7fc0;
+        --secondary-deep: #2d689f;
+        --secondary-soft: #edf4fb;
+        --secondary-soft-strong: #dfeaf6;
+        --text-color: #334155;
+        --text-strong: #1e293b;
+        --muted: #64748b;
+        --background-color: #f6fbff;
+        --surface: #ffffff;
+        --surface-alt: #f4f8fc;
+        --border-color: #dbe7f3;
+        --success-soft: rgba(47, 143, 108, 0.12);
+        --success-line: rgba(47, 143, 108, 0.44);
+        --warning-soft: rgba(245, 158, 11, 0.14);
+        --warning-line: rgba(217, 119, 6, 0.7);
+        --info-soft: rgba(59, 130, 246, 0.14);
+        --info-line: rgba(59, 130, 246, 0.65);
+        --shadow: 0 20px 48px rgba(27, 59, 96, 0.08);
+        --shadow-soft: 0 14px 30px rgba(28, 56, 93, 0.05);
+        --radius-lg: 22px;
+        --radius-md: 18px;
+        --radius-sm: 14px;
+        --mono:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        color: var(--text-color);
+        background:
+          radial-gradient(
+            880px 560px at 10% 8%,
+            rgba(126, 178, 227, 0.18),
+            transparent 52%
+          ),
+          radial-gradient(
+            780px 540px at 92% 18%,
+            rgba(121, 194, 177, 0.16),
+            transparent 50%
+          ),
+          linear-gradient(180deg, #fbfdff 0%, #f6fbff 100%);
+      }
+
+      a {
+        color: var(--secondary-color);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      button,
+      select,
+      input[type="text"] {
+        font: inherit;
+      }
+
+      button,
+      .button-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        min-height: 42px;
+        padding: 0.68rem 1rem;
+        border-radius: 999px;
+        border: 1px solid var(--border-color);
+        background: var(--surface);
+        color: var(--text-strong);
+        font-size: 0.92rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          transform 0.12s ease,
+          border-color 0.16s ease,
+          background 0.16s ease,
+          box-shadow 0.16s ease;
+      }
+
+      button:hover,
+      .button-link:hover {
+        text-decoration: none;
+        background: #f8fbff;
+        border-color: #cbdced;
+        box-shadow: 0 8px 18px rgba(45, 104, 159, 0.08);
+      }
+
+      button:active,
+      .button-link:active {
+        transform: translateY(1px);
+      }
+
+      button.primary,
+      .button-link.primary {
+        background: linear-gradient(135deg, #4b8dcf 0%, #2d689f 100%);
+        border-color: rgba(45, 104, 159, 0.25);
+        color: #ffffff;
+        box-shadow: 0 14px 28px rgba(61, 127, 192, 0.22);
+      }
+
+      button.primary:hover,
+      .button-link.primary:hover {
+        background: linear-gradient(135deg, #5798d8 0%, #2f6fa8 100%);
+      }
+
+      .page-shell {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 24px 20px 48px;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        margin-bottom: 1rem;
+        color: #5a7088;
+        font-size: 0.96rem;
+        font-weight: 600;
+      }
+
+      .hero-card {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+        gap: 1.4rem;
+        align-items: stretch;
+        padding: 1.45rem;
+        background: linear-gradient(
+          135deg,
+          #fbfdff 0%,
+          #f2f7fd 42%,
+          #edf4fb 100%
+        );
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .hero-card::before {
+        content: "";
+        position: absolute;
+        right: -80px;
+        top: -100px;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(60, 127, 192, 0.18) 0%,
+          rgba(60, 127, 192, 0) 72%
+        );
+        pointer-events: none;
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 1;
+        padding: 0.3rem 0.1rem;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.38rem 0.78rem;
+        border-radius: 999px;
+        border: 1px solid #d6e4f2;
+        background: rgba(255, 255, 255, 0.72);
+        color: #4b6785;
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      .hero-copy h1 {
+        margin: 0.9rem 0 0.55rem;
+        color: var(--primary-color);
+        font-size: clamp(2.25rem, 3.5vw, 3.5rem);
+        line-height: 1.02;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-subtitle {
+        margin: 0;
+        color: #425a74;
+        font-size: 1.16rem;
+        line-height: 1.6;
+        max-width: 720px;
+      }
+
+      .project-meta {
+        margin-top: 0.9rem;
+        color: #6c8098;
+        font-size: 0.96rem;
+        font-weight: 600;
+      }
+
+      .hero-note {
+        margin: 1rem 0 0;
+        max-width: 760px;
+        color: #52677f;
+        line-height: 1.72;
+      }
+
+      .hero-pill-row,
+      .jump-links,
+      .proof-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+      }
+
+      .hero-pill-row {
+        margin-top: 1.25rem;
+      }
+
+      .jump-links {
+        margin: 1rem 0 0;
+      }
+
+      .hero-pill-row .button-link,
+      .jump-links .button-link,
+      .proof-actions .button-link {
+        min-height: 0;
+        padding: 0.55rem 0.92rem;
+        background: var(--secondary-soft);
+        border-color: #d6e4f2;
+        color: #44617f;
+        box-shadow: none;
+      }
+
+      .hero-pill-row .button-link.primary,
+      .proof-actions .button-link.primary {
+        color: #ffffff;
+        background: linear-gradient(135deg, #4b8dcf 0%, #2d689f 100%);
+      }
+
+      .hero-visual {
+        position: relative;
+        min-height: 320px;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        border: 1px solid #d5e2ef;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.52);
+      }
+
+      .hero-visual img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 48%;
+      }
+
+      .hero-visual::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(16, 31, 53, 0.08) 0%,
+          rgba(16, 31, 53, 0.25) 38%,
+          rgba(16, 31, 53, 0.78) 100%
+        );
+      }
+
+      .hero-visual-grid {
+        position: absolute;
+        inset: auto 1.1rem 1.1rem 1.1rem;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.7rem;
+      }
+
+      .hero-stat {
+        padding: 0.8rem 0.9rem;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        color: #ffffff;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      .hero-stat .label {
+        font-size: 0.72rem;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        opacity: 0.82;
+      }
+
+      .hero-stat .value {
+        margin-top: 0.22rem;
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.45;
+      }
+
+      .overview-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        margin-top: 1.15rem;
+      }
+
+      .feature-card,
+      .panel-card,
+      .proof-card {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .feature-card {
+        padding: 1rem 1.05rem;
+      }
+
+      .feature-card h2 {
+        margin: 0 0 0.4rem;
+        color: var(--primary-color);
+        font-size: 1rem;
+      }
+
+      .feature-card p {
+        margin: 0;
+        color: #5a6d85;
+        line-height: 1.62;
+        font-size: 0.95rem;
+      }
+
+      .section-head {
+        margin: 2.4rem 0 1rem;
+      }
+
+      .section-head h2 {
+        margin: 0 0 0.35rem;
+        color: var(--primary-color);
+        font-size: clamp(1.6rem, 2vw, 2rem);
+      }
+
+      .section-head p {
+        margin: 0;
+        max-width: 880px;
+        color: #5c7189;
+        line-height: 1.72;
+      }
+
+      .nu-layout {
+        display: grid;
+        grid-template-columns: 400px minmax(0, 1fr);
+        gap: 1rem;
+        align-items: start;
+      }
+
+      .panel-card {
+        padding: 1rem;
+      }
+
+      .panel-card h3 {
+        margin: 0 0 0.45rem;
+        color: var(--primary-color);
+        font-size: 1rem;
+      }
+
+      .small {
+        color: var(--muted);
+        font-size: 0.84rem;
+        line-height: 1.55;
+      }
+
+      .mono {
+        font-family: var(--mono);
+      }
+
+      .section {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e7eff7;
+      }
+
+      .section:first-child {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: none;
+      }
+
+      .slider {
+        display: grid;
+        grid-template-columns: 58px 1fr 50px;
+        gap: 0.8rem;
+        align-items: center;
+        margin: 0.7rem 0;
+      }
+
+      label {
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        accent-color: var(--secondary-color);
+      }
+
+      .val {
+        text-align: right;
+        color: var(--text-strong);
+        font-size: 0.84rem;
+        font-family: var(--mono);
+        font-weight: 700;
+      }
+
+      select,
+      input[type="text"] {
+        width: 100%;
+        padding: 0.7rem 0.85rem;
+        border-radius: 14px;
+        border: 1px solid var(--border-color);
+        background: #fbfdff;
+        color: var(--text-strong);
+        outline: none;
+        transition:
+          border-color 0.16s ease,
+          box-shadow 0.16s ease,
+          background 0.16s ease;
+      }
+
+      select:focus,
+      input[type="text"]:focus {
+        border-color: #8cb4da;
+        box-shadow: 0 0 0 4px rgba(60, 127, 192, 0.12);
+        background: #ffffff;
+      }
+
+      .control-row,
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .control-row {
+        margin-top: 0.8rem;
+      }
+
+      .control-row select {
+        flex: 1 1 140px;
+        min-width: 120px;
+        max-width: 180px;
+      }
+
+      .control-row > span,
+      .row > span {
+        font-size: 0.84rem;
+        color: var(--muted);
+      }
+
+      .line {
+        margin-top: 0.8rem;
+        padding: 0.85rem 0.95rem;
+        border: 1px solid #e2ebf4;
+        border-radius: 14px;
+        background: #fbfdff;
+        font-size: 0.84rem;
+        line-height: 1.55;
+      }
+
+      .line .row {
+        gap: 1rem;
+      }
+
+      .kpi {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+        margin-top: 0.8rem;
+      }
+
+      .box {
+        padding: 0.85rem 0.9rem;
+        border: 1px solid #e2ebf4;
+        border-radius: 14px;
+        background: #fbfdff;
+      }
+
+      .box .lab {
+        color: var(--muted);
+        font-size: 0.75rem;
+        margin-bottom: 0.38rem;
+      }
+
+      .box .num {
+        color: var(--text-strong);
+        font-size: 1.05rem;
+        font-family: var(--mono);
+        font-weight: 800;
+      }
+
+      .treeHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 0.85rem;
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        justify-content: flex-end;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        color: var(--muted);
+        font-size: 0.76rem;
+      }
+
+      .sw {
+        width: 12px;
+        height: 12px;
+        border-radius: 4px;
+        border: 1px solid #cfd9e4;
+      }
+
+      .sw.sub {
+        background: rgba(99, 102, 241, 0.14);
+        border-color: rgba(99, 102, 241, 0.52);
+      }
+
+      .sw.obs {
+        background: var(--warning-soft);
+        border-color: var(--warning-line);
+      }
+
+      .sw.arg {
+        background: var(--info-soft);
+        border-color: var(--info-line);
+      }
+
+      .sw.bay {
+        background: var(--success-soft);
+        border-color: var(--success-line);
+      }
+
+      .treeBox {
+        position: relative;
+        height: 340px;
+        border-radius: 18px;
+        border: 1px solid #deebf6;
+        background:
+          radial-gradient(
+            160px 100px at 20% 20%,
+            rgba(60, 127, 192, 0.06),
+            transparent 70%
+          ),
+          linear-gradient(180deg, #fbfdff 0%, #f6fbff 100%);
+        overflow: hidden;
+      }
+
+      .treeSvg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .grid {
+        position: relative;
+        z-index: 2;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 150px);
+        grid-template-rows: repeat(3, 1fr);
+        justify-content: center;
+        align-items: center;
+        gap: 0.85rem;
+        padding: 1rem;
+      }
+
+      .node {
+        width: 150px;
+        padding: 0.85rem 0.9rem;
+        border-radius: 16px;
+        border: 2px solid #9fb4cb;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 10px 20px rgba(25, 57, 95, 0.07);
+      }
+
+      .node .toprow {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 0.55rem;
+        margin-bottom: 0.45rem;
+      }
+
+      .node .name {
+        color: var(--text-strong);
+        font-size: 0.96rem;
+        font-weight: 800;
+      }
+
+      .node .role {
+        color: var(--muted);
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+
+      .node .metric {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.55rem;
+        margin-top: 0.25rem;
+        color: var(--muted);
+        font-size: 0.76rem;
+      }
+
+      .node .metric span {
+        color: var(--text-strong);
+        font-family: var(--mono);
+        font-weight: 800;
+      }
+
+      .node.subtree {
+        background: rgba(99, 102, 241, 0.12);
+        border-color: rgba(99, 102, 241, 0.5);
+      }
+
+      .node.observed {
+        background: var(--warning-soft);
+        border-color: var(--warning-line);
+        border-width: 4px;
+      }
+
+      .node.argmax {
+        box-shadow:
+          0 0 0 4px rgba(59, 130, 246, 0.16),
+          0 10px 20px rgba(25, 57, 95, 0.07);
+        border-color: var(--info-line);
+      }
+
+      .node.bayes {
+        box-shadow:
+          0 0 0 4px rgba(47, 143, 108, 0.16),
+          0 10px 20px rgba(25, 57, 95, 0.07);
+        border-color: var(--success-line);
+      }
+
+      #node-A {
+        grid-column: 2 / span 2;
+        grid-row: 1;
+        justify-self: center;
+      }
+
+      #node-B {
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: center;
+      }
+
+      #node-C {
+        grid-column: 3;
+        grid-row: 2;
+        justify-self: center;
+      }
+
+      #node-D {
+        grid-column: 3;
+        grid-row: 3;
+        justify-self: center;
+      }
+
+      #node-E {
+        grid-column: 4;
+        grid-row: 3;
+        justify-self: center;
+      }
+
+      details {
+        margin-top: 0.9rem;
+        border-radius: 16px;
+        border: 1px solid #dfeaf5;
+        background: #fbfdff;
+        overflow: hidden;
+      }
+
+      summary {
+        list-style: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 0.9rem 1rem;
+        color: var(--primary-color);
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .detailBody {
+        padding: 0.95rem 1rem 1rem;
+        border-top: 1px solid #e7eff7;
+        font-size: 0.84rem;
+        line-height: 1.6;
+      }
+
+      table {
+        width: 100%;
+        margin-top: 0.8rem;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 0.42rem 0.5rem;
+        border: 1px solid #dbe7f3;
+        text-align: center;
+        font-family: var(--mono);
+        font-size: 0.78rem;
+      }
+
+      th {
+        background: #f3f8fd;
+        color: var(--text-strong);
+      }
+
+      .explorer-shell {
+        display: flex;
+        gap: 1rem;
+        align-items: stretch;
+      }
+
+      .explorer-panel,
+      .chart-wrap {
+        background: var(--surface);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .explorer-panel {
+        width: 368px;
+        min-width: 340px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .explorer-panel h3 {
+        margin: 0 0 0.4rem;
+        color: var(--primary-color);
+        font-size: 1rem;
+      }
+
+      .sub {
+        margin-bottom: 0.9rem;
+        color: var(--muted);
+        font-size: 0.84rem;
+        line-height: 1.6;
+      }
+
+      .stats,
+      .status {
+        padding: 0.85rem 0.95rem;
+        border-radius: 14px;
+        background: #f7fbff;
+        border: 1px solid #dfeaf5;
+        color: #5d738b;
+        font-family: var(--mono);
+        font-size: 0.76rem;
+        line-height: 1.55;
+        white-space: pre-wrap;
+      }
+
+      .stats {
+        margin-bottom: 0.9rem;
+      }
+
+      .status {
+        margin-top: auto;
+      }
+
+      .group {
+        margin-bottom: 0.9rem;
+        padding: 0.9rem;
+        border-radius: 16px;
+        background: #fbfdff;
+        border: 1px solid #dfeaf5;
+      }
+
+      .group-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.7rem;
+      }
+
+      .group-title span {
+        color: var(--primary-color);
+        font-size: 0.86rem;
+        font-weight: 700;
+      }
+
+      .explorer-panel .row {
+        margin: 0.6rem 0;
+      }
+
+      .explorer-panel .row label {
+        flex: 1;
+      }
+
+      .explorer-panel .row select {
+        flex: 1 1 170px;
+        min-width: 170px;
+        max-width: 220px;
+      }
+
+      .btns {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.65rem;
+        margin-top: 0.8rem;
+      }
+
+      .chk-list {
+        display: grid;
+        gap: 0.5rem;
+        max-height: 220px;
+        overflow: auto;
+        padding-right: 0.15rem;
+      }
+
+      .chk {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.65rem 0.75rem;
+        border-radius: 12px;
+        background: #f7fbff;
+        border: 1px solid #dfeaf5;
+      }
+
+      .chk .name {
+        color: var(--text-strong);
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .hint {
+        margin-top: 0.75rem;
+        color: #7a8ca3;
+        font-size: 0.76rem;
+        line-height: 1.55;
+      }
+
+      .chart-wrap {
+        flex: 1;
+        min-width: 0;
+        min-height: 820px;
+        overflow: hidden;
+        position: relative;
+        background:
+          radial-gradient(
+            360px 240px at 15% 15%,
+            rgba(60, 127, 192, 0.08),
+            transparent 70%
+          ),
+          linear-gradient(180deg, #fbfdff 0%, #f6fbff 100%);
+      }
+
+      #chart {
+        width: 100%;
+        height: 100%;
+      }
+
+      .proof-card {
+        padding: 1rem;
+      }
+
+      .proof-card p {
+        margin: 0.5rem 0 0;
+        color: #5a6d85;
+        line-height: 1.7;
+      }
+
+      .proof-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .proof-frame {
+        width: 100%;
+        height: 900px;
+        border: 1px solid #dbe7f3;
+        border-radius: 16px;
+        background: #ffffff;
+      }
+
+      footer {
+        margin-top: 2.5rem;
+        text-align: center;
+        color: #8b9cb1;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 1180px) {
+        .nu-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .explorer-shell {
+          flex-direction: column;
+        }
+
+        .explorer-panel {
+          width: 100%;
+          min-width: 0;
+        }
+
+        .chart-wrap {
+          min-height: 700px;
+        }
+      }
+
+      @media (max-width: 960px) {
+        .hero-card {
+          grid-template-columns: 1fr;
+        }
+
+        .overview-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .proof-header,
+        .treeHeader {
+          flex-direction: column;
+        }
+
+        .legend {
+          justify-content: flex-start;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .page-shell {
+          padding: 16px 12px 36px;
+        }
+
+        .hero-card {
+          padding: 1.05rem;
+          border-radius: 18px;
+        }
+
+        .hero-copy h1 {
+          font-size: 2.2rem;
+        }
+
+        .grid {
+          grid-template-columns: repeat(2, 156px);
+          grid-template-rows: repeat(4, 1fr);
+        }
+
+        .node {
+          width: 156px;
+        }
+
+        #node-A {
+          grid-column: 1 / span 2;
+          grid-row: 1;
+        }
+
+        #node-B {
+          grid-column: 1;
+          grid-row: 2;
+        }
+
+        #node-C {
+          grid-column: 2;
+          grid-row: 2;
+        }
+
+        #node-D {
+          grid-column: 2;
+          grid-row: 3;
+        }
+
+        #node-E {
+          grid-column: 2;
+          grid-row: 4;
+        }
+
+        .treeBox {
+          height: 390px;
+        }
+
+        .slider {
+          grid-template-columns: 54px 1fr 44px;
+          gap: 0.6rem;
+        }
+
+        .chart-wrap {
+          min-height: 560px;
+        }
+
+        .proof-frame {
+          height: 640px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="page-shell">
+      <a class="back-link" href="../index.html">Back to research homepage</a>
+
+      <section class="hero-card">
+        <div class="hero-copy">
+          <div class="eyebrow">Research project website</div>
+          <h1>NuClass v2</h1>
+          <p class="hero-subtitle">
+            Adaptive multi-scale integration for robust cell annotation across
+            histopathology and spatial imaging data.
+          </p>
+          <div class="project-meta">
+            2025 | Yinuo Xu, Yan Cui, Mingyao Li, Zhi Huang | Preprint
+          </div>
+          <p class="hero-note">
+            This page combines the theorem intuition and the ontology explorer
+            into one interface. The top section explains the training and
+            Bayes-risk decision rule on a toy tree, and the second section lets
+            you explore the larger NuClass cell hierarchy used for annotation.
+          </p>
+          <div class="hero-pill-row">
+            <a
+              class="button-link primary"
+              href="../files/Nuclass_Tree.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Preview proof</a
+            >
+            <a class="button-link" href="../files/Nuclass_Tree.pdf" download
+              >Download proof PDF</a
+            >
+            <a
+              class="button-link"
+              href="https://arxiv.org/abs/2511.13586"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Open preprint</a
+            >
+          </div>
+          <div class="jump-links">
+            <a class="button-link" href="#theorem-toy">Jump to theorem toy</a>
+            <a class="button-link" href="#ontology-explorer"
+              >Jump to ontology explorer</a
+            >
+            <a class="button-link" href="#proof-preview"
+              >Jump to embedded proof</a
+            >
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img src="../images/Nuclass.png" alt="NuClass v2 project preview" />
+          <div class="hero-visual-grid">
+            <div class="hero-stat">
+              <div class="label">Model view</div>
+              <div class="value">Coarse labels, subtree likelihood, Bayes-risk inference</div>
+            </div>
+            <div class="hero-stat">
+              <div class="label">Interactive view</div>
+              <div class="value">Search, filter, expand, and inspect the cell ontology</div>
+            </div>
+            <div class="hero-stat">
+              <div class="label">Proof access</div>
+              <div class="value">Direct PDF preview and download from this page</div>
+            </div>
+            <div class="hero-stat">
+              <div class="label">Use case</div>
+              <div class="value">Histopathology and spatial imaging cell annotation</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="overview-grid" aria-label="NuClass highlights">
+        <article class="feature-card">
+          <h2>Posterior over ontology nodes</h2>
+          <p>
+            The toy theorem panel shows how NuClass keeps probability mass on
+            both internal and leaf nodes using a stop-at-node formulation.
+          </p>
+        </article>
+        <article class="feature-card">
+          <h2>Training with coarse supervision</h2>
+          <p>
+            Coarse labels become subtree events, so the likelihood aggregates
+            all descendants that remain consistent with the observed label.
+          </p>
+        </article>
+        <article class="feature-card">
+          <h2>Decision rule on the tree</h2>
+          <p>
+            Prediction is based on Bayes risk under tree distance, which makes
+            ontology-aware decisions different from plain posterior argmax.
+          </p>
+        </article>
+      </section>
+
+      <section id="theorem-toy" class="section-head">
+        <h2>NuClass theorem toy</h2>
+        <p>
+          The toy tree uses the ontology A -&gt; {B, C}, C -&gt; {D, E}. Adjust the
+          logits to see how posterior mass changes, how a coarse label becomes a
+          subtree likelihood during training, and how Bayes-risk decoding can
+          choose a different prediction than posterior argmax.
+        </p>
+      </section>
+
+      <section class="nu-layout">
+        <div class="panel-card">
+          <div class="section">
+            <h3>Posterior from logits</h3>
+            <div class="small mono">p(S=v|x)=exp(zv)/sum_u exp(zu)</div>
+
+            <div class="slider">
+              <label for="zA">z(A)</label>
+              <input type="range" id="zA" min="-6" max="6" step="0.1" value="0" />
+              <div class="val" id="zAv">0.0</div>
+            </div>
+            <div class="slider">
+              <label for="zB">z(B)</label>
+              <input type="range" id="zB" min="-6" max="6" step="0.1" value="0" />
+              <div class="val" id="zBv">0.0</div>
+            </div>
+            <div class="slider">
+              <label for="zC">z(C)</label>
+              <input type="range" id="zC" min="-6" max="6" step="0.1" value="0" />
+              <div class="val" id="zCv">0.0</div>
+            </div>
+            <div class="slider">
+              <label for="zD">z(D)</label>
+              <input type="range" id="zD" min="-6" max="6" step="0.1" value="0" />
+              <div class="val" id="zDv">0.0</div>
+            </div>
+            <div class="slider">
+              <label for="zE">z(E)</label>
+              <input type="range" id="zE" min="-6" max="6" step="0.1" value="0" />
+              <div class="val" id="zEv">0.0</div>
+            </div>
+
+            <div class="control-row">
+              <button id="presetProof" class="primary">Proof preset</button>
+              <button id="presetUniform">Uniform</button>
+              <button id="presetReset">Reset</button>
+            </div>
+
+            <div class="line">
+              <div class="row">
+                <div class="small">
+                  sum p = <span class="mono" id="sumP">1.0</span>
+                </div>
+                <div class="small">
+                  argmax p = <span class="mono" id="argmax">A</span>
+                </div>
+                <div class="small">
+                  Bayes a-hat = <span class="mono" id="bayes">A</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h3>Training with subtree likelihood</h3>
+            <div class="small mono">
+              Fine: L=p(S=v|x). Coarse: L=p(S in subtree(u)|x)=sum_w A[u,w]p(S=w|x).
+              Loss l=-log L.
+            </div>
+
+            <div class="control-row">
+              <span>Observed label</span>
+              <select id="obsLabel">
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C" selected>C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+              </select>
+
+              <span>Type</span>
+              <select id="obsType">
+                <option value="auto" selected>auto</option>
+                <option value="fine">fine</option>
+                <option value="coarse">coarse</option>
+              </select>
+            </div>
+
+            <div class="kpi">
+              <div class="box">
+                <div class="lab">Likelihood L</div>
+                <div class="num" id="Lval">0.0</div>
+              </div>
+              <div class="box">
+                <div class="lab">Loss l = -log L</div>
+                <div class="num" id="lossVal">0.0</div>
+              </div>
+            </div>
+
+            <div class="line mono" id="trainLine">-</div>
+          </div>
+
+          <div class="section">
+            <h3>Inference by Bayes risk</h3>
+            <div class="small mono">ER(a)=sum_v p(S=v|x)R[a,v], a-hat=argmin ER(a)</div>
+
+            <div class="kpi">
+              <div class="box">
+                <div class="lab">ER(a-hat)</div>
+                <div class="num" id="ERhat">0.0</div>
+              </div>
+              <div class="box">
+                <div class="lab">ER(argmax)</div>
+                <div class="num" id="ERarg">0.0</div>
+              </div>
+            </div>
+
+            <details>
+              <summary>
+                <span>Show ER(a) for all nodes</span>
+                <span class="small mono">A,B,C,D,E</span>
+              </summary>
+              <div class="detailBody mono" id="erList"></div>
+            </details>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="treeHeader">
+            <div>
+              <h3>Toy ontology view</h3>
+              <div class="small">
+                Each node shows posterior p(S=node|x) and risk ER(a=node).
+              </div>
+            </div>
+            <div class="legend">
+              <div class="tag">
+                <span class="sw sub"></span><span>subtree(y-tilde)</span>
+              </div>
+              <div class="tag"><span class="sw obs"></span><span>y-tilde</span></div>
+              <div class="tag"><span class="sw arg"></span><span>argmax</span></div>
+              <div class="tag"><span class="sw bay"></span><span>Bayes</span></div>
+            </div>
+          </div>
+
+          <div class="treeBox" id="treeBox">
+            <svg class="treeSvg" id="treeSvg"></svg>
+            <div class="grid">
+              <div class="node" id="node-A" data-node="A">
+                <div class="toprow">
+                  <div class="name">A</div>
+                  <div class="role">root</div>
+                </div>
+                <div class="metric">
+                  <div>p</div>
+                  <span id="pA">0.0</span>
+                </div>
+                <div class="metric">
+                  <div>ER</div>
+                  <span id="erA">0.0</span>
+                </div>
+              </div>
+
+              <div class="node" id="node-B" data-node="B">
+                <div class="toprow">
+                  <div class="name">B</div>
+                  <div class="role">leaf</div>
+                </div>
+                <div class="metric">
+                  <div>p</div>
+                  <span id="pB">0.0</span>
+                </div>
+                <div class="metric">
+                  <div>ER</div>
+                  <span id="erB">0.0</span>
+                </div>
+              </div>
+
+              <div class="node" id="node-C" data-node="C">
+                <div class="toprow">
+                  <div class="name">C</div>
+                  <div class="role">internal</div>
+                </div>
+                <div class="metric">
+                  <div>p</div>
+                  <span id="pC">0.0</span>
+                </div>
+                <div class="metric">
+                  <div>ER</div>
+                  <span id="erC">0.0</span>
+                </div>
+              </div>
+
+              <div class="node" id="node-D" data-node="D">
+                <div class="toprow">
+                  <div class="name">D</div>
+                  <div class="role">leaf</div>
+                </div>
+                <div class="metric">
+                  <div>p</div>
+                  <span id="pD">0.0</span>
+                </div>
+                <div class="metric">
+                  <div>ER</div>
+                  <span id="erD">0.0</span>
+                </div>
+              </div>
+
+              <div class="node" id="node-E" data-node="E">
+                <div class="toprow">
+                  <div class="name">E</div>
+                  <div class="role">leaf</div>
+                </div>
+                <div class="metric">
+                  <div>p</div>
+                  <span id="pE">0.0</span>
+                </div>
+                <div class="metric">
+                  <div>ER</div>
+                  <span id="erE">0.0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <details>
+            <summary>
+              <span>Show matrices from the proof</span>
+              <span class="small mono">ancestor matrix A and risk matrix R</span>
+            </summary>
+            <div class="detailBody">
+              <div class="small mono">
+                Ancestor matrix A (A[u,v]=1 if u is ancestor of v)
+              </div>
+              <div id="Amat"></div>
+              <div class="small mono" style="margin-top: 0.9rem">
+                Risk matrix R (tree edge distance)
+              </div>
+              <div id="Rmat"></div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section id="ontology-explorer" class="section-head">
+        <h2>NuClass ontology explorer</h2>
+        <p>
+          This larger tree lets you inspect the cell hierarchy directly. You can
+          change layouts, control visible depth, filter lineages, restrict to
+          dataset nodes, and search for specific cell types while keeping the
+          visual language aligned with the theorem panel above.
+        </p>
+      </section>
+
+      <section class="explorer-shell">
+        <div class="explorer-panel">
+          <h3>Cell type tree explorer</h3>
+          <div class="sub">
+            Horizontal labels, overlap control, lineage filters, depth control,
+            and search-to-node highlighting.
+          </div>
+          <div class="stats" id="statsBox">stats</div>
+
+          <div class="group">
+            <div class="group-title"><span>Display</span></div>
+
+            <div class="row">
+              <label for="layoutSel">Layout</label>
+              <select id="layoutSel">
+                <option value="radial" selected>Radial</option>
+                <option value="orthogonal">Orthogonal</option>
+              </select>
+            </div>
+
+            <div class="row">
+              <label for="depthRange">Default expand depth</label>
+              <div style="flex: 1; display: flex; align-items: center; gap: 0.75rem">
+                <input
+                  id="depthRange"
+                  type="range"
+                  min="-1"
+                  max="7"
+                  step="1"
+                  value="3"
+                  style="flex: 1"
+                />
+                <div
+                  id="depthVal"
+                  class="mono"
+                  style="width: 46px; text-align: right; color: #5d738b; font-size: 0.8rem"
+                >
+                  3
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <label for="onlyDataset">Only show from_dataset nodes</label>
+              <input id="onlyDataset" type="checkbox" />
+            </div>
+
+            <div class="row">
+              <label for="showInternal">Show internal labels (radial)</label>
+              <input id="showInternal" type="checkbox" />
+            </div>
+
+            <div class="row">
+              <label for="hideOverlap">Hide overlapped labels (radial)</label>
+              <input id="hideOverlap" type="checkbox" checked />
+            </div>
+
+            <div class="btns">
+              <button id="expandAllBtn" class="primary">Expand all</button>
+              <button id="collapseAllBtn">Collapse</button>
+            </div>
+          </div>
+
+          <div class="group">
+            <div class="group-title"><span>Lineage filter</span></div>
+            <div class="chk-list" id="lineageList"></div>
+            <div class="btns">
+              <button id="selectAllBtn">Select all</button>
+              <button id="selectNoneBtn">Select none</button>
+            </div>
+          </div>
+
+          <div class="group">
+            <div class="group-title"><span>Search</span></div>
+            <input
+              id="searchBox"
+              type="text"
+              placeholder="substring match on node name"
+            />
+            <div class="btns">
+              <button id="searchBtn" class="primary">Locate</button>
+              <button id="clearSearchBtn">Clear</button>
+            </div>
+            <div class="hint">
+              Locate expands the path and highlights the first match.
+            </div>
+          </div>
+
+          <div class="status" id="statusBox">ready</div>
+        </div>
+
+        <div class="chart-wrap">
+          <div id="chart"></div>
+        </div>
+      </section>
+
+      <section id="proof-preview" class="section-head">
+        <h2>Proof preview</h2>
+        <p>
+          The proof PDF is embedded here for quick reference. If your browser
+          blocks inline PDF rendering, use the preview or download buttons
+          instead.
+        </p>
+      </section>
+
+      <section class="proof-card">
+        <div class="proof-header">
+          <div>
+            <h3 style="margin: 0; color: var(--primary-color); font-size: 1rem">
+              NuClass tree proof PDF
+            </h3>
+            <p>
+              The same proof document is available for direct browser preview and
+              local download from the buttons on the right.
+            </p>
+          </div>
+          <div class="proof-actions">
+            <a
+              class="button-link primary"
+              href="../files/Nuclass_Tree.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Preview PDF</a
+            >
+            <a class="button-link" href="../files/Nuclass_Tree.pdf" download
+              >Download PDF</a
+            >
+          </div>
+        </div>
+        <iframe
+          class="proof-frame"
+          src="../files/Nuclass_Tree.pdf#view=FitH"
+          title="NuClass tree proof PDF preview"
+        ></iframe>
+      </section>
+
+      <footer>NuClass v2 interactive project page</footer>
+    </main>
+
+    <script>
+      (function () {
+        "use strict";
+
+        const NODES = ["A", "B", "C", "D", "E"];
+        const IDX = Object.fromEntries(NODES.map((n, i) => [n, i]));
+        const LEAF = new Set(["B", "D", "E"]);
+        const EPS = 1e-12;
+
+        const A_mat = [
+          [1, 1, 1, 1, 1],
+          [0, 1, 0, 0, 0],
+          [0, 0, 1, 1, 1],
+          [0, 0, 0, 1, 0],
+          [0, 0, 0, 0, 1],
+        ];
+
+        const R_mat = [
+          [0, 1, 1, 2, 2],
+          [1, 0, 2, 3, 3],
+          [1, 2, 0, 1, 1],
+          [2, 3, 1, 0, 2],
+          [2, 3, 1, 2, 0],
+        ];
+
+        const $ = (id) => document.getElementById(id);
+
+        const z = {
+          A: $("zA"),
+          B: $("zB"),
+          C: $("zC"),
+          D: $("zD"),
+          E: $("zE"),
+        };
+        const zv = {
+          A: $("zAv"),
+          B: $("zBv"),
+          C: $("zCv"),
+          D: $("zDv"),
+          E: $("zEv"),
+        };
+
+        const pSpan = {
+          A: $("pA"),
+          B: $("pB"),
+          C: $("pC"),
+          D: $("pD"),
+          E: $("pE"),
+        };
+        const erSpan = {
+          A: $("erA"),
+          B: $("erB"),
+          C: $("erC"),
+          D: $("erD"),
+          E: $("erE"),
+        };
+
+        const sumPEl = $("sumP");
+        const argmaxEl = $("argmax");
+        const bayesEl = $("bayes");
+        const obsLabel = $("obsLabel");
+        const obsType = $("obsType");
+        const Lval = $("Lval");
+        const lossVal = $("lossVal");
+        const trainLine = $("trainLine");
+        const ERhat = $("ERhat");
+        const ERarg = $("ERarg");
+        const erList = $("erList");
+
+        const nodeDiv = {
+          A: $("node-A"),
+          B: $("node-B"),
+          C: $("node-C"),
+          D: $("node-D"),
+          E: $("node-E"),
+        };
+
+        const treeBox = $("treeBox");
+        const treeSvg = $("treeSvg");
+        const f1 = (x) => (Number.isFinite(x) ? x.toFixed(1) : String(x));
+
+        function softmax(logits) {
+          const m = Math.max(...logits);
+          const exps = logits.map((v) => Math.exp(v - m));
+          const s = exps.reduce((a, b) => a + b, 0);
+          return exps.map((e) => e / s);
+        }
+
+        function subtreeNodes(u) {
+          const i = IDX[u];
+          const out = [];
+          for (let j = 0; j < NODES.length; j++) {
+            if (A_mat[i][j] === 1) out.push(NODES[j]);
+          }
+          return out;
+        }
+
+        function subtreeProb(u, p) {
+          const i = IDX[u];
+          let s = 0;
+          for (let j = 0; j < NODES.length; j++) s += A_mat[i][j] * p[j];
+          return s;
+        }
+
+        function expectedRisks(p) {
+          const ER = new Array(NODES.length).fill(0);
+          for (let a = 0; a < NODES.length; a++) {
+            let s = 0;
+            for (let v = 0; v < NODES.length; v++) s += p[v] * R_mat[a][v];
+            ER[a] = s;
+          }
+          return ER;
+        }
+
+        function argmax(arr) {
+          let k = 0;
+          for (let i = 1; i < arr.length; i++) if (arr[i] > arr[k]) k = i;
+          return k;
+        }
+
+        function argmin(arr) {
+          let k = 0;
+          for (let i = 1; i < arr.length; i++) if (arr[i] < arr[k]) k = i;
+          return k;
+        }
+
+        function clearClasses() {
+          for (const n of NODES) {
+            nodeDiv[n].classList.remove("subtree", "observed", "argmax", "bayes");
+          }
+        }
+
+        function applyClasses(obsNode, subtreeSet, argNode, bayesNode) {
+          clearClasses();
+          for (const n of subtreeSet) nodeDiv[n].classList.add("subtree");
+          nodeDiv[obsNode].classList.add("observed");
+          nodeDiv[argNode].classList.add("argmax");
+          nodeDiv[bayesNode].classList.add("bayes");
+        }
+
+        function updateConnectors() {
+          const edges = [
+            ["A", "B"],
+            ["A", "C"],
+            ["C", "D"],
+            ["C", "E"],
+          ];
+          const crect = treeBox.getBoundingClientRect();
+
+          const center = (n) => {
+            const r = nodeDiv[n].getBoundingClientRect();
+            return {
+              x: r.left - crect.left + r.width / 2,
+              y: r.top - crect.top + r.height / 2,
+            };
+          };
+
+          while (treeSvg.firstChild) treeSvg.removeChild(treeSvg.firstChild);
+
+          for (const [u, v] of edges) {
+            const pu = center(u);
+            const pv = center(v);
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", String(pu.x));
+            line.setAttribute("y1", String(pu.y));
+            line.setAttribute("x2", String(pv.x));
+            line.setAttribute("y2", String(pv.y));
+            line.setAttribute("stroke", "#9fb4cb");
+            line.setAttribute("stroke-width", "2.2");
+            line.setAttribute("stroke-linecap", "round");
+            treeSvg.appendChild(line);
+          }
+        }
+
+        function renderMatrix(containerId, mat) {
+          const wrap = $(containerId);
+          const table = document.createElement("table");
+          const thead = document.createElement("thead");
+          const trh = document.createElement("tr");
+          const th0 = document.createElement("th");
+          th0.textContent = "";
+          trh.appendChild(th0);
+          for (const c of NODES) {
+            const th = document.createElement("th");
+            th.textContent = c;
+            trh.appendChild(th);
+          }
+          thead.appendChild(trh);
+          table.appendChild(thead);
+
+          const tbody = document.createElement("tbody");
+          for (let i = 0; i < NODES.length; i++) {
+            const tr = document.createElement("tr");
+            const th = document.createElement("th");
+            th.textContent = NODES[i];
+            tr.appendChild(th);
+            for (let j = 0; j < NODES.length; j++) {
+              const td = document.createElement("td");
+              td.textContent = String(mat[i][j]);
+              tr.appendChild(td);
+            }
+            tbody.appendChild(tr);
+          }
+          table.appendChild(tbody);
+          wrap.innerHTML = "";
+          wrap.appendChild(table);
+        }
+
+        function updateAll() {
+          for (const n of NODES) zv[n].textContent = f1(parseFloat(z[n].value));
+
+          const logits = NODES.map((n) => parseFloat(z[n].value));
+          const p = softmax(logits);
+
+          for (let i = 0; i < NODES.length; i++) pSpan[NODES[i]].textContent = f1(p[i]);
+          sumPEl.textContent = f1(p.reduce((a, b) => a + b, 0));
+
+          const argIdx = argmax(p);
+          const argNode = NODES[argIdx];
+          argmaxEl.textContent = argNode;
+
+          const y = obsLabel.value;
+          let mode = obsType.value;
+          if (mode === "auto") mode = LEAF.has(y) ? "fine" : "coarse";
+
+          const subNodes = subtreeNodes(y);
+          let L = 0;
+          if (mode === "fine") {
+            L = p[IDX[y]];
+            trainLine.textContent = "fine: L = p(" + y + ") = " + f1(L);
+          } else {
+            L = subtreeProb(y, p);
+            const terms = subNodes.map((n) => "p(" + n + ")").join(" + ");
+            trainLine.textContent = "coarse: L = " + terms + " = " + f1(L);
+          }
+
+          const loss = -Math.log(Math.max(L, EPS));
+          Lval.textContent = f1(L);
+          lossVal.textContent = f1(loss);
+
+          const ER = expectedRisks(p);
+          for (let i = 0; i < NODES.length; i++) erSpan[NODES[i]].textContent = f1(ER[i]);
+
+          const bayIdx = argmin(ER);
+          const bayNode = NODES[bayIdx];
+          bayesEl.textContent = bayNode;
+          ERhat.textContent = f1(ER[bayIdx]);
+          ERarg.textContent = f1(ER[argIdx]);
+
+          let s = "";
+          for (let i = 0; i < NODES.length; i++) s += "ER(" + NODES[i] + ") = " + f1(ER[i]) + "\n";
+          erList.textContent = s.trimEnd();
+
+          applyClasses(y, subNodes, argNode, bayNode);
+          requestAnimationFrame(updateConnectors);
+        }
+
+        $("presetProof").addEventListener("click", () => {
+          z.A.value = -6;
+          z.B.value = -6;
+          z.C.value = Math.log(0.2);
+          z.D.value = Math.log(0.4);
+          z.E.value = Math.log(0.4);
+          obsLabel.value = "C";
+          obsType.value = "auto";
+          updateAll();
+        });
+
+        $("presetUniform").addEventListener("click", () => {
+          for (const n of NODES) z[n].value = 0;
+          obsLabel.value = "C";
+          obsType.value = "auto";
+          updateAll();
+        });
+
+        $("presetReset").addEventListener("click", () => {
+          for (const n of NODES) z[n].value = 0;
+          updateAll();
+        });
+
+        for (const n of NODES) {
+          z[n].addEventListener("input", updateAll);
+          z[n].addEventListener("change", updateAll);
+        }
+        obsLabel.addEventListener("change", updateAll);
+        obsType.addEventListener("change", updateAll);
+        window.addEventListener("resize", () => requestAnimationFrame(updateConnectors));
+
+        renderMatrix("Amat", A_mat);
+        renderMatrix("Rmat", R_mat);
+        $("presetProof").click();
+      })();
+    </script>
+
+    <script>
+      (function () {
+        "use strict";
+
+        const RAW_TREE = {
+          name: "Cell types",
+          children: [
+            {
+              name: "Epithelial lineage",
+              children: [
+                {
+                  name: "Normal epithelial cell",
+                  children: [
+                    { name: "Airway epithelial cell", from_dataset: true },
+                    { name: "Alveolar cell", from_dataset: true },
+                    { name: "Ciliated Epithelial cell", from_dataset: true },
+                    { name: "Fallopian tube epithelial cell", from_dataset: true },
+                    { name: "Ductal cell", from_dataset: true },
+                    { name: "Acinar cell", from_dataset: true },
+                    { name: "Endocrine cell", from_dataset: true },
+                  ],
+                },
+                {
+                  name: "Tumor epithelial cell",
+                  from_dataset: true,
+                  children: [
+                    { name: "Proliferative Tumor cell", from_dataset: true },
+                    { name: "Inflammatory Tumor cell", from_dataset: true },
+                    { name: "Metaplastic cell", from_dataset: true },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "Vascular lineage",
+              children: [
+                {
+                  name: "Endothelial cell",
+                  from_dataset: true,
+                  children: [
+                    { name: "Lymphatic Endothelial cell", from_dataset: true },
+                    {
+                      name: "Stromal associated endothelial cell",
+                      from_dataset: true,
+                    },
+                    {
+                      name: "Tumor associated endothelial cell",
+                      from_dataset: true,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "Stromal & contractile lineage",
+              children: [
+                {
+                  name: "Stromal cell",
+                  children: [
+                    { name: "Fibroblast cell", from_dataset: true },
+                    { name: "CAF", from_dataset: true },
+                    { name: "Granulosa cell", from_dataset: true },
+                  ],
+                },
+                {
+                  name: "Contractile cell",
+                  children: [
+                    { name: "Cardiomyocyte cell", from_dataset: true },
+                    {
+                      name: "Vascular mural cell",
+                      children: [
+                        { name: "Smooth Muscle cell", from_dataset: true },
+                        { name: "Pericyte cell", from_dataset: true },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "Immune & hematopoietic lineage",
+              children: [
+                {
+                  name: "Lymphoid lineage",
+                  children: [
+                    {
+                      name: "T cell",
+                      from_dataset: true,
+                      children: [
+                        { name: "CD4 T cell", from_dataset: true },
+                        { name: "CD8 T cell", from_dataset: true },
+                        { name: "Regulatory T cell", from_dataset: true },
+                      ],
+                    },
+                    { name: "B cell", from_dataset: true },
+                  ],
+                },
+                {
+                  name: "Myeloid lineage",
+                  children: [
+                    {
+                      name: "Myeloid cell",
+                      from_dataset: true,
+                      children: [
+                        { name: "Macrophage cell", from_dataset: true },
+                        { name: "Mast cell", from_dataset: true },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: "Other / quality control",
+              children: [{ name: "Ambiguous", from_dataset: true }],
+            },
+          ],
+        };
+
+        function deepClone(x) {
+          return JSON.parse(JSON.stringify(x));
+        }
+
+        function isLeaf(n) {
+          return !(n.children && n.children.length);
+        }
+
+        function annotateTree(node, lineage, depth, path) {
+          node.__depth = depth;
+          node.__path = (path ? path + " > " : "") + node.name;
+          if (depth === 1) lineage = node.name;
+          node.__lineage = lineage || "root";
+          if (node.children) {
+            for (const ch of node.children) annotateTree(ch, lineage, depth + 1, node.__path);
+          }
+        }
+
+        function collectLineages(root) {
+          return (root.children || []).map((x) => x.name);
+        }
+
+        function countTree(node) {
+          let nodes = 0;
+          let leaves = 0;
+          let datasetLeaves = 0;
+          let datasetNodes = 0;
+
+          (function rec(n) {
+            nodes += 1;
+            if (n.from_dataset) datasetNodes += 1;
+            if (isLeaf(n)) {
+              leaves += 1;
+              if (n.from_dataset) datasetLeaves += 1;
+            }
+            if (n.children) for (const ch of n.children) rec(ch);
+          })(node);
+
+          return { nodes, leaves, datasetLeaves, datasetNodes };
+        }
+
+        function filterTree(root, opts) {
+          const keepRoot = deepClone(root);
+
+          function rec(node, isRoot) {
+            const out = { ...node };
+            const children = Array.isArray(node.children) ? node.children : [];
+            let outChildren = [];
+
+            for (const ch of children) {
+              if (isRoot && !opts.allowedLineages.has(ch.name)) continue;
+              const kept = rec(ch, false);
+              if (kept) outChildren.push(kept);
+            }
+            if (outChildren.length) out.children = outChildren;
+            else delete out.children;
+
+            if (isRoot) return out;
+
+            if (opts.onlyDataset) {
+              const selfOk = !!out.from_dataset;
+              const childOk = !!out.children && out.children.length > 0;
+              if (!selfOk && !childOk) return null;
+            }
+            return out;
+          }
+
+          return rec(keepRoot, true);
+        }
+
+        function applyCollapsedByDepth(node, depthLimit) {
+          const lim = Number(depthLimit);
+          (function rec(n) {
+            n.collapsed = lim >= 0 ? n.__depth > lim : false;
+            if (n.children) for (const ch of n.children) rec(ch);
+          })(node);
+        }
+
+        function findFirstMatch(node, q) {
+          const qq = q.trim().toLowerCase();
+          if (!qq) return null;
+          let best = null;
+
+          (function rec(n) {
+            if (best) return;
+            const name = String(n.name || "").toLowerCase();
+            if (name.includes(qq)) {
+              best = n;
+              return;
+            }
+            if (n.children) for (const ch of n.children) rec(ch);
+          })(node);
+
+          return best;
+        }
+
+        function expandPathTo(node, targetPath) {
+          const parts = targetPath
+            .split(" > ")
+            .map((s) => s.trim())
+            .filter(Boolean);
+
+          function rec(n, idx) {
+            n.collapsed = false;
+            if (!n.children || idx >= parts.length) return;
+            for (const ch of n.children) {
+              if (ch.name === parts[idx]) rec(ch, idx + 1);
+            }
+          }
+
+          if (!parts.length) return;
+          if (node.name !== parts[0]) return;
+          rec(node, 1);
+        }
+
+        function makePalette(lineages) {
+          const base = [
+            "#4b8dcf",
+            "#62b59f",
+            "#e3b25f",
+            "#d46d6d",
+            "#5ea6d8",
+            "#9f86d7",
+            "#e09263",
+            "#7eb9df",
+            "#8ecb8b",
+          ];
+          const pal = {};
+          for (let i = 0; i < lineages.length; i++) pal[lineages[i]] = base[i % base.length];
+          pal.root = "#6b8198";
+          return pal;
+        }
+
+        function styleTree(node, palette, ui) {
+          const highlightPath = ui.highlightPath || null;
+          const layoutMode = ui.layoutMode;
+          const showInternal = ui.showInternal;
+
+          const leaf = isLeaf(node);
+          const isHighlight = highlightPath && node.__path === highlightPath;
+          const color = palette[node.__lineage] || "#8ba0b5";
+
+          node.itemStyle = node.itemStyle || {};
+          node.label = node.label || {};
+          node.emphasis = node.emphasis || {};
+          node.emphasis.label = node.emphasis.label || {};
+
+          node.itemStyle.color = color;
+          node.itemStyle.borderColor = isHighlight ? "#ffffff" : "rgba(255,255,255,0.75)";
+          node.itemStyle.borderWidth = isHighlight ? 2 : 1;
+          node.itemStyle.shadowBlur = isHighlight ? 20 : 8;
+          node.itemStyle.shadowColor = isHighlight
+            ? "rgba(255,255,255,0.45)"
+            : "rgba(28,56,93,0.16)";
+
+          if (layoutMode === "radial" && !showInternal && !leaf) node.label.show = false;
+          else node.label.show = true;
+
+          node.label.rotate = 0;
+          node.label.fontWeight = isHighlight ? 900 : 700;
+          node.label.color = isHighlight ? "#203448" : "#36506b";
+
+          node.emphasis.label.show = true;
+          node.emphasis.label.color = "#203448";
+          node.emphasis.label.fontWeight = 900;
+
+          if (node.children) for (const ch of node.children) styleTree(ch, palette, ui);
+        }
+
+        function buildOption(tree, ui) {
+          const isRadial = ui.layoutMode === "radial";
+          const depthLimit = ui.depthLimit;
+          const hideOverlap = ui.hideOverlap && isRadial;
+          const initialDepth = depthLimit < 0 ? -1 : depthLimit;
+
+          return {
+            backgroundColor: "transparent",
+            animation: true,
+            animationDuration: 800,
+            animationEasing: "cubicOut",
+            animationDurationUpdate: 420,
+            animationEasingUpdate: "cubicOut",
+            tooltip: {
+              trigger: "item",
+              triggerOn: "mousemove",
+              backgroundColor: "rgba(255,255,255,0.98)",
+              borderColor: "rgba(203,220,237,1)",
+              borderWidth: 1,
+              textStyle: { color: "#36506b", fontSize: 12 },
+              formatter: (p) => {
+                const d = p.data || {};
+                const fd = d.from_dataset ? "true" : "false";
+                const lin = d.__lineage || "root";
+                const dep = d.__depth ?? "";
+                const path = d.__path || d.name || "";
+                return [
+                  '<div style="font-weight:900;font-size:12px;margin-bottom:6px;color:#203448;">' +
+                    (d.name || "") +
+                    "</div>",
+                  '<div style="opacity:.9;">lineage: <span style="font-family:var(--mono);">' +
+                    lin +
+                    "</span></div>",
+                  '<div style="opacity:.9;">depth: <span style="font-family:var(--mono);">' +
+                    dep +
+                    "</span></div>",
+                  '<div style="opacity:.9;">from_dataset: <span style="font-family:var(--mono);">' +
+                    fd +
+                    "</span></div>",
+                  '<div style="margin-top:6px;opacity:.78;font-size:11px;">' + path + "</div>",
+                ].join("");
+              },
+            },
+            toolbox: {
+              show: true,
+              top: 10,
+              right: 10,
+              itemSize: 18,
+              iconStyle: { borderColor: "#5d738b" },
+              feature: {
+                saveAsImage: { show: true, title: "Save" },
+                restore: { show: true, title: "Restore" },
+              },
+            },
+            series: [
+              {
+                type: "tree",
+                name: "Cell Type Tree",
+                data: [tree],
+                top: "2%",
+                left: "2%",
+                bottom: "2%",
+                right: "2%",
+                layout: isRadial ? "radial" : "orthogonal",
+                orient: "LR",
+                roam: true,
+                scaleLimit: { min: 0.2, max: 4.0 },
+                ...(isRadial ? { radius: ["6%", "86%"] } : {}),
+                symbol: "circle",
+                symbolSize: 8,
+                edgeShape: "curve",
+                edgeForkPosition: "55%",
+                expandAndCollapse: true,
+                initialTreeDepth: initialDepth,
+                lineStyle: {
+                  width: 1.2,
+                  curveness: 0.25,
+                  color: "rgba(120,146,173,0.5)",
+                },
+                label: {
+                  rotate: 0,
+                  position: "right",
+                  align: "left",
+                  verticalAlign: "middle",
+                  fontSize: 11,
+                  overflow: "truncate",
+                  width: 260,
+                  formatter: (p) => {
+                    const d = p.data || {};
+                    const tag = d.from_dataset ? " [D]" : "";
+                    return (d.name || "") + tag;
+                  },
+                },
+                leaves: {
+                  label: {
+                    rotate: 0,
+                    fontSize: 11,
+                    overflow: "truncate",
+                    width: 260,
+                  },
+                },
+                emphasis: { focus: "descendant", scale: true },
+                ...(hideOverlap ? { labelLayout: { hideOverlap: true } } : {}),
+              },
+            ],
+          };
+        }
+
+        const chart = echarts.init(document.getElementById("chart"), null, {
+          renderer: "canvas",
+        });
+        let LINEAGES = [];
+        let PALETTE = {};
+
+        function setStatus(s) {
+          document.getElementById("statusBox").textContent = s;
+        }
+
+        function setStats(s) {
+          document.getElementById("statsBox").textContent = s;
+        }
+
+        function renderLineageChecklist(lineages) {
+          const host = document.getElementById("lineageList");
+          host.innerHTML = "";
+          for (const lin of lineages) {
+            const id = "lin_" + lin.replace(/[^a-zA-Z0-9]/g, "_");
+            const div = document.createElement("div");
+            div.className = "chk";
+            div.innerHTML =
+              '<input type="checkbox" id="' +
+              id +
+              '" name="lineage" value="' +
+              lin +
+              '" checked />' +
+              '<div class="name">' +
+              lin +
+              "</div>";
+            host.appendChild(div);
+          }
+        }
+
+        function getAllowedLineages() {
+          const boxes = Array.from(document.querySelectorAll('input[name="lineage"]'));
+          const allowed = new Set();
+          for (const b of boxes) if (b.checked) allowed.add(b.value);
+          return allowed;
+        }
+
+        function renderTree(opts = {}) {
+          const layoutMode = document.getElementById("layoutSel").value;
+          const depthLimit = parseInt(document.getElementById("depthRange").value, 10);
+          const onlyDataset = document.getElementById("onlyDataset").checked;
+          const showInternal = document.getElementById("showInternal").checked;
+          const hideOverlap = document.getElementById("hideOverlap").checked;
+          const allowed = getAllowedLineages();
+
+          let base = deepClone(RAW_TREE);
+          annotateTree(base, null, 0, "");
+          const total = countTree(base);
+
+          let t = filterTree(base, { allowedLineages: allowed, onlyDataset });
+          annotateTree(t, null, 0, "");
+          applyCollapsedByDepth(t, depthLimit);
+
+          const highlightPath = opts.highlightPath || null;
+          styleTree(t, PALETTE, { layoutMode, showInternal, highlightPath });
+
+          chart.setOption(buildOption(t, { layoutMode, depthLimit, hideOverlap }), true);
+
+          const shown = countTree(t);
+          setStats(
+            [
+              "TOTAL leaf cell types: " + total.leaves,
+              "TOTAL nodes: " + total.nodes,
+              "TOTAL from_dataset leaves: " + total.datasetLeaves,
+              "SHOWN leaf cell types: " + shown.leaves,
+              "SHOWN nodes: " + shown.nodes,
+              "SHOWN from_dataset leaves: " + shown.datasetLeaves,
+            ].join("\n"),
+          );
+
+          setStatus(
+            [
+              "layout=" + layoutMode,
+              "depth=" + depthLimit,
+              "onlyDataset=" + onlyDataset,
+              "showInternal(radial)=" + showInternal,
+              "hideOverlap(radial)=" + hideOverlap,
+              "lineages=" + Array.from(allowed).length + "/" + LINEAGES.length,
+              highlightPath
+                ? "highlight=" + highlightPath.split(" > ").slice(-1)[0]
+                : "highlight=none",
+            ].join("\n"),
+          );
+        }
+
+        function locate() {
+          const q = document.getElementById("searchBox").value.trim();
+          if (!q) return;
+
+          const layoutMode = document.getElementById("layoutSel").value;
+          const depthLimit = parseInt(document.getElementById("depthRange").value, 10);
+          const onlyDataset = document.getElementById("onlyDataset").checked;
+          const showInternal = document.getElementById("showInternal").checked;
+          const hideOverlap = document.getElementById("hideOverlap").checked;
+          const allowed = getAllowedLineages();
+
+          let base = deepClone(RAW_TREE);
+          annotateTree(base, null, 0, "");
+          let t = filterTree(base, { allowedLineages: allowed, onlyDataset });
+
+          annotateTree(t, null, 0, "");
+          applyCollapsedByDepth(t, depthLimit);
+
+          const m = findFirstMatch(t, q);
+          if (!m) {
+            setStatus('no match: "' + q + '"');
+            renderTree();
+            return;
+          }
+
+          expandPathTo(t, m.__path);
+          styleTree(t, PALETTE, {
+            layoutMode,
+            showInternal,
+            highlightPath: m.__path,
+          });
+
+          chart.setOption(buildOption(t, { layoutMode, depthLimit, hideOverlap }), true);
+          setStatus('match="' + m.name + '"\npath=' + m.__path);
+        }
+
+        function bindUI() {
+          const depth = document.getElementById("depthRange");
+          const depthVal = document.getElementById("depthVal");
+
+          depth.addEventListener("input", () => {
+            depthVal.textContent = depth.value;
+            renderTree();
+          });
+          document.getElementById("layoutSel").addEventListener("change", () => renderTree());
+          document.getElementById("onlyDataset").addEventListener("change", () => renderTree());
+          document.getElementById("showInternal").addEventListener("change", () => renderTree());
+          document.getElementById("hideOverlap").addEventListener("change", () => renderTree());
+          document.getElementById("lineageList").addEventListener("change", () => renderTree());
+
+          document.getElementById("expandAllBtn").addEventListener("click", () => {
+            depth.value = -1;
+            depthVal.textContent = "-1";
+            renderTree();
+          });
+
+          document.getElementById("collapseAllBtn").addEventListener("click", () => {
+            depth.value = 1;
+            depthVal.textContent = "1";
+            renderTree();
+          });
+
+          document.getElementById("selectAllBtn").addEventListener("click", () => {
+            for (const b of document.querySelectorAll('input[name="lineage"]')) b.checked = true;
+            renderTree();
+          });
+
+          document.getElementById("selectNoneBtn").addEventListener("click", () => {
+            for (const b of document.querySelectorAll('input[name="lineage"]')) b.checked = false;
+            renderTree();
+          });
+
+          document.getElementById("searchBtn").addEventListener("click", () => locate());
+          document.getElementById("clearSearchBtn").addEventListener("click", () => {
+            document.getElementById("searchBox").value = "";
+            renderTree();
+          });
+          document.getElementById("searchBox").addEventListener("keydown", (e) => {
+            if (e.key === "Enter") locate();
+          });
+
+          chart.on("click", (p) => {
+            if (!p || !p.data) return;
+            const d = p.data;
+            setStatus(
+              [
+                'clicked="' + d.name + '"',
+                "leaf=" + isLeaf(d),
+                "from_dataset=" + !!d.from_dataset,
+                "lineage=" + d.__lineage,
+                "depth=" + d.__depth,
+                "path=" + d.__path,
+              ].join("\n"),
+            );
+          });
+
+          window.addEventListener("resize", () => chart.resize());
+        }
+
+        (function main() {
+          let tmp = deepClone(RAW_TREE);
+          annotateTree(tmp, null, 0, "");
+          LINEAGES = collectLineages(tmp);
+          PALETTE = makePalette(LINEAGES);
+
+          renderLineageChecklist(LINEAGES);
+          bindUI();
+
+          document.getElementById("depthVal").textContent =
+            document.getElementById("depthRange").value;
+          renderTree();
+        })();
+      })();
+    </script>
+  </body>
+</html>

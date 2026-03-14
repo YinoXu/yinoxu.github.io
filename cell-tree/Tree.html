@@ -1,0 +1,978 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cell Type Tree Explorer</title>
+    <script src="https://assets.pyecharts.org/assets/v5/echarts.min.js"></script>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --panel: rgba(255, 255, 255, 0.06);
+        --line: rgba(255, 255, 255, 0.12);
+        --text: rgba(255, 255, 255, 0.88);
+        --muted: rgba(255, 255, 255, 0.6);
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        --radius: 14px;
+        --mono:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        --sans:
+          ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background:
+          radial-gradient(
+            1200px 800px at 20% 10%,
+            rgba(122, 162, 247, 0.15),
+            transparent 50%
+          ),
+          radial-gradient(
+            900px 700px at 85% 85%,
+            rgba(123, 211, 137, 0.12),
+            transparent 55%
+          ),
+          var(--bg);
+        color: var(--text);
+        font-family: var(--sans);
+      }
+      .app {
+        height: 100%;
+        display: flex;
+        gap: 14px;
+        padding: 14px;
+        box-sizing: border-box;
+      }
+      .panel {
+        width: 360px;
+        min-width: 340px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.08),
+          rgba(255, 255, 255, 0.04)
+        );
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 14px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .panel h1 {
+        font-size: 14px;
+        margin: 0 0 8px 0;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+      .sub {
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.35;
+        margin-bottom: 10px;
+      }
+      .stats {
+        background: rgba(0, 0, 0, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 10px;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.7);
+        font-family: var(--mono);
+        line-height: 1.35;
+        margin-bottom: 10px;
+        white-space: pre-wrap;
+      }
+      .group {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+      .group-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+      .group-title span {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.86);
+        font-weight: 800;
+        letter-spacing: 0.2px;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 8px 0;
+      }
+      .row label {
+        font-size: 12px;
+        color: var(--muted);
+        flex: 1;
+      }
+      input[type="text"] {
+        width: 100%;
+        box-sizing: border-box;
+        background: rgba(0, 0, 0, 0.22);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px;
+        color: var(--text);
+        outline: none;
+        font-size: 12px;
+      }
+      select {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.22);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 8px 10px;
+        color: var(--text);
+        font-size: 12px;
+        outline: none;
+      }
+      button {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--line);
+        color: var(--text);
+        border-radius: 12px;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 800;
+        transition:
+          transform 0.05s ease,
+          background 0.15s ease;
+      }
+      button:hover {
+        background: rgba(255, 255, 255, 0.14);
+      }
+      button:active {
+        transform: translateY(1px);
+      }
+      button.primary {
+        border-color: rgba(122, 162, 247, 0.35);
+      }
+      button.danger {
+        border-color: rgba(255, 107, 107, 0.35);
+      }
+      .btns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 8px;
+      }
+      .chk-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 6px;
+        margin-top: 6px;
+        max-height: 220px;
+        overflow: auto;
+        padding-right: 4px;
+      }
+      .chk {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.16);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .chk input {
+        transform: scale(1.05);
+      }
+      .chk .name {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.86);
+        font-weight: 800;
+      }
+      .hint {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.52);
+        line-height: 1.35;
+        margin-top: 8px;
+      }
+      .status {
+        margin-top: auto;
+        background: rgba(0, 0, 0, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 10px;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.65);
+        font-family: var(--mono);
+        line-height: 1.35;
+        white-space: pre-wrap;
+      }
+      .chart-wrap {
+        flex: 1;
+        min-width: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.04),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+      }
+      #chart {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="panel">
+        <h1>Cell Type Tree Explorer</h1>
+        <div class="sub">
+          Horizontal labels, overlap control (radial), lineage filter, depth
+          control, search-to-node.
+        </div>
+        <div class="stats" id="statsBox">stats</div>
+
+        <div class="group">
+          <div class="group-title"><span>Display</span></div>
+
+          <div class="row">
+            <label>Layout</label>
+            <select id="layoutSel">
+              <option value="radial" selected>Radial</option>
+              <option value="orthogonal">Orthogonal</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <label>Default expand depth</label>
+            <div style="flex: 1; display: flex; align-items: center; gap: 10px">
+              <input
+                id="depthRange"
+                type="range"
+                min="-1"
+                max="7"
+                step="1"
+                value="3"
+                style="flex: 1"
+              />
+              <div
+                id="depthVal"
+                style="
+                  width: 44px;
+                  text-align: right;
+                  font-family: var(--mono);
+                  color: rgba(255, 255, 255, 0.75);
+                  font-size: 11px;
+                "
+              >
+                3
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <label>Only show from_dataset nodes</label>
+            <input id="onlyDataset" type="checkbox" />
+          </div>
+
+          <div class="row">
+            <label>Show internal labels (radial)</label>
+            <input id="showInternal" type="checkbox" />
+          </div>
+
+          <div class="row">
+            <label>Hide overlapped labels (radial)</label>
+            <input id="hideOverlap" type="checkbox" checked />
+          </div>
+
+          <div class="btns">
+            <button id="expandAllBtn" class="primary">Expand All</button>
+            <button id="collapseAllBtn" class="danger">Collapse All</button>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-title"><span>Lineage filter</span></div>
+          <div class="chk-list" id="lineageList"></div>
+          <div class="btns">
+            <button id="selectAllBtn">Select All</button>
+            <button id="selectNoneBtn">Select None</button>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="group-title"><span>Search</span></div>
+          <input
+            id="searchBox"
+            type="text"
+            placeholder="substring match on node name"
+          />
+          <div class="btns">
+            <button id="searchBtn" class="primary">Locate</button>
+            <button id="clearSearchBtn">Clear</button>
+          </div>
+          <div class="hint">
+            Locate expands the path and highlights the first match.
+          </div>
+        </div>
+
+        <div class="status" id="statusBox">ready</div>
+      </div>
+
+      <div class="chart-wrap">
+        <div id="chart"></div>
+      </div>
+    </div>
+
+    <script>
+      // Tree data (fixed myeloid mutual exclusivity: macrophage/mast under myeloid cell)
+      const RAW_TREE = {
+        name: "Cell types",
+        children: [
+          {
+            name: "Epithelial lineage",
+            children: [
+              {
+                name: "Normal epithelial cell",
+                children: [
+                  { name: "Airway epithelial cell", from_dataset: true },
+                  { name: "Alveolar cell", from_dataset: true },
+                  { name: "Ciliated Epithelial cell", from_dataset: true },
+                  {
+                    name: "Fallopian tube epithelial cell",
+                    from_dataset: true,
+                  },
+                  { name: "Ductal cell", from_dataset: true },
+                  { name: "Acinar cell", from_dataset: true },
+                  { name: "Endocrine cell", from_dataset: true },
+                ],
+              },
+              {
+                name: "Tumor epithelial cell",
+                from_dataset: true,
+                children: [
+                  { name: "Proliferative Tumor cell", from_dataset: true },
+                  { name: "Inflammatory Tumor cell", from_dataset: true },
+                  { name: "Metaplastic cell", from_dataset: true },
+                ],
+              },
+            ],
+          },
+          {
+            name: "Vascular lineage",
+            children: [
+              {
+                name: "Endothelial cell",
+                from_dataset: true,
+                children: [
+                  { name: "Lymphatic Endothelial cell", from_dataset: true },
+                  {
+                    name: "Stromal associated endothelial cell",
+                    from_dataset: true,
+                  },
+                  {
+                    name: "Tumor associated endothelial cell",
+                    from_dataset: true,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: "Stromal & contractile lineage",
+            children: [
+              {
+                name: "Stromal cell",
+                children: [
+                  { name: "Fibroblast cell", from_dataset: true },
+                  { name: "CAF", from_dataset: true },
+                  { name: "Granulosa cell", from_dataset: true },
+                ],
+              },
+              {
+                name: "Contractile cell",
+                children: [
+                  { name: "Cardiomyocyte cell", from_dataset: true },
+                  {
+                    name: "Vascular mural cell",
+                    children: [
+                      { name: "Smooth Muscle cell", from_dataset: true },
+                      { name: "Pericyte cell", from_dataset: true },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: "Immune & hematopoietic lineage",
+            children: [
+              {
+                name: "Lymphoid lineage",
+                children: [
+                  {
+                    name: "T cell",
+                    from_dataset: true,
+                    children: [
+                      { name: "CD4 T cell", from_dataset: true },
+                      { name: "CD8 T cell", from_dataset: true },
+                      { name: "Regulatory T cell", from_dataset: true },
+                    ],
+                  },
+                  { name: "B cell", from_dataset: true },
+                ],
+              },
+              {
+                name: "Myeloid lineage",
+                children: [
+                  {
+                    name: "Myeloid cell",
+                    from_dataset: true,
+                    children: [
+                      { name: "Macrophage cell", from_dataset: true },
+                      { name: "Mast cell", from_dataset: true },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: "Other / quality control",
+            children: [{ name: "Ambiguous", from_dataset: true }],
+          },
+        ],
+      };
+
+      function deepClone(x) {
+        return JSON.parse(JSON.stringify(x));
+      }
+      function isLeaf(n) {
+        return !(n.children && n.children.length);
+      }
+
+      function annotateTree(node, lineage, depth, path) {
+        node.__depth = depth;
+        node.__path = (path ? path + " > " : "") + node.name;
+        if (depth === 1) lineage = node.name;
+        node.__lineage = lineage || "root";
+        if (node.children)
+          for (const ch of node.children)
+            annotateTree(ch, lineage, depth + 1, node.__path);
+      }
+
+      function collectLineages(root) {
+        return (root.children || []).map((x) => x.name);
+      }
+
+      function countTree(node) {
+        let nodes = 0,
+          leaves = 0,
+          datasetLeaves = 0,
+          datasetNodes = 0;
+        (function rec(n) {
+          nodes += 1;
+          if (n.from_dataset) datasetNodes += 1;
+          if (isLeaf(n)) {
+            leaves += 1;
+            if (n.from_dataset) datasetLeaves += 1;
+          }
+          if (n.children) for (const ch of n.children) rec(ch);
+        })(node);
+        return { nodes, leaves, datasetLeaves, datasetNodes };
+      }
+
+      function filterTree(root, opts) {
+        const keepRoot = deepClone(root);
+
+        function rec(node, isRoot) {
+          const out = { ...node };
+          const children = Array.isArray(node.children) ? node.children : [];
+          let outChildren = [];
+
+          for (const ch of children) {
+            if (isRoot && !opts.allowedLineages.has(ch.name)) continue;
+            const kept = rec(ch, false);
+            if (kept) outChildren.push(kept);
+          }
+          if (outChildren.length) out.children = outChildren;
+          else delete out.children;
+
+          if (isRoot) return out;
+
+          if (opts.onlyDataset) {
+            const selfOk = !!out.from_dataset;
+            const childOk = !!out.children && out.children.length > 0;
+            if (!selfOk && !childOk) return null;
+          }
+          return out;
+        }
+
+        return rec(keepRoot, true);
+      }
+
+      function applyCollapsedByDepth(node, depthLimit) {
+        const lim = Number(depthLimit);
+        (function rec(n) {
+          n.collapsed = lim >= 0 ? n.__depth > lim : false;
+          if (n.children) for (const ch of n.children) rec(ch);
+        })(node);
+      }
+
+      function findFirstMatch(node, q) {
+        const qq = q.trim().toLowerCase();
+        if (!qq) return null;
+        let best = null;
+        (function rec(n) {
+          if (best) return;
+          const name = String(n.name || "").toLowerCase();
+          if (name.includes(qq)) {
+            best = n;
+            return;
+          }
+          if (n.children) for (const ch of n.children) rec(ch);
+        })(node);
+        return best;
+      }
+
+      function expandPathTo(node, targetPath) {
+        const parts = targetPath
+          .split(" > ")
+          .map((s) => s.trim())
+          .filter(Boolean);
+        function rec(n, idx) {
+          n.collapsed = false;
+          if (!n.children || idx >= parts.length) return;
+          for (const ch of n.children)
+            if (ch.name === parts[idx]) rec(ch, idx + 1);
+        }
+        if (!parts.length) return;
+        if (node.name !== parts[0]) return;
+        rec(node, 1);
+      }
+
+      function makePalette(lineages) {
+        const base = [
+          "#7aa2f7",
+          "#7bd389",
+          "#f2cc8f",
+          "#ff6b6b",
+          "#6dd4ff",
+          "#c792ea",
+          "#f78c6c",
+          "#89ddff",
+          "#c3e88d",
+        ];
+        const pal = {};
+        for (let i = 0; i < lineages.length; i++)
+          pal[lineages[i]] = base[i % base.length];
+        pal["root"] = "rgba(255,255,255,0.75)";
+        return pal;
+      }
+
+      function styleTree(node, palette, ui) {
+        const highlightPath = ui.highlightPath || null;
+        const layoutMode = ui.layoutMode;
+        const showInternal = ui.showInternal;
+
+        const leaf = isLeaf(node);
+        const isHighlight = highlightPath && node.__path === highlightPath;
+
+        const color = palette[node.__lineage] || "#a6adc8";
+
+        node.itemStyle = node.itemStyle || {};
+        node.label = node.label || {};
+        node.emphasis = node.emphasis || {};
+        node.emphasis.label = node.emphasis.label || {};
+
+        // node symbol + color
+        node.itemStyle.color = color;
+        node.itemStyle.borderColor = isHighlight
+          ? "#ffffff"
+          : "rgba(255,255,255,0.25)";
+        node.itemStyle.borderWidth = isHighlight ? 2 : 1;
+        node.itemStyle.shadowBlur = isHighlight ? 18 : 6;
+        node.itemStyle.shadowColor = isHighlight
+          ? "rgba(255,255,255,0.35)"
+          : "rgba(0,0,0,0.35)";
+
+        // label policy (radial): default hide internal labels to reduce center clutter
+        if (layoutMode === "radial" && !showInternal && !leaf)
+          node.label.show = false;
+        else node.label.show = true;
+
+        // always horizontal labels
+        node.label.rotate = 0;
+        node.label.fontWeight = isHighlight ? 900 : 700;
+        node.label.color = isHighlight ? "#ffffff" : "rgba(255,255,255,0.86)";
+
+        // show label on hover even if hidden
+        node.emphasis.label.show = true;
+        node.emphasis.label.color = "#ffffff";
+        node.emphasis.label.fontWeight = 900;
+
+        if (node.children)
+          for (const ch of node.children) styleTree(ch, palette, ui);
+      }
+
+      function buildOption(tree, ui) {
+        const isRadial = ui.layoutMode === "radial";
+        const depthLimit = ui.depthLimit;
+        const hideOverlap = ui.hideOverlap && isRadial;
+
+        const initialDepth = depthLimit < 0 ? -1 : depthLimit;
+
+        return {
+          backgroundColor: "transparent",
+          animation: true,
+          animationDuration: 800,
+          animationEasing: "cubicOut",
+          animationDurationUpdate: 420,
+          animationEasingUpdate: "cubicOut",
+          tooltip: {
+            trigger: "item",
+            triggerOn: "mousemove",
+            backgroundColor: "rgba(10,14,28,0.95)",
+            borderColor: "rgba(255,255,255,0.10)",
+            borderWidth: 1,
+            textStyle: { color: "rgba(255,255,255,0.92)", fontSize: 12 },
+            formatter: (p) => {
+              const d = p.data || {};
+              const fd = d.from_dataset ? "true" : "false";
+              const lin = d.__lineage || "root";
+              const dep = d.__depth ?? "";
+              const path = d.__path || d.name || "";
+              return [
+                `<div style="font-weight:900;font-size:12px;margin-bottom:6px;">${d.name || ""}</div>`,
+                `<div style="opacity:.85;">lineage: <span style="font-family:${getComputedStyle(document.documentElement).getPropertyValue("--mono")}">${lin}</span></div>`,
+                `<div style="opacity:.85;">depth: <span style="font-family:${getComputedStyle(document.documentElement).getPropertyValue("--mono")}">${dep}</span></div>`,
+                `<div style="opacity:.85;">from_dataset: <span style="font-family:${getComputedStyle(document.documentElement).getPropertyValue("--mono")}">${fd}</span></div>`,
+                `<div style="margin-top:6px;opacity:.75;font-size:11px;">${path}</div>`,
+              ].join("");
+            },
+          },
+          toolbox: {
+            show: true,
+            top: 10,
+            right: 10,
+            itemSize: 18,
+            iconStyle: { borderColor: "rgba(255,255,255,0.70)" },
+            feature: {
+              saveAsImage: { show: true, title: "Save" },
+              restore: { show: true, title: "Restore" },
+            },
+          },
+          series: [
+            {
+              type: "tree",
+              name: "Cell Type Tree",
+              data: [tree],
+              top: "2%",
+              left: "2%",
+              bottom: "2%",
+              right: "2%",
+              layout: isRadial ? "radial" : "orthogonal",
+              orient: "LR",
+              roam: true,
+              scaleLimit: { min: 0.2, max: 4.0 },
+              // radial spread to reduce overlap
+              ...(isRadial ? { radius: ["6%", "86%"] } : {}),
+              symbol: "circle",
+              symbolSize: 8,
+              edgeShape: "curve",
+              edgeForkPosition: "55%",
+              expandAndCollapse: true,
+              initialTreeDepth: initialDepth,
+              lineStyle: {
+                width: 1.2,
+                curveness: 0.25,
+                color: "rgba(255,255,255,0.22)",
+              },
+              // horizontal labels + truncation
+              label: {
+                rotate: 0,
+                position: "right",
+                align: "left",
+                verticalAlign: "middle",
+                fontSize: 11,
+                overflow: "truncate",
+                width: 260,
+                formatter: (p) => {
+                  const d = p.data || {};
+                  const tag = d.from_dataset ? " [D]" : "";
+                  return `${d.name || ""}${tag}`;
+                },
+              },
+              leaves: {
+                label: {
+                  rotate: 0,
+                  fontSize: 11,
+                  overflow: "truncate",
+                  width: 260,
+                },
+              },
+              emphasis: { focus: "descendant", scale: true },
+              // hide overlapped labels (radial)
+              ...(hideOverlap ? { labelLayout: { hideOverlap: true } } : {}),
+            },
+          ],
+        };
+      }
+
+      // ---------- init ----------
+      const chart = echarts.init(document.getElementById("chart"), null, {
+        renderer: "canvas",
+      });
+      let LINEAGES = [];
+      let PALETTE = {};
+
+      function setStatus(s) {
+        document.getElementById("statusBox").textContent = s;
+      }
+      function setStats(s) {
+        document.getElementById("statsBox").textContent = s;
+      }
+
+      function renderLineageChecklist(lineages) {
+        const host = document.getElementById("lineageList");
+        host.innerHTML = "";
+        for (const lin of lineages) {
+          const id = "lin_" + lin.replace(/[^a-zA-Z0-9]/g, "_");
+          const div = document.createElement("div");
+          div.className = "chk";
+          div.innerHTML = `
+          <input type="checkbox" id="${id}" name="lineage" value="${lin}" checked />
+          <div class="name">${lin}</div>
+        `;
+          host.appendChild(div);
+        }
+      }
+
+      function getAllowedLineages() {
+        const boxes = Array.from(
+          document.querySelectorAll('input[name="lineage"]'),
+        );
+        const allowed = new Set();
+        for (const b of boxes) if (b.checked) allowed.add(b.value);
+        return allowed;
+      }
+
+      function renderTree(opts = {}) {
+        const layoutMode = document.getElementById("layoutSel").value;
+        const depthLimit = parseInt(
+          document.getElementById("depthRange").value,
+          10,
+        );
+        const onlyDataset = document.getElementById("onlyDataset").checked;
+        const showInternal = document.getElementById("showInternal").checked;
+        const hideOverlap = document.getElementById("hideOverlap").checked;
+        const allowed = getAllowedLineages();
+
+        // global stats (unfiltered)
+        let base = deepClone(RAW_TREE);
+        annotateTree(base, null, 0, "");
+        const total = countTree(base);
+
+        // filtered tree
+        let t = filterTree(base, { allowedLineages: allowed, onlyDataset });
+        annotateTree(t, null, 0, "");
+        applyCollapsedByDepth(t, depthLimit);
+
+        // label style / policies
+        const highlightPath = opts.highlightPath || null;
+        styleTree(t, PALETTE, { layoutMode, showInternal, highlightPath });
+
+        // chart
+        chart.setOption(
+          buildOption(t, { layoutMode, depthLimit, hideOverlap }),
+          true,
+        );
+
+        // shown stats
+        const shown = countTree(t);
+        setStats(
+          [
+            `TOTAL leaf cell types: ${total.leaves}`,
+            `TOTAL nodes: ${total.nodes}`,
+            `TOTAL from_dataset leaves: ${total.datasetLeaves}`,
+            `SHOWN leaf cell types: ${shown.leaves}`,
+            `SHOWN nodes: ${shown.nodes}`,
+            `SHOWN from_dataset leaves: ${shown.datasetLeaves}`,
+          ].join("\n"),
+        );
+
+        setStatus(
+          [
+            `layout=${layoutMode}`,
+            `depth=${depthLimit}`,
+            `onlyDataset=${onlyDataset}`,
+            `showInternal(radial)=${showInternal}`,
+            `hideOverlap(radial)=${hideOverlap}`,
+            `lineages=${Array.from(allowed).length}/${LINEAGES.length}`,
+            highlightPath
+              ? `highlight=${highlightPath.split(" > ").slice(-1)[0]}`
+              : `highlight=none`,
+          ].join("\n"),
+        );
+      }
+
+      function locate() {
+        const q = document.getElementById("searchBox").value.trim();
+        if (!q) return;
+
+        const layoutMode = document.getElementById("layoutSel").value;
+        const depthLimit = parseInt(
+          document.getElementById("depthRange").value,
+          10,
+        );
+        const onlyDataset = document.getElementById("onlyDataset").checked;
+        const showInternal = document.getElementById("showInternal").checked;
+        const hideOverlap = document.getElementById("hideOverlap").checked;
+        const allowed = getAllowedLineages();
+
+        let base = deepClone(RAW_TREE);
+        annotateTree(base, null, 0, "");
+        let t = filterTree(base, { allowedLineages: allowed, onlyDataset });
+
+        annotateTree(t, null, 0, "");
+        applyCollapsedByDepth(t, depthLimit);
+
+        const m = findFirstMatch(t, q);
+        if (!m) {
+          setStatus(`no match: "${q}"`);
+          renderTree();
+          return;
+        }
+
+        expandPathTo(t, m.__path);
+        styleTree(t, PALETTE, {
+          layoutMode,
+          showInternal,
+          highlightPath: m.__path,
+        });
+
+        chart.setOption(
+          buildOption(t, { layoutMode, depthLimit, hideOverlap }),
+          true,
+        );
+        setStatus(`match="${m.name}"\npath=${m.__path}`);
+      }
+
+      function bindUI() {
+        const depth = document.getElementById("depthRange");
+        const depthVal = document.getElementById("depthVal");
+
+        depth.addEventListener("input", () => {
+          depthVal.textContent = depth.value;
+          renderTree();
+        });
+        document
+          .getElementById("layoutSel")
+          .addEventListener("change", () => renderTree());
+        document
+          .getElementById("onlyDataset")
+          .addEventListener("change", () => renderTree());
+        document
+          .getElementById("showInternal")
+          .addEventListener("change", () => renderTree());
+        document
+          .getElementById("hideOverlap")
+          .addEventListener("change", () => renderTree());
+        document
+          .getElementById("lineageList")
+          .addEventListener("change", () => renderTree());
+
+        document
+          .getElementById("expandAllBtn")
+          .addEventListener("click", () => {
+            depth.value = -1;
+            depthVal.textContent = "-1";
+            renderTree();
+          });
+        document
+          .getElementById("collapseAllBtn")
+          .addEventListener("click", () => {
+            depth.value = 1;
+            depthVal.textContent = "1";
+            renderTree();
+          });
+
+        document
+          .getElementById("selectAllBtn")
+          .addEventListener("click", () => {
+            for (const b of document.querySelectorAll('input[name="lineage"]'))
+              b.checked = true;
+            renderTree();
+          });
+        document
+          .getElementById("selectNoneBtn")
+          .addEventListener("click", () => {
+            for (const b of document.querySelectorAll('input[name="lineage"]'))
+              b.checked = false;
+            renderTree();
+          });
+
+        document
+          .getElementById("searchBtn")
+          .addEventListener("click", () => locate());
+        document
+          .getElementById("clearSearchBtn")
+          .addEventListener("click", () => {
+            document.getElementById("searchBox").value = "";
+            renderTree();
+          });
+        document
+          .getElementById("searchBox")
+          .addEventListener("keydown", (e) => {
+            if (e.key === "Enter") locate();
+          });
+
+        // click-to-inspect
+        chart.on("click", (p) => {
+          if (!p || !p.data) return;
+          const d = p.data;
+          const leaf = isLeaf(d);
+          setStatus(
+            [
+              `clicked="${d.name}"`,
+              `leaf=${leaf}`,
+              `from_dataset=${!!d.from_dataset}`,
+              `lineage=${d.__lineage}`,
+              `depth=${d.__depth}`,
+              `path=${d.__path}`,
+            ].join("\n"),
+          );
+        });
+
+        window.addEventListener("resize", () => chart.resize());
+      }
+
+      (function main() {
+        let tmp = deepClone(RAW_TREE);
+        annotateTree(tmp, null, 0, "");
+        LINEAGES = collectLineages(tmp);
+        PALETTE = makePalette(LINEAGES);
+
+        renderLineageChecklist(LINEAGES);
+        bindUI();
+
+        document.getElementById("depthVal").textContent =
+          document.getElementById("depthRange").value;
+        renderTree();
+      })();
+    </script>
+  </body>
+</html>
