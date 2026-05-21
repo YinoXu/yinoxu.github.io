@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>door</title>
+    <link rel="icon" href="../favicon.svg?v=9" type="image/svg+xml" />
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #f7f4ec;
+        --paper-deep: #eee8dc;
+        --ink: #202221;
+        --soft-ink: #67645e;
+        --line: #d8d0c3;
+        --field: #fffcf5;
+        --accent: #8e5149;
+        --accent-dark: #61332f;
+        --sage: #5d7468;
+        --shadow: rgba(54, 45, 35, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.32), transparent 42%),
+          var(--paper);
+        color: var(--ink);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB",
+          "Microsoft YaHei", sans-serif;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .gate {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        padding: 28px;
+      }
+
+      .gate-panel {
+        width: min(100%, 380px);
+        border-top: 1px solid var(--line);
+        padding-top: 34px;
+      }
+
+      .gate-mark {
+        display: block;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 34px;
+        opacity: 0.72;
+      }
+
+      .gate-word {
+        margin: 0 0 34px;
+        font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+        font-size: clamp(2.8rem, 12vw, 5.6rem);
+        font-weight: 400;
+        line-height: 0.92;
+        letter-spacing: 0;
+      }
+
+      .gate-form {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+      }
+
+      .gate-input {
+        width: 100%;
+        min-width: 0;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: var(--field);
+        color: var(--ink);
+        padding: 12px 13px;
+        outline: none;
+      }
+
+      .gate-input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(142, 81, 73, 0.12);
+      }
+
+      .gate-button,
+      .lock-button {
+        border: 1px solid var(--ink);
+        border-radius: 0;
+        background: var(--ink);
+        color: var(--field);
+        cursor: pointer;
+        padding: 12px 17px;
+      }
+
+      .gate-button:disabled {
+        cursor: wait;
+        opacity: 0.6;
+      }
+
+      .gate-message {
+        min-height: 1.6em;
+        grid-column: 1 / -1;
+        margin: 2px 0 0;
+        color: var(--accent-dark);
+        font-size: 0.92rem;
+      }
+
+      .room {
+        display: none;
+      }
+
+      .is-open .gate {
+        display: none;
+      }
+
+      .is-open .room {
+        display: block;
+      }
+
+      .room-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(247, 244, 236, 0.92);
+        padding: 16px clamp(18px, 4vw, 58px);
+        backdrop-filter: blur(14px);
+      }
+
+      .room-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        color: var(--soft-ink);
+        font-size: 0.9rem;
+        letter-spacing: 0;
+      }
+
+      .room-brand img {
+        width: 22px;
+        height: 22px;
+        opacity: 0.68;
+      }
+
+      .lock-button {
+        border-color: var(--line);
+        background: transparent;
+        color: var(--ink);
+        padding: 8px 13px;
+      }
+
+      .room-layout {
+        display: grid;
+        grid-template-columns: minmax(160px, 230px) minmax(0, 760px);
+        gap: clamp(28px, 6vw, 92px);
+        width: min(1180px, 100%);
+        margin: 0 auto;
+        padding: clamp(34px, 7vw, 86px) clamp(18px, 4vw, 58px) 88px;
+      }
+
+      .poem-index {
+        position: sticky;
+        top: 88px;
+        align-self: start;
+        border-top: 1px solid var(--line);
+        padding-top: 18px;
+      }
+
+      .poem-index a {
+        display: block;
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid rgba(216, 208, 195, 0.62);
+        background: transparent;
+        color: var(--soft-ink);
+        padding: 11px 0;
+        text-align: left;
+        text-decoration: none;
+      }
+
+      .poem-index a:focus,
+      .poem-index a:hover {
+        color: var(--accent-dark);
+      }
+
+      .poem-shelf {
+        border-top: 1px solid var(--line);
+      }
+
+      .poem {
+        display: grid;
+        gap: 18px;
+        padding: clamp(34px, 6vw, 64px) 0;
+        border-bottom: 1px solid var(--line);
+        scroll-margin-top: 86px;
+      }
+
+      .poem-number {
+        color: var(--sage);
+        font-size: 0.82rem;
+      }
+
+      .poem h2 {
+        margin: 0;
+        font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+        font-size: clamp(2rem, 5vw, 3.6rem);
+        font-weight: 400;
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .poem-body {
+        max-width: 68ch;
+        margin: 0;
+        color: #282724;
+        font-family: "Songti SC", "STSong", "Noto Serif SC", Georgia, serif;
+        font-size: clamp(1.05rem, 2vw, 1.2rem);
+        line-height: 2.05;
+        letter-spacing: 0;
+        white-space: pre-wrap;
+      }
+
+      @media (max-width: 760px) {
+        .gate-form {
+          grid-template-columns: 1fr;
+        }
+
+        .gate-button {
+          width: 100%;
+        }
+
+        .room-header {
+          padding: 13px 18px;
+        }
+
+        .room-layout {
+          display: block;
+          padding: 28px 18px 72px;
+        }
+
+        .poem-index {
+          position: sticky;
+          top: 57px;
+          z-index: 4;
+          display: flex;
+          gap: 18px;
+          overflow-x: auto;
+          border-bottom: 1px solid var(--line);
+          background: rgba(247, 244, 236, 0.94);
+          padding: 12px 0 10px;
+          scrollbar-width: none;
+        }
+
+        .poem-index::-webkit-scrollbar {
+          display: none;
+        }
+
+        .poem-index a {
+          flex: 0 0 auto;
+          border-bottom: 0;
+          padding: 7px 0;
+          white-space: nowrap;
+        }
+
+        .poem-shelf {
+          border-top: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="gate" aria-labelledby="gate-title">
+      <div class="gate-panel">
+        <img class="gate-mark" src="../favicon.svg?v=9" alt="" />
+        <h1 id="gate-title" class="gate-word">door</h1>
+        <form class="gate-form" id="gate-form" autocomplete="off">
+          <label class="sr-only" for="door-key">密码</label>
+          <input
+            class="gate-input"
+            id="door-key"
+            name="door-key"
+            type="password"
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="password"
+            required
+          />
+          <button class="gate-button" type="submit">Enter</button>
+          <p class="gate-message" id="gate-message" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="room" aria-label="poems">
+      <header class="room-header">
+        <div class="room-brand">
+          <img src="../favicon.svg?v=9" alt="" />
+          <span>door</span>
+        </div>
+        <button class="lock-button" id="lock-door" type="button">Lock</button>
+      </header>
+      <main class="room-layout">
+        <nav class="poem-index" id="poem-index" aria-label="目录"></nav>
+        <section class="poem-shelf" id="poem-shelf" aria-label="诗歌"></section>
+      </main>
+    </section>
+
+    <script>
+      const DOOR_PAYLOAD = {
+        v: 1,
+        kdf: "PBKDF2-SHA-256",
+        cipher: "AES-GCM",
+        iterations: 250000,
+        salt: "4CqlwHwnacTuzuNktjz3zg==",
+        iv: "QJwOzOKgkaeJduoP",
+        data: "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",
+      };
+
+      const form = document.querySelector("#gate-form");
+      const input = document.querySelector("#door-key");
+      const message = document.querySelector("#gate-message");
+      const shelf = document.querySelector("#poem-shelf");
+      const index = document.querySelector("#poem-index");
+      const lockButton = document.querySelector("#lock-door");
+      const submitButton = form.querySelector("button");
+
+      function fromBase64(value) {
+        const binary = atob(value);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i += 1) {
+          bytes[i] = binary.charCodeAt(i);
+        }
+        return bytes;
+      }
+
+      async function deriveKey(password) {
+        const encoder = new TextEncoder();
+        const material = await crypto.subtle.importKey(
+          "raw",
+          encoder.encode(password),
+          "PBKDF2",
+          false,
+          ["deriveKey"],
+        );
+        return crypto.subtle.deriveKey(
+          {
+            name: "PBKDF2",
+            salt: fromBase64(DOOR_PAYLOAD.salt),
+            iterations: DOOR_PAYLOAD.iterations,
+            hash: "SHA-256",
+          },
+          material,
+          { name: "AES-GCM", length: 256 },
+          false,
+          ["decrypt"],
+        );
+      }
+
+      async function unlockDoor(password) {
+        const key = await deriveKey(password);
+        const decrypted = await crypto.subtle.decrypt(
+          { name: "AES-GCM", iv: fromBase64(DOOR_PAYLOAD.iv) },
+          key,
+          fromBase64(DOOR_PAYLOAD.data),
+        );
+        return JSON.parse(new TextDecoder().decode(decrypted));
+      }
+
+      function renderPoems(poems) {
+        const fragment = document.createDocumentFragment();
+        const indexFragment = document.createDocumentFragment();
+
+        poems.forEach((poem, position) => {
+          const id = `poem-${position + 1}`;
+          const link = document.createElement("a");
+          link.href = `#${id}`;
+          link.textContent = `《${poem.title}》`;
+          indexFragment.append(link);
+
+          const article = document.createElement("article");
+          article.className = "poem";
+          article.id = id;
+
+          const number = document.createElement("div");
+          number.className = "poem-number";
+          number.textContent = String(position + 1).padStart(2, "0");
+
+          const title = document.createElement("h2");
+          title.textContent = `《${poem.title}》`;
+
+          const body = document.createElement("p");
+          body.className = "poem-body";
+          body.textContent = poem.body;
+
+          article.append(number, title, body);
+          fragment.append(article);
+        });
+
+        index.replaceChildren(indexFragment);
+        shelf.replaceChildren(fragment);
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        message.textContent = "";
+        submitButton.disabled = true;
+
+        try {
+          const poems = await unlockDoor(input.value.trim());
+          renderPoems(poems);
+          input.value = "";
+          document.body.classList.add("is-open");
+          window.scrollTo({ top: 0 });
+        } catch (error) {
+          message.textContent = "密码不对。";
+          input.select();
+        } finally {
+          submitButton.disabled = false;
+        }
+      });
+
+      lockButton.addEventListener("click", () => {
+        document.body.classList.remove("is-open");
+        index.replaceChildren();
+        shelf.replaceChildren();
+        message.textContent = "";
+        requestAnimationFrame(() => input.focus());
+      });
+
+      input.focus();
+    </script>
+  </body>
+</html>
