@@ -2950,9 +2950,425 @@
           font-size: 0.72rem;
         }
       }
+
+      /* --- Quieter details and the wandering butterfly --- */
+      .header-profile {
+        padding-bottom: 42px;
+        border-color: var(--braun-line);
+      }
+
+      .header-profile::before {
+        content: none;
+        display: none;
+      }
+
+      .header-photo img {
+        box-shadow: 4px 4px 0 var(--braun-line);
+      }
+
+      .header-focus {
+        column-gap: 1rem;
+        row-gap: 0.4rem;
+      }
+
+      .header-focus .hero-pill,
+      .header-focus .hero-pill:hover {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--braun-muted);
+        font-size: 0.78rem;
+        font-weight: 600;
+      }
+
+      .header-focus .hero-pill::before {
+        width: 6px;
+        height: 6px;
+      }
+
+      .header-text > .email-addresses {
+        display: flex;
+        width: auto;
+        max-width: 100%;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.2rem 0.55rem;
+        margin-top: 0.9rem;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--braun-muted);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", monospace;
+        font-size: 0.79rem;
+        line-height: 1.5;
+      }
+
+      .email-label {
+        color: var(--braun-faint);
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .email-address {
+        color: var(--braun-ink);
+        font-weight: 600;
+      }
+
+      .email-separator {
+        color: var(--braun-line-strong);
+      }
+
+      .misc-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1px;
+        border: 1px solid var(--braun-line);
+        background: var(--braun-line);
+      }
+
+      .misc-card,
+      .misc-card:nth-child(n) {
+        border: 0;
+        border-radius: 0;
+      }
+
+      .misc-card--wide {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.85fr);
+        grid-template-rows: auto 1fr;
+        gap: 0;
+      }
+
+      .misc-card--wide .misc-card-media {
+        grid-row: 1 / 3;
+        aspect-ratio: 2 / 1;
+        border-right: 1px solid var(--braun-line);
+        border-bottom: 0;
+      }
+
+      .misc-card--wide .misc-card-media img {
+        object-position: center 48%;
+      }
+
+      .misc-card--wide h3 {
+        padding-top: 1rem;
+      }
+
+      .wandering-butterfly {
+        --flight-rotate: 0deg;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 80;
+        width: 58px;
+        height: 47px;
+        margin: 0;
+        padding: 0;
+        appearance: none;
+        border: 0;
+        background: transparent;
+        color: var(--braun-ink);
+        cursor: pointer;
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, -50%) rotate(var(--flight-rotate));
+        transform-origin: center;
+        transition: none;
+      }
+
+      .wandering-butterfly.is-ready {
+        opacity: 1;
+        pointer-events: auto;
+        transition:
+          left 0.72s cubic-bezier(0.3, 0.72, 0.18, 1),
+          top 0.72s cubic-bezier(0.3, 0.72, 0.18, 1),
+          transform 0.72s ease;
+      }
+
+      .wandering-butterfly:focus-visible {
+        outline: 1px dashed var(--braun-line-strong);
+        outline-offset: 3px;
+      }
+
+      .butterfly-mark {
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+
+      .butterfly-wing {
+        transform-box: view-box;
+      }
+
+      .butterfly-wing--left {
+        transform-origin: 36px 30px;
+        animation: butterflyLeftWing 3.8s cubic-bezier(0.45, 0, 0.55, 1)
+          infinite;
+      }
+
+      .butterfly-wing--right {
+        transform-origin: 36px 30px;
+        animation: butterflyRightWing 3.8s cubic-bezier(0.45, 0, 0.55, 1)
+          infinite;
+      }
+
+      .butterfly-wing-outline {
+        fill: color-mix(in srgb, var(--braun-panel) 44%, transparent);
+        stroke: currentColor;
+        stroke-width: 1.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        vector-effect: non-scaling-stroke;
+      }
+
+      .butterfly-body,
+      .butterfly-antenna {
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .butterfly-body {
+        stroke-width: 1.85;
+      }
+
+      .butterfly-antenna {
+        stroke-width: 1.35;
+      }
+
+      .butterfly-antennae {
+        transform-box: view-box;
+        transform-origin: 36px 24px;
+        animation: butterflyAntennae 3.8s ease-in-out infinite;
+      }
+
+      .butterfly-center {
+        transform-box: view-box;
+        transform-origin: 36px 30px;
+        transform: rotate(18deg);
+      }
+
+      .butterfly-antenna-tip,
+      .butterfly-head {
+        fill: currentColor;
+      }
+
+      .wandering-butterfly.is-flying .butterfly-wing--left,
+      .wandering-butterfly.is-flying .butterfly-wing--right {
+        animation-duration: 0.32s;
+        animation-timing-function: ease-in-out;
+      }
+
+      .wandering-butterfly.is-flying .butterfly-wing--left {
+        animation-name: butterflyLeftFlight;
+      }
+
+      .wandering-butterfly.is-flying .butterfly-wing--right {
+        animation-name: butterflyRightFlight;
+      }
+
+      @keyframes butterflyLeftWing {
+        0%,
+        12%,
+        100% {
+          transform: scaleX(1);
+        }
+        2.8%,
+        8.2% {
+          transform: scaleX(0.18);
+        }
+        5.5% {
+          transform: scaleX(0.9);
+        }
+      }
+
+      @keyframes butterflyRightWing {
+        0%,
+        12%,
+        100% {
+          transform: scaleX(1);
+        }
+        2.8%,
+        8.2% {
+          transform: scaleX(0.2);
+        }
+        5.5% {
+          transform: scaleX(0.9);
+        }
+      }
+
+      @keyframes butterflyAntennae {
+        0%,
+        11.5%,
+        100% {
+          transform: rotate(0deg);
+        }
+        2.7% {
+          transform: rotate(-2.5deg);
+        }
+        8.1% {
+          transform: rotate(2deg);
+        }
+      }
+
+      @keyframes butterflyLeftFlight {
+        0%,
+        100% {
+          transform: scaleX(1);
+        }
+        50% {
+          transform: scaleX(0.18);
+        }
+      }
+
+      @keyframes butterflyRightFlight {
+        0%,
+        100% {
+          transform: scaleX(1);
+        }
+        50% {
+          transform: scaleX(0.2);
+        }
+      }
+
+      @media (max-width: 1180px) {
+        .misc-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 960px) {
+        .header-profile {
+          padding-bottom: 30px;
+        }
+
+        .misc-card--wide {
+          grid-template-columns: minmax(0, 1.25fr) minmax(240px, 0.75fr);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .header-profile {
+          padding-bottom: 18px;
+        }
+
+        .header-text > .email-addresses {
+          display: block;
+          width: calc(100% - 104px);
+          margin-top: 0.62rem;
+          font-size: 0.69rem;
+          line-height: 1.55;
+        }
+
+        .email-label,
+        .email-address {
+          display: block;
+        }
+
+        .email-separator {
+          display: none;
+        }
+
+        .misc-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .misc-card--wide {
+          grid-column: auto;
+          grid-template-columns: 94px minmax(0, 1fr);
+          grid-template-rows: auto 1fr;
+        }
+
+        .misc-card--wide .misc-card-media {
+          grid-row: 1 / 3;
+          aspect-ratio: auto;
+          min-height: 100%;
+        }
+
+        .misc-card--wide h3 {
+          padding-top: 0.66rem;
+        }
+
+        .wandering-butterfly {
+          width: 43px;
+          height: 35px;
+          transform: translate(-50%, -50%) scale(0.86)
+            rotate(var(--flight-rotate));
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .wandering-butterfly {
+          transition: none;
+        }
+
+        .butterfly-wing--left,
+        .butterfly-wing--right,
+        .butterfly-antennae {
+          animation: none;
+        }
+      }
     </style>
   </head>
   <body>
+    <button
+      class="wandering-butterfly"
+      type="button"
+      aria-label="Let the butterfly circle the portrait"
+      title="Let the butterfly circle the portrait"
+    >
+      <svg
+        class="butterfly-mark"
+        viewBox="0 0 72 56"
+        aria-hidden="true"
+      >
+        <g class="butterfly-wing butterfly-wing--left">
+          <path
+            class="butterfly-wing-outline"
+            d="M35.5 30 C31.7 18.4 27.6 5.8 16.1 5.1 C6.3 4.5 3.5 14.9 4.5 24.8 C5.5 35.3 15.8 42.1 25.2 39.2 C30.3 37.6 33.7 33.7 35.5 30 Z"
+          />
+        </g>
+        <g class="butterfly-wing butterfly-wing--right">
+          <path
+            class="butterfly-wing-outline"
+            d="M36.5 30 C40.4 21.4 46.5 15.4 55.1 16.1 C65.3 17 68.6 27.4 65.7 36.9 C62.9 46 52 49.6 44.6 44.2 C39.9 40.8 37.4 35.3 36.5 30 Z"
+          />
+        </g>
+        <g class="butterfly-center">
+          <g class="butterfly-antennae">
+            <path
+              class="butterfly-antenna"
+              d="M35.7 24.4 C33.3 18.8 29.8 15.4 26.6 12.8"
+            />
+            <path
+              class="butterfly-antenna"
+              d="M36.5 24.2 C37.1 18.2 37.6 13.4 37.8 10.9"
+            />
+            <circle
+              class="butterfly-antenna-tip"
+              cx="26.1"
+              cy="12.4"
+              r="1.15"
+            />
+            <circle
+              class="butterfly-antenna-tip"
+              cx="38.2"
+              cy="10.5"
+              r="1.15"
+            />
+          </g>
+          <path
+            class="butterfly-body"
+            d="M36.1 24.9 C34.9 28.2 35.1 33.3 36.9 37.2"
+          />
+          <circle class="butterfly-head" cx="36" cy="24.3" r="1.4" />
+        </g>
+      </svg>
+    </button>
     <!--
     <div class="floating-cells-layer" aria-hidden="true">
         <div class="floating-cells-column left" id="floating-cells-left"></div>
@@ -3009,10 +3425,16 @@
             <span class="hero-pill">Xenium / Visium / CosMX supervision</span>
             <span class="hero-pill">Computational pathology</span>
           </div>
-          <span>Email: 
-          <b>xuyinuo@cis.upenn.edu</b> / 
-          <b>Yinuo.Xu@PennMedicine.upenn.edu</b>
-        </span>
+          <span class="email-addresses" aria-label="Obfuscated email addresses">
+            <span class="email-label">Email</span>
+            <span class="email-address"
+              >xuyinuo [AT] cis [DOT] upenn [DOT] edu</span
+            >
+            <span class="email-separator" aria-hidden="true">/</span>
+            <span class="email-address"
+              >Yinuo [DOT] Xu [AT] PennMedicine [DOT] upenn [DOT] edu</span
+            >
+          </span>
           <div class="contact-links">
             <a
               class="contact-icon-link"
@@ -3589,6 +4011,27 @@
         <section id="misc">
           <h2>Life Outside Research</h2>
           <div class="misc-grid">
+            <div class="misc-card misc-card--wide">
+              <div class="misc-card-media">
+                <img
+                  src="images/mina_perhonen_pattern.jpg"
+                  alt="Embroidered minä perhonen textile pattern"
+                />
+              </div>
+              <h3>minä perhonen</h3>
+              <p>
+                minä perhonen is my favorite brand. I love its imagination and
+                thoughtful craftsmanship, especially the original
+                <a
+                  href="https://www.mina-perhonen.jp/textile/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >patterns</a
+                >. “minä” means “I” and “perhonen” means “butterfly”; the name
+                reflects a hope that its clothes help each person express their
+                individuality and live more authentically.
+              </p>
+            </div>
             <div class="misc-card">
               <div class="misc-card-media">
                 <img
@@ -4720,6 +5163,121 @@
           rightColumn.appendChild(
             createFloatingCell(spec, index + placements.left.length),
           );
+        });
+      })();
+    </script>
+
+    <script>
+      (function () {
+        const butterfly = document.querySelector(".wandering-butterfly");
+        const photo = document.querySelector(".header-photo img");
+        const reducedMotion = window.matchMedia(
+          "(prefers-reduced-motion: reduce)",
+        );
+
+        if (!butterfly || !photo) {
+          return;
+        }
+
+        const perches = [
+          { x: 0.08, y: 0.1 },
+          { x: 0.5, y: -0.02 },
+          { x: 0.96, y: 0.06 },
+          { x: 1.02, y: 0.5 },
+          { x: 0.92, y: 0.9 },
+          { x: 0.5, y: 1.02 },
+          { x: 0.08, y: 0.9 },
+          { x: -0.02, y: 0.5 },
+        ];
+        let currentPerchIndex = 2;
+        let currentPerch = perches[currentPerchIndex];
+        let flying = false;
+        let scrollFrame = null;
+
+        function positionFor(perch) {
+          const rect = photo.getBoundingClientRect();
+          return {
+            left: rect.left + rect.width * perch.x,
+            top: rect.top + rect.height * perch.y,
+          };
+        }
+
+        function placeOn(perch) {
+          const position = positionFor(perch);
+          const safeLeft = Math.max(
+            24,
+            Math.min(window.innerWidth - 24, position.left),
+          );
+
+          butterfly.style.left = safeLeft + "px";
+          butterfly.style.top = position.top + "px";
+        }
+
+        function letButterflyCirclePhoto() {
+          if (flying || reducedMotion.matches) {
+            return;
+          }
+
+          let nextIndex = Math.floor(Math.random() * perches.length);
+          if (nextIndex === currentPerchIndex) {
+            nextIndex = (nextIndex + 1) % perches.length;
+          }
+
+          const currentLeft = parseFloat(butterfly.style.left) || 0;
+          const nextPerch = {
+            x: perches[nextIndex].x + (Math.random() - 0.5) * 0.04,
+            y: perches[nextIndex].y + (Math.random() - 0.5) * 0.04,
+          };
+          const nextPosition = positionFor(nextPerch);
+
+          flying = true;
+          currentPerchIndex = nextIndex;
+          currentPerch = nextPerch;
+          butterfly.classList.add("is-flying");
+          butterfly.style.setProperty(
+            "--flight-rotate",
+            nextPosition.left < currentLeft ? "-9deg" : "9deg",
+          );
+          placeOn(currentPerch);
+
+          window.setTimeout(function () {
+            butterfly.classList.remove("is-flying");
+            butterfly.style.setProperty("--flight-rotate", "0deg");
+            flying = false;
+          }, 760);
+        }
+
+        function refreshPerch() {
+          if (!flying) {
+            placeOn(currentPerch);
+          }
+        }
+
+        function scheduleRefresh() {
+          if (scrollFrame !== null) {
+            return;
+          }
+
+          scrollFrame = window.requestAnimationFrame(function () {
+            scrollFrame = null;
+            refreshPerch();
+          });
+        }
+
+        butterfly.addEventListener("pointerenter", function (event) {
+          if (event.pointerType === "mouse" || event.pointerType === "pen") {
+            letButterflyCirclePhoto();
+          }
+        });
+        butterfly.addEventListener("click", letButterflyCirclePhoto);
+        window.addEventListener("resize", scheduleRefresh);
+        window.addEventListener("scroll", scheduleRefresh, { passive: true });
+
+        window.requestAnimationFrame(function () {
+          placeOn(currentPerch);
+          window.requestAnimationFrame(function () {
+            butterfly.classList.add("is-ready");
+          });
         });
       })();
     </script>
