@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="A public, privacy-preserving view of GPU allocation, lab queue pressure, and storage health on Penn's Betty cluster."
+      content="A public view of current lab GPU and CPU allocations, Betty-wide capacity, queue pressure, and storage health."
     />
     <meta name="theme-color" content="#f1ede3" />
     <meta name="referrer" content="no-referrer" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; connect-src 'self' https://kaimwopilugeilwnhclv.supabase.co; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
@@ -551,8 +552,17 @@
         font-size: 0.84rem;
       }
 
+      .lab-allocation-kicker {
+        margin: 15px 0 0;
+        color: var(--green);
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
       .lab-allocation-value {
-        margin: 17px 0 8px;
+        margin: 5px 0 8px;
         font-family: Georgia, "Times New Roman", serif;
         font-size: 2.35rem;
         letter-spacing: -0.05em;
@@ -564,6 +574,84 @@
         color: var(--muted);
         font-size: 0.7rem;
         line-height: 1.55;
+      }
+
+      .availability-footnote {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 0.68rem;
+        line-height: 1.5;
+      }
+
+      .public-access-note {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        margin-bottom: 12px;
+        border: 1px solid #d4b88f;
+        border-radius: 7px;
+        background: var(--amber-soft);
+        color: #70420f;
+        padding: 11px 13px;
+        font-size: 0.72rem;
+        line-height: 1.5;
+      }
+
+      .public-access-note strong {
+        white-space: nowrap;
+      }
+
+      .jobs-table-shell {
+        overflow-x: auto;
+      }
+
+      .running-jobs-table {
+        width: 100%;
+        min-width: 930px;
+        border-collapse: collapse;
+      }
+
+      .running-jobs-table th,
+      .running-jobs-table td {
+        border-bottom: 1px solid var(--line-soft);
+        padding: 12px 15px;
+        font-size: 0.72rem;
+        line-height: 1.45;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .running-jobs-table th {
+        background: rgba(222, 215, 201, 0.34);
+        color: var(--muted);
+        font-size: 0.64rem;
+        font-weight: 800;
+        letter-spacing: 0.055em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .running-jobs-table tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .running-jobs-table tbody tr:hover td {
+        background: rgba(255, 253, 247, 0.72);
+      }
+
+      .running-jobs-table .numeric {
+        text-align: right;
+      }
+
+      .running-jobs-table .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.68rem;
+      }
+
+      .running-jobs-table .empty-row {
+        color: var(--muted);
+        padding: 24px 15px;
+        text-align: center;
       }
 
       .compact-panel {
@@ -898,7 +986,7 @@
 
       .methodology-copy {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 24px;
         color: var(--muted);
         padding: 0 0 19px;
@@ -965,6 +1053,10 @@
 
         .storage-grid {
           grid-template-columns: 1fr;
+        }
+
+        .methodology-copy {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
 
@@ -1073,7 +1165,7 @@
           </span>
         </a>
         <div class="top-actions">
-          <span class="privacy-pill">Aggregate only</span>
+          <span class="privacy-pill">Public · no login</span>
           <span
             class="status-pill"
             id="status-pill"
@@ -1100,9 +1192,9 @@
         <div>
           <h1 id="page-title">Betty compute monitor</h1>
           <p class="hero-copy">
-            Current scheduler allocation, lab-account queue pressure, and storage
-            quotas. This public view refreshes every two minutes and contains only
-            non-identifying aggregates.
+            Current lab job allocations, Betty-wide scheduler capacity, queue
+            pressure, and storage quotas. This public view refreshes every two
+            minutes; no login or password is required.
           </p>
         </div>
         <div class="freshness-card">
@@ -1122,8 +1214,9 @@
       <div class="scope-strip">
         <strong>Coverage</strong>
         <span>
-          GPU capacity and node states are Betty-wide. Lab allocations, queue
-          statistics, and lab-shared storage are limited to the configured lab account.
+          GPU capacity and anonymous node-state totals are Betty-wide. Running-job
+          rows, policy limits, queue statistics, and lab-shared storage are limited
+          to the configured lab account.
         </span>
       </div>
 
@@ -1186,7 +1279,7 @@
       <section class="section" aria-labelledby="lab-gpu-heading">
         <div class="section-heading">
           <div>
-            <h2 id="lab-gpu-heading">Lab GPU allocation by pool</h2>
+            <h2 id="lab-gpu-heading">Lab GPU availability by pool</h2>
           </div>
           <p class="section-note">
             The lab uses a shared Betty pool. Policy caps are concurrent allocation
@@ -1201,6 +1294,45 @@
           <article class="lab-allocation-item">
             <p class="resource-meta">Loading lab allocation…</p>
           </article>
+        </div>
+        <p class="availability-footnote">
+          *Estimated from current Betty schedulable capacity and lab policy
+          headroom. Scheduler priority, reservations, and job requirements can
+          still delay a start. The two MIG values share one policy headroom and
+          must not be added together.
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="running-jobs-heading">
+        <div class="section-heading">
+          <div>
+            <h2 id="running-jobs-heading">Running lab jobs</h2>
+          </div>
+          <p class="section-note" id="running-jobs-summary">
+            Current running records from the configured lab Slurm account.
+          </p>
+        </div>
+        <div class="public-access-note">
+          <strong>Public access</strong>
+          <span>No login or password is required. Anyone with this URL can read these rows.</span>
+        </div>
+        <div class="panel jobs-table-shell">
+          <table class="running-jobs-table" aria-labelledby="running-jobs-heading">
+            <thead>
+              <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Partition</th>
+                <th scope="col">Node</th>
+                <th scope="col">GPU resource + IDX</th>
+                <th scope="col" class="numeric">GPU units</th>
+                <th scope="col" class="numeric">CPU cores</th>
+                <th scope="col" class="numeric">Runtime</th>
+              </tr>
+            </thead>
+            <tbody id="running-jobs-body" aria-live="polite">
+              <tr><td class="empty-row" colspan="7">Loading running allocations…</td></tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -1271,8 +1403,8 @@
             <h2 id="queue-heading">Queue pressure</h2>
           </div>
           <p class="section-note">
-            Aggregated only for the lab Slurm account. Rare reasons are grouped to
-            avoid exposing individual jobs.
+            Pending queue statistics are aggregated for the lab Slurm account.
+            Running allocations are listed separately above.
           </p>
         </div>
 
@@ -1328,21 +1460,28 @@
         <summary>Data coverage, privacy, and interpretation</summary>
         <div class="methodology-copy">
           <div>
-            <strong>Public by design</strong>
-            No usernames, job IDs or names, node names, filesystem paths, commands,
-            logs, project names, or SSH credentials are sent to this page. There is
-            no per-job view.
+            <strong>Public access</strong>
+            No account or password is required; anyone with this URL can read the
+            current snapshot. The noindex directive discourages search indexing but
+            does not make the page private.
           </div>
           <div>
-            <strong>What “GPU” means here</strong>
-            Slurm allocation units are the common comparable measure available to the
-            collector. A unit can be one full GPU or one configured MIG slice; it does
-            not measure compute-core activity.
+            <strong>What is shown</strong>
+            Running lab jobs include Slurm username, partition, compute node, GPU
+            resource and node-local IDX, allocated GPU units, allocated CPU cores,
+            and runtime.
           </div>
           <div>
-            <strong>Freshness</strong>
-            The page reads a single allow-listed public snapshot. If updates stop, the
-            status changes to stale rather than silently presenting old data as live.
+            <strong>What is withheld</strong>
+            Job IDs and names, commands and scripts, environment variables,
+            filesystem paths, stdout/stderr and other logs, SSH credentials,
+            passwords, and collector tokens are not sent to this page.
+          </div>
+          <div>
+            <strong>Allocation semantics</strong>
+            GPU and CPU values are scheduler reservations, not hardware utilization.
+            A GPU unit may be one full GPU or one configured MIG slice. IDX is a
+            node-local Slurm GRES index, not a permanent GPU UUID.
           </div>
         </div>
       </details>
@@ -1355,7 +1494,7 @@
     </main>
 
     <footer>
-      <span>Read-only · aggregate telemetry · no login required</span>
+      <span>Public read-only view · URL access · no login or password</span>
       <span>For operational awareness only—not a scheduler guarantee</span>
     </footer>
 
@@ -1535,6 +1674,13 @@
             : [];
           const fullLimit = limits.find((item) => item.id === "full-b200-policy");
           const migLimit = limits.find((item) => item.id === "mig-shared-policy");
+          const migAllocated = partitions
+            .filter((partition) => partition.id === "b200-mig90" || partition.id === "b200-mig45")
+            .reduce(
+              (sum, partition) =>
+                sum + (finite(partition.queue?.running_allocated_units) ?? 0),
+              0,
+            );
           els["lab-allocation-grid"].replaceChildren();
           if (!partitions.length) {
             const item = create("article", "lab-allocation-item");
@@ -1547,28 +1693,125 @@
             const queue = partition.queue || {};
             const item = create("article", "lab-allocation-item");
             item.append(create("h3", "", partition.label || "GPU pool"));
+            item.append(create("p", "lab-allocation-kicker", "Lab available now*"));
+            const applicableLimit =
+              partition.id === "full-b200" ? fullLimit : migLimit;
+            const concurrentLimit = finite(applicableLimit?.concurrent_limit_units);
+            const allocatedForPolicy =
+              partition.id === "full-b200"
+                ? finite(queue.running_allocated_units) ?? 0
+                : migAllocated;
+            const policyHeadroom =
+              concurrentLimit === null
+                ? null
+                : Math.max(0, concurrentLimit - allocatedForPolicy);
+            const clusterHeadroom = finite(partition.schedulable_unallocated_units);
+            const availableNow =
+              policyHeadroom === null || clusterHeadroom === null
+                ? null
+                : Math.min(policyHeadroom, Math.max(0, clusterHeadroom));
             item.append(
               create(
                 "p",
                 "lab-allocation-value",
-                formatNumber(queue.running_allocated_units),
+                formatNumber(availableNow),
               ),
             );
-            const applicableLimit =
-              partition.id === "full-b200" ? fullLimit : migLimit;
             const limitText = applicableLimit
               ? partition.id === "full-b200"
                 ? `${formatNumber(applicableLimit.concurrent_limit_units)}-unit concurrent cap`
                 : `${formatNumber(applicableLimit.concurrent_limit_units)}-unit cap shared across both MIG pools`
-              : "policy cap unavailable";
+              : "policy headroom unavailable";
             item.append(
               create(
                 "p",
                 "lab-allocation-meta",
-                `allocated now · ${formatNumber(queue.pending_requested_units)} pending · ${limitText}`,
+                `${formatNumber(queue.running_allocated_units)} allocated · ` +
+                  `${formatNumber(queue.pending_requested_units)} pending · ${limitText}`,
               ),
             );
             els["lab-allocation-grid"].append(item);
+          });
+        }
+
+        function formatGpuDetail(item) {
+          const gpuUnits = finite(item.allocated_gpu_units) ?? 0;
+          if (gpuUnits <= 0) return "—";
+          const resource =
+            typeof item.gpu_resource === "string" ? item.gpu_resource : "GPU";
+          const nodes = Array.isArray(item.nodes) ? item.nodes : [];
+          const groups = Array.isArray(item.gpu_indices) ? item.gpu_indices : [];
+          const hasAnyIndex = groups.some(
+            (group) => Array.isArray(group) && group.length > 0,
+          );
+          if (!hasAnyIndex) return `${resource} · IDX unavailable`;
+          if (groups.length === 1) {
+            return `${resource} · IDX ${groups[0].join(", ")}`;
+          }
+          const mappings = groups.map((group, index) => {
+            const node = nodes[index] || `node ${index + 1}`;
+            return Array.isArray(group) && group.length
+              ? `${node}: IDX ${group.join(", ")}`
+              : `${node}: IDX unavailable`;
+          });
+          return `${resource} · ${mappings.join("; ")}`;
+        }
+
+        function renderRunningJobs(payload) {
+          const rows = Array.isArray(payload.running_allocations)
+            ? [...payload.running_allocations]
+            : [];
+          rows.sort((left, right) => {
+            const byUser = String(left.username || "").localeCompare(
+              String(right.username || ""),
+            );
+            return byUser ||
+              (finite(right.runtime_seconds) ?? 0) -
+                (finite(left.runtime_seconds) ?? 0);
+          });
+          const distinctUsers = new Set(rows.map((item) => item.username)).size;
+          els["running-jobs-summary"].textContent = rows.length
+            ? `${formatNumber(rows.length)} running records · ${formatNumber(distinctUsers)} usernames`
+            : "Current running records from the configured lab Slurm account.";
+          els["running-jobs-body"].replaceChildren();
+          if (!rows.length) {
+            const row = create("tr");
+            const cell = create("td", "empty-row", "No running lab jobs in this snapshot.");
+            cell.colSpan = 7;
+            row.append(cell);
+            els["running-jobs-body"].append(row);
+            return;
+          }
+
+          rows.forEach((item) => {
+            const row = create("tr");
+            const username = create("td", "mono", item.username || "—");
+            const partition = create("td", "", item.partition || "—");
+            const nodes = create(
+              "td",
+              "mono",
+              Array.isArray(item.nodes) && item.nodes.length
+                ? item.nodes.join(", ")
+                : "—",
+            );
+            const gpu = create("td", "mono", formatGpuDetail(item));
+            const gpuUnits = create(
+              "td",
+              "numeric",
+              formatNumber(item.allocated_gpu_units),
+            );
+            const cpuCores = create(
+              "td",
+              "numeric",
+              formatNumber(item.allocated_cpu_cores),
+            );
+            const runtime = create(
+              "td",
+              "numeric",
+              formatDuration(item.runtime_seconds),
+            );
+            row.append(username, partition, nodes, gpu, gpuUnits, cpuCores, runtime);
+            els["running-jobs-body"].append(row);
           });
         }
 
@@ -1886,6 +2129,7 @@
           historyPoints = Array.isArray(payload.history) ? payload.history : [];
           renderMetrics(payload);
           renderLabAllocations(payload);
+          renderRunningJobs(payload);
           renderResources(payload);
           renderNodes(payload);
           renderQueue(payload);
@@ -1910,10 +2154,15 @@
             const rows = await response.json();
             const row = Array.isArray(rows) ? rows[0] : null;
             const payload = row?.payload;
+            const isV1 =
+              payload?.schema_version === "monitor.public.v1" &&
+              payload?.privacy === "public_aggregate";
+            const isV2 =
+              payload?.schema_version === "monitor.public.v2" &&
+              payload?.privacy === "lab_authorized_operational";
             if (
               !payload ||
-              payload.schema_version !== "monitor.public.v1" ||
-              payload.privacy !== "public_aggregate"
+              (!isV1 && !isV2)
             ) {
               throw new Error("Unexpected snapshot schema");
             }
