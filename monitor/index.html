@@ -1,0 +1,1811 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A public, privacy-preserving view of GPU allocation, lab queue pressure, and storage health on Penn's Betty cluster."
+    />
+    <meta name="theme-color" content="#f1ede3" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; connect-src 'self' https://kaimwopilugeilwnhclv.supabase.co; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>Betty Compute Monitor · Yinuo Xu</title>
+    <link rel="icon" href="../favicon.svg?v=9" type="image/svg+xml" />
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #f1ede3;
+        --surface: #faf7ef;
+        --surface-strong: #fffdf7;
+        --ink: #1d201d;
+        --muted: #686b64;
+        --faint: #8f9088;
+        --line: #c9bfad;
+        --line-soft: #ded7c9;
+        --navy: #283d4a;
+        --blue: #2d6675;
+        --blue-soft: #dcebed;
+        --green: #477460;
+        --green-soft: #e0ebe3;
+        --amber: #a35f18;
+        --amber-soft: #f4e3ca;
+        --red: #a24c43;
+        --red-soft: #f2ddd8;
+        --graphite: #4a4d48;
+        --shadow: 0 8px 26px rgba(45, 40, 31, 0.055);
+        --radius: 10px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background:
+          linear-gradient(rgba(68, 64, 55, 0.026) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(68, 64, 55, 0.026) 1px, transparent 1px),
+          var(--paper);
+        background-size: 28px 28px;
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Helvetica, Arial, sans-serif;
+        font-variant-numeric: tabular-nums;
+      }
+
+      button,
+      summary {
+        font: inherit;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .skip-link {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 100;
+        transform: translateY(-160%);
+        border-radius: 6px;
+        background: var(--ink);
+        color: white;
+        padding: 10px 14px;
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid rgba(137, 126, 108, 0.48);
+        background: rgba(241, 237, 227, 0.9);
+        backdrop-filter: blur(14px);
+      }
+
+      .topbar-inner,
+      main,
+      footer {
+        width: min(1180px, calc(100% - 40px));
+        margin-inline: auto;
+      }
+
+      .topbar-inner {
+        display: flex;
+        min-height: 66px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+
+      .brand:hover .brand-name {
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 33px;
+        height: 33px;
+        place-items: center;
+        border: 1px solid var(--ink);
+        border-radius: 50%;
+        background: var(--surface-strong);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+
+      .brand-copy {
+        display: grid;
+        gap: 1px;
+      }
+
+      .brand-name {
+        font-size: 0.9rem;
+        font-weight: 760;
+        letter-spacing: 0.01em;
+      }
+
+      .brand-subtitle {
+        color: var(--muted);
+        font-size: 0.71rem;
+        letter-spacing: 0.045em;
+        text-transform: uppercase;
+      }
+
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+      }
+
+      .privacy-pill,
+      .status-pill {
+        display: inline-flex;
+        min-height: 32px;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--surface);
+        padding: 6px 11px;
+        font-size: 0.73rem;
+        font-weight: 750;
+        white-space: nowrap;
+      }
+
+      .privacy-pill {
+        color: var(--green);
+      }
+
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--faint);
+      }
+
+      .status-pill[data-state="live"] {
+        border-color: #9eb5a8;
+        color: #315c49;
+        background: var(--green-soft);
+      }
+
+      .status-pill[data-state="live"] .status-dot {
+        background: var(--green);
+        box-shadow: 0 0 0 4px rgba(71, 116, 96, 0.12);
+      }
+
+      .status-pill[data-state="loading"] .status-dot {
+        background: var(--blue);
+        animation: pulse 1.25s ease-in-out infinite;
+      }
+
+      .status-pill[data-state="stale"],
+      .status-pill[data-state="offline"] {
+        border-color: #d1ae83;
+        color: #7b4715;
+        background: var(--amber-soft);
+      }
+
+      .status-pill[data-state="stale"] .status-dot,
+      .status-pill[data-state="offline"] .status-dot {
+        background: var(--amber);
+      }
+
+      .refresh-button {
+        min-height: 34px;
+        border: 1px solid var(--ink);
+        border-radius: 6px;
+        background: var(--ink);
+        color: #fff;
+        cursor: pointer;
+        padding: 7px 12px;
+        font-size: 0.75rem;
+        font-weight: 760;
+      }
+
+      .refresh-button:hover,
+      .refresh-button:focus-visible {
+        background: var(--navy);
+        outline: 3px solid rgba(45, 102, 117, 0.18);
+        outline-offset: 2px;
+      }
+
+      .refresh-button:disabled {
+        cursor: wait;
+        opacity: 0.65;
+      }
+
+      main {
+        padding: 54px 0 72px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.42fr) minmax(280px, 0.58fr);
+        gap: clamp(32px, 7vw, 90px);
+        align-items: end;
+        margin-bottom: 34px;
+      }
+
+      .eyebrow,
+      .section-kicker {
+        margin: 0 0 11px;
+        color: var(--blue);
+        font-size: 0.7rem;
+        font-weight: 820;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 780px;
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(3rem, 7.4vw, 6.6rem);
+        font-weight: 400;
+        letter-spacing: -0.062em;
+        line-height: 0.88;
+      }
+
+      .hero-copy {
+        max-width: 680px;
+        margin: 21px 0 0;
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.72;
+      }
+
+      .freshness-card {
+        border-top: 2px solid var(--ink);
+        border-bottom: 1px solid var(--line);
+        padding: 15px 0 16px;
+      }
+
+      .freshness-label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 760;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      .freshness-value {
+        margin: 13px 0 7px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.85rem;
+        line-height: 1;
+      }
+
+      .freshness-detail {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.76rem;
+        line-height: 1.55;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border-top: 1px solid var(--line);
+        border-left: 1px solid var(--line);
+      }
+
+      .metric-card {
+        min-height: 166px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background: rgba(250, 247, 239, 0.9);
+        padding: 19px 18px 17px;
+      }
+
+      .metric-label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+
+      .metric-index {
+        color: var(--faint);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      .metric-value {
+        margin: 20px 0 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2.3rem, 5vw, 3.8rem);
+        letter-spacing: -0.06em;
+        line-height: 0.92;
+      }
+
+      .metric-detail {
+        min-height: 2.5em;
+        margin: 11px 0 0;
+        color: var(--muted);
+        font-size: 0.76rem;
+        line-height: 1.45;
+      }
+
+      .metric-track,
+      .allocation-track,
+      .bar-track,
+      .storage-track {
+        overflow: hidden;
+        background: #ded9ce;
+      }
+
+      .metric-track {
+        height: 4px;
+        margin-top: 13px;
+      }
+
+      .metric-track span,
+      .allocation-track span,
+      .bar-track span,
+      .storage-track span {
+        display: block;
+        width: 0;
+        height: 100%;
+        background: var(--blue);
+        transition: width 360ms ease;
+      }
+
+      .section {
+        margin-top: 54px;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 16px;
+      }
+
+      .section-heading h2 {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.7rem, 3vw, 2.45rem);
+        font-weight: 400;
+        letter-spacing: -0.035em;
+      }
+
+      .section-note {
+        max-width: 500px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.77rem;
+        line-height: 1.55;
+        text-align: right;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(250, 247, 239, 0.94);
+        box-shadow: var(--shadow);
+      }
+
+      .resource-list {
+        overflow: hidden;
+      }
+
+      .resource-row {
+        padding: 21px;
+      }
+
+      .resource-row + .resource-row {
+        border-top: 1px solid var(--line-soft);
+      }
+
+      .resource-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .resource-title {
+        margin: 0;
+        font-size: 0.96rem;
+        font-weight: 790;
+      }
+
+      .resource-meta {
+        margin: 5px 0 0;
+        color: var(--muted);
+        font-size: 0.75rem;
+      }
+
+      .resource-number {
+        text-align: right;
+      }
+
+      .resource-number strong {
+        display: block;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.65rem;
+        font-weight: 400;
+        letter-spacing: -0.04em;
+        line-height: 1;
+      }
+
+      .resource-number span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.69rem;
+      }
+
+      .allocation-track {
+        height: 8px;
+        margin-top: 17px;
+        border-radius: 2px;
+      }
+
+      .resource-stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 15px;
+      }
+
+      .resource-stat {
+        color: var(--muted);
+        font-size: 0.69rem;
+        line-height: 1.45;
+      }
+
+      .resource-stat strong {
+        display: block;
+        margin-bottom: 2px;
+        color: var(--ink);
+        font-size: 0.88rem;
+      }
+
+      .resource-subgrid,
+      .queue-grid,
+      .storage-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 16px;
+      }
+
+      .compact-panel {
+        min-height: 100%;
+        padding: 20px;
+      }
+
+      .compact-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .compact-title h3 {
+        margin: 0;
+        font-size: 0.86rem;
+      }
+
+      .compact-title span {
+        color: var(--muted);
+        font-size: 0.68rem;
+      }
+
+      .node-grid {
+        display: grid;
+        grid-template-columns: repeat(15, minmax(8px, 1fr));
+        gap: 5px;
+      }
+
+      .node-cell {
+        display: grid;
+        aspect-ratio: 1;
+        place-items: center;
+        border: 1px solid #7f817b;
+        border-radius: 2px;
+        background: var(--surface-strong);
+        color: var(--ink);
+        font-size: clamp(0.48rem, 0.72vw, 0.62rem);
+        font-weight: 800;
+      }
+
+      .node-cell[data-state="allocated"] {
+        border-color: var(--graphite);
+        background: var(--graphite);
+        color: white;
+      }
+
+      .node-cell[data-state="mixed"] {
+        border-color: var(--blue);
+        background: var(--blue-soft);
+        color: #174c59;
+      }
+
+      .node-cell[data-state="drain"],
+      .node-cell[data-state="down"] {
+        border-color: var(--red);
+        background:
+          repeating-linear-gradient(
+            135deg,
+            var(--red-soft),
+            var(--red-soft) 4px,
+            #fff7f3 4px,
+            #fff7f3 8px
+          );
+        color: var(--red);
+      }
+
+      .node-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px 14px;
+        margin-top: 13px;
+        color: var(--muted);
+        font-size: 0.66rem;
+      }
+
+      .legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .legend-swatch {
+        width: 8px;
+        height: 8px;
+        border-radius: 1px;
+        background: var(--graphite);
+      }
+
+      .legend-swatch.mixed {
+        border: 1px solid var(--blue);
+        background: var(--blue-soft);
+      }
+
+      .legend-swatch.unavailable {
+        border: 1px solid var(--red);
+        background: var(--red-soft);
+      }
+
+      .history-wrap {
+        position: relative;
+        min-height: 195px;
+      }
+
+      #history-canvas {
+        display: block;
+        width: 100%;
+        height: 195px;
+      }
+
+      .history-empty {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        color: var(--muted);
+        font-size: 0.75rem;
+        text-align: center;
+      }
+
+      .history-empty[hidden] {
+        display: none;
+      }
+
+      .notice-rack {
+        display: grid;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .notice-rack:empty {
+        display: none;
+      }
+
+      .notice {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        border: 1px solid #d4b88f;
+        border-radius: 7px;
+        background: var(--amber-soft);
+        color: #70420f;
+        padding: 11px 13px;
+        font-size: 0.73rem;
+      }
+
+      .notice[data-severity="critical"] {
+        border-color: #cb958e;
+        background: var(--red-soft);
+        color: #7b332d;
+      }
+
+      .notice[data-severity="info"] {
+        border-color: #aac5cb;
+        background: var(--blue-soft);
+        color: #24545f;
+      }
+
+      .notice strong {
+        font-size: 0.7rem;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      .queue-summary {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 7px;
+        background: var(--line);
+        margin-bottom: 17px;
+      }
+
+      .queue-summary div {
+        background: var(--surface-strong);
+        padding: 12px;
+      }
+
+      .queue-summary strong,
+      .queue-summary span {
+        display: block;
+      }
+
+      .queue-summary strong {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.45rem;
+        font-weight: 400;
+      }
+
+      .queue-summary span {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 0.65rem;
+      }
+
+      .bar-list {
+        display: grid;
+        gap: 11px;
+      }
+
+      .bar-row {
+        display: grid;
+        grid-template-columns: minmax(112px, 0.58fr) minmax(100px, 1fr) 28px;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 0.69rem;
+      }
+
+      .bar-row strong {
+        overflow: hidden;
+        color: var(--ink);
+        font-weight: 680;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .bar-track {
+        height: 6px;
+      }
+
+      .bar-track span {
+        background: var(--amber);
+      }
+
+      .bar-count {
+        color: var(--ink);
+        text-align: right;
+      }
+
+      .queue-footnote {
+        margin: 16px 0 0;
+        border-top: 1px solid var(--line-soft);
+        color: var(--muted);
+        padding-top: 13px;
+        font-size: 0.69rem;
+        line-height: 1.5;
+      }
+
+      .storage-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .storage-card {
+        padding: 19px;
+      }
+
+      .storage-card h3 {
+        margin: 0;
+        font-size: 0.88rem;
+      }
+
+      .storage-main {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .storage-main strong {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 2.2rem;
+        font-weight: 400;
+        letter-spacing: -0.05em;
+      }
+
+      .storage-main span {
+        color: var(--muted);
+        font-size: 0.69rem;
+      }
+
+      .storage-track {
+        height: 8px;
+        margin-top: 11px;
+        border-radius: 2px;
+      }
+
+      .storage-track span[data-level="warning"] {
+        background: var(--amber);
+      }
+
+      .storage-track span[data-level="critical"] {
+        background: var(--red);
+      }
+
+      .inode-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 13px;
+        border-top: 1px solid var(--line-soft);
+        color: var(--muted);
+        padding-top: 11px;
+        font-size: 0.67rem;
+      }
+
+      .methodology {
+        margin-top: 42px;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .methodology summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 17px 0;
+        font-size: 0.77rem;
+        font-weight: 780;
+      }
+
+      .methodology summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .methodology summary::after {
+        float: right;
+        color: var(--muted);
+        content: "+";
+        font-size: 1rem;
+      }
+
+      .methodology[open] summary::after {
+        content: "−";
+      }
+
+      .methodology-copy {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+        color: var(--muted);
+        padding: 0 0 19px;
+        font-size: 0.71rem;
+        line-height: 1.6;
+      }
+
+      .methodology-copy strong {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--ink);
+      }
+
+      .error-panel {
+        display: none;
+        margin-bottom: 18px;
+        border: 1px solid #ca9e72;
+        border-radius: 7px;
+        background: var(--amber-soft);
+        color: #724516;
+        padding: 12px 14px;
+        font-size: 0.75rem;
+        line-height: 1.5;
+      }
+
+      .error-panel[data-visible="true"] {
+        display: block;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        padding: 22px 0 31px;
+        font-size: 0.67rem;
+        line-height: 1.5;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.45;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 960px) {
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+
+        .freshness-card {
+          max-width: 520px;
+        }
+
+        .metrics {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .storage-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .resource-subgrid,
+        .queue-grid,
+        .methodology-copy {
+          grid-template-columns: 1fr;
+        }
+
+        .section-heading {
+          align-items: start;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .section-note {
+          text-align: left;
+        }
+
+        .node-grid {
+          grid-template-columns: repeat(10, minmax(8px, 1fr));
+        }
+      }
+
+      @media (max-width: 560px) {
+        .topbar-inner,
+        main,
+        footer {
+          width: min(100% - 24px, 1180px);
+        }
+
+        .brand-subtitle,
+        .privacy-pill {
+          display: none;
+        }
+
+        main {
+          padding-top: 36px;
+        }
+
+        h1 {
+          font-size: clamp(3rem, 18vw, 5rem);
+        }
+
+        .metrics {
+          grid-template-columns: 1fr;
+        }
+
+        .metric-card {
+          min-height: 145px;
+        }
+
+        .resource-head {
+          gap: 12px;
+        }
+
+        .resource-stats {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .queue-summary {
+          grid-template-columns: 1fr;
+        }
+
+        .bar-row {
+          grid-template-columns: minmax(96px, 0.65fr) minmax(70px, 1fr) 24px;
+        }
+
+        footer {
+          flex-direction: column;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        .status-pill[data-state="loading"] .status-dot {
+          animation: none;
+        }
+
+        .metric-track span,
+        .allocation-track span,
+        .bar-track span,
+        .storage-track span {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#dashboard">Skip to dashboard</a>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="../" aria-label="Back to Yinuo Xu's homepage">
+          <span class="brand-mark" aria-hidden="true">Y</span>
+          <span class="brand-copy">
+            <span class="brand-name">Compute Monitor</span>
+            <span class="brand-subtitle">Yinuo Xu · Penn</span>
+          </span>
+        </a>
+        <div class="top-actions">
+          <span class="privacy-pill">Aggregate only</span>
+          <span
+            class="status-pill"
+            id="status-pill"
+            data-state="loading"
+            role="status"
+            aria-live="polite"
+          >
+            <span class="status-dot" aria-hidden="true"></span>
+            <span id="status-text">Connecting</span>
+          </span>
+          <button class="refresh-button" id="refresh-button" type="button">
+            Refresh
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="dashboard">
+      <div class="error-panel" id="error-panel" data-visible="false" role="alert">
+        Live telemetry could not be refreshed. The last valid snapshot remains visible.
+      </div>
+
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Betty cluster · near-live public telemetry</p>
+          <h1 id="page-title">Compute,<br />at a glance.</h1>
+          <p class="hero-copy">
+            GPU allocation, lab queue pressure, and storage health without another
+            terminal window. The view refreshes every two minutes and is intentionally
+            limited to non-identifying aggregates.
+          </p>
+        </div>
+        <div class="freshness-card">
+          <div class="freshness-label">
+            <span>Snapshot age</span>
+            <span id="source-state">Awaiting data</span>
+          </div>
+          <p class="freshness-value" id="freshness-value">—</p>
+          <p class="freshness-detail">
+            Last received
+            <time id="updated-at" datetime="">—</time><br />
+            Slurm refresh: 2 min · storage refresh: 10 min
+          </p>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="Current summary">
+        <article class="metric-card">
+          <div class="metric-label">
+            <span>GPU room</span><span class="metric-index">01</span>
+          </div>
+          <p class="metric-value" id="metric-gpu">—</p>
+          <p class="metric-detail" id="metric-gpu-detail">Connecting to Betty…</p>
+          <div class="metric-track" aria-hidden="true">
+            <span id="metric-gpu-track"></span>
+          </div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">
+            <span>Lab jobs</span><span class="metric-index">02</span>
+          </div>
+          <p class="metric-value" id="metric-jobs">—</p>
+          <p class="metric-detail" id="metric-jobs-detail">Running / pending</p>
+          <div class="metric-track" aria-hidden="true">
+            <span id="metric-jobs-track" style="background: var(--amber)"></span>
+          </div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">
+            <span>Median wait</span><span class="metric-index">03</span>
+          </div>
+          <p class="metric-value" id="metric-wait">—</p>
+          <p class="metric-detail" id="metric-wait-detail">Pending lab records</p>
+          <div class="metric-track" aria-hidden="true">
+            <span id="metric-wait-track" style="background: var(--green)"></span>
+          </div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">
+            <span>Lab shared</span><span class="metric-index">04</span>
+          </div>
+          <p class="metric-value" id="metric-storage">—</p>
+          <p class="metric-detail" id="metric-storage-detail">Storage quota</p>
+          <div class="metric-track" aria-hidden="true">
+            <span id="metric-storage-track" style="background: var(--red)"></span>
+          </div>
+        </article>
+      </section>
+
+      <div class="notice-rack" id="notice-rack" aria-live="polite"></div>
+
+      <section class="section" aria-labelledby="gpu-heading">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Resources</p>
+            <h2 id="gpu-heading">GPU allocation</h2>
+          </div>
+          <p class="section-note">
+            Counts are Slurm allocation units, including MIG instances. They show
+            scheduled capacity—not live SM, power, or GPU-memory utilization.
+          </p>
+        </div>
+
+        <div class="panel resource-list" id="resource-list" aria-live="polite">
+          <div class="resource-row">
+            <p class="resource-meta">Loading resource pools…</p>
+          </div>
+        </div>
+
+        <div class="resource-subgrid">
+          <article class="panel compact-panel">
+            <div class="compact-title">
+              <h3>Anonymous node map</h3>
+              <span id="node-summary">—</span>
+            </div>
+            <div
+              class="node-grid"
+              id="node-grid"
+              aria-hidden="true"
+            ></div>
+            <p class="resource-meta" id="node-accessible-summary">
+              Node state summary will appear here.
+            </p>
+            <div class="node-legend" aria-hidden="true">
+              <span class="legend-item"><span class="legend-swatch"></span>Allocated</span>
+              <span class="legend-item"><span class="legend-swatch mixed"></span>Mixed / idle</span>
+              <span class="legend-item"><span class="legend-swatch unavailable"></span>Unavailable</span>
+            </div>
+          </article>
+
+          <article class="panel compact-panel">
+            <div class="compact-title">
+              <h3>24-hour pressure trace</h3>
+              <span>Free vs. requested units</span>
+            </div>
+            <div class="history-wrap" id="history-wrap">
+              <canvas
+                id="history-canvas"
+                role="img"
+                aria-label="24-hour history of schedulable GPU units and pending lab GPU requests"
+              ></canvas>
+              <div class="history-empty" id="history-empty">
+                Building history from new samples…
+              </div>
+            </div>
+            <div class="node-legend" aria-hidden="true">
+              <span class="legend-item"><span class="legend-swatch mixed"></span>Schedulable free</span>
+              <span class="legend-item"><span class="legend-swatch" style="background: var(--amber)"></span>Lab requested</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="queue-heading">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Lab scope</p>
+            <h2 id="queue-heading">Queue pressure</h2>
+          </div>
+          <p class="section-note">
+            Aggregated only for the lab Slurm account. Rare reasons are grouped to
+            avoid exposing individual jobs.
+          </p>
+        </div>
+
+        <div class="queue-grid">
+          <article class="panel compact-panel">
+            <div class="compact-title">
+              <h3>Pending wait distribution</h3>
+              <span id="wait-sample">—</span>
+            </div>
+            <div class="queue-summary">
+              <div><strong id="wait-p50">—</strong><span>median</span></div>
+              <div><strong id="wait-p95">—</strong><span>p95</span></div>
+              <div><strong id="wait-oldest">—</strong><span>oldest</span></div>
+            </div>
+            <div class="bar-list" id="wait-bars"></div>
+            <p class="queue-footnote" id="estimated-start">
+              Scheduler start estimates will appear when available.
+            </p>
+          </article>
+
+          <article class="panel compact-panel">
+            <div class="compact-title">
+              <h3>Why jobs are pending</h3>
+              <span>Grouped scheduler reasons</span>
+            </div>
+            <div class="bar-list" id="reason-bars"></div>
+            <p class="queue-footnote">
+              Counts are records, not people. Array tasks may contribute multiple
+              records. A scheduler estimate is not a guarantee.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="storage-heading">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Quotas</p>
+            <h2 id="storage-heading">Storage health</h2>
+          </div>
+          <p class="section-note">
+            Quota totals are refreshed every ten minutes. Raw mount paths and quota
+            subject names never leave the cluster.
+          </p>
+        </div>
+        <div class="storage-grid" id="storage-grid" aria-live="polite">
+          <article class="panel storage-card">
+            <p class="resource-meta">Loading storage quotas…</p>
+          </article>
+        </div>
+      </section>
+
+      <details class="methodology">
+        <summary>Data coverage, privacy, and interpretation</summary>
+        <div class="methodology-copy">
+          <div>
+            <strong>Public by design</strong>
+            No usernames, job IDs or names, node names, filesystem paths, commands,
+            logs, project names, or SSH credentials are sent to this page. There is
+            no per-job view.
+          </div>
+          <div>
+            <strong>What “GPU” means here</strong>
+            Slurm allocation units are the common comparable measure available to the
+            collector. A unit can be one full GPU or one configured MIG slice; it does
+            not measure compute-core activity.
+          </div>
+          <div>
+            <strong>Freshness</strong>
+            The page reads a single allow-listed public snapshot. If updates stop, the
+            status changes to stale rather than silently presenting old data as live.
+          </div>
+        </div>
+      </details>
+
+      <noscript>
+        <p class="error-panel" style="display: block">
+          JavaScript is required to load the current public snapshot.
+        </p>
+      </noscript>
+    </main>
+
+    <footer>
+      <span>Read-only · aggregate telemetry · no login required</span>
+      <span>For operational awareness only—not a scheduler guarantee</span>
+    </footer>
+
+    <script>
+      (() => {
+        "use strict";
+
+        const API_URL =
+          "https://kaimwopilugeilwnhclv.supabase.co/rest/v1/monitor_snapshots" +
+          "?source_id=eq.betty-public&select=payload,observed_at&limit=1";
+        const API_KEY = "sb_publishable_tCs3OT7S9GmSRAfqTaYA2g_Kky4xYPR";
+        const REFRESH_MS = 120_000;
+        const els = Object.fromEntries(
+          Array.from(document.querySelectorAll("[id]")).map((element) => [
+            element.id,
+            element,
+          ]),
+        );
+
+        let currentPayload = null;
+        let currentObservedAt = null;
+        let historyPoints = [];
+        let connectionError = false;
+
+        const finite = (value) =>
+          typeof value === "number" && Number.isFinite(value) ? value : null;
+
+        const clamp = (value, minimum = 0, maximum = 100) =>
+          Math.min(maximum, Math.max(minimum, finite(value) ?? minimum));
+
+        const formatNumber = (value, options = {}) => {
+          const checked = finite(value);
+          return checked === null
+            ? "—"
+            : new Intl.NumberFormat(undefined, options).format(checked);
+        };
+
+        const formatBytes = (value) => {
+          const checked = finite(value);
+          if (checked === null) return "—";
+          const units = ["B", "KB", "MB", "GB", "TB", "PB"];
+          let amount = checked;
+          let index = 0;
+          while (Math.abs(amount) >= 1000 && index < units.length - 1) {
+            amount /= 1000;
+            index += 1;
+          }
+          const digits = amount >= 100 ? 0 : amount >= 10 ? 1 : 2;
+          return `${amount.toFixed(digits)} ${units[index]}`;
+        };
+
+        const formatDuration = (seconds) => {
+          const checked = finite(seconds);
+          if (checked === null) return "—";
+          const totalMinutes = Math.max(0, Math.round(checked / 60));
+          const days = Math.floor(totalMinutes / 1440);
+          const hours = Math.floor((totalMinutes % 1440) / 60);
+          const minutes = totalMinutes % 60;
+          if (days > 0) return `${days}d ${hours}h`;
+          if (hours > 0) return `${hours}h ${minutes}m`;
+          return `${minutes}m`;
+        };
+
+        const formatDate = (value) => {
+          const date = new Date(value);
+          if (!Number.isFinite(date.getTime())) return "—";
+          return new Intl.DateTimeFormat(undefined, {
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            timeZoneName: "short",
+          }).format(date);
+        };
+
+        const relativeAge = (value) => {
+          const date = new Date(value);
+          if (!Number.isFinite(date.getTime())) return "—";
+          const seconds = Math.max(0, Math.round((Date.now() - date.getTime()) / 1000));
+          if (seconds < 60) return `${seconds}s ago`;
+          if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
+          if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
+          return `${Math.floor(seconds / 86400)}d ago`;
+        };
+
+        const create = (tag, className, text) => {
+          const element = document.createElement(tag);
+          if (className) element.className = className;
+          if (text !== undefined && text !== null) element.textContent = String(text);
+          return element;
+        };
+
+        const setTrack = (element, value, color) => {
+          const width = clamp(value);
+          element.style.width = `${width}%`;
+          if (color) element.style.background = color;
+        };
+
+        const storageLevel = (percent) => {
+          if ((finite(percent) ?? 0) >= 90) return "critical";
+          if ((finite(percent) ?? 0) >= 80) return "warning";
+          return "normal";
+        };
+
+        function setStatus(state, label) {
+          els["status-pill"].dataset.state = state;
+          els["status-text"].textContent = label;
+        }
+
+        function updateFreshness() {
+          if (!currentPayload) return;
+          const generatedAt = currentPayload.freshness?.generated_at || currentObservedAt;
+          const validUntil = new Date(currentPayload.freshness?.valid_until || 0);
+          const isValid = Number.isFinite(validUntil.getTime()) && Date.now() <= validUntil.getTime();
+          els["freshness-value"].textContent = relativeAge(generatedAt);
+          els["updated-at"].textContent = formatDate(generatedAt);
+          els["updated-at"].dateTime = generatedAt || "";
+          els["source-state"].textContent = isValid ? "Sources healthy" : "Update overdue";
+          if (connectionError) {
+            setStatus("offline", "Unavailable");
+          } else {
+            setStatus(isValid ? "live" : "stale", isValid ? "Live" : "Stale");
+          }
+        }
+
+        function renderMetrics(payload) {
+          const gpu = payload.gpu || {};
+          const queue = payload.queue || {};
+          const waits = queue.pending_wait_seconds || {};
+          const storage = Array.isArray(payload.storage) ? payload.storage : [];
+          const labStorage = storage.find((item) => item.id === "lab-shared");
+
+          const configured = finite(gpu.configured_units) ?? 0;
+          const schedulable = finite(gpu.schedulable_unallocated_units) ?? 0;
+          const unallocated = finite(gpu.unallocated_units) ?? 0;
+          els["metric-gpu"].textContent = formatNumber(schedulable);
+          els["metric-gpu-detail"].textContent =
+            `${formatNumber(schedulable)} schedulable of ${formatNumber(configured)} units` +
+            (unallocated !== schedulable
+              ? ` · ${formatNumber(unallocated)} physically unallocated`
+              : "");
+          setTrack(
+            els["metric-gpu-track"],
+            configured ? (schedulable / configured) * 100 : 0,
+          );
+
+          const running = finite(queue.running_records) ?? 0;
+          const pending = finite(queue.pending_records) ?? 0;
+          els["metric-jobs"].textContent = `${formatNumber(running)} / ${formatNumber(pending)}`;
+          els["metric-jobs-detail"].textContent =
+            `running / pending · ${formatNumber(queue.running_allocated_units)} / ` +
+            `${formatNumber(queue.pending_requested_units)} GPU units`;
+          setTrack(
+            els["metric-jobs-track"],
+            running + pending ? (pending / (running + pending)) * 100 : 0,
+          );
+
+          els["metric-wait"].textContent = formatDuration(waits.p50_rounded);
+          els["metric-wait-detail"].textContent =
+            waits.sample_size >= 3
+              ? `p95 ${formatDuration(waits.p95_rounded)} · oldest ${formatDuration(waits.oldest_rounded)}`
+              : `${formatNumber(waits.sample_size)} pending sample${waits.sample_size === 1 ? "" : "s"}`;
+          setTrack(
+            els["metric-wait-track"],
+            Math.min(100, ((finite(waits.p50_rounded) ?? 0) / 21600) * 100),
+          );
+
+          els["metric-storage"].textContent = labStorage
+            ? `${formatNumber(labStorage.percent_used, { maximumFractionDigits: 1 })}%`
+            : "—";
+          els["metric-storage-detail"].textContent = labStorage
+            ? `${formatBytes(labStorage.used_bytes)} of ${formatBytes(labStorage.limit_bytes)}`
+            : "Quota snapshot unavailable";
+          setTrack(els["metric-storage-track"], labStorage?.percent_used ?? 0);
+        }
+
+        function renderResources(payload) {
+          const partitions = Array.isArray(payload.partitions) ? payload.partitions : [];
+          els["resource-list"].replaceChildren();
+          if (!partitions.length) {
+            const row = create("div", "resource-row");
+            row.append(create("p", "resource-meta", "No public GPU pools are available."));
+            els["resource-list"].append(row);
+            return;
+          }
+
+          partitions.forEach((partition) => {
+            const row = create("article", "resource-row");
+            const head = create("div", "resource-head");
+            const titleWrap = create("div");
+            titleWrap.append(create("h3", "resource-title", partition.label || "GPU pool"));
+            const queue = partition.queue || {};
+            titleWrap.append(
+              create(
+                "p",
+                "resource-meta",
+                `${formatNumber(queue.running_records)} lab running · ` +
+                  `${formatNumber(queue.pending_records)} lab pending`,
+              ),
+            );
+            const capacity = finite(partition.configured_units) ?? 0;
+            const allocated = finite(partition.allocated_units) ?? 0;
+            const number = create("div", "resource-number");
+            number.append(create("strong", "", `${formatNumber(allocated)} / ${formatNumber(capacity)}`));
+            number.append(create("span", "", "allocated units"));
+            head.append(titleWrap, number);
+            row.append(head);
+
+            const track = create("div", "allocation-track");
+            const fill = create("span");
+            fill.style.width = `${clamp(capacity ? (allocated / capacity) * 100 : 0)}%`;
+            track.append(fill);
+            track.setAttribute(
+              "aria-label",
+              `${formatNumber(allocated)} of ${formatNumber(capacity)} allocation units in use`,
+            );
+            track.setAttribute("role", "progressbar");
+            track.setAttribute("aria-valuemin", "0");
+            track.setAttribute("aria-valuemax", String(capacity));
+            track.setAttribute("aria-valuenow", String(allocated));
+            row.append(track);
+
+            const stats = create("div", "resource-stats");
+            const statValues = [
+              [partition.schedulable_unallocated_units, "schedulable free"],
+              [partition.unallocated_units, "unallocated"],
+              [queue.pending_requested_units, "lab requested"],
+              [Object.values(partition.nodes || {}).reduce((sum, value) => sum + (finite(value) ?? 0), 0), "nodes"],
+            ];
+            statValues.forEach(([value, label]) => {
+              const stat = create("div", "resource-stat");
+              stat.append(create("strong", "", formatNumber(value)), document.createTextNode(label));
+              stats.append(stat);
+            });
+            row.append(stats);
+            els["resource-list"].append(row);
+          });
+        }
+
+        function renderNodes(payload) {
+          const nodes = Array.isArray(payload.gpu?.anonymous_nodes)
+            ? payload.gpu.anonymous_nodes
+            : [];
+          els["node-grid"].replaceChildren();
+          nodes.forEach((node) => {
+            const cell = create(
+              "span",
+              "node-cell",
+              `${formatNumber(node.allocated_units)}/${formatNumber(node.configured_units)}`,
+            );
+            cell.dataset.state = node.state || "other";
+            els["node-grid"].append(cell);
+          });
+
+          const states = payload.gpu?.nodes_by_state || {};
+          const unavailable = (finite(states.down) ?? 0) + (finite(states.drain) ?? 0);
+          els["node-summary"].textContent = `${formatNumber(nodes.length)} public GPU nodes`;
+          const stateParts = [
+            [states.allocated, "allocated"],
+            [states.mixed, "mixed"],
+            [states.idle, "idle"],
+            [unavailable, "unavailable"],
+          ]
+            .filter(([value]) => (finite(value) ?? 0) > 0)
+            .map(([value, label]) => `${formatNumber(value)} ${label}`);
+          els["node-accessible-summary"].textContent = stateParts.length
+            ? `Public node states: ${stateParts.join(", ")}. Identities are withheld.`
+            : "No public node state summary is available.";
+        }
+
+        function friendlyReason(code) {
+          const labels = {
+            Priority: "Scheduler priority",
+            Resources: "Resources unavailable",
+            Dependency: "Dependency",
+            MaxGRESPerAccount: "Lab GPU allocation limit",
+            QOSMaxGRESPerUser: "Per-user GPU policy limit",
+            QOSMaxGRESPerAccount: "Lab GPU policy limit",
+            ReqNodeNotAvail: "Requested resource unavailable",
+            Reservation: "Reservation",
+            Other: "Other / rare reasons",
+          };
+          return labels[code] || "Other / rare reasons";
+        }
+
+        function renderBarList(container, items, color) {
+          container.replaceChildren();
+          const maximum = Math.max(1, ...items.map((item) => finite(item.count) ?? 0));
+          if (!items.length) {
+            container.append(create("p", "resource-meta", "No pending records in this snapshot."));
+            return;
+          }
+          items.forEach((item) => {
+            const row = create("div", "bar-row");
+            row.append(create("strong", "", item.label));
+            const track = create("div", "bar-track");
+            const fill = create("span");
+            fill.style.width = `${clamp(((finite(item.count) ?? 0) / maximum) * 100)}%`;
+            if (color) fill.style.background = color;
+            track.append(fill);
+            row.append(track, create("span", "bar-count", formatNumber(item.count)));
+            container.append(row);
+          });
+        }
+
+        function renderQueue(payload) {
+          const queue = payload.queue || {};
+          const waits = queue.pending_wait_seconds || {};
+          const buckets = waits.buckets || {};
+          els["wait-sample"].textContent = `${formatNumber(waits.sample_size)} pending records`;
+          els["wait-p50"].textContent = formatDuration(waits.p50_rounded);
+          els["wait-p95"].textContent = formatDuration(waits.p95_rounded);
+          els["wait-oldest"].textContent = formatDuration(waits.oldest_rounded);
+          renderBarList(
+            els["wait-bars"],
+            [
+              { label: "Under 15 min", count: finite(buckets.lt_15m) ?? 0 },
+              { label: "15 min – 1 hour", count: finite(buckets["15m_1h"]) ?? 0 },
+              { label: "1 – 6 hours", count: finite(buckets["1h_6h"]) ?? 0 },
+              { label: "6+ hours", count: finite(buckets.gte_6h) ?? 0 },
+            ],
+            "var(--blue)",
+          );
+
+          const estimate = queue.next_estimated_start_at;
+          els["estimated-start"].textContent = estimate
+            ? `Earliest scheduler estimate: ${formatDate(estimate)} · ` +
+              `${formatNumber(queue.estimated_start_records)} record${queue.estimated_start_records === 1 ? "" : "s"} with estimates.`
+            : "No future scheduler start estimates are present in this snapshot.";
+
+          const reasons = Array.isArray(queue.reasons)
+            ? queue.reasons.map((item) => ({
+                label: friendlyReason(item.code),
+                count: finite(item.count) ?? 0,
+              }))
+            : [];
+          renderBarList(els["reason-bars"], reasons, "var(--amber)");
+        }
+
+        function renderStorage(payload) {
+          const storage = Array.isArray(payload.storage) ? payload.storage : [];
+          els["storage-grid"].replaceChildren();
+          if (!storage.length) {
+            const card = create("article", "panel storage-card");
+            card.append(create("p", "resource-meta", "Storage quota data is unavailable."));
+            els["storage-grid"].append(card);
+            return;
+          }
+
+          storage.forEach((item) => {
+            const card = create("article", "panel storage-card");
+            card.append(create("h3", "", item.label || "Storage"));
+            const main = create("div", "storage-main");
+            main.append(
+              create("strong", "", `${formatNumber(item.percent_used, { maximumFractionDigits: 1 })}%`),
+              create("span", "", `${formatBytes(item.used_bytes)} / ${formatBytes(item.limit_bytes)}`),
+            );
+            card.append(main);
+            const track = create("div", "storage-track");
+            const fill = create("span");
+            fill.style.width = `${clamp(item.percent_used)}%`;
+            fill.dataset.level = storageLevel(item.percent_used);
+            track.append(fill);
+            track.setAttribute(
+              "aria-label",
+              `${formatNumber(item.percent_used, { maximumFractionDigits: 1 })}% of storage quota used`,
+            );
+            track.setAttribute("role", "progressbar");
+            track.setAttribute("aria-valuemin", "0");
+            track.setAttribute("aria-valuemax", "100");
+            track.setAttribute("aria-valuenow", String(clamp(item.percent_used)));
+            card.append(track);
+            const inodes = create("div", "inode-row");
+            inodes.append(
+              create("span", "", "File-count quota"),
+              create(
+                "strong",
+                "",
+                `${formatNumber(item.inode_percent_used, { maximumFractionDigits: 1 })}% · ` +
+                  `${formatNumber(item.used_inodes)} / ${formatNumber(item.limit_inodes)}`,
+              ),
+            );
+            card.append(inodes);
+            els["storage-grid"].append(card);
+          });
+        }
+
+        function noticeText(notice) {
+          if (notice.code === "gpu_nodes_unavailable") {
+            return `${formatNumber(notice.count)} public GPU node${notice.count === 1 ? " is" : "s are"} unavailable to the scheduler.`;
+          }
+          if (notice.code === "storage_data_stale") {
+            return "The storage quota source is older than expected.";
+          }
+          if (notice.code === "storage_quota_high") {
+            const labels = { home: "Home", "lab-shared": "Lab shared", workspace: "Personal workspace" };
+            return `${labels[notice.storage_id] || "A storage quota"} is approximately ${formatNumber(notice.percent_rounded)}% full.`;
+          }
+          if (notice.code === "lab_queue_pressure") {
+            return `${formatNumber(notice.count)} lab records are pending in the current snapshot.`;
+          }
+          return null;
+        }
+
+        function renderNotices(payload) {
+          const notices = Array.isArray(payload.notices) ? payload.notices : [];
+          els["notice-rack"].replaceChildren();
+          notices.forEach((item) => {
+            const message = noticeText(item);
+            if (!message) return;
+            const notice = create("div", "notice");
+            notice.dataset.severity = item.severity || "info";
+            notice.append(
+              create("span", "", message),
+              create("strong", "", item.severity || "info"),
+            );
+            els["notice-rack"].append(notice);
+          });
+        }
+
+        function drawHistory() {
+          const canvas = els["history-canvas"];
+          const context = canvas.getContext("2d");
+          const points = historyPoints.filter((point) => {
+            const time = new Date(point.at).getTime();
+            return Number.isFinite(time) && time >= Date.now() - 86_400_000;
+          });
+          const ratio = Math.min(2, window.devicePixelRatio || 1);
+          const width = Math.max(260, canvas.clientWidth);
+          const height = 195;
+          canvas.width = Math.round(width * ratio);
+          canvas.height = Math.round(height * ratio);
+          context.setTransform(ratio, 0, 0, ratio, 0, 0);
+          context.clearRect(0, 0, width, height);
+
+          const styles = getComputedStyle(document.documentElement);
+          const ink = styles.getPropertyValue("--ink").trim();
+          const muted = styles.getPropertyValue("--muted").trim();
+          const line = styles.getPropertyValue("--line-soft").trim();
+          const blue = styles.getPropertyValue("--blue").trim();
+          const amber = styles.getPropertyValue("--amber").trim();
+
+          context.font = "10px ui-monospace, SFMono-Regular, Menlo, monospace";
+          context.fillStyle = muted;
+          context.strokeStyle = line;
+          context.lineWidth = 1;
+          [22, 96, 118, 192].forEach((y) => {
+            context.beginPath();
+            context.moveTo(42, y + 0.5);
+            context.lineTo(width - 8, y + 0.5);
+            context.stroke();
+          });
+          context.fillText("FREE", 0, 31);
+          context.fillText("REQ", 0, 127);
+
+          if (points.length < 2) {
+            els["history-empty"].hidden = false;
+            return;
+          }
+          els["history-empty"].hidden = true;
+
+          const drawSeries = (key, top, bottom, color) => {
+            const values = points.map((point) => finite(point[key]) ?? 0);
+            const maximum = Math.max(1, ...values);
+            context.beginPath();
+            values.forEach((value, index) => {
+              const x = 42 + (index / (values.length - 1)) * (width - 50);
+              const y = bottom - (value / maximum) * (bottom - top);
+              if (index === 0) context.moveTo(x, y);
+              else context.lineTo(x, y);
+            });
+            context.strokeStyle = color;
+            context.lineWidth = 2;
+            context.lineJoin = "round";
+            context.lineCap = "round";
+            context.stroke();
+            context.fillStyle = ink;
+            context.fillText(String(values[values.length - 1]), width - 30, top + 10);
+          };
+
+          drawSeries("schedulable_unallocated_units", 25, 91, blue);
+          drawSeries("lab_pending_requested_units", 121, 187, amber);
+        }
+
+        function render(payload, observedAt) {
+          currentPayload = payload;
+          currentObservedAt = observedAt;
+          historyPoints = Array.isArray(payload.history) ? payload.history : [];
+          renderMetrics(payload);
+          renderResources(payload);
+          renderNodes(payload);
+          renderQueue(payload);
+          renderStorage(payload);
+          renderNotices(payload);
+          drawHistory();
+          updateFreshness();
+        }
+
+        async function loadSnapshot({ manual = false } = {}) {
+          if (manual) {
+            els["refresh-button"].disabled = true;
+            els["refresh-button"].textContent = "Checking…";
+          }
+          if (!currentPayload) setStatus("loading", "Connecting");
+          try {
+            const response = await fetch(API_URL, {
+              headers: { apikey: API_KEY },
+              cache: "no-store",
+            });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const rows = await response.json();
+            const row = Array.isArray(rows) ? rows[0] : null;
+            const payload = row?.payload;
+            if (
+              !payload ||
+              payload.schema_version !== "monitor.public.v1" ||
+              payload.privacy !== "public_aggregate"
+            ) {
+              throw new Error("Unexpected snapshot schema");
+            }
+            connectionError = false;
+            render(payload, row.observed_at);
+            els["error-panel"].dataset.visible = "false";
+          } catch (error) {
+            connectionError = true;
+            els["error-panel"].dataset.visible = "true";
+            els["error-panel"].textContent = currentPayload
+              ? "Live telemetry could not be refreshed. The last valid snapshot remains visible."
+              : "Live telemetry could not be loaded. Please try again shortly.";
+            setStatus("offline", "Unavailable");
+            if (!currentPayload) {
+              els["freshness-value"].textContent = "No data";
+              els["source-state"].textContent = "Connection failed";
+            }
+          } finally {
+            if (manual) {
+              els["refresh-button"].disabled = false;
+              els["refresh-button"].textContent = "Refresh";
+            }
+          }
+        }
+
+        els["refresh-button"].addEventListener("click", () => loadSnapshot({ manual: true }));
+        window.addEventListener("resize", () => window.requestAnimationFrame(drawHistory));
+        document.addEventListener("visibilitychange", () => {
+          if (document.visibilityState === "visible") loadSnapshot();
+        });
+        window.setInterval(loadSnapshot, REFRESH_MS);
+        window.setInterval(updateFreshness, 30_000);
+        loadSnapshot();
+      })();
+    </script>
+  </body>
+</html>
