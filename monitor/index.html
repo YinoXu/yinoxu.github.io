@@ -1637,11 +1637,13 @@
             (fullLimit && migLimit
               ? ` · policy caps ${formatNumber(fullLimit.concurrent_limit_units)} full / ${formatNumber(migLimit.concurrent_limit_units)} MIG`
               : "");
-          const runningCpu = finite(queue.running_allocated_cpu_cores) ?? 0;
-          const pendingCpu = finite(queue.pending_requested_cpu_cores) ?? 0;
+          const runningCpu = finite(queue.running_allocated_cpu_cores);
+          const pendingCpu = finite(queue.pending_requested_cpu_cores);
           els["metric-cpu"].textContent = formatNumber(runningCpu);
           els["metric-cpu-detail"].textContent =
-            `${formatNumber(pendingCpu)} cores requested by pending lab jobs`;
+            runningCpu === null
+              ? "CPU allocation data unavailable in this snapshot"
+              : `${formatNumber(pendingCpu)} cores requested by pending lab jobs`;
           const running = finite(queue.running_records) ?? 0;
           const pending = finite(queue.pending_records) ?? 0;
           els["metric-jobs"].textContent = `${formatNumber(running)} / ${formatNumber(pending)}`;
@@ -1714,7 +1716,9 @@
               create(
                 "p",
                 "lab-allocation-value",
-                formatNumber(availableNow),
+                availableNow === null
+                  ? "—"
+                  : `${formatNumber(availableNow)} units`,
               ),
             );
             const limitText = applicableLimit
@@ -1758,6 +1762,9 @@
         }
 
         function renderRunningJobs(payload) {
+          const isDetailedSnapshot =
+            payload.schema_version === "monitor.public.v2" &&
+            payload.privacy === "lab_authorized_operational";
           const rows = Array.isArray(payload.running_allocations)
             ? [...payload.running_allocations]
             : [];
@@ -1772,11 +1779,19 @@
           const distinctUsers = new Set(rows.map((item) => item.username)).size;
           els["running-jobs-summary"].textContent = rows.length
             ? `${formatNumber(rows.length)} running records · ${formatNumber(distinctUsers)} usernames`
-            : "Current running records from the configured lab Slurm account.";
+            : isDetailedSnapshot
+              ? "Current running records from the configured lab Slurm account."
+              : "Legacy snapshot · detailed running allocations unavailable.";
           els["running-jobs-body"].replaceChildren();
           if (!rows.length) {
             const row = create("tr");
-            const cell = create("td", "empty-row", "No running lab jobs in this snapshot.");
+            const cell = create(
+              "td",
+              "empty-row",
+              isDetailedSnapshot
+                ? "No running lab jobs in this snapshot."
+                : "Detailed running allocations are unavailable in this legacy snapshot.",
+            );
             cell.colSpan = 7;
             row.append(cell);
             els["running-jobs-body"].append(row);
