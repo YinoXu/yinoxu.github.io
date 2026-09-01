@@ -13,7 +13,7 @@
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; connect-src 'self' https://kaimwopilugeilwnhclv.supabase.co; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
     />
-    <title>Betty Compute Monitor · Yinuo Xu</title>
+    <title>Betty Compute Monitor</title>
     <link rel="icon" href="../favicon.svg?v=9" type="image/svg+xml" />
     <style>
       :root {
@@ -265,10 +265,10 @@
         max-width: 780px;
         margin: 0;
         font-family: Georgia, "Times New Roman", serif;
-        font-size: clamp(3rem, 7.4vw, 6.6rem);
+        font-size: clamp(2.3rem, 4vw, 3.8rem);
         font-weight: 400;
-        letter-spacing: -0.062em;
-        line-height: 0.88;
+        letter-spacing: -0.045em;
+        line-height: 1;
       }
 
       .hero-copy {
@@ -313,9 +313,42 @@
 
       .metrics {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         border-top: 1px solid var(--line);
         border-left: 1px solid var(--line);
+      }
+
+      .scope-strip,
+      .telemetry-gap {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        border: 1px solid var(--line);
+        background: rgba(250, 247, 239, 0.88);
+        color: var(--muted);
+        padding: 12px 14px;
+        font-size: 0.73rem;
+        line-height: 1.55;
+      }
+
+      .scope-strip {
+        margin-bottom: 16px;
+      }
+
+      .telemetry-gap {
+        margin-top: 16px;
+        border-color: #d4b88f;
+        background: var(--amber-soft);
+        color: #70420f;
+      }
+
+      .scope-strip strong,
+      .telemetry-gap strong {
+        flex: 0 0 auto;
+        color: var(--ink);
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
 
       .metric-card {
@@ -359,7 +392,6 @@
         line-height: 1.45;
       }
 
-      .metric-track,
       .allocation-track,
       .bar-track,
       .storage-track {
@@ -367,12 +399,6 @@
         background: #ded9ce;
       }
 
-      .metric-track {
-        height: 4px;
-        margin-top: 13px;
-      }
-
-      .metric-track span,
       .allocation-track span,
       .bar-track span,
       .storage-track span {
@@ -503,6 +529,41 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 16px;
         margin-top: 16px;
+      }
+
+      .lab-allocation-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        overflow: hidden;
+      }
+
+      .lab-allocation-item {
+        min-width: 0;
+        padding: 20px;
+      }
+
+      .lab-allocation-item + .lab-allocation-item {
+        border-left: 1px solid var(--line-soft);
+      }
+
+      .lab-allocation-item h3 {
+        margin: 0;
+        font-size: 0.84rem;
+      }
+
+      .lab-allocation-value {
+        margin: 17px 0 8px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 2.35rem;
+        letter-spacing: -0.05em;
+        line-height: 1;
+      }
+
+      .lab-allocation-meta {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.7rem;
+        line-height: 1.55;
       }
 
       .compact-panel {
@@ -927,6 +988,15 @@
         .node-grid {
           grid-template-columns: repeat(10, minmax(8px, 1fr));
         }
+
+        .lab-allocation-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .lab-allocation-item + .lab-allocation-item {
+          border-top: 1px solid var(--line-soft);
+          border-left: 0;
+        }
       }
 
       @media (max-width: 560px) {
@@ -943,10 +1013,6 @@
 
         main {
           padding-top: 36px;
-        }
-
-        h1 {
-          font-size: clamp(3rem, 18vw, 5rem);
         }
 
         .metrics {
@@ -987,7 +1053,6 @@
           animation: none;
         }
 
-        .metric-track span,
         .allocation-track span,
         .bar-track span,
         .storage-track span {
@@ -1000,11 +1065,11 @@
     <a class="skip-link" href="#dashboard">Skip to dashboard</a>
     <header class="topbar">
       <div class="topbar-inner">
-        <a class="brand" href="../" aria-label="Back to Yinuo Xu's homepage">
-          <span class="brand-mark" aria-hidden="true">Y</span>
+        <a class="brand" href="../" aria-label="Back to homepage">
+          <span class="brand-mark" aria-hidden="true">B</span>
           <span class="brand-copy">
             <span class="brand-name">Compute Monitor</span>
-            <span class="brand-subtitle">Yinuo Xu · Penn</span>
+            <span class="brand-subtitle">Betty · Penn</span>
           </span>
         </a>
         <div class="top-actions">
@@ -1033,12 +1098,11 @@
 
       <section class="hero" aria-labelledby="page-title">
         <div>
-          <p class="eyebrow">Betty cluster · near-live public telemetry</p>
-          <h1 id="page-title">Compute,<br />at a glance.</h1>
+          <h1 id="page-title">Betty compute monitor</h1>
           <p class="hero-copy">
-            GPU allocation, lab queue pressure, and storage health without another
-            terminal window. The view refreshes every two minutes and is intentionally
-            limited to non-identifying aggregates.
+            Current scheduler allocation, lab-account queue pressure, and storage
+            quotas. This public view refreshes every two minutes and contains only
+            non-identifying aggregates.
           </p>
         </div>
         <div class="freshness-card">
@@ -1055,60 +1119,99 @@
         </div>
       </section>
 
+      <div class="scope-strip">
+        <strong>Coverage</strong>
+        <span>
+          GPU capacity and node states are Betty-wide. Lab allocations, queue
+          statistics, and lab-shared storage are limited to the configured lab account.
+        </span>
+      </div>
+
       <section class="metrics" aria-label="Current summary">
         <article class="metric-card">
           <div class="metric-label">
-            <span>GPU room</span><span class="metric-index">01</span>
+            <span>Lab GPU allocated</span><span class="metric-index">01</span>
           </div>
           <p class="metric-value" id="metric-gpu">—</p>
-          <p class="metric-detail" id="metric-gpu-detail">Connecting to Betty…</p>
-          <div class="metric-track" aria-hidden="true">
-            <span id="metric-gpu-track"></span>
-          </div>
+          <p class="metric-detail" id="metric-gpu-detail">Running allocation units</p>
         </article>
         <article class="metric-card">
           <div class="metric-label">
-            <span>Lab jobs</span><span class="metric-index">02</span>
+            <span>Lab CPU reserved</span><span class="metric-index">02</span>
+          </div>
+          <p class="metric-value" id="metric-cpu">—</p>
+          <p class="metric-detail" id="metric-cpu-detail">Allocated CPU cores</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">
+            <span>Lab jobs</span><span class="metric-index">03</span>
           </div>
           <p class="metric-value" id="metric-jobs">—</p>
           <p class="metric-detail" id="metric-jobs-detail">Running / pending</p>
-          <div class="metric-track" aria-hidden="true">
-            <span id="metric-jobs-track" style="background: var(--amber)"></span>
-          </div>
         </article>
         <article class="metric-card">
           <div class="metric-label">
-            <span>Median wait</span><span class="metric-index">03</span>
+            <span>Median wait</span><span class="metric-index">04</span>
           </div>
           <p class="metric-value" id="metric-wait">—</p>
           <p class="metric-detail" id="metric-wait-detail">Pending lab records</p>
-          <div class="metric-track" aria-hidden="true">
-            <span id="metric-wait-track" style="background: var(--green)"></span>
-          </div>
         </article>
         <article class="metric-card">
           <div class="metric-label">
-            <span>Lab shared</span><span class="metric-index">04</span>
+            <span>Cluster GPU room</span><span class="metric-index">05</span>
+          </div>
+          <p class="metric-value" id="metric-cluster-gpu">—</p>
+          <p class="metric-detail" id="metric-cluster-gpu-detail">Schedulable cluster units</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">
+            <span>Lab shared</span><span class="metric-index">06</span>
           </div>
           <p class="metric-value" id="metric-storage">—</p>
           <p class="metric-detail" id="metric-storage-detail">Storage quota</p>
-          <div class="metric-track" aria-hidden="true">
-            <span id="metric-storage-track" style="background: var(--red)"></span>
-          </div>
         </article>
       </section>
 
+      <div class="telemetry-gap">
+        <strong>Hardware utilization</strong>
+        <span>
+          Cross-user live GPU activity, GPU memory use, and CPU efficiency are not
+          exposed to this collector. The values above are scheduler reservations;
+          unavailable telemetry is never shown as 0%.
+        </span>
+      </div>
+
       <div class="notice-rack" id="notice-rack" aria-live="polite"></div>
+
+      <section class="section" aria-labelledby="lab-gpu-heading">
+        <div class="section-heading">
+          <div>
+            <h2 id="lab-gpu-heading">Lab GPU allocation by pool</h2>
+          </div>
+          <p class="section-note">
+            The lab uses a shared Betty pool. Policy caps are concurrent allocation
+            limits, not lab-owned physical-card inventory; MIG units are separate.
+          </p>
+        </div>
+        <div
+          class="panel lab-allocation-grid"
+          id="lab-allocation-grid"
+          aria-live="polite"
+        >
+          <article class="lab-allocation-item">
+            <p class="resource-meta">Loading lab allocation…</p>
+          </article>
+        </div>
+      </section>
 
       <section class="section" aria-labelledby="gpu-heading">
         <div class="section-heading">
           <div>
-            <p class="section-kicker">Resources</p>
-            <h2 id="gpu-heading">GPU allocation</h2>
+            <h2 id="gpu-heading">Cluster GPU allocation</h2>
           </div>
           <p class="section-note">
-            Counts are Slurm allocation units, including MIG instances. They show
-            scheduled capacity—not live SM, power, or GPU-memory utilization.
+            This section covers Betty's public GPU partitions, not lab-owned hardware.
+            Counts are Slurm allocation units—not live SM, power, or memory utilization.
           </p>
         </div>
 
@@ -1121,7 +1224,7 @@
         <div class="resource-subgrid">
           <article class="panel compact-panel">
             <div class="compact-title">
-              <h3>Anonymous node map</h3>
+              <h3>Cluster GPU node map</h3>
               <span id="node-summary">—</span>
             </div>
             <div
@@ -1165,7 +1268,6 @@
       <section class="section" aria-labelledby="queue-heading">
         <div class="section-heading">
           <div>
-            <p class="section-kicker">Lab scope</p>
             <h2 id="queue-heading">Queue pressure</h2>
           </div>
           <p class="section-note">
@@ -1208,7 +1310,6 @@
       <section class="section" aria-labelledby="storage-heading">
         <div class="section-heading">
           <div>
-            <p class="section-kicker">Quotas</p>
             <h2 id="storage-heading">Storage health</h2>
           </div>
           <p class="section-note">
@@ -1347,12 +1448,6 @@
           return element;
         };
 
-        const setTrack = (element, value, color) => {
-          const width = clamp(value);
-          element.style.width = `${width}%`;
-          if (color) element.style.background = color;
-        };
-
         const storageLevel = (percent) => {
           if ((finite(percent) ?? 0) >= 90) return "critical";
           if ((finite(percent) ?? 0) >= 80) return "warning";
@@ -1390,45 +1485,91 @@
           const configured = finite(gpu.configured_units) ?? 0;
           const schedulable = finite(gpu.schedulable_unallocated_units) ?? 0;
           const unallocated = finite(gpu.unallocated_units) ?? 0;
-          els["metric-gpu"].textContent = formatNumber(schedulable);
+          const limits = Array.isArray(gpu.lab_scheduler_limits)
+            ? gpu.lab_scheduler_limits
+            : [];
+          const fullLimit = limits.find((item) => item.id === "full-b200-policy");
+          const migLimit = limits.find((item) => item.id === "mig-shared-policy");
+          const labGpuAllocated = finite(queue.running_allocated_units) ?? 0;
+          const labGpuPending = finite(queue.pending_requested_units) ?? 0;
+          els["metric-gpu"].textContent = formatNumber(labGpuAllocated);
           els["metric-gpu-detail"].textContent =
-            `${formatNumber(schedulable)} schedulable of ${formatNumber(configured)} units` +
-            (unallocated !== schedulable
-              ? ` · ${formatNumber(unallocated)} physically unallocated`
+            `${formatNumber(labGpuPending)} requested by pending jobs` +
+            (fullLimit && migLimit
+              ? ` · policy caps ${formatNumber(fullLimit.concurrent_limit_units)} full / ${formatNumber(migLimit.concurrent_limit_units)} MIG`
               : "");
-          setTrack(
-            els["metric-gpu-track"],
-            configured ? (schedulable / configured) * 100 : 0,
-          );
-
+          const runningCpu = finite(queue.running_allocated_cpu_cores) ?? 0;
+          const pendingCpu = finite(queue.pending_requested_cpu_cores) ?? 0;
+          els["metric-cpu"].textContent = formatNumber(runningCpu);
+          els["metric-cpu-detail"].textContent =
+            `${formatNumber(pendingCpu)} cores requested by pending lab jobs`;
           const running = finite(queue.running_records) ?? 0;
           const pending = finite(queue.pending_records) ?? 0;
           els["metric-jobs"].textContent = `${formatNumber(running)} / ${formatNumber(pending)}`;
           els["metric-jobs-detail"].textContent =
-            `running / pending · ${formatNumber(queue.running_allocated_units)} / ` +
-            `${formatNumber(queue.pending_requested_units)} GPU units`;
-          setTrack(
-            els["metric-jobs-track"],
-            running + pending ? (pending / (running + pending)) * 100 : 0,
-          );
-
+            `running / pending · ${formatNumber(queue.gpu_running_records)} / ` +
+            `${formatNumber(queue.gpu_pending_records)} are GPU jobs`;
           els["metric-wait"].textContent = formatDuration(waits.p50_rounded);
           els["metric-wait-detail"].textContent =
             waits.sample_size >= 3
               ? `p95 ${formatDuration(waits.p95_rounded)} · oldest ${formatDuration(waits.oldest_rounded)}`
               : `${formatNumber(waits.sample_size)} pending sample${waits.sample_size === 1 ? "" : "s"}`;
-          setTrack(
-            els["metric-wait-track"],
-            Math.min(100, ((finite(waits.p50_rounded) ?? 0) / 21600) * 100),
-          );
-
+          els["metric-cluster-gpu"].textContent = formatNumber(schedulable);
+          els["metric-cluster-gpu-detail"].textContent =
+            `${formatNumber(schedulable)} schedulable of ${formatNumber(configured)} units` +
+            (unallocated !== schedulable
+              ? ` · ${formatNumber(unallocated)} unallocated`
+              : "");
           els["metric-storage"].textContent = labStorage
             ? `${formatNumber(labStorage.percent_used, { maximumFractionDigits: 1 })}%`
             : "—";
           els["metric-storage-detail"].textContent = labStorage
             ? `${formatBytes(labStorage.used_bytes)} of ${formatBytes(labStorage.limit_bytes)}`
             : "Quota snapshot unavailable";
-          setTrack(els["metric-storage-track"], labStorage?.percent_used ?? 0);
+        }
+
+        function renderLabAllocations(payload) {
+          const partitions = Array.isArray(payload.partitions) ? payload.partitions : [];
+          const limits = Array.isArray(payload.gpu?.lab_scheduler_limits)
+            ? payload.gpu.lab_scheduler_limits
+            : [];
+          const fullLimit = limits.find((item) => item.id === "full-b200-policy");
+          const migLimit = limits.find((item) => item.id === "mig-shared-policy");
+          els["lab-allocation-grid"].replaceChildren();
+          if (!partitions.length) {
+            const item = create("article", "lab-allocation-item");
+            item.append(create("p", "resource-meta", "Lab allocation data is unavailable."));
+            els["lab-allocation-grid"].append(item);
+            return;
+          }
+
+          partitions.forEach((partition) => {
+            const queue = partition.queue || {};
+            const item = create("article", "lab-allocation-item");
+            item.append(create("h3", "", partition.label || "GPU pool"));
+            item.append(
+              create(
+                "p",
+                "lab-allocation-value",
+                formatNumber(queue.running_allocated_units),
+              ),
+            );
+            const applicableLimit =
+              partition.id === "full-b200" ? fullLimit : migLimit;
+            const limitText = applicableLimit
+              ? partition.id === "full-b200"
+                ? `${formatNumber(applicableLimit.concurrent_limit_units)}-unit concurrent cap`
+                : `${formatNumber(applicableLimit.concurrent_limit_units)}-unit cap shared across both MIG pools`
+              : "policy cap unavailable";
+            item.append(
+              create(
+                "p",
+                "lab-allocation-meta",
+                `allocated now · ${formatNumber(queue.pending_requested_units)} pending · ${limitText}`,
+              ),
+            );
+            els["lab-allocation-grid"].append(item);
+          });
         }
 
         function renderResources(payload) {
@@ -1511,7 +1652,7 @@
 
           const states = payload.gpu?.nodes_by_state || {};
           const unavailable = (finite(states.down) ?? 0) + (finite(states.drain) ?? 0);
-          els["node-summary"].textContent = `${formatNumber(nodes.length)} public GPU nodes`;
+          els["node-summary"].textContent = `${formatNumber(nodes.length)} cluster GPU nodes`;
           const stateParts = [
             [states.allocated, "allocated"],
             [states.mixed, "mixed"],
@@ -1521,7 +1662,7 @@
             .filter(([value]) => (finite(value) ?? 0) > 0)
             .map(([value, label]) => `${formatNumber(value)} ${label}`);
           els["node-accessible-summary"].textContent = stateParts.length
-            ? `Public node states: ${stateParts.join(", ")}. Identities are withheld.`
+            ? `Cluster-wide public GPU node states: ${stateParts.join(", ")}. This is not lab-only; node identities are withheld.`
             : "No public node state summary is available.";
         }
 
@@ -1744,6 +1885,7 @@
           currentObservedAt = observedAt;
           historyPoints = Array.isArray(payload.history) ? payload.history : [];
           renderMetrics(payload);
+          renderLabAllocations(payload);
           renderResources(payload);
           renderNodes(payload);
           renderQueue(payload);
