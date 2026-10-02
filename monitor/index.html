@@ -583,59 +583,6 @@
         line-height: 1.5;
       }
 
-      .jobs-table-shell {
-        overflow-x: auto;
-      }
-
-      .running-jobs-table {
-        width: 100%;
-        min-width: 930px;
-        border-collapse: collapse;
-      }
-
-      .running-jobs-table th,
-      .running-jobs-table td {
-        border-bottom: 1px solid var(--line-soft);
-        padding: 12px 15px;
-        font-size: 0.72rem;
-        line-height: 1.45;
-        text-align: left;
-        vertical-align: top;
-      }
-
-      .running-jobs-table th {
-        background: rgba(222, 215, 201, 0.34);
-        color: var(--muted);
-        font-size: 0.64rem;
-        font-weight: 800;
-        letter-spacing: 0.055em;
-        text-transform: uppercase;
-        white-space: nowrap;
-      }
-
-      .running-jobs-table tbody tr:last-child td {
-        border-bottom: 0;
-      }
-
-      .running-jobs-table tbody tr:hover td {
-        background: rgba(255, 253, 247, 0.72);
-      }
-
-      .running-jobs-table .numeric {
-        text-align: right;
-      }
-
-      .running-jobs-table .mono {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        font-size: 0.68rem;
-      }
-
-      .running-jobs-table .empty-row {
-        color: var(--muted);
-        padding: 24px 15px;
-        text-align: center;
-      }
-
       .compact-panel {
         min-height: 100%;
         padding: 20px;
@@ -1174,7 +1121,7 @@
         <div>
           <h1 id="page-title">Betty compute monitor</h1>
           <p class="hero-copy">
-            Current lab job allocations, Betty-wide scheduler capacity, queue
+            Aggregate lab allocations, Betty-wide scheduler capacity, queue
             pressure, and storage quotas. This public view refreshes every two
             minutes; no login or password is required.
           </p>
@@ -1196,8 +1143,8 @@
       <div class="scope-strip">
         <strong>Coverage</strong>
         <span>
-          GPU capacity and anonymous node-state totals are Betty-wide. Running-job
-          rows, policy limits, queue statistics, and lab-shared storage are limited
+          GPU capacity and anonymous node-state totals are Betty-wide. Allocation
+          totals, policy limits, queue statistics, and lab-shared storage are limited
           to the configured lab account.
         </span>
       </div>
@@ -1283,35 +1230,6 @@
           still delay a start. The two MIG values share one policy headroom and
           must not be added together.
         </p>
-      </section>
-
-      <section class="section" aria-labelledby="running-jobs-heading">
-        <div class="section-heading">
-          <div>
-            <h2 id="running-jobs-heading">Running lab jobs</h2>
-          </div>
-          <p class="section-note" id="running-jobs-summary">
-            Current running records from the configured lab Slurm account.
-          </p>
-        </div>
-        <div class="panel jobs-table-shell">
-          <table class="running-jobs-table" aria-labelledby="running-jobs-heading">
-            <thead>
-              <tr>
-                <th scope="col">Username</th>
-                <th scope="col">Partition</th>
-                <th scope="col">Node</th>
-                <th scope="col">GPU resource + IDX</th>
-                <th scope="col" class="numeric">GPU units</th>
-                <th scope="col" class="numeric">CPU cores</th>
-                <th scope="col" class="numeric">Runtime</th>
-              </tr>
-            </thead>
-            <tbody id="running-jobs-body" aria-live="polite">
-              <tr><td class="empty-row" colspan="7">Loading running allocations…</td></tr>
-            </tbody>
-          </table>
-        </div>
       </section>
 
       <section class="section" aria-labelledby="gpu-heading">
@@ -1445,21 +1363,20 @@
           </div>
           <div>
             <strong>What is shown</strong>
-            Running lab jobs include Slurm username, partition, compute node, GPU
-            resource and node-local IDX, allocated GPU units, allocated CPU cores,
-            and runtime.
+            Aggregate GPU and CPU allocations, resource-pool availability, queue
+            statistics, anonymous node states, and storage quotas.
           </div>
           <div>
             <strong>What is withheld</strong>
-            Job IDs and names, commands and scripts, environment variables,
+            Member usernames, individual job details, job IDs and names, commands
+            and scripts, environment variables,
             filesystem paths, stdout/stderr and other logs, SSH credentials,
             passwords, and collector tokens are not sent to this page.
           </div>
           <div>
             <strong>Allocation semantics</strong>
             GPU and CPU values are scheduler reservations, not hardware utilization.
-            A GPU unit may be one full GPU or one configured MIG slice. IDX is a
-            node-local Slurm GRES index, not a permanent GPU UUID.
+            A GPU unit may be one full GPU or one configured MIG slice.
           </div>
         </div>
       </details>
@@ -1713,98 +1630,6 @@
               ),
             );
             els["lab-allocation-grid"].append(item);
-          });
-        }
-
-        function formatGpuDetail(item) {
-          const gpuUnits = finite(item.allocated_gpu_units) ?? 0;
-          if (gpuUnits <= 0) return "—";
-          const resource =
-            typeof item.gpu_resource === "string" ? item.gpu_resource : "GPU";
-          const nodes = Array.isArray(item.nodes) ? item.nodes : [];
-          const groups = Array.isArray(item.gpu_indices) ? item.gpu_indices : [];
-          const hasAnyIndex = groups.some(
-            (group) => Array.isArray(group) && group.length > 0,
-          );
-          if (!hasAnyIndex) return `${resource} · IDX unavailable`;
-          if (groups.length === 1) {
-            return `${resource} · IDX ${groups[0].join(", ")}`;
-          }
-          const mappings = groups.map((group, index) => {
-            const node = nodes[index] || `node ${index + 1}`;
-            return Array.isArray(group) && group.length
-              ? `${node}: IDX ${group.join(", ")}`
-              : `${node}: IDX unavailable`;
-          });
-          return `${resource} · ${mappings.join("; ")}`;
-        }
-
-        function renderRunningJobs(payload) {
-          const isDetailedSnapshot =
-            payload.schema_version === "monitor.public.v2" &&
-            payload.privacy === "lab_authorized_operational";
-          const rows = Array.isArray(payload.running_allocations)
-            ? [...payload.running_allocations]
-            : [];
-          rows.sort((left, right) => {
-            const byUser = String(left.username || "").localeCompare(
-              String(right.username || ""),
-            );
-            return byUser ||
-              (finite(right.runtime_seconds) ?? 0) -
-                (finite(left.runtime_seconds) ?? 0);
-          });
-          const distinctUsers = new Set(rows.map((item) => item.username)).size;
-          els["running-jobs-summary"].textContent = rows.length
-            ? `${formatNumber(rows.length)} running records · ${formatNumber(distinctUsers)} usernames`
-            : isDetailedSnapshot
-              ? "Current running records from the configured lab Slurm account."
-              : "Legacy snapshot · detailed running allocations unavailable.";
-          els["running-jobs-body"].replaceChildren();
-          if (!rows.length) {
-            const row = create("tr");
-            const cell = create(
-              "td",
-              "empty-row",
-              isDetailedSnapshot
-                ? "No running lab jobs in this snapshot."
-                : "Detailed running allocations are unavailable in this legacy snapshot.",
-            );
-            cell.colSpan = 7;
-            row.append(cell);
-            els["running-jobs-body"].append(row);
-            return;
-          }
-
-          rows.forEach((item) => {
-            const row = create("tr");
-            const username = create("td", "mono", item.username || "—");
-            const partition = create("td", "", item.partition || "—");
-            const nodes = create(
-              "td",
-              "mono",
-              Array.isArray(item.nodes) && item.nodes.length
-                ? item.nodes.join(", ")
-                : "—",
-            );
-            const gpu = create("td", "mono", formatGpuDetail(item));
-            const gpuUnits = create(
-              "td",
-              "numeric",
-              formatNumber(item.allocated_gpu_units),
-            );
-            const cpuCores = create(
-              "td",
-              "numeric",
-              formatNumber(item.allocated_cpu_cores),
-            );
-            const runtime = create(
-              "td",
-              "numeric",
-              formatDuration(item.runtime_seconds),
-            );
-            row.append(username, partition, nodes, gpu, gpuUnits, cpuCores, runtime);
-            els["running-jobs-body"].append(row);
           });
         }
 
@@ -2122,7 +1947,6 @@
           historyPoints = Array.isArray(payload.history) ? payload.history : [];
           renderMetrics(payload);
           renderLabAllocations(payload);
-          renderRunningJobs(payload);
           renderResources(payload);
           renderNodes(payload);
           renderQueue(payload);
