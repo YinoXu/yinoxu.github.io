@@ -3,9 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NuClass v2 | Tree Explorer and Theorem Notes</title>
+    <title>NuClass | Tissue Explorer, Cell Ontology and Theorem Notes</title>
     <link rel="icon" href="../favicon.svg?v=9" type="image/svg+xml" />
-    <script src="https://assets.pyecharts.org/assets/v5/echarts.min.js"></script>
     <style>
       :root {
         --primary-color: #2c3e50;
@@ -1056,6 +1055,19 @@
           height: 640px;
         }
       }
+
+      /* The image reviewer is the primary entry point; research panels follow. */
+      .page-shell { max-width: 1760px; }
+      .reviewer-intro { display:flex; align-items:end; justify-content:space-between; gap:24px; margin:8px 0 22px; }
+      .reviewer-kicker { color:#258b84; text-transform:uppercase; font-size:11px; font-weight:700; letter-spacing:.16em; margin-bottom:10px; }
+      .reviewer-intro h1 { margin:0 0 10px; color:#23384c; font-size:clamp(26px,3vw,40px); letter-spacing:-.035em; line-height:1.15; }
+      .reviewer-intro p { margin:0; color:#718296; font-size:14px; line-height:1.7; max-width:800px; }
+      .reviewer-links { display:flex; gap:16px; white-space:nowrap; font-size:12px; padding-bottom:4px; }
+      .reviewer-frame { display:block; width:100%; height: min(850px,82vh); min-height:650px; border:1px solid #d4e0e9; border-radius:12px; background:white; box-shadow:0 16px 40px #243d5508; }
+      .reviewer-footnote { display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; margin:12px 2px 44px; color:#8593a1; font-size:11px; line-height:1.6; }
+      .hero-card { max-width:1280px; margin:0 auto; }
+      .hero-copy h2 { margin:.9rem 0 .55rem; color:var(--primary-color); font-size:clamp(2.25rem,3.5vw,3.5rem); line-height:1.02; letter-spacing:-.02em; }
+      @media(max-width:850px) { .page-shell {padding:18px 12px 40px;} .reviewer-intro {display:block;} .reviewer-links {margin-top:14px;} .reviewer-frame {height:78vh;min-height:560px;} .reviewer-footnote {margin-bottom:30px;} }
     </style>
   </head>
 
@@ -1063,10 +1075,26 @@
     <main class="page-shell">
       <a class="back-link" href="../index.html">Back to research homepage</a>
 
-      <section class="hero-card">
+      <section id="image-reviewer" aria-labelledby="reviewer-title">
+        <header class="reviewer-intro">
+          <div>
+            <div class="reviewer-kicker">NuClass / Interactive tissue explorer</div>
+            <h1 id="reviewer-title">From whole tissue to a single cell.</h1>
+            <p>Explore S07 and S03 with linked H&amp;E and cell-type views. Pan, zoom, and switch between 47 fine types, 15 lineages, and 5 broad categories.</p>
+          </div>
+          <nav class="reviewer-links" aria-label="Explore NuClass">
+            <a href="nuclass-reviewer/index.html" target="_blank" rel="noopener">Open full reviewer ↗</a>
+            <a href="#project-overview">About NuClass ↓</a>
+          </nav>
+        </header>
+        <iframe class="reviewer-frame" src="nuclass-reviewer/index.html" title="NuClass interactive image reviewer for S07 and S03" allow="fullscreen" allowfullscreen loading="eager"></iframe>
+        <div class="reviewer-footnote"><span>2 samples · 3,099,177 nuclei · all 47 types enabled · overlay at every zoom</span><span>Predicted cell types for research inspection.</span></div>
+      </section>
+
+      <section class="hero-card" id="project-overview">
         <div class="hero-copy">
           <div class="eyebrow">Research project website</div>
-          <h1>NuClass v2</h1>
+          <h2>NuClass v2</h2>
           <p class="hero-subtitle">
             Adaptive multi-scale integration for robust cell annotation across
             histopathology and spatial imaging data.
@@ -1075,10 +1103,9 @@
             2025 | Yinuo Xu, Yan Cui, Mingyao Li, Zhi Huang | Preprint
           </div>
           <p class="hero-note">
-            This page combines the theorem intuition and the ontology explorer
-            into one interface. The top section explains the training and
-            Bayes-risk decision rule on a toy tree, and the second section lets
-            you explore the larger NuClass cell hierarchy used for annotation.
+            Explore predicted cells in their tissue context above, then inspect
+            the underlying cell ontology and the training and Bayes-risk
+            decision rule through the interactive panels below.
           </p>
           <div class="hero-pill-row">
             <a
@@ -1550,6 +1577,7 @@
       <footer>NuClass v2 interactive project page</footer>
     </main>
 
+    <script src="https://assets.pyecharts.org/assets/v5/echarts.min.js"></script>
     <script>
       (function () {
         "use strict";

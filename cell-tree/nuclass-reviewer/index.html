@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NuClass · Tissue explorer</title>
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="reviewer.css">
+<script type="module" src="reviewer.js"></script>
+</head>
+<body>
+<main id="reviewer" aria-label="NuClass interactive tissue explorer">
+  <div class="toolbar">
+    <div class="sample-controls"><label class="sr-only" for="sample">Sample</label><select id="sample"><option value="S07">S07 · TCGA-L9-A444</option><option value="S03">S03 · TCGA-75-6212</option></select><label class="sr-only" for="field">Saved field</label><select id="field"><option value="whole">Whole slide</option></select></div>
+    <div class="zoom-controls"><button id="fit">Whole slide</button><button data-fov="2000">2 mm</button><button data-fov="1000">1 mm</button><button data-fov="500">500 μm</button><button id="native">1:1</button><button id="minus" aria-label="Zoom out">−</button><button id="plus" aria-label="Zoom in">+</button><button id="split" aria-pressed="true" class="active">Split</button><button id="fullscreen">Fullscreen</button></div>
+  </div>
+  <div class="mobile-controls"><button id="toggle-types" aria-expanded="false">Cell types</button><span id="mobile-sample">S07</span><button id="toggle-settings" aria-expanded="false">View settings</button></div>
+  <div class="workspace">
+    <aside class="left-panel" id="types-panel">
+      <h2>Display resolution</h2>
+      <select id="resolution" aria-label="Display resolution"><option value="fine">Fine · 47 cell types</option><option value="lineage">Lineage · 15 categories</option><option value="broad">Broad · 5 categories</option></select>
+      <div class="all-cells-note"><span class="status-dot"></span>No support cutoff</div>
+      <h2>Whole-slide navigator</h2><canvas id="minimap" width="400" height="260" tabindex="0" aria-label="Whole-slide navigator. Click to move the viewport."></canvas>
+      <h2>Cell types <span id="selected-count">47 / 47</span></h2>
+      <div class="presets"><button data-preset="all" class="active">All 47</button><button data-preset="epithelial">Epithelial</button><button data-preset="immune">Immune</button><button data-preset="none">Clear</button></div>
+      <input id="search" type="search" placeholder="Find a cell type" aria-label="Find a cell type">
+      <div class="filter-caption">Predicted type <span>Whole-slide count</span></div>
+      <div id="filters"></div>
+      <p class="subtle">Filters use original leaf calls. Changing resolution groups these cells along the same ontology.</p>
+    </aside>
+    <section class="stage" aria-label="Linked tissue views">
+      <div class="panes" id="panes">
+        <div class="pane" id="original-pane"><span class="badge">ORIGINAL H&E</span><canvas id="original" tabindex="0" aria-label="Original H&E. Drag to pan, scroll to zoom, arrow keys to move."></canvas></div>
+        <div class="pane" id="overlay-pane"><span class="badge" id="overlay-badge">NUCLASS · FINE · ALL CELLS</span><canvas id="tissue" tabindex="0" aria-label="NuClass overlay. Drag to pan, scroll to zoom, click a cell to inspect."></canvas><canvas id="cells" aria-hidden="true"></canvas><canvas id="selection" aria-hidden="true"></canvas><div class="scale"><span id="scale-label"></span><i id="scale-line"></i></div></div>
+      </div>
+      <div class="stage-footer"><span id="status" role="status" aria-live="polite">Loading S07…</span><button id="retry" hidden>Retry</button><span id="view-size"></span></div>
+    </section>
+    <aside class="right-panel" id="settings-panel">
+      <h2>View settings</h2>
+      <label class="check"><input id="show-cells" type="checkbox" checked> Cell overlay</label>
+      <label class="setting">Marks <select id="marks"><option value="dot">Small dots</option><option value="ring">Hollow rings</option></select></label>
+      <label class="setting" for="size">Size <input id="size" type="range" min="0.6" max="4" step="0.1" value="1.6"></label>
+      <label class="setting" for="opacity">Opacity <input id="opacity" type="range" min="0.1" max="1" step="0.05" value="0.85"></label>
+      <label class="setting" for="he-strength">H&E strength <input id="he-strength" type="range" min="0.2" max="1" step="0.05" value="0.85"></label>
+      <div class="actions"><button id="clean" aria-pressed="false">Clean H&E</button><button id="export" disabled>Export view</button></div>
+      <p class="subtle">Drag to pan · scroll or pinch to zoom.<br>Hold Space for clean H&E. Overlay stays visible from whole tissue to a single cell.</p>
+      <h2>Labels in view <span id="visible-count"></span></h2><div id="legend"></div>
+      <div class="cell-detail"><h2>Selected nucleus</h2><div id="cell-info"><p class="subtle">Zoom into the tissue and click a nucleus to inspect its predicted type and 47-class posterior.</p></div><div id="probabilities"></div><button id="export-cell" hidden>Export 47 probabilities</button></div>
+      <p class="subtle prediction-note">Model predictions for research inspection. “Carcinoma / generic epithelium” is the original combined class; it does not distinguish malignant from normal epithelium.</p>
+    </aside>
+  </div>
+</main>
+</body>
+</html>
