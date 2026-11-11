@@ -27,6 +27,11 @@ for summary in manifest['slides']:
         assert np.all((points//meta['cell_chunk_px']).astype(int)==[c['x'],c['y']])
         offset+=c['count']
     assert offset==n
+    support=gzip.decompress((base/'support.bin.gz').read_bytes()); header=np.frombuffer(support,'<u4',count=2)
+    assert header.tolist()==[n,manifest['supportEncoding']['pathSlots']]
+    caps=np.frombuffer(support,'u1',offset=8).reshape(n,-1)
+    assert np.all(caps<=19) and np.all(np.diff(caps.astype('i2'),axis=1)>=0)
+    assert np.all(caps[:,-1]==19)
     tiles=0
     for level in meta['levels']:
         for y in range(math.ceil(level['height']/meta['tile_size'])):

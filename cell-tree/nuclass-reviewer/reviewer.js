@@ -1,6 +1,7 @@
+import {makeResolutionTable,resolveCells} from './resolution.mjs';
 const $ = id => document.getElementById(id);
 const fmt = n => n.toLocaleString('en-US');
-const S = {slide:'S07', mode:'fine', selected:new Set(Array.from({length:47},(_,i)=>i)), meta:null, data:null,
+const S = {slide:'S07', mode:'fine', step:0, appliedMode:'fine', appliedStep:0, labels:null, supportReady:false, resolving:false, selected:new Set(Array.from({length:47},(_,i)=>i)), meta:null, data:null,
   cx:0, cy:0, scale:1, w:1, h:1, dpr:1, fit:true, split:true, show:true, clean:false, held:false,
   radius:1.6, opacity:.85, he:.85, marks:'dot', ready:false, cell:null, epoch:0};
 const surfaces = ['original','tissue','cells','selection'].map($);
@@ -9,6 +10,7 @@ const selection = $('selection').getContext('2d'), mini = $('minimap').getContex
 let manifest, taxonomy, frame=0, settleTimer=0, abortSlide, tiles = new Map(), queue=[], activeTiles=0;
 let wanted = new Set(), overview, initialOverlay, loadMessage='', loadError=false, selectedEpoch=0, visible=[];
 const probabilities = new Map();
+let resolver, resolutionTable, resolutionVersion=0, resolverBusy=false;
 const gl = $('cells').getContext('webgl', {alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:false});
 let gpu, fallback;
 if (!gl) fallback = $('cells').getContext('2d');
@@ -23,22 +25,22 @@ function initGPU() {
   const p=gl.createProgram();
   gl.attachShader(p,shader(gl.VERTEX_SHADER,`
     precision highp float;
-    attribute vec2 a_position; attribute float a_leaf;
+    attribute vec2 a_position; attribute float a_leaf; attribute float a_node;
     uniform vec2 u_center; uniform vec2 u_view; uniform float u_scale; uniform float u_size;
-    uniform vec3 u_colors[47]; uniform float u_enabled[47]; varying vec3 v_color;
+    uniform vec3 u_colors[${taxonomy.nodes.length}]; uniform float u_enabled[47]; varying vec3 v_color;
     void main(){int i=int(a_leaf); vec2 xy=(a_position-u_center)*u_scale/u_view*2.0;
       gl_Position=vec4(xy.x,-xy.y,0.0,1.0);
       if(u_enabled[i]<0.5)gl_Position=vec4(3.0,3.0,0.0,1.0);
-      gl_PointSize=u_size;v_color=u_colors[i];}`));
+      gl_PointSize=u_size;v_color=u_colors[int(a_node)];}`));
   gl.attachShader(p,shader(gl.FRAGMENT_SHADER,`
     precision mediump float; varying vec3 v_color; uniform float u_opacity; uniform float u_ring;
     void main(){float d=length(gl_PointCoord-vec2(0.5));if(d>0.5)discard;
       if(u_ring>0.5&&d<0.30)discard; gl_FragColor=vec4(v_color,u_opacity);}`));
   gl.linkProgram(p);if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(p));
   gl.useProgram(p);gl.enable(gl.BLEND);gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
-  gpu={p,xy:gl.createBuffer(),leaf:gl.createBuffer(),u:{}};
+  gpu={p,xy:gl.createBuffer(),leaf:gl.createBuffer(),node:gl.createBuffer(),u:{}};
   for(const n of ['center','view','scale','size','colors','enabled','opacity','ring'])gpu.u[n]=gl.getUniformLocation(p,'u_'+n);
-  gpu.position=gl.getAttribLocation(p,'a_position');gpu.type=gl.getAttribLocation(p,'a_leaf');
+  gpu.position=gl.getAttribLocation(p,'a_position');gpu.type=gl.getAttribLocation(p,'a_leaf');gpu.nodeType=gl.getAttribLocation(p,'a_node');
   if(S.data)uploadCells();
 }
 function uploadCells(){
@@ -47,17 +49,57 @@ function uploadCells(){
   gl.enableVertexAttribArray(gpu.position);gl.vertexAttribPointer(gpu.position,2,gl.FLOAT,false,0,0);
   gl.bindBuffer(gl.ARRAY_BUFFER,gpu.leaf);gl.bufferData(gl.ARRAY_BUFFER,S.data.leaf,gl.STATIC_DRAW);
   gl.enableVertexAttribArray(gpu.type);gl.vertexAttribPointer(gpu.type,1,gl.UNSIGNED_BYTE,false,0,0);
-  updatePalette();
+  uploadLabels();updatePalette();
 }
-function nodeFor(leaf){return taxonomy.paths[S.mode][leaf][0];}
+function uploadLabels(){if(!gpu||!S.labels)return;gl.bindBuffer(gl.ARRAY_BUFFER,gpu.node);gl.bufferData(gl.ARRAY_BUFFER,S.labels,gl.DYNAMIC_DRAW);gl.enableVertexAttribArray(gpu.nodeType);gl.vertexAttribPointer(gpu.nodeType,1,gl.UNSIGNED_BYTE,false,0,0);}
+function nodeForCell(i){return taxonomy.nodes[S.labels[i]];}
 function label(node){return taxonomy.labels[node]||node;}
 function color(node){return taxonomy.colors[node]||'#a8adb4';}
 function updatePalette(){
   if(!taxonomy||!gpu)return;
-  const rgb=taxonomy.leaves.flatMap((_,i)=>color(nodeFor(i)).slice(1).match(/../g).map(x=>parseInt(x,16)/255));
+  const rgb=taxonomy.nodes.flatMap(node=>color(node).slice(1).match(/../g).map(x=>parseInt(x,16)/255));
   gl.useProgram(gpu.p);gl.uniform3fv(gpu.u.colors,new Float32Array(rgb));
   gl.uniform1fv(gpu.u.enabled,new Float32Array(taxonomy.leaves.map((_,i)=>S.selected.has(i)?1:0)));
 }
+function updateSelectedInfo(){if(S.cell){$('cell-info').innerHTML=`<h3 class="cell-name">${label(taxonomy.leaves[S.cell.leaf])}</h3><div class="cell-meta">${S.slide} · x ${fmt(S.cell.x)} · y ${fmt(S.cell.y)}<br>Displayed as ${label(nodeForCell(S.cell.i))}<br>Posterior support ≥ ${ (S.appliedStep/20).toFixed(2)}</div>`;}}
+function applyLabels(labels,mode,step){
+  S.labels=labels;S.appliedMode=mode;S.appliedStep=step;S.resolving=false;
+  uploadLabels();updateSelectedInfo();$('export').disabled=!S.ready;
+  $('support-status').textContent=step===0?'Full detail · no support cutoff':'Uncertain labels roll up · no cells removed';
+  changed();
+}
+function supportError(message){resolverBusy=false;S.supportReady=false;S.resolving=false;$('support').disabled=true;$('retry-support').hidden=false;$('support-status').textContent=message+' Current overlay retained.';$('export').disabled=!S.ready;}
+function startResolver(){
+  if(!S.data)return;resolver?.terminate();resolverBusy=false;S.supportReady=false;S.resolving=S.appliedMode!==S.mode||S.appliedStep!==S.step;$('export').disabled=!S.ready||S.resolving;
+  $('support').disabled=true;$('retry-support').hidden=true;$('support-status').textContent='Loading posterior controls…';
+  const epoch=S.epoch;
+  try{
+    resolver=new Worker(new URL('./resolution-worker.js',import.meta.url),{type:'module'});const owner=resolver;
+    resolver.onmessage=({data})=>{
+      if(epoch!==S.epoch||resolver!==owner)return;
+      if(data.type==='ready'){S.supportReady=true;$('support').disabled=false;requestResolution();}
+      else if(data.type==='labels'){
+        resolverBusy=false;
+        if(data.version===resolutionVersion)applyLabels(new Uint8Array(data.buffer),data.mode,data.step);
+        else dispatchResolution();
+      }else supportError('Posterior data could not load.');
+    };
+    resolver.onerror=()=>{if(epoch===S.epoch&&resolver===owner)supportError('Posterior controls could not start.');};
+    const leaves=S.data.leaf.slice();resolver.postMessage({type:'init',leaves:leaves.buffer,taxonomy,url:new URL(`data/${S.slide}/support.bin.gz`,location.href).href},[leaves.buffer]);
+  }catch{supportError('Posterior controls could not start.');}
+}
+function dispatchResolution(){
+  if(!S.data||!S.supportReady||resolverBusy)return;
+  resolverBusy=true;resolver.postMessage({type:'resolve',mode:S.mode,step:S.step,version:resolutionVersion});
+}
+function requestResolution(){
+  resolutionVersion++;$('support-value').textContent=(S.step/20).toFixed(2);$('support').value=S.step/20;
+  if(!S.data)return;
+  if(!S.supportReady&&S.step===0){applyLabels(resolveCells(S.data.leaf,null,resolutionTable,S.mode,0),S.mode,0);return;}
+  S.resolving=true;$('export').disabled=true;$('support-status').textContent=S.supportReady?'Updating labels…':'Loading posterior controls…';
+  dispatchResolution();
+}
+function setThreshold(value){S.step=Math.max(0,Math.min(19,Math.round(Number(value)*20)));requestResolution();}
 function request(){if(!frame)frame=requestAnimationFrame(()=>{frame=0;draw();});}
 function settle(){clearTimeout(settleTimer);settleTimer=setTimeout(updateStatistics,180);}
 function changed(){request();settle();}
@@ -85,6 +127,7 @@ function makeImage(src,onload){const im=new Image();im.onload=()=>{onload?.();re
 async function selectSlide(id){
   if(!manifest.slides.some(x=>x.id===id))return;
   abortSlide?.abort();abortSlide=new AbortController();const signal=abortSlide.signal,epoch=++S.epoch;
+  resolver?.terminate();resolverBusy=false;resolutionVersion++;S.supportReady=false;S.resolving=false;S.labels=null;$('support').disabled=true;$('retry-support').hidden=true;$('support-status').textContent='Loading posterior controls…';
   selectedEpoch++;S.slide=id;S.meta=null;S.data=null;S.ready=false;S.cell=null;S.fit=true;visible=[];probabilities.clear();
   tiles.clear();queue=[];$('sample').value=id;$('mobile-sample').textContent=id;$('export').disabled=true;
   $('cell-info').innerHTML='<p class="subtle">Zoom into the tissue and click a nucleus to inspect its predicted type and 47-class posterior.</p>';$('probabilities').replaceChildren();$('export-cell').hidden=true;
@@ -99,8 +142,8 @@ async function selectSlide(id){
     status(`Loading ${fmt(S.meta.valid)} cells · preview available`);
     const buffer=await binary(`data/${id}/cells.bin.gz`,signal);if(epoch!==S.epoch)return;
     const n=new DataView(buffer).getUint32(0,true);if(n!==S.meta.valid||buffer.byteLength!==4+n*9)throw Error('Cell data integrity check failed.');
-    S.data={n,xy:new Float32Array(buffer,4,n*2),leaf:new Uint8Array(buffer,4+n*8,n)};uploadCells();S.ready=true;
-    status(`${fmt(n)} cells · all zoom levels`);$('export').disabled=false;changed();updateStatistics();
+    S.data={n,xy:new Float32Array(buffer,4,n*2),leaf:new Uint8Array(buffer,4+n*8,n)};S.labels=resolveCells(S.data.leaf,null,resolutionTable,S.mode,0);S.appliedMode=S.mode;S.appliedStep=0;uploadCells();S.ready=true;startResolver();
+    status(`${fmt(n)} cells · all zoom levels`);$('export').disabled=S.resolving;changed();updateStatistics();
     const url=new URL(location.href);url.searchParams.set('slide',id);history.replaceState(null,'',url);
   }catch(e){if(e.name==='AbortError')return;status(e.message+' · Retry to reload.',true);console.error(e);}
 }
@@ -152,7 +195,7 @@ function drawCells(){
     const b=bounds(),r=Math.max(.65,Math.min(5,S.radius*Math.sqrt(Math.max(.2,S.scale/.12))));fallback.globalAlpha=S.opacity;
     for(const chunk of viewportChunks(b))for(let i=chunk.start;i<chunk.start+chunk.count;i++){
       const x=S.data.xy[i*2],y=S.data.xy[i*2+1],li=S.data.leaf[i];if(!S.selected.has(li)||x<b[0]||x>b[2]||y<b[1]||y>b[3])continue;
-      const p=point(x,y);fallback.fillStyle=color(nodeFor(li));fallback.fillRect(p[0]-r,p[1]-r,r*2,r*2);
+      const p=point(x,y);fallback.fillStyle=color(nodeForCell(i));fallback.fillRect(p[0]-r,p[1]-r,r*2,r*2);
     }fallback.globalAlpha=1;
   }
 }
@@ -170,7 +213,7 @@ function draw(){
   pumpTiles();drawMini();
   const fov=S.w*S.meta.mpp[0]/S.scale,um=[10,20,50,100,200,500,1000,2000,5000,10000].filter(v=>v<fov*.22).pop()||10;
   $('scale-label').textContent=um>=1000?`${um/1000} mm`:`${um} μm`;$('scale-line').style.width=`${um/S.meta.mpp[0]*S.scale}px`;
-  $('overlay-badge').textContent=S.clean||S.held?'ORIGINAL H&E':`NUCLASS · ${S.mode.toUpperCase()} · ${S.selected.size===47?'ALL CELLS':S.selected.size+' TYPES'}`;
+  $('overlay-badge').textContent=S.clean||S.held?'ORIGINAL H&E':`NUCLASS · ${S.appliedMode.toUpperCase()} · ${S.appliedStep?'SUPPORT ≥'+(S.appliedStep/20).toFixed(2):'FULL DETAIL'} · ${S.selected.size===47?'ALL CELLS':S.selected.size+' TYPES'}`;
   $('view-size').textContent=`${fov>=1000?(fov/1000).toFixed(1)+' mm':Math.round(fov)+' μm'} field`;
   if(new URLSearchParams(location.search).has('debug')){const d=$('reviewer').dataset;d.drawMs=(performance.now()-started).toFixed(2);d.cells=S.data?.n||0;d.cache=tiles.size;d.renderer=gl?'WebGL':'Canvas2D';}
 }
@@ -188,7 +231,7 @@ function updateStatistics(){
   if(!S.ready)return;const b=bounds(),counts=new Map();let total=0;
   for(const c of viewportChunks(b))for(let i=c.start;i<c.start+c.count;i++){
     const x=S.data.xy[i*2],y=S.data.xy[i*2+1],leaf=S.data.leaf[i];if(x<b[0]||x>b[2]||y<b[1]||y>b[3]||!S.selected.has(leaf))continue;
-    const node=nodeFor(leaf);counts.set(node,(counts.get(node)||0)+1);total++;
+    const node=nodeForCell(i);counts.set(node,(counts.get(node)||0)+1);total++;
   }
   $('legend').innerHTML=counts.size?[...counts].sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="legend-row"><i class="swatch" style="background:${color(n)}"></i><span>${label(n)}</span><span class="count">${fmt(c)}</span></div>`).join(''):'<div class="empty">No selected cells in this view.</div>';
   $('visible-count').textContent=fmt(total);
@@ -202,7 +245,8 @@ function renderFilters(){
 }
 function clearExcludedSelection(){if(S.cell&&!S.selected.has(S.cell.leaf)){S.cell=null;selectedEpoch++;$('cell-info').innerHTML='<p class="subtle">Click a visible nucleus to inspect its predicted type and posterior.</p>';$('probabilities').replaceChildren();$('export-cell').hidden=true;}}
 function setPreset(preset){S.selected=new Set(preset==='all'?taxonomy.leaves.map((_,i)=>i):preset==='none'?[]:taxonomy.members[preset==='epithelial'?'Epithelial':'Immune']);clearExcludedSelection();renderFilters();updatePalette();changed();}
-function setResolution(mode){if(!['fine','lineage','broad'].includes(mode))return;S.mode=mode;$('resolution').value=mode;if(S.cell){$('cell-info').innerHTML=`<h3 class="cell-name">${label(taxonomy.leaves[S.cell.leaf])}</h3><div class="cell-meta">${S.slide} · x ${fmt(S.cell.x)} · y ${fmt(S.cell.y)}<br>Displayed as ${label(nodeFor(S.cell.leaf))}</div>`;}updatePalette();changed();}
+function setResolution(mode){if(!['fine','lineage','broad'].includes(mode))return;S.mode=mode;$('resolution').value=mode;requestResolution();}
+
 async function selectAt(px,py){
   if(!S.ready)return;
   if(S.w*S.meta.mpp[0]/S.scale>2500){zoom(2,px,py);return;}
@@ -212,7 +256,7 @@ async function selectAt(px,py){
     if(d<dist){dist=d;best={i,x,y,leaf:S.data.leaf[i],chunk:c};}
   }
   if(!best)return;const epoch=++selectedEpoch,sid=S.slide;S.cell=best;request();
-  $('cell-info').innerHTML=`<h3 class="cell-name">${label(taxonomy.leaves[best.leaf])}</h3><div class="cell-meta">${sid} · x ${fmt(best.x)} · y ${fmt(best.y)}<br>Displayed as ${label(nodeFor(best.leaf))}</div>`;
+  updateSelectedInfo();
   $('probabilities').textContent='Loading 47-class posterior…';$('export-cell').hidden=true;
   if(innerWidth<=800){$('settings-panel').classList.add('open');$('toggle-settings').setAttribute('aria-expanded','true');}
   try{
@@ -225,9 +269,9 @@ async function selectAt(px,py){
 }
 function download(name,rows){const quote=v=>'"'+String(v).replaceAll('"','""')+'"';const blob=new Blob([rows.map(r=>r.map(quote).join(',')).join('\n')+'\n'],{type:'text/csv'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 async function exportView(){
-  if(!S.ready)return;
-  const epoch=S.epoch,b=bounds(),chunks=viewportChunks(b),mode=S.mode,sid=S.slide,chosen=new Set(S.selected),data=S.data;
-  const parts=['slide,native_x,native_y,leaf_prediction,displayed_label\n'];
+  if(!S.ready||S.resolving)return;
+  const epoch=S.epoch,b=bounds(),chunks=viewportChunks(b),mode=S.appliedMode,step=S.appliedStep,labels=S.labels,sid=S.slide,chosen=new Set(S.selected),data=S.data;
+  const parts=['slide,native_x,native_y,leaf_prediction,displayed_label,posterior_support\n'];
   $('export').disabled=true;$('export').textContent='Exporting…';
   try{
     let k=0;
@@ -236,17 +280,17 @@ async function exportView(){
       let text='';
       for(let i=c.start;i<c.start+c.count;i++){
         const x=data.xy[i*2],y=data.xy[i*2+1],li=data.leaf[i];
-        if(chosen.has(li)&&x>=b[0]&&x<=b[2]&&y>=b[1]&&y<=b[3])text+=`${sid},${x},${y},${taxonomy.leaves[li]},${taxonomy.paths[mode][li][0]}\n`;
+        if(chosen.has(li)&&x>=b[0]&&x<=b[2]&&y>=b[1]&&y<=b[3])text+=`${sid},${x},${y},${taxonomy.leaves[li]},${taxonomy.nodes[labels[i]]},${(step/20).toFixed(2)}\n`;
       }
       if(text)parts.push(new TextEncoder().encode(text));
       if(++k%32===0)await new Promise(r=>setTimeout(r,0));
     }
-    const url=URL.createObjectURL(new Blob(parts,{type:'text/csv'})),a=document.createElement('a');a.href=url;a.download=`NuClass_${sid}_${mode}_visible.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
-  }finally{$('export').disabled=!S.ready;$('export').textContent='Export view';}
+    const url=URL.createObjectURL(new Blob(parts,{type:'text/csv'})),a=document.createElement('a');a.href=url;a.download=`NuClass_${sid}_${mode}_p${(step/20).toFixed(2)}_visible.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }finally{$('export').disabled=!S.ready||S.resolving;$('export').textContent='Export view';}
 }
 function openField(id){const f=S.meta?.fields.find(f=>f.id===id);if(!f){fit();return;}S.fit=false;S.cx=f.origin[0]+f.width/2;S.cy=f.origin[1]+f.height/2;S.scale=Math.min(S.w/f.width,S.h/f.height)*.94;changed();}
 function wire(){
-  $('sample').onchange=e=>selectSlide(e.target.value);$('retry').onclick=()=>selectSlide(S.slide);$('resolution').onchange=e=>setResolution(e.target.value);$('field').onchange=e=>openField(e.target.value);
+  $('sample').onchange=e=>selectSlide(e.target.value);$('retry').onclick=()=>selectSlide(S.slide);$('resolution').onchange=e=>setResolution(e.target.value);$('field').onchange=e=>openField(e.target.value);$('support').oninput=e=>setThreshold(e.target.value);$('retry-support').onclick=startResolver;
   $('fit').onclick=()=>{$('field').value='whole';fit();};$('plus').onclick=()=>zoom(1.5);$('minus').onclick=()=>zoom(1/1.5);$('native').onclick=()=>{S.fit=false;S.scale=1;changed();};
   document.querySelectorAll('[data-fov]').forEach(b=>b.onclick=()=>physical(+b.dataset.fov));
   $('split').onclick=()=>{S.split=!S.split;$('panes').classList.toggle('single',!S.split);$('split').setAttribute('aria-pressed',S.split);resize();};
@@ -278,7 +322,7 @@ function wire(){
   $('cells').addEventListener('webglcontextrestored',()=>{initGPU();request();updateStatistics();});
   new ResizeObserver(resize).observe($('overlay-pane'));resize();
 }
-async function init(){try{manifest=await json('data/manifest.json');taxonomy=manifest.taxonomy;initGPU();wire();renderFilters();const requested=new URLSearchParams(location.search).get('slide');await selectSlide(manifest.slides.some(s=>s.id===requested)?requested:'S07');}catch(e){status('Viewer could not start: '+e.message,true);$('retry').onclick=()=>location.reload();console.error(e);}}
+async function init(){try{manifest=await json('data/manifest.json');taxonomy=manifest.taxonomy;resolutionTable=makeResolutionTable(taxonomy);initGPU();wire();renderFilters();const requested=new URLSearchParams(location.search).get('slide');await selectSlide(manifest.slides.some(s=>s.id===requested)?requested:'S07');}catch(e){status('Viewer could not start: '+e.message,true);$('retry').onclick=()=>location.reload();console.error(e);}}
 // A small read-only state surface and explicit controls support reproducible QA.
-window.nuclassViewer={state:S,selectSlide,fit,zoom,physical,setResolution,setPreset,selectAt,panTo:(x,y)=>{S.fit=false;S.cx=x;S.cy=y;changed();},get tileCacheSize(){return tiles.size;},get renderer(){return gl?'WebGL':'Canvas2D';}};
+window.nuclassViewer={state:S,selectSlide,fit,zoom,physical,setResolution,setThreshold,setPreset,selectAt,panTo:(x,y)=>{S.fit=false;S.cx=x;S.cy=y;changed();},get tileCacheSize(){return tiles.size;},get renderer(){return gl?'WebGL':'Canvas2D';}};
 init();

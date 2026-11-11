@@ -4,8 +4,8 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NuClass · Tissue explorer</title>
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="reviewer.css">
-<script type="module" src="reviewer.js"></script>
+<link rel="stylesheet" href="reviewer.css?v=2">
+<script type="module" src="reviewer.js?v=2"></script>
 </head>
 <body>
 <main id="reviewer" aria-label="NuClass interactive tissue explorer">
@@ -18,7 +18,13 @@
     <aside class="left-panel" id="types-panel">
       <h2>Display resolution</h2>
       <select id="resolution" aria-label="Display resolution"><option value="fine">Fine · 47 cell types</option><option value="lineage">Lineage · 15 categories</option><option value="broad">Broad · 5 categories</option></select>
-      <div class="all-cells-note"><span class="status-dot"></span>No support cutoff</div>
+      <div class="support-control">
+        <label for="support">Posterior support <output id="support-value" for="support">0.00</output></label>
+        <input id="support" type="range" min="0" max="0.95" step="0.05" value="0" aria-label="Posterior support" aria-describedby="support-help" disabled>
+        <div class="support-scale"><span>0 · full detail</span><span>0.95 · broader labels</span></div>
+        <p id="support-help" class="subtle">Raise to merge uncertain subtypes into supported parent labels. Cells stay visible. Posterior support is not measured accuracy.</p>
+        <div id="support-status" role="status" aria-live="polite">Loading posterior controls…</div><button id="retry-support" hidden>Retry posterior data</button>
+      </div>
       <h2>Whole-slide navigator</h2><canvas id="minimap" width="400" height="260" tabindex="0" aria-label="Whole-slide navigator. Click to move the viewport."></canvas>
       <h2>Cell types <span id="selected-count">47 / 47</span></h2>
       <div class="presets"><button data-preset="all" class="active">All 47</button><button data-preset="epithelial">Epithelial</button><button data-preset="immune">Immune</button><button data-preset="none">Clear</button></div>

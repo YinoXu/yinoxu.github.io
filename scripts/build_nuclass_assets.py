@@ -6,6 +6,7 @@ import argparse, base64, gzip, hashlib, json, math, pathlib, shutil, time
 from concurrent.futures import ThreadPoolExecutor
 import numpy as np
 from PIL import Image
+from build_nuclass_support import build_support
 import pillow_avif  # registers AVIF with Pillow
 
 
@@ -108,6 +109,7 @@ def main():
         for i,size in enumerate(pool.map(convert_tile,jobs),1):
             total+=size
             if i%500==0 or i==len(jobs):print(f'Tiles {i}/{len(jobs)} · {total/1e6:.1f} MB · {time.time()-start:.0f}s',flush=True)
+    build_support(src,out)
     receipt={'slides':{s['id']:s['valid'] for s in manifest['slides']},'tiles':len(jobs),'tileBytes':total,'totalBytes':sum(p.stat().st_size for p in out.rglob('*') if p.is_file())}
     write_json(out/'build-receipt.json',receipt)
     print(json.dumps(receipt),flush=True)
