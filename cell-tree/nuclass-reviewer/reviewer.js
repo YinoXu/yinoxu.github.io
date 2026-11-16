@@ -1,10 +1,11 @@
 import {makeResolutionTable,resolveCells} from './resolution.mjs';
+import {createWholeCellViewer} from './wholecell.mjs';
 const $ = id => document.getElementById(id);
 const fmt = n => n.toLocaleString('en-US');
 const S = {slide:'S07', mode:'fine', step:0, appliedMode:'fine', appliedStep:0, labels:null, supportReady:false, resolving:false, selected:new Set(Array.from({length:47},(_,i)=>i)), meta:null, data:null,
   cx:0, cy:0, scale:1, w:1, h:1, dpr:1, fit:true, split:true, show:true, clean:false, held:false,
-  radius:1.6, opacity:.85, he:.85, marks:'dot', ready:false, cell:null, epoch:0};
-const surfaces = ['original','tissue','cells','selection'].map($);
+  radius:1.6, opacity:.85, he:.85, marks:'dot', ready:false, cell:null, epoch:0,analysisMode:'types'};
+const surfaces = ['original','tissue','cells','wholecells','selection'].map($);
 const original = $('original').getContext('2d'), tissue = $('tissue').getContext('2d');
 const selection = $('selection').getContext('2d'), mini = $('minimap').getContext('2d');
 let manifest, taxonomy, frame=0, settleTimer=0, abortSlide, tiles = new Map(), queue=[], activeTiles=0;
@@ -13,6 +14,7 @@ const probabilities = new Map();
 let resolver, resolutionTable, resolutionVersion=0, resolverBusy=false;
 const gl = $('cells').getContext('webgl', {alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:false});
 let gpu, fallback;
+let wholeCell;
 if (!gl) fallback = $('cells').getContext('2d');
 
 function shader(type, source) {
@@ -129,6 +131,7 @@ async function selectSlide(id){
   abortSlide?.abort();abortSlide=new AbortController();const signal=abortSlide.signal,epoch=++S.epoch;
   resolver?.terminate();resolverBusy=false;resolutionVersion++;S.supportReady=false;S.resolving=false;S.labels=null;$('support').disabled=true;$('retry-support').hidden=true;$('support-status').textContent='Loading posterior controls…';
   selectedEpoch++;S.slide=id;S.meta=null;S.data=null;S.ready=false;S.cell=null;S.fit=true;visible=[];probabilities.clear();
+  wholeCell?.setSlide(id);
   tiles.clear();queue=[];$('sample').value=id;$('mobile-sample').textContent=id;$('export').disabled=true;
   $('cell-info').innerHTML='<p class="subtle">Zoom into the tissue and click a nucleus to inspect its predicted type and 47-class posterior.</p>';$('probabilities').replaceChildren();$('export-cell').hidden=true;
   $('legend').textContent='Loading cell map…';$('visible-count').textContent='';$('field').value='whole';
@@ -188,7 +191,12 @@ function drawCells(){
     gl.viewport(0,0,$('cells').width,$('cells').height);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);if(!show)return;
     const u=gpu.u;gl.useProgram(gpu.p);gl.uniform2f(u.center,S.cx,S.cy);gl.uniform2f(u.view,S.w,S.h);gl.uniform1f(u.scale,S.scale);
     gl.uniform1f(u.size,Math.max(.65,Math.min(5,S.radius*Math.sqrt(Math.max(.2,S.scale/.12))))*2*S.dpr);
-    gl.uniform1f(u.opacity,S.opacity);gl.uniform1f(u.ring,S.marks==='ring'&&S.scale>.05?1:0);gl.drawArrays(gl.POINTS,0,S.data.n);
+    gl.uniform1f(u.opacity,S.opacity);gl.uniform1f(u.ring,S.marks==='ring'&&S.scale>.05?1:0);
+    // Spatial chunks are contiguous in the immutable point buffer. Clip whole
+    // ranges before vertex processing while retaining every visible point.
+    const margin=8/S.scale,b=bounds().map((v,i)=>v+(i<2?-margin:margin)),chunks=viewportChunks(b);
+    if(chunks.length>700||S.debugFullPoints){gl.drawArrays(gl.POINTS,0,S.data.n);}
+    else{let start=-1,end=-1;for(const c of chunks){if(c.start===end){end+=c.count;continue;}if(start>=0)gl.drawArrays(gl.POINTS,start,end-start);start=c.start;end=c.start+c.count;}if(start>=0)gl.drawArrays(gl.POINTS,start,end-start);}
   }else if(fallback){
     reset2d(fallback);if(!show)return;
     // Canvas fallback retains every cell; no zoom cutoff or subsampling.
@@ -201,19 +209,21 @@ function drawCells(){
 }
 function draw(){
   const started=performance.now();
-  if(!S.meta){for(const c of[original,tissue,selection])reset2d(c);if(gl)gl.clear(gl.COLOR_BUFFER_BIT);return;}
-  const b=bounds(),level=Math.max(0,Math.min(S.meta.levels.length-1,Math.floor(Math.log2(1/S.scale))));wanted=new Set();
+  if(!S.meta){for(const c of[original,tissue,selection])reset2d(c);if(gl)gl.clear(gl.COLOR_BUFFER_BIT);wholeCell?.draw(null);return;}
+  const b=bounds(),level=Math.max(0,Math.min(S.meta.levels.length-1,Math.floor(Math.log2(1/(S.scale*S.dpr)))));wanted=new Set();
+  $('reviewer').dataset.imageLevel=level;
   drawBase(tissue,b,level);if(S.split)drawBase(original,b,level);
   if(S.show&&!S.clean&&!S.held){
     tissue.fillStyle=`rgba(255,255,255,${1-S.he})`;tissue.fillRect(0,0,S.w,S.h);
     if(!S.ready&&S.mode==='fine'&&S.selected.size===47&&initialOverlay?.complete&&initialOverlay.naturalWidth){const q=point(0,0);tissue.globalAlpha=S.opacity;tissue.drawImage(initialOverlay,...q,S.meta.width*S.scale,S.meta.height*S.scale);tissue.globalAlpha=1;}
   }
-  drawCells();reset2d(selection);
-  if(S.cell&&!S.clean&&!S.held){const p=point(S.cell.x,S.cell.y);for(const c of S.split?[selection,original]:[selection]){c.beginPath();c.arc(...p,8,0,Math.PI*2);c.strokeStyle='#fff';c.lineWidth=3;c.stroke();c.strokeStyle='#20354a';c.lineWidth=1;c.stroke();}}
+  drawCells();wholeCell?.draw(b);reset2d(selection);
+  const selected=S.analysisMode==='wholecell'?wholeCell?.state.selected:S.cell;
+  if(selected&&!S.clean&&!S.held){const p=point(selected.x,selected.y);for(const c of S.split?[selection,original]:[selection]){c.beginPath();c.arc(...p,8,0,Math.PI*2);c.strokeStyle='#fff';c.lineWidth=3;c.stroke();c.strokeStyle='#20354a';c.lineWidth=1;c.stroke();}}
   pumpTiles();drawMini();
   const fov=S.w*S.meta.mpp[0]/S.scale,um=[10,20,50,100,200,500,1000,2000,5000,10000].filter(v=>v<fov*.22).pop()||10;
   $('scale-label').textContent=um>=1000?`${um/1000} mm`:`${um} μm`;$('scale-line').style.width=`${um/S.meta.mpp[0]*S.scale}px`;
-  $('overlay-badge').textContent=S.clean||S.held?'ORIGINAL H&E':`NUCLASS · ${S.appliedMode.toUpperCase()} · ${S.appliedStep?'SUPPORT ≥'+(S.appliedStep/20).toFixed(2):'FULL DETAIL'} · ${S.selected.size===47?'ALL CELLS':S.selected.size+' TYPES'}`;
+  $('overlay-badge').textContent=S.clean||S.held?'ORIGINAL H&E':S.analysisMode==='tls'?'TLS CANDIDATES · '+($('wc-tls-colour').value==='stage'?'SCIENCE STAGE PREDICTION':'NUCLASS COMPOSITION'):S.analysisMode==='wholecell'?'WHOLE CELL v6 · '+['NUCLASS v15 TYPES','ORIGINAL CELLSTP TYPES','NUCLEAR / CELL AREA','CELL AREA','NUCLEAR DISPLACEMENT'][+$('wc-colour').value]:`CELLSTP v7.1 · ${S.appliedMode.toUpperCase()} · ${S.appliedStep?'SUPPORT ≥'+(S.appliedStep/20).toFixed(2):'FULL DETAIL'} · ${S.selected.size===47?'ALL CELLS':S.selected.size+' TYPES'}`;
   $('view-size').textContent=`${fov>=1000?(fov/1000).toFixed(1)+' mm':Math.round(fov)+' μm'} field`;
   if(new URLSearchParams(location.search).has('debug')){const d=$('reviewer').dataset;d.drawMs=(performance.now()-started).toFixed(2);d.cells=S.data?.n||0;d.cache=tiles.size;d.renderer=gl?'WebGL':'Canvas2D';}
 }
@@ -235,7 +245,7 @@ function updateStatistics(){
   }
   $('legend').innerHTML=counts.size?[...counts].sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="legend-row"><i class="swatch" style="background:${color(n)}"></i><span>${label(n)}</span><span class="count">${fmt(c)}</span></div>`).join(''):'<div class="empty">No selected cells in this view.</div>';
   $('visible-count').textContent=fmt(total);
-  if(!loadError)status(`${fmt(total)} visible cells · ${S.show?'overlay at every zoom':'overlay hidden'}`);
+  if(!loadError)status(S.analysisMode==='types'?`${fmt(total)} visible CellSTP nuclei · ${S.show?'point overlay':'points hidden'}`:S.analysisMode==='tls'?'TLS candidate view · stage and composition sources shown in the sidebar':'Whole-cell view · v6 boundaries and source-labelled v15 decisions');
 }
 function renderFilters(){
   if(!taxonomy)return;const counts=manifest.slides.find(s=>s.id===S.slide).counts,search=$('search').value.toLowerCase();
@@ -251,6 +261,8 @@ async function selectAt(px,py){
   if(!S.ready)return;
   if(S.w*S.meta.mpp[0]/S.scale>2500){zoom(2,px,py);return;}
   const [wx,wy]=world(px,py),radius=12/S.scale,b=[wx-radius,wy-radius,wx+radius,wy+radius];let best=null,dist=radius*radius;
+  if(S.analysisMode==='tls'){wholeCell?.pickRegion(wx,wy);return;}
+  if(S.analysisMode==='wholecell'&&wholeCell?.pick(wx,wy)){S.cell=null;request();if(innerWidth<=800){$('settings-panel').classList.add('open');$('toggle-settings').setAttribute('aria-expanded','true');}return;}
   for(const c of viewportChunks(b))for(let i=c.start;i<c.start+c.count;i++){
     if(!S.selected.has(S.data.leaf[i]))continue;const x=S.data.xy[i*2],y=S.data.xy[i*2+1],d=(x-wx)**2+(y-wy)**2;
     if(d<dist){dist=d;best={i,x,y,leaf:S.data.leaf[i],chunk:c};}
@@ -322,7 +334,41 @@ function wire(){
   $('cells').addEventListener('webglcontextrestored',()=>{initGPU();request();updateStatistics();});
   new ResizeObserver(resize).observe($('overlay-pane'));resize();
 }
-async function init(){try{manifest=await json('data/manifest.json');taxonomy=manifest.taxonomy;resolutionTable=makeResolutionTable(taxonomy);initGPU();wire();renderFilters();const requested=new URLSearchParams(location.search).get('slide');await selectSlide(manifest.slides.some(s=>s.id===requested)?requested:'S07');}catch(e){status('Viewer could not start: '+e.message,true);$('retry').onclick=()=>location.reload();console.error(e);}}
+function setAnalysisMode(mode){
+  if(!['types','wholecell','tls'].includes(mode))return;S.analysisMode=mode;
+  document.querySelectorAll('[data-analysis-mode]').forEach(b=>{b.classList.toggle('active',b.dataset.analysisMode===mode);b.setAttribute('aria-pressed',b.dataset.analysisMode===mode);});
+  S.show=mode==='types';$('show-cells').checked=S.show;
+  $('wholecell-controls').hidden=mode==='types';
+  $('type-resolution-controls').hidden=mode!=='types';$('celltype-filter-controls').hidden=mode==='tls';
+  for(const id of ['point-style-controls','original-legend','original-selected-panel','export'])$(id).hidden=mode!=='types';
+  $('wc-tls-settings').hidden=mode!=='tls';$('wc-geometry-settings').hidden=mode!=='wholecell';$('wc-selected-panel').hidden=mode!=='wholecell';
+  if(mode!=='types')S.cell=null;
+  $('analysis-mode-help').textContent={types:'Original CellSTP v7.1 predictions across the complete slides.',wholecell:'v6 predicted whole-cell boundaries, with NuClass v15 calls linked through the same supplied nucleus. Coverage is restricted to processed regions.',tls:'Previously detected lymphoid candidates. Composition phenotypes and published Science E/P/S predictions have separate provenance; no confirmed maturity labels.'}[mode];
+  const url=new URL(location.href);url.searchParams.set('mode',mode);history.replaceState(null,'',url);
+  changed();
+}
+function navigateRegion(sid,b){
+  if(sid!==S.slide){selectSlide(sid).then(()=>navigateRegion(sid,b));return;}
+  if(!S.meta)return;S.fit=false;S.cx=(b[0]+b[2])/2;S.cy=(b[1]+b[3])/2;S.scale=Math.min(S.w/Math.max(1,b[2]-b[0]),S.h/Math.max(1,b[3]-b[1]))*.82;changed();
+}
+async function init(){try{manifest=await json('data/manifest.json');taxonomy=manifest.taxonomy;resolutionTable=makeResolutionTable(taxonomy);initGPU();
+  wholeCell=createWholeCellViewer({canvas:$('wholecells'),state:S,taxonomy,request,navigate:navigateRegion});
+  document.querySelectorAll('[data-analysis-mode]').forEach(b=>b.onclick=()=>setAnalysisMode(b.dataset.analysisMode));
+  setAnalysisMode(new URLSearchParams(location.search).get('mode')||'types');wire();renderFilters();const requested=new URLSearchParams(location.search).get('slide');await selectSlide(manifest.slides.some(s=>s.id===requested)?requested:'S07');
+  window.addEventListener('message',async e=>{if(e.origin!==location.origin||e.source!==parent||e.data?.type!=='NUCLASS_OPEN_REGION')return;
+    const {slide,id,mode}=e.data;if(!['S03','S07'].includes(slide)||typeof id!=='string')return;
+    setAnalysisMode(mode||'tls');if(S.slide!==slide)await selectSlide(slide);
+    const t=setInterval(()=>{if(wholeCell.state.loaded){clearInterval(t);wholeCell.openRegion(id);}},50);setTimeout(()=>clearInterval(t),10000);
+  });
+}catch(e){status('Viewer could not start: '+e.message,true);$('retry').onclick=()=>location.reload();console.error(e);}}
 // A small read-only state surface and explicit controls support reproducible QA.
-window.nuclassViewer={state:S,selectSlide,fit,zoom,physical,setResolution,setThreshold,setPreset,selectAt,panTo:(x,y)=>{S.fit=false;S.cx=x;S.cy=y;changed();},get tileCacheSize(){return tiles.size;},get renderer(){return gl?'WebGL':'Canvas2D';}};
+window.nuclassViewer={state:S,selectSlide,fit,zoom,physical,setResolution,setThreshold,setPreset,setAnalysisMode,selectAt,panTo:(x,y)=>{S.fit=false;S.cx=x;S.cy=y;changed();},get wholeCell(){return wholeCell;},get tileCacheSize(){return tiles.size;},get renderer(){return gl?'WebGL':'Canvas2D';}};
+if(new URLSearchParams(location.search).has('debug'))window.nuclassViewer.qa={comparePointPixels(){
+  if(!gl||!S.ready)throw Error('WebGL point layer is not ready');
+  const w=$('cells').width,h=$('cells').height,a=new Uint8Array(w*h*4),b=new Uint8Array(a.length),prior=S.debugFullPoints;
+  S.debugFullPoints=false;drawCells();gl.readPixels(0,0,w,h,gl.RGBA,gl.UNSIGNED_BYTE,a);
+  S.debugFullPoints=true;drawCells();gl.readPixels(0,0,w,h,gl.RGBA,gl.UNSIGNED_BYTE,b);S.debugFullPoints=prior;
+  let different=0,nonzero=0;for(let i=0;i<a.length;i++){if(a[i]!==b[i])different++;if(a[i])nonzero++;}
+  request();return {different_bytes:different,nonzero_bytes:nonzero,pixels:w*h,original_cells:S.data.n};
+}};
 init();

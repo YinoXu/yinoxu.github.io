@@ -1,0 +1,1579 @@
+{
+  "utc": "2026-11-16T19:44:46.687119+00:00",
+  "rows": [
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Context",
+      "target": "Epithelial",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Epithelial": 63921
+      },
+      "R2": -0.41270760306142606,
+      "MAE": 5.45619203552685,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus",
+      "target": "Epithelial",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Epithelial": 63921
+      },
+      "R2": 0.38058023586031486,
+      "MAE": 4.4088678436475,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+context",
+      "target": "Epithelial",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Epithelial": 63921
+      },
+      "R2": 0.33661494272876613,
+      "MAE": 3.6912543483577087,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "Epithelial",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Epithelial": 63921
+      },
+      "R2": 0.31946180424500825,
+      "MAE": 3.716252523101834,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Whole cell+context",
+      "target": "Epithelial",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Epithelial": 63921
+      },
+      "R2": 0.37756139243104403,
+      "MAE": 3.5583325716479703,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Context",
+      "target": "Epithelial",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Epithelial": 28455
+      },
+      "R2": -0.5293956081863593,
+      "MAE": 4.4380691785312765,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus",
+      "target": "Epithelial",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Epithelial": 28455
+      },
+      "R2": -0.5055903953361969,
+      "MAE": 4.43689416546673,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+context",
+      "target": "Epithelial",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Epithelial": 28455
+      },
+      "R2": -0.610439849372036,
+      "MAE": 4.816600812939597,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "Epithelial",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Epithelial": 28455
+      },
+      "R2": -0.5655163721061571,
+      "MAE": 4.73181580110739,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Whole cell+context",
+      "target": "Epithelial",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Epithelial": 28455
+      },
+      "R2": -0.4067645754274818,
+      "MAE": 4.4412884483717185,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Context",
+      "target": "T",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "T": 51288
+      },
+      "R2": 0.11366112593734001,
+      "MAE": 2.6781361563649893,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus",
+      "target": "T",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "T": 51288
+      },
+      "R2": 0.22903915344480108,
+      "MAE": 2.6119749099228455,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+context",
+      "target": "T",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "T": 51288
+      },
+      "R2": 0.45255093511600053,
+      "MAE": 2.2009223848039623,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "T",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "T": 51288
+      },
+      "R2": 0.4684910939591015,
+      "MAE": 2.1592553607016574,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Whole cell+context",
+      "target": "T",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "T": 51288
+      },
+      "R2": 0.47045383700740295,
+      "MAE": 2.153385994815751,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Context",
+      "target": "T",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "T": 80722
+      },
+      "R2": 0.025771772481115174,
+      "MAE": 2.3323747263898027,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus",
+      "target": "T",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "T": 80722
+      },
+      "R2": 0.18105485174539881,
+      "MAE": 1.9590038747878589,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+context",
+      "target": "T",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "T": 80722
+      },
+      "R2": 0.3229226392872896,
+      "MAE": 1.8984027585986125,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "T",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "T": 80722
+      },
+      "R2": 0.3405891122087489,
+      "MAE": 1.8539833834738386,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Whole cell+context",
+      "target": "T",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "T": 80722
+      },
+      "R2": 0.1584766932154652,
+      "MAE": 2.1160317144966445,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Context",
+      "target": "B",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "B": 50766
+      },
+      "R2": 0.08339723183293313,
+      "MAE": 3.9070035100960534,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus",
+      "target": "B",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "B": 50766
+      },
+      "R2": -0.29223925793565697,
+      "MAE": 4.44086876450397,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+context",
+      "target": "B",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "B": 50766
+      },
+      "R2": -0.3047680004887099,
+      "MAE": 4.721743601395561,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "B",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "B": 50766
+      },
+      "R2": -0.19425446533837176,
+      "MAE": 4.509534408155701,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Whole cell+context",
+      "target": "B",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "B": 50766
+      },
+      "R2": -0.22220418254831897,
+      "MAE": 4.56094852614308,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Context",
+      "target": "B",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "B": 47669
+      },
+      "R2": -6.082847949146392,
+      "MAE": 9.09634201051892,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus",
+      "target": "B",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "B": 47669
+      },
+      "R2": -2.155006882243213,
+      "MAE": 5.738572526752243,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+context",
+      "target": "B",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "B": 47669
+      },
+      "R2": -6.071309516448684,
+      "MAE": 9.208137016875298,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "B",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "B": 47669
+      },
+      "R2": -5.583443908782262,
+      "MAE": 8.872313737096624,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Whole cell+context",
+      "target": "B",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "B": 47669
+      },
+      "R2": -5.70290596302202,
+      "MAE": 8.945355848548763,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Context",
+      "target": "Plasma",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Plasma": 22149
+      },
+      "R2": -1.431664689903386,
+      "MAE": 4.722337961799749,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus",
+      "target": "Plasma",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Plasma": 22149
+      },
+      "R2": -0.43246139953067586,
+      "MAE": 3.114177590881585,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+context",
+      "target": "Plasma",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Plasma": 22149
+      },
+      "R2": -0.21150828542769173,
+      "MAE": 3.1684518324009585,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "Plasma",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Plasma": 22149
+      },
+      "R2": -0.28596802816089406,
+      "MAE": 3.263583443970162,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Whole cell+context",
+      "target": "Plasma",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Plasma": 22149
+      },
+      "R2": -0.267479055060893,
+      "MAE": 3.197044878461947,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Context",
+      "target": "Plasma",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Plasma": 30181
+      },
+      "R2": -0.9261335931000605,
+      "MAE": 4.109303595681071,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus",
+      "target": "Plasma",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Plasma": 30181
+      },
+      "R2": -0.05263093612759229,
+      "MAE": 3.203538012939744,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+context",
+      "target": "Plasma",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Plasma": 30181
+      },
+      "R2": -1.031787933104766,
+      "MAE": 4.276260498847356,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "Plasma",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Plasma": 30181
+      },
+      "R2": -0.7956082691198556,
+      "MAE": 3.9110138195723203,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Whole cell+context",
+      "target": "Plasma",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Plasma": 30181
+      },
+      "R2": -0.43479259125647163,
+      "MAE": 3.3781597784216935,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Context",
+      "target": "Macrophage",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Macrophage": 7093
+      },
+      "R2": -0.6751355999586297,
+      "MAE": 2.8633883725238176,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus",
+      "target": "Macrophage",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Macrophage": 7093
+      },
+      "R2": -0.9012078703967312,
+      "MAE": 3.03646859682932,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+context",
+      "target": "Macrophage",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Macrophage": 7093
+      },
+      "R2": -0.826460160123067,
+      "MAE": 2.9937434200195576,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "Macrophage",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Macrophage": 7093
+      },
+      "R2": -0.44661173395571274,
+      "MAE": 2.659184668444314,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Whole cell+context",
+      "target": "Macrophage",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Macrophage": 7093
+      },
+      "R2": -0.4852886138291699,
+      "MAE": 2.67664245017223,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Context",
+      "target": "Macrophage",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Macrophage": 18773
+      },
+      "R2": -3.9391381391501703,
+      "MAE": 5.618754086194845,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus",
+      "target": "Macrophage",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Macrophage": 18773
+      },
+      "R2": -3.052066083403571,
+      "MAE": 4.933624987008586,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+context",
+      "target": "Macrophage",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Macrophage": 18773
+      },
+      "R2": -4.930456056904611,
+      "MAE": 6.269627762049164,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "Macrophage",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Macrophage": 18773
+      },
+      "R2": -3.7846948828489726,
+      "MAE": 5.553181396555575,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Whole cell+context",
+      "target": "Macrophage",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Macrophage": 18773
+      },
+      "R2": -4.197570563896808,
+      "MAE": 5.813186631075588,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Context",
+      "target": "Endothelium",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Endothelium": 17444
+      },
+      "R2": -1.3937200374927938,
+      "MAE": 4.540836103027627,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus",
+      "target": "Endothelium",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Endothelium": 17444
+      },
+      "R2": -0.16250763155040682,
+      "MAE": 2.9748954634266775,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+context",
+      "target": "Endothelium",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Endothelium": 17444
+      },
+      "R2": -0.49093204018587455,
+      "MAE": 3.506124280973132,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "Endothelium",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Endothelium": 17444
+      },
+      "R2": -0.3251337307875106,
+      "MAE": 3.287959466245577,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Whole cell+context",
+      "target": "Endothelium",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Endothelium": 17444
+      },
+      "R2": -0.44942913360718717,
+      "MAE": 3.4462460195724756,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Context",
+      "target": "Endothelium",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Endothelium": 21339
+      },
+      "R2": -1.6153314712899478,
+      "MAE": 4.821931761704801,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus",
+      "target": "Endothelium",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Endothelium": 21339
+      },
+      "R2": -0.698027856623952,
+      "MAE": 3.6541627847330065,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+context",
+      "target": "Endothelium",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Endothelium": 21339
+      },
+      "R2": -2.108472439053388,
+      "MAE": 5.416684236788003,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "Endothelium",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Endothelium": 21339
+      },
+      "R2": -1.1891526492241282,
+      "MAE": 4.374833014230536,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Whole cell+context",
+      "target": "Endothelium",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Endothelium": 21339
+      },
+      "R2": -2.6117307065446935,
+      "MAE": 5.841021164516508,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Context",
+      "target": "Fibroblast",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Fibroblast": 8468
+      },
+      "R2": -2.7117357017829433,
+      "MAE": 5.5219180353660215,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus",
+      "target": "Fibroblast",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Fibroblast": 8468
+      },
+      "R2": 0.03251480158405473,
+      "MAE": 2.633942302811793,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+context",
+      "target": "Fibroblast",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Fibroblast": 8468
+      },
+      "R2": -1.259787918865872,
+      "MAE": 4.265925757012723,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "Fibroblast",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Fibroblast": 8468
+      },
+      "R2": -1.2446294908799729,
+      "MAE": 4.2602642349087025,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Whole cell+context",
+      "target": "Fibroblast",
+      "n_train": 242688,
+      "n_test": 227692,
+      "native_call_support": {
+        "Fibroblast": 8468
+      },
+      "R2": -1.0753466825492906,
+      "MAE": 4.062520761874985,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Context",
+      "target": "Fibroblast",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Fibroblast": 8778
+      },
+      "R2": -1.6357075436272805,
+      "MAE": 4.013749737472758,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus",
+      "target": "Fibroblast",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Fibroblast": 8778
+      },
+      "R2": -0.43971010848452496,
+      "MAE": 2.7288257631092616,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+context",
+      "target": "Fibroblast",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Fibroblast": 8778
+      },
+      "R2": -2.0161797059615343,
+      "MAE": 4.351387349353538,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "Fibroblast",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Fibroblast": 8778
+      },
+      "R2": -1.5000485140029656,
+      "MAE": 3.8845977385351693,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Whole cell+context",
+      "target": "Fibroblast",
+      "n_train": 227692,
+      "n_test": 242688,
+      "native_call_support": {
+        "Fibroblast": 8778
+      },
+      "R2": -1.9028984356762306,
+      "MAE": 4.18380728363241,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Context",
+      "target": "B_vs_T",
+      "n_train": 128391,
+      "n_test": 102054,
+      "native_call_support": {
+        "B": 50766,
+        "T": 51288
+      },
+      "R2": -2.0025176225710073,
+      "MAE": 4.129252333271321,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus",
+      "target": "B_vs_T",
+      "n_train": 128391,
+      "n_test": 102054,
+      "native_call_support": {
+        "B": 50766,
+        "T": 51288
+      },
+      "R2": -1.7469564860287945,
+      "MAE": 3.7089984772813898,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+context",
+      "target": "B_vs_T",
+      "n_train": 128391,
+      "n_test": 102054,
+      "native_call_support": {
+        "B": 50766,
+        "T": 51288
+      },
+      "R2": -1.383658484071809,
+      "MAE": 3.6147923374755484,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "B_vs_T",
+      "n_train": 128391,
+      "n_test": 102054,
+      "native_call_support": {
+        "B": 50766,
+        "T": 51288
+      },
+      "R2": -1.1887815425547994,
+      "MAE": 3.4642011257906744,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S07",
+      "test_slide": "S03",
+      "arm": "Whole cell+context",
+      "target": "B_vs_T",
+      "n_train": 128391,
+      "n_test": 102054,
+      "native_call_support": {
+        "B": 50766,
+        "T": 51288
+      },
+      "R2": -1.2565493918710926,
+      "MAE": 3.501788573122644,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Context",
+      "target": "B_vs_T",
+      "n_train": 102054,
+      "n_test": 128391,
+      "native_call_support": {
+        "B": 47669,
+        "T": 80722
+      },
+      "R2": -8.192330899938016,
+      "MAE": 7.582293956569227,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus",
+      "target": "B_vs_T",
+      "n_train": 102054,
+      "n_test": 128391,
+      "native_call_support": {
+        "B": 47669,
+        "T": 80722
+      },
+      "R2": -2.4391477622841524,
+      "MAE": 4.136740969100548,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+context",
+      "target": "B_vs_T",
+      "n_train": 102054,
+      "n_test": 128391,
+      "native_call_support": {
+        "B": 47669,
+        "T": 80722
+      },
+      "R2": -8.617345614515914,
+      "MAE": 7.755693427112103,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Nucleus+5um expansion+context",
+      "target": "B_vs_T",
+      "n_train": 102054,
+      "n_test": 128391,
+      "native_call_support": {
+        "B": 47669,
+        "T": 80722
+      },
+      "R2": -7.004933963524499,
+      "MAE": 7.049197495405554,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    },
+    {
+      "train_slide": "S03",
+      "test_slide": "S07",
+      "arm": "Whole cell+context",
+      "target": "B_vs_T",
+      "n_train": 102054,
+      "n_test": 128391,
+      "native_call_support": {
+        "B": 47669,
+        "T": 80722
+      },
+      "R2": -7.349732643827048,
+      "MAE": 7.189876890553785,
+      "status": "Frozen classifier-score fidelity; not biological label accuracy"
+    }
+  ],
+  "contrasts": [
+    {
+      "test_slide": "S03",
+      "target": "Epithelial",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": -0.17080939401496636,
+      "CI95_low": -0.18168962464944735,
+      "CI95_high": -0.1604161802495664,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "Epithelial",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": -0.20411296170246473,
+      "CI95_low": -0.21430605294516483,
+      "CI95_high": -0.19406394877665717,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "Epithelial",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": -0.4245722444137164,
+      "CI95_low": -0.44884090117070863,
+      "CI95_high": -0.3987535231090784,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "Epithelial",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": -0.3696541861128491,
+      "CI95_low": -0.39448853948909607,
+      "CI95_high": -0.3436638863548027,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "T",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": -0.049848938984173946,
+      "CI95_low": -0.05362185068096564,
+      "CI95_high": -0.04623165473537889,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "T",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": -0.0036128635783924156,
+      "CI95_low": -0.007542887672705101,
+      "CI95_high": 0.00023537908942115765,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "T",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": 0.10326224536017137,
+      "CI95_low": 0.08954525754016206,
+      "CI95_high": 0.11714105840598152,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "T",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": 0.13800499074351158,
+      "CI95_low": 0.12223851360118257,
+      "CI95_high": 0.15455149523296982,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "B",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": -0.13650928986677552,
+      "CI95_low": -0.14316956137793638,
+      "CI95_high": -0.12985291320915385,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "B",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": 0.03999266373404188,
+      "CI95_low": 0.03362122716495146,
+      "CI95_high": 0.046186797249338496,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "B",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": -0.29590377286176944,
+      "CI95_low": -0.30603623691856735,
+      "CI95_high": -0.28567641133086286,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "B",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": 0.002620093891024323,
+      "CI95_low": -0.00732549449262632,
+      "CI95_high": 0.012801701933738948,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "Plasma",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": 0.03035933024695394,
+      "CI95_low": 0.022500938370852742,
+      "CI95_high": 0.03773752109387904,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "Plasma",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": -0.038673574085615905,
+      "CI95_low": -0.047018212714826764,
+      "CI95_high": -0.030581612302491186,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "Plasma",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": -0.6939583621994602,
+      "CI95_low": -0.7212741429417299,
+      "CI95_high": -0.6666935087575088,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "Plasma",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": -0.3980542639933335,
+      "CI95_low": -0.4192808913062145,
+      "CI95_high": -0.3766377650810718,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "Macrophage",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": -0.24362241752431077,
+      "CI95_low": -0.2523526408495662,
+      "CI95_high": -0.23421896946543522,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "Macrophage",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": -0.006817531657903002,
+      "CI95_low": -0.011694921879293186,
+      "CI95_high": -0.0012534681814073423,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "Macrophage",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": -0.39087700305640266,
+      "CI95_low": -0.39807865174461726,
+      "CI95_high": -0.3836112502092758,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "Macrophage",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": 0.24849071180956997,
+      "CI95_low": 0.24339416399442776,
+      "CI95_high": 0.2541237392418009,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "Endothelium",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": -0.004837816156154288,
+      "CI95_low": -0.01396210777895661,
+      "CI95_high": 0.00532202335923694,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "Endothelium",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": 0.16530159164380695,
+      "CI95_low": 0.15686892991965465,
+      "CI95_high": 0.17506717640001876,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "Endothelium",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": 0.5094681937329972,
+      "CI95_low": 0.49633162080029564,
+      "CI95_high": 0.5227544062033801,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "Endothelium",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": 1.4660526626376507,
+      "CI95_low": 1.4467478126153563,
+      "CI95_high": 1.4853599914449918,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "Fibroblast",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": -0.1986434412388541,
+      "CI95_low": -0.20410483471831162,
+      "CI95_high": -0.19334569222445838,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "Fibroblast",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": -0.1915506447390505,
+      "CI95_low": -0.1974437258504372,
+      "CI95_high": -0.18562788891326443,
+      "blocks": 3381,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "Fibroblast",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": -0.09271448403291173,
+      "CI95_low": -0.103965922350895,
+      "CI95_high": -0.08296563215085365,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "Fibroblast",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": 0.3443148152592006,
+      "CI95_low": 0.33240699198229806,
+      "CI95_high": 0.3558427501373312,
+      "blocks": 2970,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "B_vs_T",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": -0.05121314576341155,
+      "CI95_low": -0.05841700761737506,
+      "CI95_high": -0.04382448455083552,
+      "blocks": 3027,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S03",
+      "target": "B_vs_T",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": -0.03826846585801833,
+      "CI95_low": -0.04463025103688829,
+      "CI95_high": -0.03201066699454743,
+      "blocks": 3027,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "B_vs_T",
+      "comparator": "Nucleus+context",
+      "block_mean_MAE_difference": -0.484647714400789,
+      "CI95_low": -0.49232405091893233,
+      "CI95_high": -0.47678565249930344,
+      "blocks": 2771,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    },
+    {
+      "test_slide": "S07",
+      "target": "B_vs_T",
+      "comparator": "Nucleus+5um expansion+context",
+      "block_mean_MAE_difference": 0.12997048982013293,
+      "CI95_low": 0.1245516191737579,
+      "CI95_high": 0.13615276263248302,
+      "blocks": 2771,
+      "bootstrap_draws": 1000,
+      "interpretation": "Negative favours whole-cell surrogate on this fixed slide; exploratory block resampling, not patient-population inference."
+    }
+  ],
+  "targets": [
+    "Epithelial",
+    "T",
+    "B",
+    "Plasma",
+    "Macrophage",
+    "Endothelium",
+    "Fibroblast",
+    "B_vs_T"
+  ],
+  "eligible_cells": 470380,
+  "arms": {
+    "Context": [
+      "neighbors20",
+      "neighbors40",
+      "context_H_mean",
+      "context_E_mean"
+    ],
+    "Nucleus": [
+      "nuc_area_um2",
+      "nuc_axis_ratio",
+      "nuc_circularity",
+      "nuc_solidity",
+      "nuc_H_mean",
+      "nuc_H_std",
+      "nuc_H_entropy"
+    ],
+    "Nucleus+context": [
+      "nuc_area_um2",
+      "nuc_axis_ratio",
+      "nuc_circularity",
+      "nuc_solidity",
+      "nuc_H_mean",
+      "nuc_H_std",
+      "nuc_H_entropy",
+      "neighbors20",
+      "neighbors40",
+      "context_H_mean",
+      "context_E_mean"
+    ],
+    "Nucleus+5um expansion+context": [
+      "nuc_area_um2",
+      "nuc_axis_ratio",
+      "nuc_circularity",
+      "nuc_solidity",
+      "nuc_H_mean",
+      "nuc_H_std",
+      "nuc_H_entropy",
+      "exp5_cell_area_um2",
+      "exp5_NC_ratio",
+      "exp5_cyto_E_mean",
+      "neighbors20",
+      "neighbors40",
+      "context_H_mean",
+      "context_E_mean"
+    ],
+    "Whole cell+context": [
+      "nuc_area_um2",
+      "nuc_axis_ratio",
+      "nuc_circularity",
+      "nuc_solidity",
+      "nuc_H_mean",
+      "nuc_H_std",
+      "nuc_H_entropy",
+      "cell_area_um2",
+      "cell_axis_ratio",
+      "cell_circularity",
+      "cell_solidity",
+      "cyto_area_um2",
+      "NC_ratio",
+      "nucleus_offset_um",
+      "cyto_H_mean",
+      "cyto_E_mean",
+      "cyto_E_std",
+      "neighbors20",
+      "neighbors40",
+      "context_H_mean",
+      "context_E_mean"
+    ]
+  },
+  "training": "Fixed alpha10 ridge, equal128um blocks; standardisation and coefficients fitted on the opposite slide only. B-vs-T fitted and evaluated only within v15-predicted B/T cells.",
+  "labels": "Native frozen v15 log odds, not RNA/protein/pathologist ground truth",
+  "purpose": "Whole-cell explanatory value beyond nuclei,5um expansion and context",
+  "limitations": [
+    "Only two cases; no external molecular validation.",
+    "Surrogate fidelity does not establish causal use of a specific image feature.",
+    "Historical H&E exposure is not removed.",
+    "Block confidence intervals are exploratory and not adjusted for multiple comparisons."
+  ],
+  "neural_optimizer_updates": 0
+}
