@@ -5,3 +5,5 @@
 .wc-modes button::before{content:'□';display:inline-block;margin-right:9px;font-size:15px;line-height:1}.wc-modes button[aria-pressed=true]::before{content:'✓'}.wc-modes button{display:flex;align-items:center;font-size:12px;padding:10px 12px}.wc-modes+ .subtle{margin-top:10px}#wc-cell-style,#wc-nucleus-style{width:100%;font-size:11px}#wc-geometry-settings{border-top:1px solid #e2e9ec;padding-top:12px}#wc-geometry-settings .setting input{width:105px}#wholecell-controls .wc-check{line-height:1.5}#he-strength{width:108px}
 
 #tlscells{pointer-events:none}
+
+#wholecell-atlas{pointer-events:none}

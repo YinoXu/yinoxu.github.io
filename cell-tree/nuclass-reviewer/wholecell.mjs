@@ -1,3 +1,4 @@
+import {createWholeCellAtlas} from './wholecell-atlas.mjs?v=1';
 import {parseWholeCell} from './wholecell-format.mjs?v=4';
 import {createShardReader} from './wholecell-shards.mjs?v=4';
 import {parseOverview,cellRings,insideRing as insideCellRing} from './wholecell-geometry.mjs?v=4';
@@ -15,11 +16,12 @@ const fixed=(x,n=2)=>Number.isFinite(x)?x.toFixed(n):'Unavailable';
 export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}){
   const gl=canvas.getContext('webgl',{alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:true});
   const tlsCanvas=$('tlscells'),tlsGL=tlsCanvas.getContext('webgl',{alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:true});
-  let manifest,index,epoch=0,abort,cache=new Map(),pending=new Map(),failed=new Set(),currentRegion=null,selected=null,geometryBase=base;
+  let manifest,index,colourTouched=false,epoch=0,abort,cache=new Map(),pending=new Map(),failed=new Set(),currentRegion=null,selected=null,geometryBase=base;
   const overviewCache=new Map(),overviewPending=new Map(),nativeJobs=new Map();
   const nativeBudget=96*1024*1024,overviewBudget=192*1024*1024;
   let renderer=null,tlsRenderer=null,worker=null,workerID=0,activeNative=0,activeOverview=0,neededNative=new Set(),neededOverview=new Set(),pickEpoch=0,overviewQueue=[],overviewPaintTimer=0,geometryVersion=0,lastDrawKey=null,lastStyleKey=null,paintedOverview=new Set();
   const shardReader=createShardReader(()=>geometryBase);
+  const atlas=createWholeCellAtlas($('wholecell-atlas'),S,()=>geometryBase,()=>{geometryVersion++;request();});
   const controls=$('wholecell-controls');
   controls.innerHTML=`<h2 id="wc-heading">Whole-cell morphology <span class="wc-pill">v6 + v15</span></h2>
     <details id="wc-tls-settings" open><summary>TLS interpretation</summary>
@@ -37,7 +39,7 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
     <label class="check wc-check"><input id="wc-halo" type="checkbox"> White outline halo</label>
     <label class="setting" for="wc-opacity">Outline opacity <input id="wc-opacity" type="range" min="0.1" max="1" step="0.05" value="0.95"></label>
     <label class="setting" for="wc-fill-opacity">Fill opacity <input id="wc-fill-opacity" type="range" min="0.05" max="1" step="0.05" value="0.3"></label>
-    <label class="check wc-check"><input id="wc-failed" type="checkbox" checked> Show QC failures in gray</label>
+    <label class="check wc-check"><input id="wc-failed" type="checkbox" checked> Include masks rejected for measurement (gray)</label>
     <label class="setting">Colour <select id="wc-colour"><option value="0">NuClass v15 type</option><option value="1">NuClass whole-slide type</option><option value="2">Nuclear / cell area</option><option value="3">Cell area</option><option value="4">Nuclear displacement</option></select></label>
     <div id="wc-scale" class="wc-scale">Type colours match the 47-class palette. Gray: unlinked or QC failure.</div><div class="actions"><button id="wc-export-view">Export cell view</button></div></div>
     <p id="wc-status" class="subtle" role="status" aria-live="polite">Loading whole-cell coverage…</p>
@@ -51,6 +53,7 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
   controls.insertBefore($('wc-geometry-settings'),$('wc-tls-settings'));
   const message=s=>text($('wc-status'),s);
   for(const id of ['wc-show','wc-nuclei','wc-failed','wc-colour','wc-cell-style','wc-nucleus-style','wc-halo'])$(id).onchange=()=>{
+    if(id==='wc-colour')colourTouched=true;
     text($('wc-scale'),['Type colours match the 47-class palette. Gray: unlinked or QC failure.',
       'Whole-slide NuClass calls. Whole-cell boundaries still come from v6.',
       'Nuclear / cell area: teal 0 → purple 1.',
@@ -63,11 +66,11 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
   $('wc-tls-colour').onchange=()=>{dispose(tlsGeometry||{});tlsGeometry=null;$('wc-tls-filter').value='all';renderTLSControls();request();};
   $('wc-tls-filter').onchange=()=>{dispose(tlsGeometry||{});tlsGeometry=null;request();};
   $('wc-tls-boundary').onchange=()=>{dispose(tlsGeometry||{});tlsGeometry=null;if(currentRegion)openRegion(currentRegion.id,false);request();};
-  $('wc-retry').onclick=()=>{failed.clear();$('wc-retry').hidden=true;request();};
+  $('wc-retry').onclick=()=>{atlas.retry();failed.clear();$('wc-retry').hidden=true;request();};
   $('wc-save-review').onclick=saveReview;$('wc-export-review').onclick=exportReviews;
   $('wc-export-view').onclick=exportView;
   if(gl)initGL();else message('Whole-cell contours require WebGL. Open the evidence workspace for measurements.');
-  const ready=fetch(new URL('manifest.json?v=4',base)).then(r=>{if(!r.ok)throw Error('Whole-cell dataset is not available');return r.json();}).then(m=>{
+  const ready=fetch(new URL('manifest.json?v=5',base)).then(r=>{if(!r.ok)throw Error('Whole-cell dataset is not available');return r.json();}).then(m=>{
     manifest=m;if(m.features.length!==16)throw Error('Unexpected measurement schema');
     if(m.geometry_base){const url=new URL(m.geometry_base);if(url.origin!=='https://raw.githubusercontent.com'||!/^\/YinoXu\/yinoxu\.github\.io\/[a-f0-9]{40}\/wholecell\/$/.test(url.pathname))throw Error('Geometry delivery must pin the repository commit');geometryBase=url;}
     return fetch(new URL('schema.json',base));
@@ -100,18 +103,20 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
   async function setSlide(sid){
     const e=++epoch;pickEpoch++;geometryVersion++;lastDrawKey=null;lastStyleKey=null;paintedOverview.clear();clearTimeout(overviewPaintTimer);overviewPaintTimer=0;overviewQueue=[];abort?.abort();abort=new AbortController();for(const job of pending.values())job.controller.abort();for(const job of overviewPending.values())job.controller.abort();pending.clear();overviewPending.clear();activeNative=activeOverview=0;
     worker?.terminate();worker=null;for(const job of nativeJobs.values())job.reject(new DOMException('Slide changed','AbortError'));nativeJobs.clear();
-    shardReader.clear();posteriorCache.clear();
+    shardReader.clear();posteriorCache.clear();atlas.setSlide(null);
     for(const x of cache.values())dispose(x);cache.clear();for(const x of overviewCache.values())dispose(x);overviewCache.clear();index=null;currentRegion=null;selected=null;failed.clear();neededNative.clear();neededOverview.clear();
     if(tlsGeometry)dispose(tlsGeometry);tlsGeometry=null;
     $('tls-labels').replaceChildren();text($('wc-region-summary'),'');text($('wc-cell-info'),'Click a cell in a processed region to inspect its actual boundary and measurements.');
-    try{await ready;const response=await fetch(new URL(`${sid}/index.json?v=4`,base),{signal:abort.signal});if(!response.ok)throw Error('No whole-cell analysis for this slide');const m=await response.json();if(e!==epoch)return;
-      if(m.overview_policy?.gpu_bytes>overviewBudget)throw Error('Whole-cell overview exceeds the graphics budget');index=m;
+    try{await ready;const descriptor=manifest.remote_indexes?.[sid];if(descriptor&&descriptor.file!==`${sid}/index.json`)throw Error('Unexpected full-slide index path');const response=await fetch(descriptor?new URL(descriptor.file,geometryBase):new URL(`${sid}/index.json?v=5`,base),{signal:abort.signal});if(!response.ok)throw Error('No whole-cell analysis for this slide');let m;if(descriptor){const bytes=await response.arrayBuffer();if(bytes.byteLength!==descriptor.bytes)throw Error('Full-slide index length mismatch');const digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');if(digest!==descriptor.sha256)throw Error('Full-slide index integrity mismatch');m=JSON.parse(new TextDecoder().decode(bytes));}else m=await response.json();if(e!==epoch)return;
+      if(m.overview_policy?.gpu_bytes>overviewBudget)throw Error('Whole-cell overview exceeds the graphics budget');index=m;atlas.setSlide(m);
+      if(m.whole_slide_coverage&&!colourTouched){$('wc-colour').value='0';text($('wc-scale'),'Frozen v15 calls across the complete slide. Gray indicates an unlinked instance or geometry QC failure.');}
       $('wc-region').innerHTML='<option value="">Choose a region</option>'+m.regions.map(c=>`<option value="${escape(c.id)}">${escape(c.label)}</option>`).join('');
-      message(`${fmt(m.summary.cells)} predicted cells · contours available at every zoom within processed regions.`);renderTLSControls();
+      message(`${fmt(m.summary.cells)} predicted cells · ${m.whole_slide_coverage?'complete whole-slide grid':'processed-region coverage'}.`);renderTLSControls();
       const selectedID=new URLSearchParams(location.search).get('candidate');if(selectedID&&m.regions.some(c=>c.id===selectedID))openRegion(selectedID);request();
     }catch(error){if(error.name!=='AbortError'&&e===epoch)message('Whole-cell layer: '+error.message);}
   }
   function intersects(a,b){return a[0]<=b[2]&&a[2]>=b[0]&&a[1]<=b[3]&&a[3]>=b[1];}
+  function geometryBounds(c){const b=c.bounds,dx=28/S.meta.mpp[0],dy=28/S.meta.mpp[1];return [b[0]-dx,b[1]-dy,b[2]+dx,b[3]+dy];}
   async function load(c,e,kind='native',forSelection=false){
     const overview=kind==='overview',map=overview?overviewPending:pending,target=overview?overviewCache:cache;
     if(target.has(c.key))return target.get(c.key);if(map.has(c.key)){if(forSelection)map.get(c.key).forSelection=true;return map.get(c.key).promise;}
@@ -143,36 +148,44 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
     const incremental=!force&&lastStyleKey===styleKey&&S.meta&&S.scale*S.dpr*.425/S.meta.mpp[0]<=.38;lastStyleKey=styleKey;
     if(!incremental){renderer.clear();paintedOverview.clear();}tlsRenderer?.clear();$('tls-labels').replaceChildren();
     canvas.dataset.loaded='0';canvas.dataset.needed='0';canvas.dataset.cells='0';
-    if(!b||!index||!S.meta||S.clean||S.held)return;
+    if(!b||!index||!S.meta||S.clean||S.held){atlas.draw(null,{},false);return;}
     const layers=S.layers||new Set([S.analysisMode]),whole=layers.has('wholecell'),tls=layers.has('tls');
-    $('wc-heading').innerHTML=whole?'Whole-cell morphology <span class="wc-pill">v6 + v15</span>':'TLS evidence <span class="wc-pill">candidate audit</span>';
+    $('wc-heading').innerHTML=whole?`Whole-cell morphology <span class="wc-pill">${+$('wc-colour').value===0?'v6 + v15':+$('wc-colour').value===1?'v6 + NuClass':'v6 geometry'}</span>`:'TLS evidence <span class="wc-pill">candidate audit</span>';
     let shown=0,overviewLoaded=0,nativeLoaded=0,visible=[];
     if(whole&&S.selected.size&&($('wc-show').checked||$('wc-nuclei').checked)){
-      const chunks=index.chunks.filter(c=>c.cells&&intersects(c.bounds,b)).sort((a,z)=>Math.hypot((a.bounds[0]+a.bounds[2])/2-S.cx,(a.bounds[1]+a.bounds[3])/2-S.cy)-Math.hypot((z.bounds[0]+z.bounds[2])/2-S.cx,(z.bounds[1]+z.bounds[3])/2-S.cy));
-      neededOverview=new Set(chunks.map(c=>c.key));
+      const chunks=index.chunks.filter(c=>c.cells&&intersects(geometryBounds(c),b)).sort((a,z)=>Math.hypot((a.bounds[0]+a.bounds[2])/2-S.cx,(a.bounds[1]+a.bounds[3])/2-S.cy)-Math.hypot((z.bounds[0]+z.bounds[2])/2-S.cx,(z.bounds[1]+z.bounds[3])/2-S.cy));
+      neededOverview=new Set(index.atlas?[]:chunks.map(c=>c.key));
       const nativeDetail=S.scale*S.dpr*.425/S.meta.mpp[0]>.38;
-      let reserved=0;const native=nativeDetail?chunks.filter(c=>{const bytes=c.render_bytes_v2||estimate(c);if(reserved+bytes>nativeBudget)return false;reserved+=bytes;return true;}):[];
+      let reserved=0;const native=nativeDetail?(index.atlas?(chunks.reduce((n,c)=>n+(c.render_bytes_v2||estimate(c)),0)<=nativeBudget?chunks:[]):chunks.filter(c=>{const bytes=c.render_bytes_v2||estimate(c);if(reserved+bytes>nativeBudget)return false;reserved+=bytes;return true;})):[];
+      const nativeReady=!!index.atlas&&native.length===chunks.length&&chunks.length>0&&native.every(c=>cache.has(c.key));
       neededNative=new Set(native.map(c=>c.key));
       for(const [key,job] of pending)if(!neededNative.has(key)&&key!==selected?.chunk&&!job.forSelection)job.controller.abort();
       for(const [key,job] of overviewPending)if(!neededOverview.has(key))job.controller.abort();
       const o=options();
-      for(const c of chunks){const detailed=neededNative.has(c.key)?cache.get(c.key):null,coarse=overviewCache.get(c.key);
+      for(const c of chunks){const resident=neededNative.has(c.key)?cache.get(c.key):null,detailed=index.atlas&&!nativeReady?null:resident,coarse=overviewCache.get(c.key);
         if(detailed){detailed.used=performance.now();visible.push(detailed.render);shown+=detailed.n;nativeLoaded++;}
         else if(coarse){coarse.used=performance.now();visible.push(coarse.render);shown+=coarse.n;overviewLoaded++;}
 
-        if(neededNative.has(c.key)&&!detailed&&activeNative<1&&!pending.has(c.key)&&!failed.has('native:'+c.key))load(c,epoch);
+        if(neededNative.has(c.key)&&!resident&&activeNative<1&&!pending.has(c.key)&&!failed.has('native:'+c.key))load(c,epoch);
       }
-      overviewQueue=chunks.filter(c=>c.overview&&(!nativeDetail||!cache.has(c.key))&&!overviewCache.has(c.key)&&!overviewPending.has(c.key));pumpOverview();
+      overviewQueue=chunks.filter(c=>!index.atlas&&c.overview&&(!nativeDetail||!cache.has(c.key))&&!overviewCache.has(c.key)&&!overviewPending.has(c.key));pumpOverview();
       // Fills precede every stroke, so neighbouring chunks cannot paint over edges.
       const fresh=incremental?visible.filter(g=>!paintedOverview.has(g.key)):visible;
       for(const g of fresh)renderer.filled(g,o);
       for(const g of fresh){paintedOverview.add(g.key);if(o.halo)renderer.stroke(g,o,1,o.width+1.8,o.alpha*.75);renderer.stroke(g,o);}
       renderer.present(o);
+      // Switch the entire view only when every native chunk fits and is ready.
+      // The pyramid stays complete while detail loads; no mixed-level seams.
+      atlas.draw(b,o,!nativeReady);
       evict(cache,neededNative,nativeBudget);evict(overviewCache,neededOverview,overviewBudget);
       const nativeMissing=native.length-nativeLoaded;
-      message(chunks.length?`${fmt(shown)} / ${fmt(chunks.reduce((n,c)=>n+c.cells,0))} cells · ${nativeLoaded?'Native detail':'Overview contours'}${nativeMissing?' · loading finer detail…':''}. Zoom in to inspect individual boundaries.`:'Outside processed whole-cell coverage. No predicted boundary is available here.');
-      Object.assign(canvas.dataset,{loaded:String(nativeLoaded+overviewLoaded),needed:String(chunks.length),intersecting:String(chunks.length),cells:String(shown),native:String(nativeLoaded),overview:String(overviewLoaded),cache:String(cache.size),cacheBytes:String([...cache.values()].reduce((n,x)=>n+x.bytes,0)+[...overviewCache.values()].reduce((n,x)=>n+x.bytes,0)),renderer:'WebGL cell contours'});
-    }else{neededNative=new Set();neededOverview=new Set();overviewQueue=[];}
+      const atlasElement=$('wholecell-atlas'),atlasReady=index.atlas&&atlas.state.supported&&(nativeReady||atlasElement.dataset.loaded===atlasElement.dataset.needed);
+      if(atlas.state.failed)$('wc-retry').hidden=false;
+      if(index.atlas&&!atlas.state.supported)message('Full-slide overlay is unavailable in this browser. Native contours remain available when you zoom in.');
+      else if(index.atlas)message(`${fmt(chunks.reduce((n,c)=>n+c.cells,0))} predicted cells in intersecting chunks · ${atlasReady?'full-slide overlay ready':'loading full-slide overlay…'}${nativeLoaded?' + native contours':''}. ${+$('wc-colour').value===0?'Frozen v15 types; gray indicates unlinked or failed geometry.':''}`);
+      else message(chunks.length?`${fmt(shown)} / ${fmt(chunks.reduce((n,c)=>n+c.cells,0))} cells · ${nativeLoaded?'Native detail':'Overview contours'}${nativeMissing?' · loading finer detail…':''}. Zoom in to inspect individual boundaries.`:'Outside processed whole-cell coverage. No predicted boundary is available here.');
+      Object.assign(canvas.dataset,{loaded:String(atlasReady?chunks.length:nativeLoaded+overviewLoaded),needed:String(chunks.length),intersecting:String(chunks.length),cells:String(atlasReady?chunks.reduce((n,c)=>n+c.cells,0):shown),native:String(nativeLoaded),overview:String(overviewLoaded),cache:String(cache.size),cacheBytes:String([...cache.values()].reduce((n,x)=>n+x.bytes,0)+[...overviewCache.values()].reduce((n,x)=>n+x.bytes,0)),renderer:'WebGL cell contours'});
+    }else{neededNative=new Set();neededOverview=new Set();overviewQueue=[];atlas.draw(null,{},false);}
     if(tls)drawTLS(b,whole);
   }
   function estimate(c){return c.render_bytes_v2||c.decoded_bytes*12;}
@@ -184,7 +197,7 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
       `Lymphoid fraction ${fixed(m.lymphoid_fraction_score,1)}% · B/T zoning ${fixed(m.zoning_score,1)}/100`,
       `Usable whole-cell links ${fixed(m.quality_score,1)}% of original candidate nuclei`,
       `Composition: ${r.composition_type||'Unscored'}`,
-      `Science stage: ${r.science?.stage||'Unassigned'} · model prediction`,
+      `Science stage: ${stageLabels[r.science?.stage]||'Unassigned'} · model prediction`,
       r.science?.stable===false?'Stage changes with crop handling. Inspect before interpreting.':'Pathology stage is unverified.');
     if(r.boundary_refinement){const q=r.boundary_refinement,c=q.composition_comparison;
       lines.push(`Boundary comparison: refined area ${q.area_change_pct>=0?'+':''}${fixed(q.area_change_pct,1)}% · mask agreement IoU ${fixed(q.raw_refined_IoU,3)} (not accuracy)`,
@@ -197,6 +210,7 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
   }
   const compNames=['B-rich','T-rich','B/T segregated','B/T mixed','B/T intermediate','Low lymphoid / discordant','Unscored'];
   const compColors=['#7763c4','#2f9b9e','#d09838','#c35d93','#587da3','#8a979e','#a9afb5'];
+  const stageLabels={E:'E · Early TLS',P:'P · Primary follicle-like TLS',S:'S · Secondary follicle-like TLS',Unassigned:'Unassigned'};
   const stageNames=['E','P','S','Unassigned'],stageColors=['#ce9237','#529ab9','#a061b6','#8a979e'];
   let tlsGeometry=null;
   function regionRings(r){return $('wc-tls-boundary').value==='refined'&&r.refined_rings?r.refined_rings:(r.raw_rings||r.rings||[]);}
@@ -206,7 +220,7 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
     const candidates=index.regions.filter(r=>!r.control),count=Object.fromEntries(names.map(n=>[n,candidates.filter(r=>tlsClass(r)===n).length]));
     $('wc-tls-filter').innerHTML='<option value="all">All candidate types</option>'+names.map(n=>`<option value="${escape(n)}">${escape(n)} · ${count[n]}</option>`).join('');
     text($('wc-tls-counts'),`${candidates.length} candidate regions · ${fixed(index.summary.candidate_area_mm2,2)} mm² total · ${fixed(index.summary.candidate_density,2)} candidates / mm² tissue`);
-    $('wc-tls-legend').innerHTML=names.filter(n=>count[n]).map(n=>`<div class="wc-legend"><i style="background:${colors[names.indexOf(n)]}"></i>${escape(stage&&n!=='Unassigned'?n+'-TLS prediction':n)} <b>${count[n]}</b></div>`).join('');
+    $('wc-tls-legend').innerHTML=names.filter(n=>count[n]).map(n=>`<div class="wc-legend"><i style="background:${colors[names.indexOf(n)]}"></i>${escape(stage?stageLabels[n]:n)} <b>${count[n]}</b></div>`).join('');
   }
   function drawTLS(b,withCells=false){
     if(!tlsRenderer)return;
@@ -235,9 +249,9 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
     if(r)openRegion(r.id);return r||null;
   }
   function clearSelection(){pickEpoch++;selected=null;request();}
-  function pick(x,y,{nuclear=false}={}){
+  function pick(x,y,{nuclear=false,chunk:selectionChunk=null}={}){
     if(!index||!S.selected.size||S.clean||S.held)return null;let best=null,minimum=Infinity;
-    for(const chunk of cache.values()){
+    for(const chunk of (selectionChunk?[selectionChunk]:cache.values())){
       if(x<chunk.descriptor.bounds[0]-50||x>chunk.descriptor.bounds[2]+50||y<chunk.descriptor.bounds[1]-50||y>chunk.descriptor.bounds[3]+50)continue;
       for(let i=0;i<chunk.n;i++){
         const r=chunk.record(i),li=nuclear||+$('wc-colour').value===1?r.cellstp:r.leaf;
@@ -252,8 +266,8 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
   async function selectAt(x,y,options={}){
     const id=++pickEpoch,e=epoch;if(!index)return null;
     let result=pick(x,y,options);if(result)return result;
-    const candidates=index.chunks.filter(c=>c.cells&&x>=c.bounds[0]-32&&x<=c.bounds[2]+32&&y>=c.bounds[1]-32&&y<=c.bounds[3]+32);
-    for(const c of candidates){await load(c,e,'native',true);if(id!==pickEpoch||e!==epoch)return null;if((result=pick(x,y,options)))return result;}
+    const candidates=index.chunks.filter(c=>c.cells&&(()=>{const b=geometryBounds(c);return x>=b[0]&&x<=b[2]&&y>=b[1]&&y<=b[3];})());
+    for(const c of candidates){const chunk=await load(c,e,'native',true);if(id!==pickEpoch||e!==epoch)return null;if(chunk&&(result=pick(x,y,{...options,chunk})))return result;}
     if(id===pickEpoch){selected=null;text($('wc-cell-info'),'No predicted whole-cell boundary contains this position in the processed regions. The source nucleus marker is shown instead.');request();}return null;
   }
   function drawSelection(contexts){
@@ -322,5 +336,5 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
   tlsCanvas.addEventListener('webglcontextrestored',()=>{tlsRenderer=createContourRenderer(tlsGL,S);tlsGeometry=null;lastDrawKey=null;request();});
   canvas.addEventListener('webglcontextrestored',()=>{initGL();cache.clear();overviewCache.clear();tlsGeometry=null;lastDrawKey=null;request();});
   function readback(){const b=[S.cx-S.w/S.scale/2,S.cy-S.h/S.scale/2,S.cx+S.w/S.scale/2,S.cy+S.h/S.scale/2],start=performance.now();draw(b,true);const pixels=new Uint8Array(canvas.width*canvas.height*4);gl.readPixels(0,0,canvas.width,canvas.height,gl.RGBA,gl.UNSIGNED_BYTE,pixels);let coloured=0;for(let i=3;i<pixels.length;i+=4)if(pixels[i])coloured++;return {coloured_pixels:coloured,width:canvas.width,height:canvas.height,draw_readback_ms:performance.now()-start,...canvas.dataset};}
-  return {setSlide,draw,pick,selectAt,clearSelection,drawSelection,pickRegion,openRegion,readback,get state(){return {slide:S.slide,loaded:!!index,cache:cache.size,bytes:[...cache.values()].reduce((s,x)=>s+x.bytes,0),overviewBytes:[...overviewCache.values()].reduce((s,x)=>s+x.bytes,0),overviewLoaded:overviewCache.size,compressed:shardReader.state,regions:index?.regions.length||0,epoch,selected};},get manifest(){return manifest;},get index(){return index;},get cache(){return cache;}};
+  return {setSlide,draw,pick,selectAt,clearSelection,drawSelection,pickRegion,openRegion,readback,get state(){return {slide:S.slide,loaded:!!index,cache:cache.size,bytes:[...cache.values()].reduce((s,x)=>s+x.bytes,0),atlas:atlas.state,overviewBytes:[...overviewCache.values()].reduce((s,x)=>s+x.bytes,0),overviewLoaded:overviewCache.size,compressed:shardReader.state,regions:index?.regions.length||0,epoch,selected};},get manifest(){return manifest;},get index(){return index;},get cache(){return cache;}};
 }
