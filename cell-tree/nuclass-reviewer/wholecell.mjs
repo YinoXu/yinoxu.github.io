@@ -1,5 +1,7 @@
-import {parseWholeCell} from './wholecell-format.mjs';
-import {createShardReader} from './wholecell-shards.mjs';
+import {parseWholeCell} from './wholecell-format.mjs?v=4';
+import {createShardReader} from './wholecell-shards.mjs?v=4';
+import {parseOverview,cellRings,insideRing as insideCellRing} from './wholecell-geometry.mjs?v=4';
+import {createContourRenderer,ringsGeometry} from './contour-renderer.mjs?v=4';
 const base=new URL('./wholecell/',import.meta.url);
 const $=id=>document.getElementById(id), fmt=n=>Number(n).toLocaleString('en-US');
 const text=(node,value)=>{if(node)node.textContent=value;};
@@ -11,9 +13,12 @@ const labels={cell_area_um2:'Cell area',nuc_area_um2:'Nuclear area',cyto_area_um
 const fixed=(x,n=2)=>Number.isFinite(x)?x.toFixed(n):'Unavailable';
 
 export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}){
-  const gl=canvas.getContext('webgl',{alpha:true,antialias:false,premultipliedAlpha:false});
-  let manifest,index,epoch=0,abort,program,u={},cache=new Map(),pending=new Map(),failed=new Set(),active=0,currentRegion=null,selected=null,lastView=null,geometryBase=base;
-  const limitBytes=120*1024*1024,limitChunks=32;
+  const gl=canvas.getContext('webgl',{alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:true});
+  const tlsCanvas=$('tlscells'),tlsGL=tlsCanvas.getContext('webgl',{alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:true});
+  let manifest,index,epoch=0,abort,cache=new Map(),pending=new Map(),failed=new Set(),currentRegion=null,selected=null,geometryBase=base;
+  const overviewCache=new Map(),overviewPending=new Map(),nativeJobs=new Map();
+  const nativeBudget=96*1024*1024,overviewBudget=192*1024*1024;
+  let renderer=null,tlsRenderer=null,worker=null,workerID=0,activeNative=0,activeOverview=0,neededNative=new Set(),neededOverview=new Set(),pickEpoch=0,overviewQueue=[],overviewPaintTimer=0,geometryVersion=0,lastDrawKey=null,lastStyleKey=null,paintedOverview=new Set();
   const shardReader=createShardReader(()=>geometryBase);
   const controls=$('wholecell-controls');
   controls.innerHTML=`<h2 id="wc-heading">Whole-cell morphology <span class="wc-pill">v6 + v15</span></h2>
@@ -21,12 +26,19 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
     <label class="wc-label" for="wc-tls-colour">TLS contour colours</label><select id="wc-tls-colour"><option value="composition">NuClass composition phenotype</option><option value="stage">Science E/P/S prediction</option></select>
     <label class="wc-label" for="wc-tls-filter">Show TLS candidates</label><select id="wc-tls-filter"><option value="all">All candidate types</option></select>
     <label class="wc-label" for="wc-tls-boundary">TLS boundary</label><select id="wc-tls-boundary"><option value="refined">H&E-constrained refinement ·5µm</option><option value="raw">Original density mask ·25µm</option></select>
-    <div id="wc-tls-counts" class="wc-tls-counts"></div><div id="wc-tls-legend"></div>
+    <label class="setting" for="wc-tls-width">TLS line width <input id="wc-tls-width" type="range" min="1" max="6" step="0.25" value="2.75"></label><div id="wc-tls-counts" class="wc-tls-counts"></div><div id="wc-tls-legend"></div>
     <p class="wc-source">E: early TLS · P: primary follicle · S: secondary follicle. These are model predictions. The refined boundary preserves white spaces and neighbouring candidate identities. Counts, composition and Science stages use the original25µm candidates; boundary sensitivity is separate. Neither outline is pathology gold. Dashed stage outlines indicate crop-sensitive predictions.</p></details>
     <div id="wc-geometry-settings"><label class="check"><input id="wc-show" type="checkbox" checked> Whole-cell contours</label>
     <label class="check wc-check"><input id="wc-nuclei" type="checkbox"> Nuclear contours</label>
+    <label class="wc-label" for="wc-cell-style">Whole-cell style</label><select id="wc-cell-style"><option value="outline">Outline</option><option value="filled">Colour fill + outline</option></select>
+    <label class="wc-label" for="wc-nucleus-style">Nuclear style</label><select id="wc-nucleus-style"><option value="outline">Outline</option><option value="filled">Colour fill + outline</option></select>
+    <label class="check wc-check"><input id="wc-bold" type="checkbox" checked> Bold outlines</label>
+    <label class="setting" for="wc-width">Line width <input id="wc-width" type="range" min="0.75" max="6" step="0.25" value="2.25"></label>
+    <label class="check wc-check"><input id="wc-halo" type="checkbox"> White outline halo</label>
+    <label class="setting" for="wc-opacity">Outline opacity <input id="wc-opacity" type="range" min="0.1" max="1" step="0.05" value="0.95"></label>
+    <label class="setting" for="wc-fill-opacity">Fill opacity <input id="wc-fill-opacity" type="range" min="0.05" max="1" step="0.05" value="0.3"></label>
     <label class="check wc-check"><input id="wc-failed" type="checkbox" checked> Show QC failures in gray</label>
-    <label class="setting">Colour <select id="wc-colour"><option value="0">NuClass v15 type</option><option value="1">Original CellSTP type</option><option value="2">Nuclear / cell area</option><option value="3">Cell area</option><option value="4">Nuclear displacement</option></select></label>
+    <label class="setting">Colour <select id="wc-colour"><option value="0">NuClass v15 type</option><option value="1">NuClass whole-slide type</option><option value="2">Nuclear / cell area</option><option value="3">Cell area</option><option value="4">Nuclear displacement</option></select></label>
     <div id="wc-scale" class="wc-scale">Type colours match the 47-class palette. Gray: unlinked or QC failure.</div><div class="actions"><button id="wc-export-view">Export cell view</button></div></div>
     <p id="wc-status" class="subtle" role="status" aria-live="polite">Loading whole-cell coverage…</p>
     <button id="wc-retry" hidden>Retry whole-cell data</button>
@@ -36,14 +48,17 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
     <details id="wc-review"><summary>Pathology review · saved locally</summary><div id="wc-review-fields"></div>
       <label class="wc-label" for="wc-review-note">Review note</label><textarea id="wc-review-note" rows="3" maxlength="4000"></textarea>
       <div class="actions"><button id="wc-save-review">Save review</button><button id="wc-export-review">Export reviews</button></div><p id="wc-review-state" class="subtle"></p></details>`;
+  controls.insertBefore($('wc-geometry-settings'),$('wc-tls-settings'));
   const message=s=>text($('wc-status'),s);
-  for(const id of ['wc-show','wc-nuclei','wc-failed','wc-colour'])$(id).onchange=()=>{
+  for(const id of ['wc-show','wc-nuclei','wc-failed','wc-colour','wc-cell-style','wc-nucleus-style','wc-halo'])$(id).onchange=()=>{
     text($('wc-scale'),['Type colours match the 47-class palette. Gray: unlinked or QC failure.',
-      'Original CellSTP calls. Whole-cell boundaries still come from v6.',
+      'Whole-slide NuClass calls. Whole-cell boundaries still come from v6.',
       'Nuclear / cell area: teal 0 → purple 1.',
       'Cell area: teal ≤32 → purple ≥512 µm² (log scale).',
       'Nuclear displacement: teal 0 → purple ≥10 µm.'][+$('wc-colour').value]);request();
   };
+  for(const id of ['wc-width','wc-opacity','wc-fill-opacity','wc-tls-width'])$(id).oninput=()=>{if(id==='wc-width')$('wc-bold').checked=+$('wc-width').value>1.5;request();};
+  $('wc-bold').onchange=()=>{$('wc-width').value=$('wc-bold').checked?'2.75':'1';request();};
   $('wc-region').onchange=()=>openRegion($('wc-region').value);
   $('wc-tls-colour').onchange=()=>{dispose(tlsGeometry||{});tlsGeometry=null;$('wc-tls-filter').value='all';renderTLSControls();request();};
   $('wc-tls-filter').onchange=()=>{dispose(tlsGeometry||{});tlsGeometry=null;request();};
@@ -52,7 +67,7 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
   $('wc-save-review').onclick=saveReview;$('wc-export-review').onclick=exportReviews;
   $('wc-export-view').onclick=exportView;
   if(gl)initGL();else message('Whole-cell contours require WebGL. Open the evidence workspace for measurements.');
-  const ready=fetch(new URL('manifest.json',base)).then(r=>{if(!r.ok)throw Error('Whole-cell dataset is not available');return r.json();}).then(m=>{
+  const ready=fetch(new URL('manifest.json?v=4',base)).then(r=>{if(!r.ok)throw Error('Whole-cell dataset is not available');return r.json();}).then(m=>{
     manifest=m;if(m.features.length!==16)throw Error('Unexpected measurement schema');
     if(m.geometry_base){const url=new URL(m.geometry_base);if(url.origin!=='https://raw.githubusercontent.com'||!/^\/YinoXu\/yinoxu\.github\.io\/[a-f0-9]{40}\/wholecell\/$/.test(url.pathname))throw Error('Geometry delivery must pin the repository commit');geometryBase=url;}
     return fetch(new URL('schema.json',base));
@@ -70,113 +85,97 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
   // Consumers may open the existing reviewer while its optional dataset is absent.
   ready.catch(()=>{});
 
-  function shader(type,source){const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s;}
-  function initGL(){
-    program=gl.createProgram();
-    gl.attachShader(program,shader(gl.VERTEX_SHADER,`precision highp float;
-      attribute vec2 a_xy;attribute vec4 a_style;attribute vec3 a_values;
-      uniform vec2 u_center,u_view;uniform float u_scale,u_mode,u_nuclei,u_failed,u_coverage,u_tls,u_unknown;
-      uniform vec3 u_colors[48];uniform float u_enabled[47];varying mediump vec4 v_color;varying mediump float v_dash;varying highp float v_along;
-      void main(){vec2 p=(a_xy-u_center)*u_scale/u_view*2.;gl_Position=vec4(p.x,-p.y,0.,1.);
-        int li=int(u_mode<.5?a_style.x:a_style.y);float qc=a_style.z;
-        vec3 col=u_colors[int(min(float(li),47.0))];float alpha=.9;
-        if(u_mode>1.5){float t=clamp(u_mode<2.5?a_values.x:(u_mode<3.5?a_values.y:a_values.z),0.,1.);col=mix(vec3(.04,.7,.65),vec3(.68,.08,.82),t);}
-        if(u_tls<.5&&(qc<.5||li>46)){col=vec3(.48,.54,.59);alpha=.55;}
-        if(u_coverage>.5){col=vec3(.1,.62,.55);alpha=.20;}
-        else{if(mod(a_style.w,2.)>.5&&u_nuclei<.5)gl_Position=vec4(3.,3.,0.,1.);
-          if(qc<.5&&u_failed<.5)gl_Position=vec4(3.,3.,0.,1.);
-          if(li>46&&u_unknown<.5)gl_Position=vec4(3.,3.,0.,1.);
-          if(li<47&&u_enabled[li]<.5)gl_Position=vec4(3.,3.,0.,1.);}
-        v_dash=u_tls>.5&&a_values.y>.5?1.:0.;v_along=a_values.x*u_scale;
-        v_color=vec4(col,alpha);}`));
-    gl.attachShader(program,shader(gl.FRAGMENT_SHADER,`precision mediump float;varying mediump vec4 v_color;varying mediump float v_dash;varying highp float v_along;void main(){if(v_dash>.5&&mod(v_along,10.)<4.)discard;gl_FragColor=v_color;}`));
-    gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));
-    u={};for(const s of ['center','view','scale','mode','nuclei','failed','coverage','tls','unknown','colors','enabled'])u[s]=gl.getUniformLocation(program,'u_'+s);
-    u.xy=gl.getAttribLocation(program,'a_xy');u.style=gl.getAttribLocation(program,'a_style');u.values=gl.getAttribLocation(program,'a_values');
-    gl.enable(gl.BLEND);gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
+  function initGL(){renderer=createContourRenderer(gl,S);if(tlsGL)tlsRenderer=createContourRenderer(tlsGL,S);}
+  function nativeWorker(){
+    if(worker)return worker;
+    worker=new Worker(new URL('./wholecell-worker.mjs?v=4',import.meta.url),{type:'module'});
+    worker.onmessage=({data})=>{const job=nativeJobs.get(data.id);if(!job)return;nativeJobs.delete(data.id);data.error?job.reject(Error(data.error)):job.resolve(data);};
+    worker.onerror=()=>{for(const job of nativeJobs.values())job.reject(Error('Contour decoding worker failed'));nativeJobs.clear();worker?.terminate();worker=null;};return worker;
   }
-  function dispose(x){if(gl&&x.gpu)for(const b of Object.values(x.gpu))gl.deleteBuffer(b);}
-  function evict(keep,budget=limitBytes,maxCount=limitChunks){let total=[...cache.values()].reduce((s,x)=>s+x.bytes,0);
-    for(const [key,x] of [...cache].sort((a,b)=>a[1].used-b[1].used)){
-      if(cache.size<=maxCount&&total<=budget)break;if(keep.has(key))continue;dispose(x);cache.delete(key);total-=x.bytes;
-    }
+  function buildNative(buffer){const id=++workerID;return new Promise((resolve,reject)=>{nativeJobs.set(id,{resolve,reject});nativeWorker().postMessage({id,epoch,buffer},[buffer]);});}
+  function dispose(x){(x.isTLS?tlsRenderer:renderer)?.dispose(x.render||x);}
+  function evict(map,keep,budget){let bytes=[...map.values()].reduce((s,x)=>s+x.bytes,0);
+    for(const [key,x] of [...map].sort((a,b)=>a[1].used-b[1].used)){if(bytes<=budget)break;if(keep.has(key))continue;dispose(x);map.delete(key);bytes-=x.bytes;}
   }
   async function setSlide(sid){
-    const e=++epoch;abort?.abort();abort=new AbortController();for(const a of pending.values())a.abort();pending.clear();active=0;
-    shardReader.clear();
-    for(const x of cache.values())dispose(x);cache.clear();index=null;currentRegion=null;selected=null;failed.clear();
-    if(coverage)dispose(coverage);coverage=null;if(tlsGeometry)dispose(tlsGeometry);tlsGeometry=null;
-    $('tls-labels').replaceChildren();
-    text($('wc-region-summary'),'');text($('wc-cell-info'),'Choose a cell in a processed region to inspect its measured compartments.');
-    try{await ready;const r=await fetch(new URL(`${sid}/index.json`,base),{signal:abort.signal});if(!r.ok)throw Error('No whole-cell analysis for this slide');const m=await r.json();if(e!==epoch)return;
-      index=m;$('wc-region').innerHTML='<option value="">Choose a region</option>'+
-        m.regions.map(c=>`<option value="${escape(c.id)}">${escape(c.label)}</option>`).join('');
-      message(`${fmt(m.summary.cells)} predicted cells · ${m.summary.candidates} candidate regions processed. Zoom in for contours.`);renderTLSControls();
+    const e=++epoch;pickEpoch++;geometryVersion++;lastDrawKey=null;lastStyleKey=null;paintedOverview.clear();clearTimeout(overviewPaintTimer);overviewPaintTimer=0;overviewQueue=[];abort?.abort();abort=new AbortController();for(const job of pending.values())job.controller.abort();for(const job of overviewPending.values())job.controller.abort();pending.clear();overviewPending.clear();activeNative=activeOverview=0;
+    worker?.terminate();worker=null;for(const job of nativeJobs.values())job.reject(new DOMException('Slide changed','AbortError'));nativeJobs.clear();
+    shardReader.clear();posteriorCache.clear();
+    for(const x of cache.values())dispose(x);cache.clear();for(const x of overviewCache.values())dispose(x);overviewCache.clear();index=null;currentRegion=null;selected=null;failed.clear();neededNative.clear();neededOverview.clear();
+    if(tlsGeometry)dispose(tlsGeometry);tlsGeometry=null;
+    $('tls-labels').replaceChildren();text($('wc-region-summary'),'');text($('wc-cell-info'),'Click a cell in a processed region to inspect its actual boundary and measurements.');
+    try{await ready;const response=await fetch(new URL(`${sid}/index.json?v=4`,base),{signal:abort.signal});if(!response.ok)throw Error('No whole-cell analysis for this slide');const m=await response.json();if(e!==epoch)return;
+      if(m.overview_policy?.gpu_bytes>overviewBudget)throw Error('Whole-cell overview exceeds the graphics budget');index=m;
+      $('wc-region').innerHTML='<option value="">Choose a region</option>'+m.regions.map(c=>`<option value="${escape(c.id)}">${escape(c.label)}</option>`).join('');
+      message(`${fmt(m.summary.cells)} predicted cells · contours available at every zoom within processed regions.`);renderTLSControls();
       const selectedID=new URLSearchParams(location.search).get('candidate');if(selectedID&&m.regions.some(c=>c.id===selectedID))openRegion(selectedID);request();
     }catch(error){if(error.name!=='AbortError'&&e===epoch)message('Whole-cell layer: '+error.message);}
   }
   function intersects(a,b){return a[0]<=b[2]&&a[2]>=b[0]&&a[1]<=b[3]&&a[3]>=b[1];}
-  function upload(x){
-    x.gpu={};for(const [key,array] of [['xy',x.xy],['style',x.style],['values',x.values]]){const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,array,gl.STATIC_DRAW);x.gpu[key]=b;}
+  async function load(c,e,kind='native',forSelection=false){
+    const overview=kind==='overview',map=overview?overviewPending:pending,target=overview?overviewCache:cache;
+    if(target.has(c.key))return target.get(c.key);if(map.has(c.key)){if(forSelection)map.get(c.key).forSelection=true;return map.get(c.key).promise;}
+    const controller=new AbortController(),sid=S.slide;
+    if(overview)activeOverview++;else activeNative++;
+    const promise=(async()=>{try{
+      const descriptor=overview?{...c,bundle:c.overview.bundle}:c;
+      const buffer=await shardReader.read(sid,descriptor,'geometry',controller.signal);if(e!==epoch)throw new DOMException('Slide changed','AbortError');
+      if(!forSelection&&!(overview?neededOverview:neededNative).has(c.key))return null;
+      let x;
+      if(overview){const geometry=parseOverview(buffer);if(geometry.cells!==c.cells)throw Error('Overview cell count does not match');const render=renderer.upload(geometry,{discardCPU:true});x={render,n:c.cells,bytes:render.gpuBytes};}
+      else{const result=await buildNative(buffer);if(e!==epoch)throw new DOMException('Slide changed','AbortError');const parsed=parseWholeCell(result.buffer,{expand:false});
+        if(parsed.n!==c.cells)throw Error('Native cell count does not match');const render=renderer.upload(result.geometry,{discardCPU:true});x={...parsed,render,bytes:parsed.buffer.byteLength+render.gpuBytes};}
+      if(e!==epoch){dispose(x);throw new DOMException('Slide changed','AbortError');}
+      x.key=c.key;x.render.key=c.key;x.descriptor=c;x.used=performance.now();target.set(c.key,x);geometryVersion++;evict(target,overview?neededOverview:neededNative,overview?overviewBudget:nativeBudget);return x;
+    }catch(error){if(error.name!=='AbortError'&&e===epoch){failed.add(kind+':'+c.key);$('wc-retry').hidden=false;message('Some contour data could not load. Retry is available.');}return null;}
+    finally{if(e===epoch){map.delete(c.key);if(overview){activeOverview--;pumpOverview();if(!overviewPaintTimer)overviewPaintTimer=setTimeout(()=>{overviewPaintTimer=0;request();},250);}else{activeNative--;request();}}}})();map.set(c.key,{controller,promise,forSelection});return promise;
   }
-  async function load(c,e){
-    const controller=new AbortController();pending.set(c.key,controller);active++;
-    try{const b=await shardReader.read(S.slide,c,'geometry',controller.signal);if(e!==epoch)return;
-      if(!lastView?.has(c.key)||S.analysisMode!=='wholecell')return;
-      const x=parseWholeCell(b);if(x.n!==c.cells)throw Error('Whole-cell count does not match its index');
-      if(x.bytes>estimate(c))throw Error('Contour cache estimate is inconsistent');
-      x.used=performance.now();x.key=c.key;x.descriptor=c;if(gl)upload(x);cache.set(c.key,x);
-    }catch(error){if(error.name!=='AbortError'&&e===epoch){failed.add(c.key);$('wc-retry').hidden=false;message('Some whole-cell chunks failed to load. Retry is available.');}}
-    finally{if(e===epoch){pending.delete(c.key);active--;request();}}
+  function pumpOverview(){while(activeOverview<4&&overviewQueue.length){const c=overviewQueue.shift();if(neededOverview.has(c.key)&&!overviewCache.has(c.key)&&!overviewPending.has(c.key)&&!failed.has('overview:'+c.key))load(c,epoch,'overview');}}
+  function palette(colors=taxonomy.leaves.map(n=>taxonomy.colors[n]||'#808890')){return new Float32Array(Array.from({length:48},(_,i)=>colors[i]||'#808890').flatMap(c=>c.slice(1).match(/../g).map(x=>parseInt(x,16)/255)));}
+  function options(){return {palette:palette(),enabled:new Float32Array(taxonomy.leaves.map((_,i)=>S.selected.has(i)?1:0)),mode:+$('wc-colour').value,
+    parts:[$('wc-show').checked?1:0,$('wc-nuclei').checked?1:0],fillParts:[$('wc-show').checked&&$('wc-cell-style').value==='filled'?1:0,$('wc-nuclei').checked&&$('wc-nucleus-style').value==='filled'?1:0],
+    width:+$('wc-width').value,alpha:+$('wc-opacity').value,fillAlpha:+$('wc-fill-opacity').value,failed:$('wc-failed').checked,unknown:S.selected.size===47,halo:$('wc-halo').checked};}
+  function draw(b,force=false){
+    if(!renderer)return;
+    const visual=['wc-show','wc-nuclei','wc-cell-style','wc-nucleus-style','wc-width','wc-opacity','wc-fill-opacity','wc-failed','wc-colour','wc-halo','wc-tls-colour','wc-tls-filter','wc-tls-boundary','wc-tls-width'].map(id=>{const e=$(id);return e.type==='checkbox'?e.checked:e.value;});
+    const styleKey=JSON.stringify([S.cx,S.cy,S.scale,S.w,S.h,S.dpr,S.clean,S.held,[...(S.layers||[])],[...S.selected],currentRegion?.id,visual]);
+    const key=styleKey+':'+geometryVersion;if(!force&&key===lastDrawKey)return;lastDrawKey=key;
+    const incremental=!force&&lastStyleKey===styleKey&&S.meta&&S.scale*S.dpr*.425/S.meta.mpp[0]<=.38;lastStyleKey=styleKey;
+    if(!incremental){renderer.clear();paintedOverview.clear();}tlsRenderer?.clear();$('tls-labels').replaceChildren();
+    canvas.dataset.loaded='0';canvas.dataset.needed='0';canvas.dataset.cells='0';
+    if(!b||!index||!S.meta||S.clean||S.held)return;
+    const layers=S.layers||new Set([S.analysisMode]),whole=layers.has('wholecell'),tls=layers.has('tls');
+    $('wc-heading').innerHTML=whole?'Whole-cell morphology <span class="wc-pill">v6 + v15</span>':'TLS evidence <span class="wc-pill">candidate audit</span>';
+    let shown=0,overviewLoaded=0,nativeLoaded=0,visible=[];
+    if(whole&&S.selected.size&&($('wc-show').checked||$('wc-nuclei').checked)){
+      const chunks=index.chunks.filter(c=>c.cells&&intersects(c.bounds,b)).sort((a,z)=>Math.hypot((a.bounds[0]+a.bounds[2])/2-S.cx,(a.bounds[1]+a.bounds[3])/2-S.cy)-Math.hypot((z.bounds[0]+z.bounds[2])/2-S.cx,(z.bounds[1]+z.bounds[3])/2-S.cy));
+      neededOverview=new Set(chunks.map(c=>c.key));
+      const nativeDetail=S.scale*S.dpr*.425/S.meta.mpp[0]>.38;
+      let reserved=0;const native=nativeDetail?chunks.filter(c=>{const bytes=c.render_bytes_v2||estimate(c);if(reserved+bytes>nativeBudget)return false;reserved+=bytes;return true;}):[];
+      neededNative=new Set(native.map(c=>c.key));
+      for(const [key,job] of pending)if(!neededNative.has(key)&&key!==selected?.chunk&&!job.forSelection)job.controller.abort();
+      for(const [key,job] of overviewPending)if(!neededOverview.has(key))job.controller.abort();
+      const o=options();
+      for(const c of chunks){const detailed=neededNative.has(c.key)?cache.get(c.key):null,coarse=overviewCache.get(c.key);
+        if(detailed){detailed.used=performance.now();visible.push(detailed.render);shown+=detailed.n;nativeLoaded++;}
+        else if(coarse){coarse.used=performance.now();visible.push(coarse.render);shown+=coarse.n;overviewLoaded++;}
+
+        if(neededNative.has(c.key)&&!detailed&&activeNative<1&&!pending.has(c.key)&&!failed.has('native:'+c.key))load(c,epoch);
+      }
+      overviewQueue=chunks.filter(c=>c.overview&&(!nativeDetail||!cache.has(c.key))&&!overviewCache.has(c.key)&&!overviewPending.has(c.key));pumpOverview();
+      // Fills precede every stroke, so neighbouring chunks cannot paint over edges.
+      const fresh=incremental?visible.filter(g=>!paintedOverview.has(g.key)):visible;
+      for(const g of fresh)renderer.filled(g,o);
+      for(const g of fresh){paintedOverview.add(g.key);if(o.halo)renderer.stroke(g,o,1,o.width+1.8,o.alpha*.75);renderer.stroke(g,o);}
+      renderer.present(o);
+      evict(cache,neededNative,nativeBudget);evict(overviewCache,neededOverview,overviewBudget);
+      const nativeMissing=native.length-nativeLoaded;
+      message(chunks.length?`${fmt(shown)} / ${fmt(chunks.reduce((n,c)=>n+c.cells,0))} cells · ${nativeLoaded?'Native detail':'Overview contours'}${nativeMissing?' · loading finer detail…':''}. Zoom in to inspect individual boundaries.`:'Outside processed whole-cell coverage. No predicted boundary is available here.');
+      Object.assign(canvas.dataset,{loaded:String(nativeLoaded+overviewLoaded),needed:String(chunks.length),intersecting:String(chunks.length),cells:String(shown),native:String(nativeLoaded),overview:String(overviewLoaded),cache:String(cache.size),cacheBytes:String([...cache.values()].reduce((n,x)=>n+x.bytes,0)+[...overviewCache.values()].reduce((n,x)=>n+x.bytes,0)),renderer:'WebGL cell contours'});
+    }else{neededNative=new Set();neededOverview=new Set();overviewQueue=[];}
+    if(tls)drawTLS(b,whole);
   }
-  function draw(b){
-    if(!gl)return;gl.viewport(0,0,canvas.width,canvas.height);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
-    $('tls-labels').replaceChildren();
-    if(!b||!index||!S.meta||S.analysisMode==='types'||S.clean||S.held)return;
-    $('wc-heading').innerHTML=S.analysisMode==='tls'?'TLS evidence <span class="wc-pill">candidate audit</span>':'Whole-cell morphology <span class="wc-pill">v6 + v15</span>';
-    gl.useProgram(program);gl.uniform2f(u.center,S.cx,S.cy);gl.uniform2f(u.view,S.w,S.h);gl.uniform1f(u.scale,S.scale);
-    gl.uniform1f(u.tls,0);gl.uniform1f(u.unknown,S.selected.size===47?1:0);
-    gl.uniform1f(u.mode,+$('wc-colour').value);gl.uniform1f(u.nuclei,$('wc-nuclei').checked?1:0);gl.uniform1f(u.failed,$('wc-failed').checked?1:0);
-    const pal=[...taxonomy.leaves.map(n=>taxonomy.colors[n]||'#808890'),'#808890'].flatMap(c=>c.slice(1).match(/../g).map(x=>parseInt(x,16)/255));
-    gl.uniform3fv(u.colors,new Float32Array(pal));gl.uniform1fv(u.enabled,new Float32Array(taxonomy.leaves.map((_,i)=>S.selected.has(i)?1:0)));
-    if(S.analysisMode==='tls'){drawTLS(b);return;}
-    if(S.selected.size===0)return;
-    if(!$('wc-show').checked)return;
-    const width=(b[2]-b[0])*S.meta.mpp[0],height=(b[3]-b[1])*S.meta.mpp[1];
-    if(Math.max(width,height)>1600){
-      message(`Processed coverage shown in teal. Zoom to ≤1.6 mm on the longer axis for whole-cell contours. ${index.summary.candidates} candidates + controls.`);
-      drawCoverage();return;
-    }
-    const chunks=index.chunks.filter(c=>intersects(c.bounds,b));
-    const sorted=chunks.sort((a,z)=>Math.hypot((a.bounds[0]+a.bounds[2])/2-S.cx,(a.bounds[1]+a.bounds[3])/2-S.cy)-Math.hypot((z.bounds[0]+z.bounds[2])/2-S.cx,(z.bounds[1]+z.bounds[3])/2-S.cy));
-    let reserved=0;const admitted=[];
-    for(const c of sorted)if(admitted.length<limitChunks&&reserved+estimate(c)<=limitBytes){admitted.push(c);reserved+=estimate(c);}
-    const keep=new Set(admitted.map(c=>c.key));lastView=keep;
-    for(const [key,c] of pending)if(!keep.has(key))c.abort();
-    const missingChunks=admitted.filter(c=>!cache.has(c.key)),missing=missingChunks.reduce((sum,c)=>sum+estimate(c),0);evict(keep,limitBytes-missing,limitChunks-missingChunks.length);
-    if(admitted.length<chunks.length)drawCoverage();
-    let shown=0,loaded=0;gl.uniform1f(u.coverage,0);
-    for(const c of admitted){const x=cache.get(c.key);if(!x){if(active<2&&!pending.has(c.key)&&!failed.has(c.key))load(c,epoch);continue;}
-      x.used=performance.now();loaded++;shown+=x.n;bind(x.gpu);gl.drawArrays(gl.LINES,0,x.nv);
-    }
-    evict(keep);
-    message(chunks.length?`${fmt(shown)} cells in loaded spatial chunks · ${loaded}/${admitted.length} admitted chunks.${admitted.length<chunks.length?' Cache limit: zoom in to load all '+chunks.length+' intersecting chunks.':''} Gray: QC failures / unlinked.`:'This field is outside processed whole-cell coverage. Existing points remain CellSTP predictions.');
-    canvas.dataset.loaded=loaded;canvas.dataset.needed=admitted.length;canvas.dataset.intersecting=chunks.length;canvas.dataset.cells=shown;canvas.dataset.cache=cache.size;
-    canvas.dataset.cacheBytes=[...cache.values()].reduce((s,x)=>s+x.bytes,0);canvas.dataset.renderer='WebGL lines';
-  }
-  function estimate(c){return c.cache_bytes_includes_CPU_and_GPU?c.cache_bytes:c.decoded_bytes+2*(c.cache_bytes-c.decoded_bytes);}
-  function bind(gpu){
-    for(const [key,size,type] of [['xy',2,gl.FLOAT],['style',4,gl.UNSIGNED_BYTE],['values',3,gl.FLOAT]]){
-      gl.bindBuffer(gl.ARRAY_BUFFER,gpu[key]);gl.enableVertexAttribArray(u[key]);gl.vertexAttribPointer(u[key],size,type,false,0,0);
-    }
-  }
-  let coverage=null;
-  function drawCoverage(){
-    if(!coverage||coverage.epoch!==epoch){if(coverage?.gpu)dispose(coverage);const points=[];
-      for(const f of index.coverage){const [a,b,c,d]=f;points.push(a,b,c,b,c,b,c,d,c,d,a,d,a,d,a,b);}
-      coverage={epoch,xy:new Float32Array(points),style:new Uint8Array(points.length/2*4),values:new Float32Array(points.length/2*3)};upload(coverage);}
-    gl.uniform1f(u.coverage,1);bind(coverage.gpu);gl.drawArrays(gl.LINES,0,coverage.xy.length/2);
-  }
+  function estimate(c){return c.render_bytes_v2||c.decoded_bytes*12;}
   function openRegion(id,move=true){
     const r=index?.regions.find(c=>c.id===id);if(!r)return;currentRegion=r;$('wc-region').value=id;
     const m=r.metrics||{};const lines=[r.label,r.control?'Prespecified image-only control; not pathology-negative gold.':'Previously detected candidate; pathology status unreviewed.'];
@@ -209,26 +208,24 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
     text($('wc-tls-counts'),`${candidates.length} candidate regions · ${fixed(index.summary.candidate_area_mm2,2)} mm² total · ${fixed(index.summary.candidate_density,2)} candidates / mm² tissue`);
     $('wc-tls-legend').innerHTML=names.filter(n=>count[n]).map(n=>`<div class="wc-legend"><i style="background:${colors[names.indexOf(n)]}"></i>${escape(stage&&n!=='Unassigned'?n+'-TLS prediction':n)} <b>${count[n]}</b></div>`).join('');
   }
-  function drawTLS(b){
+  function drawTLS(b,withCells=false){
+    if(!tlsRenderer)return;
     const stage=$('wc-tls-colour').value==='stage',names=stage?stageNames:compNames,colors=stage?stageColors:compColors,filter=$('wc-tls-filter').value;
     const selected=index.regions.filter(r=>!r.control&&(filter==='all'||tlsClass(r)===filter));
-    if(!tlsGeometry){const xy=[],style=[],values=[];
-      for(const r of selected)for(const ring of regionRings(r)){const li=Math.max(0,names.indexOf(tlsClass(r)));
-        let along=0;for(let k=0;k<ring.length;k++){const p=ring[k],q=ring[(k+1)%ring.length],len=Math.hypot(q[0]-p[0],q[1]-p[1]);
-          xy.push(...p,...q);style.push(li,li,1,0,li,li,1,0);values.push(along,stage&&r.science?.stable===false?1:0,0,along+len,stage&&r.science?.stable===false?1:0,0);along+=len;}}
-      tlsGeometry={xy:new Float32Array(xy),style:new Uint8Array(style),values:new Float32Array(values)};upload(tlsGeometry);
+    if(!tlsGeometry){const rings=[];
+      for(const r of selected)for(const xy of regionRings(r))rings.push({xy,kind:0,leaf:Math.max(0,names.indexOf(tlsClass(r))),dash:stage&&r.science?.stable===false});
+      tlsGeometry=tlsRenderer.upload(ringsGeometry(rings),{discardCPU:true});tlsGeometry.isTLS=true;
     }
-    const palette=Array.from({length:48},(_,i)=>colors[i]||'#889299').flatMap(c=>c.slice(1).match(/../g).map(x=>parseInt(x,16)/255));
-    gl.uniform3fv(u.colors,new Float32Array(palette));gl.uniform1fv(u.enabled,new Float32Array(47).fill(1));gl.uniform1f(u.mode,1);gl.uniform1f(u.coverage,0);gl.uniform1f(u.failed,1);gl.uniform1f(u.tls,1);gl.uniform1f(u.unknown,1);
-    bind(tlsGeometry.gpu);gl.drawArrays(gl.LINES,0,tlsGeometry.xy.length/2);
+    const o={palette:palette(colors),enabled:new Float32Array(47).fill(1),mode:0,parts:[1,1],width:+$('wc-tls-width').value,alpha:1,failed:true,unknown:true};
+    tlsRenderer.stroke(tlsGeometry,o);tlsRenderer.present({...o,halo:true});
     const visible=selected.filter(r=>intersects(r.bounds,b));
     const annotated=visible.sort((a,z)=>(z.id===currentRegion?.id)-(a.id===currentRegion?.id)||(z.metrics?.area_mm2||0)-(a.metrics?.area_mm2||0)),boxes=[];
     for(const r of annotated){if(boxes.length>=8)break;const label=`${r.slide||S.slide} C${String(r.candidate_id).padStart(3,'0')} · ${tlsClass(r)}`;
       const w=Math.min(S.w-20,label.length*5.6+12),h=20,x=Math.max(w/2+5,Math.min(S.w-w/2-5,((r.bounds[0]+r.bounds[2])/2-S.cx)*S.scale+S.w/2)),y=Math.max(60,Math.min(S.h-25,((r.bounds[1]+r.bounds[3])/2-S.cy)*S.scale+S.h/2));
       const box=[x-w/2,y-h/2,x+w/2,y+h/2];if(boxes.some(b=>intersects(b,[box[0]-5,box[1]-5,box[2]+5,box[3]+5])))continue;
       const span=document.createElement('span');span.textContent=label;span.style.left=`${x}px`;span.style.top=`${y}px`;$('tls-labels').append(span);boxes.push(box);}
-    message(`${visible.length} candidates intersect this view · ${selected.length}/${index.summary.candidates} selected on ${S.slide}. Click a contour to inspect composition and stage evidence.`);
-    canvas.dataset.renderer='WebGL TLS contours';canvas.dataset.tlsVisible=visible.length;canvas.dataset.tlsSelected=selected.length;
+    if(!withCells)message(`${visible.length} candidates intersect this view · ${selected.length}/${index.summary.candidates} selected on ${S.slide}. Click a contour to inspect composition and stage evidence.`);
+    if(!withCells)canvas.dataset.renderer='WebGL TLS contours';canvas.dataset.tlsVisible=visible.length;canvas.dataset.tlsSelected=selected.length;
   }
   function insideRing(x,y,ring){let inside=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){
     const [xi,yi]=ring[i],[xj,yj]=ring[j];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)inside=!inside;}return inside;}
@@ -237,22 +234,41 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
       regionRings(r).reduce((v,ring)=>v!==insideRing(x,y,ring),false));
     if(r)openRegion(r.id);return r||null;
   }
-  function pick(x,y){
-    if(!index||!$('wc-show').checked||!S.selected.size||S.clean||S.held)return null;let best=null,minimum=Infinity;
-    for(const chunk of cache.values())for(let i=0;i<chunk.n;i++){
-      const r=chunk.record(i),li=+$('wc-colour').value===1?r.cellstp:r.leaf;
-      if((li<47&&!S.selected.has(li))||(li>46&&S.selected.size<47)||(!$('wc-failed').checked&&!(r.flags&1)))continue;
-      const distance=Math.hypot((r.x-x)*S.meta.mpp[0],(r.y-y)*S.meta.mpp[1]);
-      if(distance<minimum&&distance<=8){minimum=distance;best=r;best.chunk=chunk.key;best.chunkIndex=i;}
+  function clearSelection(){pickEpoch++;selected=null;request();}
+  function pick(x,y,{nuclear=false}={}){
+    if(!index||!S.selected.size||S.clean||S.held)return null;let best=null,minimum=Infinity;
+    for(const chunk of cache.values()){
+      if(x<chunk.descriptor.bounds[0]-50||x>chunk.descriptor.bounds[2]+50||y<chunk.descriptor.bounds[1]-50||y>chunk.descriptor.bounds[3]+50)continue;
+      for(let i=0;i<chunk.n;i++){
+        const r=chunk.record(i),li=nuclear||+$('wc-colour').value===1?r.cellstp:r.leaf;
+        if((li<47&&!S.selected.has(li))||(li>46&&S.selected.size<47)||(!$('wc-failed').checked&&!(r.flags&1)))continue;
+        const distance=Math.hypot((r.x-x)*S.meta.mpp[0],(r.y-y)*S.meta.mpp[1]);if(distance>35||distance>=minimum)continue;
+        const rings=cellRings(chunk,i),kind=nuclear?1:0,contained=rings.filter(p=>p.kind===kind||p.kind===kind+2).reduce((hit,p)=>hit!==insideCellRing(x,y,p.xy),false);
+        if(!contained)continue;minimum=distance;best={...r,chunk:chunk.key,chunkIndex:i,rings};
+      }
     }
-    if(!best){text($('wc-cell-info'),'No linked whole-cell measurement is loaded at this position. Zoom into a processed region.');return null;}
-    selected=best;renderCell(best);return best;
+    if(!best)return null;selected=best;renderCell(best);request();return best;
+  }
+  async function selectAt(x,y,options={}){
+    const id=++pickEpoch,e=epoch;if(!index)return null;
+    let result=pick(x,y,options);if(result)return result;
+    const candidates=index.chunks.filter(c=>c.cells&&x>=c.bounds[0]-32&&x<=c.bounds[2]+32&&y>=c.bounds[1]-32&&y<=c.bounds[3]+32);
+    for(const c of candidates){await load(c,e,'native',true);if(id!==pickEpoch||e!==epoch)return null;if((result=pick(x,y,options)))return result;}
+    if(id===pickEpoch){selected=null;text($('wc-cell-info'),'No predicted whole-cell boundary contains this position in the processed regions. The source nucleus marker is shown instead.');request();}return null;
+  }
+  function drawSelection(contexts){
+    if(!selected||S.clean||S.held||!S.layers.has('types')&&!S.layers.has('wholecell'))return false;
+    for(const context of contexts)for(const ring of selected.rings.filter(r=>r.kind===0||r.kind===2)){
+      const points=ring.xy;if(!points.length)continue;context.beginPath();context.moveTo((points[0][0]-S.cx)*S.scale+S.w/2,(points[0][1]-S.cy)*S.scale+S.h/2);
+      for(let i=1;i<points.length;i++)context.lineTo((points[i][0]-S.cx)*S.scale+S.w/2,(points[i][1]-S.cy)*S.scale+S.h/2);
+      context.closePath();context.lineJoin='round';context.strokeStyle='#fff';context.lineWidth=5;context.stroke();context.strokeStyle='#087b91';context.lineWidth=2.5;context.stroke();
+    }return true;
   }
   function renderCell(r){
     const li=r.leaf<47?taxonomy.labels[taxonomy.leaves[r.leaf]]:'Unlinked / unavailable';
     const old=r.cellstp<47?taxonomy.labels[taxonomy.leaves[r.cellstp]]:'Unlinked';const good=!!(r.flags&1);
     const values=manifest.features.map((key,i)=>({key,value:r.features[i]})).filter(x=>x.key in labels),stats=index.class_stats?.[taxonomy.leaves[r.leaf]];
-    $('wc-cell-info').innerHTML=`<div class="cell-name">${escape(li)}</div><div class="cell-meta">NuClass v15 · ${Number.isFinite(r.p[0])?fixed(r.p[0]*100,1)+'% posterior':'no linked posterior'} · v6 geometry<br>Original CellSTP: ${escape(old)}<br>${good?'Complete single-nucleus geometry':'QC failure: inspect gray contour'} · ${r.nuclei} associated nuclei<br>Native identity link: ${r.row>=0?'unique nuclear match':'unmatched'}</div>
+    $('wc-cell-info').innerHTML=`<div class="cell-name">${escape(li)}</div><div class="cell-meta">NuClass v15 · ${Number.isFinite(r.p[0])?fixed(r.p[0]*100,1)+'% posterior':'no linked posterior'} · v6 geometry<br>Whole-slide NuClass: ${escape(old)}<br>${good?'Complete single-nucleus geometry':'QC failure: inspect gray contour'} · ${r.nuclei} associated nuclei<br>Native identity link: ${r.row>=0?'unique nuclear match':'unmatched'}</div>
       <table class="wc-feature-table"><thead><tr><th>Measurement</th><th>This cell</th><th title="Median among cells called the same type by v15 on this slide">Type median</th></tr></thead><tbody>${values.map(v=>`<tr><th>${escape(labels[v.key])}</th><td>${fixed(v.value,v.key==='NC_ratio'?3:2)}${v.key.endsWith('_um2')?' µm²':v.key.endsWith('_um')?' µm':''}</td><td>${fixed(stats?.features[v.key]?.median,v.key==='NC_ratio'?3:2)}</td></tr>`).join('')}</tbody></table>
       <p class="subtle">Measured morphology describes this prediction. See the decision audit for how well morphology explains frozen v15 scores; these measurements alone do not prove model dependence or true identity.</p>
       <button id="wc-export-cell">Export cell measurements</button><details><summary>Native v15 · 47 posteriors</summary><div id="wc-posteriors">Loading…</div></details>`;
@@ -302,6 +318,9 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
     download('NuClass_TLS_local_reviews.json',JSON.stringify(rows,null,2),'application/json');}
   function download(name,body,type){const url=URL.createObjectURL(new Blob([body],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
   canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();message('Whole-cell graphics interrupted; restoring…');});
-  canvas.addEventListener('webglcontextrestored',()=>{initGL();for(const x of cache.values())upload(x);coverage=null;tlsGeometry=null;request();});
-  return {setSlide,draw,pick,pickRegion,openRegion,get state(){return {slide:S.slide,loaded:!!index,cache:cache.size,bytes:[...cache.values()].reduce((s,x)=>s+x.bytes,0),compressed:shardReader.state,regions:index?.regions.length||0,epoch,selected};},get manifest(){return manifest;},get index(){return index;},get cache(){return cache;}};
+  tlsCanvas.addEventListener('webglcontextlost',e=>{e.preventDefault();});
+  tlsCanvas.addEventListener('webglcontextrestored',()=>{tlsRenderer=createContourRenderer(tlsGL,S);tlsGeometry=null;lastDrawKey=null;request();});
+  canvas.addEventListener('webglcontextrestored',()=>{initGL();cache.clear();overviewCache.clear();tlsGeometry=null;lastDrawKey=null;request();});
+  function readback(){const b=[S.cx-S.w/S.scale/2,S.cy-S.h/S.scale/2,S.cx+S.w/S.scale/2,S.cy+S.h/S.scale/2],start=performance.now();draw(b,true);const pixels=new Uint8Array(canvas.width*canvas.height*4);gl.readPixels(0,0,canvas.width,canvas.height,gl.RGBA,gl.UNSIGNED_BYTE,pixels);let coloured=0;for(let i=3;i<pixels.length;i+=4)if(pixels[i])coloured++;return {coloured_pixels:coloured,width:canvas.width,height:canvas.height,draw_readback_ms:performance.now()-start,...canvas.dataset};}
+  return {setSlide,draw,pick,selectAt,clearSelection,drawSelection,pickRegion,openRegion,readback,get state(){return {slide:S.slide,loaded:!!index,cache:cache.size,bytes:[...cache.values()].reduce((s,x)=>s+x.bytes,0),overviewBytes:[...overviewCache.values()].reduce((s,x)=>s+x.bytes,0),overviewLoaded:overviewCache.size,compressed:shardReader.state,regions:index?.regions.length||0,epoch,selected};},get manifest(){return manifest;},get index(){return index;},get cache(){return cache;}};
 }
