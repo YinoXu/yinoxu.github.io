@@ -1,6 +1,6 @@
 // Integer contours, physical transform and explicit per-cell prediction provenance.
 export const FEATURE_COUNT=16, RECORD_BYTES=24+FEATURE_COUNT*4+24;
-export function parseWholeCell(buffer){
+export function parseWholeCell(buffer,{expand=true}={}){
   let d=new DataView(buffer);const magic=String.fromCharCode(...new Uint8Array(buffer,0,4));
   if(!['WCV6','WCS6'].includes(magic))throw Error('Unsupported whole-cell geometry');
   const n=d.getUint32(4,true),nr=d.getUint32(8,true),np=d.getUint32(12,true),nf=d.getUint32(16,true),stride=d.getUint32(20,true);
@@ -26,6 +26,7 @@ export function parseWholeCell(buffer){
   const part=i=>{const o=partsOffset+i*16;return {cell:d.getUint32(o,true),start:d.getUint32(o+4,true),count:d.getUint32(o+8,true),kind:d.getUint8(o+12)};};
   // Closed rings become individual GPU line segments; no polygon/Canvas loop per frame.
   let nv=0;for(let i=0;i<nr;i++){const p=part(i);if(p.cell>=n||p.start+p.count>np||p.kind>3)throw Error('Invalid contour ring');nv+=p.count*2;}
+  if(!expand)return {n,nr,np,nf,nv,record,part,fields,points,buffer,bytes:buffer.byteLength};
   const xy=new Float32Array(nv*2),style=new Uint8Array(nv*4),values=new Float32Array(nv*3);
   let vertex=0;
   for(let i=0;i<nr;i++){

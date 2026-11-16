@@ -1,4 +1,4 @@
-import {readCompressed} from './wholecell-format.mjs';
+import {readCompressed} from './wholecell-format.mjs?v=4';
 
 // Compressed bundles reduce request count. Only the selected shard is inflated.
 // The contour cache and this8MiB compressed-bundle cache have separate budgets.
