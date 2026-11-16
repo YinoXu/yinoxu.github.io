@@ -1,0 +1,482 @@
+[
+  {
+    "id": "S03_CTRL001",
+    "slide": "S03",
+    "stratum": "B_context",
+    "instances": 487,
+    "linked": 359,
+    "QC": 445,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL002",
+    "slide": "S03",
+    "stratum": "B_context",
+    "instances": 359,
+    "linked": 268,
+    "QC": 306,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL003",
+    "slide": "S03",
+    "stratum": "B_context",
+    "instances": 313,
+    "linked": 213,
+    "QC": 285,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL004",
+    "slide": "S03",
+    "stratum": "B_context",
+    "instances": 524,
+    "linked": 429,
+    "QC": 490,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL005",
+    "slide": "S03",
+    "stratum": "B_context",
+    "instances": 388,
+    "linked": 294,
+    "QC": 342,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL006",
+    "slide": "S03",
+    "stratum": "B_context",
+    "instances": 361,
+    "linked": 261,
+    "QC": 319,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL007",
+    "slide": "S03",
+    "stratum": "T_context",
+    "instances": 103,
+    "linked": 80,
+    "QC": 84,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL008",
+    "slide": "S03",
+    "stratum": "T_context",
+    "instances": 18,
+    "linked": 9,
+    "QC": 14,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL009",
+    "slide": "S03",
+    "stratum": "T_context",
+    "instances": 309,
+    "linked": 187,
+    "QC": 246,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL010",
+    "slide": "S03",
+    "stratum": "T_context",
+    "instances": 287,
+    "linked": 202,
+    "QC": 230,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL011",
+    "slide": "S03",
+    "stratum": "T_context",
+    "instances": 350,
+    "linked": 247,
+    "QC": 297,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL012",
+    "slide": "S03",
+    "stratum": "T_context",
+    "instances": 286,
+    "linked": 194,
+    "QC": 230,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL013",
+    "slide": "S03",
+    "stratum": "myeloid_context",
+    "instances": 175,
+    "linked": 129,
+    "QC": 149,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL014",
+    "slide": "S03",
+    "stratum": "myeloid_context",
+    "instances": 200,
+    "linked": 146,
+    "QC": 168,
+    "high_white_fraction": 1,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL015",
+    "slide": "S03",
+    "stratum": "myeloid_context",
+    "instances": 379,
+    "linked": 272,
+    "QC": 325,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL016",
+    "slide": "S03",
+    "stratum": "myeloid_context",
+    "instances": 162,
+    "linked": 121,
+    "QC": 139,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL017",
+    "slide": "S03",
+    "stratum": "myeloid_context",
+    "instances": 316,
+    "linked": 222,
+    "QC": 262,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL018",
+    "slide": "S03",
+    "stratum": "stromal_epithelial_context",
+    "instances": 400,
+    "linked": 268,
+    "QC": 339,
+    "high_white_fraction": 1,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_CTRL019",
+    "slide": "S03",
+    "stratum": "stromal_epithelial_context",
+    "instances": 0,
+    "linked": 0,
+    "QC": 0,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_BLANK1",
+    "slide": "S03",
+    "stratum": "low_optical_density",
+    "instances": 0,
+    "linked": 0,
+    "QC": 0,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_BLANK2",
+    "slide": "S03",
+    "stratum": "low_optical_density",
+    "instances": 0,
+    "linked": 0,
+    "QC": 0,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_BLANK3",
+    "slide": "S03",
+    "stratum": "low_optical_density",
+    "instances": 0,
+    "linked": 0,
+    "QC": 0,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S03_BLANK4",
+    "slide": "S03",
+    "stratum": "low_optical_density",
+    "instances": 0,
+    "linked": 0,
+    "QC": 0,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL024",
+    "slide": "S07",
+    "stratum": "B_context",
+    "instances": 580,
+    "linked": 494,
+    "QC": 562,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL025",
+    "slide": "S07",
+    "stratum": "B_context",
+    "instances": 479,
+    "linked": 398,
+    "QC": 429,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL026",
+    "slide": "S07",
+    "stratum": "B_context",
+    "instances": 590,
+    "linked": 472,
+    "QC": 552,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL027",
+    "slide": "S07",
+    "stratum": "B_context",
+    "instances": 653,
+    "linked": 535,
+    "QC": 619,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL028",
+    "slide": "S07",
+    "stratum": "B_context",
+    "instances": 412,
+    "linked": 329,
+    "QC": 358,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL029",
+    "slide": "S07",
+    "stratum": "B_context",
+    "instances": 206,
+    "linked": 153,
+    "QC": 181,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL030",
+    "slide": "S07",
+    "stratum": "T_context",
+    "instances": 103,
+    "linked": 67,
+    "QC": 77,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL031",
+    "slide": "S07",
+    "stratum": "T_context",
+    "instances": 98,
+    "linked": 68,
+    "QC": 76,
+    "high_white_fraction": 1,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL032",
+    "slide": "S07",
+    "stratum": "T_context",
+    "instances": 345,
+    "linked": 257,
+    "QC": 280,
+    "high_white_fraction": 1,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL033",
+    "slide": "S07",
+    "stratum": "T_context",
+    "instances": 284,
+    "linked": 226,
+    "QC": 244,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL034",
+    "slide": "S07",
+    "stratum": "T_context",
+    "instances": 162,
+    "linked": 128,
+    "QC": 139,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL035",
+    "slide": "S07",
+    "stratum": "T_context",
+    "instances": 353,
+    "linked": 289,
+    "QC": 315,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL036",
+    "slide": "S07",
+    "stratum": "myeloid_context",
+    "instances": 184,
+    "linked": 132,
+    "QC": 142,
+    "high_white_fraction": 2,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL037",
+    "slide": "S07",
+    "stratum": "myeloid_context",
+    "instances": 363,
+    "linked": 289,
+    "QC": 308,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL038",
+    "slide": "S07",
+    "stratum": "myeloid_context",
+    "instances": 189,
+    "linked": 134,
+    "QC": 153,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL039",
+    "slide": "S07",
+    "stratum": "myeloid_context",
+    "instances": 0,
+    "linked": 0,
+    "QC": 0,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL040",
+    "slide": "S07",
+    "stratum": "stromal_epithelial_context",
+    "instances": 66,
+    "linked": 57,
+    "QC": 61,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL041",
+    "slide": "S07",
+    "stratum": "stromal_epithelial_context",
+    "instances": 210,
+    "linked": 141,
+    "QC": 153,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL042",
+    "slide": "S07",
+    "stratum": "stromal_epithelial_context",
+    "instances": 280,
+    "linked": 208,
+    "QC": 227,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL043",
+    "slide": "S07",
+    "stratum": "stromal_epithelial_context",
+    "instances": 335,
+    "linked": 258,
+    "QC": 277,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_CTRL044",
+    "slide": "S07",
+    "stratum": "stromal_epithelial_context",
+    "instances": 1,
+    "linked": 0,
+    "QC": 0,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_BLANK1",
+    "slide": "S07",
+    "stratum": "low_optical_density",
+    "instances": 0,
+    "linked": 0,
+    "QC": 0,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_BLANK2",
+    "slide": "S07",
+    "stratum": "low_optical_density",
+    "instances": 0,
+    "linked": 0,
+    "QC": 0,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_BLANK3",
+    "slide": "S07",
+    "stratum": "low_optical_density",
+    "instances": 0,
+    "linked": 0,
+    "QC": 0,
+    "high_white_fraction": 0,
+    "negative_gold": false
+  },
+  {
+    "id": "S07_BLANK4",
+    "slide": "S07",
+    "stratum": "low_optical_density",
+    "instances": 12,
+    "linked": 0,
+    "QC": 0,
+    "high_white_fraction": 12,
+    "negative_gold": false
+  }
+]

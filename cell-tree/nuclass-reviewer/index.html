@@ -4,8 +4,9 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>NuClass · Tissue explorer</title>
 <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="reviewer.css?v=2">
-<script type="module" src="reviewer.js?v=2"></script>
+<link rel="stylesheet" href="reviewer.css?v=3">
+<link rel="stylesheet" href="wholecell.css?v=1">
+<script type="module" src="reviewer.js?v=3"></script>
 </head>
 <body>
 <main id="reviewer" aria-label="NuClass interactive tissue explorer">
@@ -16,7 +17,14 @@
   <div class="mobile-controls"><button id="toggle-types" aria-expanded="false">Cell types</button><span id="mobile-sample">S07</span><button id="toggle-settings" aria-expanded="false">View settings</button></div>
   <div class="workspace">
     <aside class="left-panel" id="types-panel">
-      <h2>Display resolution</h2>
+      <h2>Analysis mode</h2>
+      <div class="wc-modes" role="group" aria-label="Analysis mode">
+        <button data-analysis-mode="types" class="active" aria-pressed="true">Cell types</button>
+        <button data-analysis-mode="wholecell" aria-pressed="false">Whole-cell seg</button>
+        <button data-analysis-mode="tls" aria-pressed="false">TLS only</button>
+      </div>
+      <p id="analysis-mode-help" class="subtle">Original CellSTP v7.1 calls across the complete slides. Whole-cell mode adds frozen NuClass v15 in processed regions.</p>
+      <div id="type-resolution-controls"><h2>Display resolution</h2>
       <select id="resolution" aria-label="Display resolution"><option value="fine">Fine · 47 cell types</option><option value="lineage">Lineage · 15 categories</option><option value="broad">Broad · 5 categories</option></select>
       <div class="support-control">
         <label for="support">Posterior support <output id="support-value" for="support">0.00</output></label>
@@ -25,32 +33,35 @@
         <p id="support-help" class="subtle">Raise to merge uncertain subtypes into supported parent labels. Cells stay visible. Posterior support is not measured accuracy.</p>
         <div id="support-status" role="status" aria-live="polite">Loading posterior controls…</div><button id="retry-support" hidden>Retry posterior data</button>
       </div>
-      <h2>Whole-slide navigator</h2><canvas id="minimap" width="400" height="260" tabindex="0" aria-label="Whole-slide navigator. Click to move the viewport."></canvas>
-      <h2>Cell types <span id="selected-count">47 / 47</span></h2>
+      </div><h2>Whole-slide navigator</h2><canvas id="minimap" width="400" height="260" tabindex="0" aria-label="Whole-slide navigator. Click to move the viewport."></canvas>
+      <div id="celltype-filter-controls"><h2>Cell types <span id="selected-count">47 / 47</span></h2>
       <div class="presets"><button data-preset="all" class="active">All 47</button><button data-preset="epithelial">Epithelial</button><button data-preset="immune">Immune</button><button data-preset="none">Clear</button></div>
       <input id="search" type="search" placeholder="Find a cell type" aria-label="Find a cell type">
-      <div class="filter-caption">Predicted type <span>Whole-slide count</span></div>
+      <div class="filter-caption">Predicted type <span>Original CellSTP count</span></div>
       <div id="filters"></div>
-      <p class="subtle">Filters use original leaf calls. Changing resolution groups these cells along the same ontology.</p>
+      <p class="subtle">Type filters apply to the active layer. Counts above describe the original complete CellSTP point layer.</p></div>
     </aside>
     <section class="stage" aria-label="Linked tissue views">
       <div class="panes" id="panes">
         <div class="pane" id="original-pane"><span class="badge">ORIGINAL H&E</span><canvas id="original" tabindex="0" aria-label="Original H&E. Drag to pan, scroll to zoom, arrow keys to move."></canvas></div>
-        <div class="pane" id="overlay-pane"><span class="badge" id="overlay-badge">NUCLASS · FINE · ALL CELLS</span><canvas id="tissue" tabindex="0" aria-label="NuClass overlay. Drag to pan, scroll to zoom, click a cell to inspect."></canvas><canvas id="cells" aria-hidden="true"></canvas><canvas id="selection" aria-hidden="true"></canvas><div class="scale"><span id="scale-label"></span><i id="scale-line"></i></div></div>
+        <div class="pane" id="overlay-pane"><span class="badge" id="overlay-badge">NUCLASS · FINE · ALL CELLS</span><canvas id="tissue" tabindex="0" aria-label="NuClass overlay. Drag to pan, scroll to zoom, click a cell to inspect."></canvas><canvas id="cells" aria-hidden="true"></canvas><canvas id="wholecells" aria-hidden="true"></canvas><canvas id="selection" aria-hidden="true"></canvas><div id="tls-labels" aria-hidden="true"></div><div class="scale"><span id="scale-label"></span><i id="scale-line"></i></div></div>
       </div>
       <div class="stage-footer"><span id="status" role="status" aria-live="polite">Loading S07…</span><button id="retry" hidden>Retry</button><span id="view-size"></span></div>
     </section>
     <aside class="right-panel" id="settings-panel">
+      <div id="wholecell-controls"></div>
+      <div class="cell-detail" id="wc-selected-panel"><h2>Selected whole cell</h2><div id="wc-cell-info"><p class="subtle">Choose whole-cell mode and click a cell in a processed region.</p></div></div>
       <h2>View settings</h2>
-      <label class="check"><input id="show-cells" type="checkbox" checked> Cell overlay</label>
+      <div id="point-style-controls"><label class="check"><input id="show-cells" type="checkbox" checked> Original CellSTP points</label>
       <label class="setting">Marks <select id="marks"><option value="dot">Small dots</option><option value="ring">Hollow rings</option></select></label>
       <label class="setting" for="size">Size <input id="size" type="range" min="0.6" max="4" step="0.1" value="1.6"></label>
       <label class="setting" for="opacity">Opacity <input id="opacity" type="range" min="0.1" max="1" step="0.05" value="0.85"></label>
       <label class="setting" for="he-strength">H&E strength <input id="he-strength" type="range" min="0.2" max="1" step="0.05" value="0.85"></label>
+      </div>
       <div class="actions"><button id="clean" aria-pressed="false">Clean H&E</button><button id="export" disabled>Export view</button></div>
       <p class="subtle">Drag to pan · scroll or pinch to zoom.<br>Hold Space for clean H&E. Overlay stays visible from whole tissue to a single cell.</p>
-      <h2>Labels in view <span id="visible-count"></span></h2><div id="legend"></div>
-      <div class="cell-detail"><h2>Selected nucleus</h2><div id="cell-info"><p class="subtle">Zoom into the tissue and click a nucleus to inspect its predicted type and 47-class posterior.</p></div><div id="probabilities"></div><button id="export-cell" hidden>Export 47 probabilities</button></div>
+      <div id="original-legend"><h2>Labels in view <span id="visible-count"></span></h2><div id="legend"></div></div>
+      <div class="cell-detail" id="original-selected-panel"><h2>Original CellSTP nucleus</h2><div id="cell-info"><p class="subtle">Zoom into the tissue and click a nucleus to inspect its predicted type and 47-class posterior.</p></div><div id="probabilities"></div><button id="export-cell" hidden>Export 47 probabilities</button></div>
       <p class="subtle prediction-note">Model predictions for research inspection. “Carcinoma / generic epithelium” is the original combined class; it does not distinguish malignant from normal epithelium.</p>
     </aside>
   </div>

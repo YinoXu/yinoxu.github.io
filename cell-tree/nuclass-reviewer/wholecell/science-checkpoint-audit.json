@@ -1,0 +1,89 @@
+{
+  "utc": "2026-11-16T18:48:32.107325+00:00",
+  "weight_bindings": {
+    "repository": "Coolgenome/Pan-Cancer_Spatial_Atlas_TLS",
+    "commit": "8f376e89eb378e000fd410e691993392e81474c8",
+    "sha256": {
+      "data/TLS_classification_HE_YOLO_step1.pt": "3aa3bafbc86e9e31f748727e9fdc523e823b1e0584d94c173265e0471c80ef0d",
+      "data/TLS_classification_HE_YOLO_step2.pt": "7a4bb7bb371dd2feb6ac87a97625f673f7d0dbc31c223ae66523bc99a89a6085"
+    }
+  },
+  "first_head_outputs": 4,
+  "first_names": {
+    "0": "Immature",
+    "1": "Mature",
+    "2": "Primary",
+    "3": "Secondary"
+  },
+  "second_names": {
+    "0": "Primary",
+    "1": "Secondary"
+  },
+  "native_head_preserved": true,
+  "strict_route": "Immature ->E; Mature -> second head P/S; unexpected first-head Primary/Secondary -> Unassigned",
+  "paper_binary_head_contract_not_exactly_reproduced": true,
+  "author_example_API_replay": [
+    {
+      "example": 1,
+      "input_sha256": "ef82c8d2edb2f68e1eb3b207c00c17e26a4fb0c1faafc572a6bbd371d01f4eb2",
+      "step1": [
+        1.2785528724634787e-06,
+        0.9999986886978149,
+        5.384636292404821e-09,
+        3.949361726540701e-09
+      ],
+      "step2": [
+        0.0005239961319603026,
+        0.9994760155677795
+      ],
+      "stage": "S"
+    },
+    {
+      "example": 2,
+      "input_sha256": "081050f0e04688ea9f60fc10b5669cc47ab66cd97fcc088a8908be75a8f8fe48",
+      "step1": [
+        6.151391396258532e-09,
+        1.0,
+        9.64990760909945e-12,
+        6.754914336215556e-12
+      ],
+      "step2": [
+        0.8192011117935181,
+        0.18079882860183716
+      ],
+      "stage": "P"
+    },
+    {
+      "example": 3,
+      "input_sha256": "403c121daa014b047a7840fc198f0434442c71949f652820189312c98a1aefc1",
+      "step1": [
+        1.0,
+        3.3945304834196965e-20,
+        2.5909994683540226e-26,
+        1.8144897829779594e-26
+      ],
+      "step2": [
+        0.9999052286148071,
+        9.475854312768206e-05
+      ],
+      "stage": "E"
+    }
+  ],
+  "author_example_labels_not_external_gold": true,
+  "neural_optimizer_updates": 0,
+  "CPU_GPU_parity": {
+    "utc": "2026-11-16T18:56:30.299033+00:00",
+    "CPU_records": 9,
+    "all_primary_stages_exact": true,
+    "max_absolute_score_error": 9.5367431640625e-07,
+    "threshold": 0.0001
+  },
+  "counts": {
+    "E": 51,
+    "P": 114,
+    "S": 24,
+    "Unassigned": 0
+  },
+  "stable_regions": 125,
+  "total_regions": 189
+}

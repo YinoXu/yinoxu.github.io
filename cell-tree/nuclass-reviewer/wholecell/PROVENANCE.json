@@ -1,0 +1,66 @@
+{
+  "version": "0.1",
+  "utc": "2026-11-16T19:52:02.593852+00:00",
+  "slides": [
+    {
+      "id": "S03",
+      "case": "TCGA-75-6212",
+      "mpp": [
+        0.5005,
+        0.5005
+      ]
+    },
+    {
+      "id": "S07",
+      "case": "TCGA-L9-A444",
+      "mpp": [
+        0.2456,
+        0.2456
+      ]
+    }
+  ],
+  "classifier": {
+    "name": "NuClass v15",
+    "step": 59712,
+    "sha256": "65dc70df5a6db6881b079e560f0a8a1c463264dd49ead577c2ac1a5e960bcf45",
+    "mpp": 0.5,
+    "input_pixels": 512
+  },
+  "segmentation": {
+    "name": "WholeCell v6 VitaminP-derived native H&E core",
+    "step": 1000,
+    "state": "EMA",
+    "sha256": "8ac5c3678945611a50c62949dc982b46bd298eeb2b892e832ca43501f42d34f5",
+    "mpp": 0.425,
+    "input_pixels": 512,
+    "core_pixels": 384,
+    "halo_pixels": 64
+  },
+  "science_checkpoint": {
+    "repository": "Coolgenome/Pan-Cancer_Spatial_Atlas_TLS",
+    "commit": "8f376e89eb378e000fd410e691993392e81474c8",
+    "sha256": {
+      "data/TLS_classification_HE_YOLO_step1.pt": "3aa3bafbc86e9e31f748727e9fdc523e823b1e0584d94c173265e0471c80ef0d",
+      "data/TLS_classification_HE_YOLO_step2.pt": "7a4bb7bb371dd2feb6ac87a97625f673f7d0dbc31c223ae66523bc99a89a6085"
+    }
+  },
+  "whole_slide_segmentation": false,
+  "model_or_threshold_updates": 0,
+  "CAL_or_TEST_used": false,
+  "clinical_outcomes_used": false,
+  "reference_cell_labels": "Unavailable on these TCGA H&E-only examples",
+  "TLS_or_maturity_reference": "Unreviewed",
+  "wholecell_geometry": "Integer masks and lossless uint16 boundary-pixel contours; float32 measurement delivery; GPU float32 coordinate transform.",
+  "v15_posterior_delivery": "Top/selected group scores float32; full47 independently rounded to uint16/65535, max absolute error0.00000763; no renormalization",
+  "figures": "Derived TCGA fields only; no private Xenium material or model weights published.",
+  "geometry_delivery": {
+    "repository": "YinoXu/yinoxu.github.io",
+    "branch": "data/wholecell-tcga-20261116",
+    "commit": "66f5064dd0dc98c95cf3e81c2204b637e6bb9825",
+    "bundles": 166,
+    "bytes": 137890514,
+    "cache": "120MiB contour CPU/GPU buffers plus8MiB compressed bundles; lazy spatial delivery",
+    "complete_integer_contours": true,
+    "SHA256_verified_per_bundle": true
+  }
+}
