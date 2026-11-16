@@ -1,12 +1,13 @@
 import {makeResolutionTable,resolveCells} from './resolution.mjs';
-import {createWholeCellViewer} from './wholecell.mjs?v=4';
+import {createWholeCellViewer} from './wholecell.mjs?v=5';
 const $ = id => document.getElementById(id);
 const fmt = n => n.toLocaleString('en-US');
 const S = {slide:'S07', mode:'fine', step:0, appliedMode:'fine', appliedStep:0, labels:null, supportReady:false, resolving:false, selected:new Set(Array.from({length:47},(_,i)=>i)), meta:null, data:null,
   cx:0, cy:0, scale:1, w:1, h:1, dpr:1, fit:true, split:true, show:true, clean:false, held:false,
   radius:1.6, opacity:.85, he:.6, marks:'dot', ready:false, cell:null, epoch:0,analysisMode:'types',layers:new Set(['types'])};
 if(!$('tlscells')){const layer=document.createElement('canvas');layer.id='tlscells';layer.setAttribute('aria-hidden','true');$('wholecells').after(layer);}
-const surfaces = ['original','tissue','cells','wholecells','tlscells','selection'].map($);
+if(!$('wholecell-atlas')){const layer=document.createElement('canvas');layer.id='wholecell-atlas';layer.setAttribute('aria-hidden','true');$('wholecells').before(layer);}
+const surfaces = ['original','tissue','cells','wholecell-atlas','wholecells','tlscells','selection'].map($);
 const original = $('original').getContext('2d'), tissue = $('tissue').getContext('2d');
 const selection = $('selection').getContext('2d'), mini = $('minimap').getContext('2d');
 let manifest, taxonomy, frame=0, settleTimer=0, abortSlide, tiles = new Map(), queue=[], activeTiles=0;

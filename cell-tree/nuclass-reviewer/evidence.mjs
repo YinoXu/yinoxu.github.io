@@ -57,6 +57,7 @@ async function init(){
   root.querySelector('#evidence-prev').onclick=()=>{page=Math.max(0,page-1);renderRegions();};root.querySelector('#evidence-next').onclick=()=>{page++;renderRegions();};
   root.addEventListener('click',e=>{const b=e.target.closest('[data-open-region]');if(b)openRegion(b.dataset.slide,b.dataset.openRegion,b.dataset.mode||'tls');});
   renderRegions();loadAudit();
+  import('./explainability.mjs?v=1').then(m=>m.enhance({root,manifest,schema,indices,regions,openRegion})).catch(e=>{const p=document.createElement('p');p.className='wc-note';p.textContent='Additional explanation charts could not load: '+e.message;root.prepend(p);console.error(e);});
 }
 function metric(value,label){return `<div class="wc-metric"><strong>${esc(value)}</strong><span>${esc(label)}</span></div>`;}
 function sourceLinks(ids){return ids.map(id=>{const s=schema.sources.find(s=>s.id===id);return s?`<a href="${s.url}" target="_blank" rel="noopener">${esc(id)}</a>`:'';}).join(' · ');}

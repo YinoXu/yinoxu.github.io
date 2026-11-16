@@ -1,0 +1,89 @@
+{
+  "examples": [
+    {
+      "id": "S03_C001",
+      "slide": "S03",
+      "stage": "E",
+      "file": "examples/S03_C001_stage.jpg",
+      "width": 878,
+      "height": 928,
+      "display_mpp_um": [
+        0.5005,
+        0.5005
+      ],
+      "selection": "Area closest to the within-slide median among crop-stable predictions of this stage; no visual quality selection.",
+      "sha256": "d38fca286602cc2a8e38a9d55968794675995481dc1d3a14122c0e07bcddffc6"
+    },
+    {
+      "id": "S03_C017",
+      "slide": "S03",
+      "stage": "P",
+      "file": "examples/S03_C017_stage.jpg",
+      "width": 1060,
+      "height": 1159,
+      "display_mpp_um": [
+        0.5005,
+        0.5005
+      ],
+      "selection": "Area closest to the within-slide median among crop-stable predictions of this stage; no visual quality selection.",
+      "sha256": "2321373e43b05e4c2e82981ae020fae7e5576493fdb092ffe87a182009cae97f"
+    },
+    {
+      "id": "S03_C023",
+      "slide": "S03",
+      "stage": "S",
+      "file": "examples/S03_C023_stage.jpg",
+      "width": 1551,
+      "height": 1600,
+      "display_mpp_um": [
+        0.526150625,
+        0.526150625
+      ],
+      "selection": "Area closest to the within-slide median among crop-stable predictions of this stage; no visual quality selection.",
+      "sha256": "1e22ce6ae8dd80d5c48171c09451b3e280bd5c06cc40264a89e96386c532b3a4"
+    },
+    {
+      "id": "S07_C044",
+      "slide": "S07",
+      "stage": "E",
+      "file": "examples/S07_C044_stage.jpg",
+      "width": 1514,
+      "height": 1600,
+      "display_mpp_um": [
+        0.290115,
+        0.290115
+      ],
+      "selection": "Area closest to the within-slide median among crop-stable predictions of this stage; no visual quality selection.",
+      "sha256": "2c8c0a7efd4f82a364820732742908009f85e60b7123ceca99a7791cb5fdffe2"
+    },
+    {
+      "id": "S07_C004",
+      "slide": "S07",
+      "stage": "P",
+      "file": "examples/S07_C004_stage.jpg",
+      "width": 1600,
+      "height": 1599,
+      "display_mpp_um": [
+        0.3989465,
+        0.3989465
+      ],
+      "selection": "Area closest to the within-slide median among crop-stable predictions of this stage; no visual quality selection.",
+      "sha256": "2c12a137d17c8eea5a72f284e26939d92aefd5a21cd35a75fe6b4f1affc3d6d4"
+    },
+    {
+      "id": "S07_C047",
+      "slide": "S07",
+      "stage": "S",
+      "file": "examples/S07_C047_stage.jpg",
+      "width": 1380,
+      "height": 1600,
+      "display_mpp_um": [
+        0.7977395,
+        0.7977395
+      ],
+      "selection": "Area closest to the within-slide median among crop-stable predictions of this stage; no visual quality selection.",
+      "sha256": "781e26bd804296aa9e1fb04001127292645db7e2f9e83a334ce5d3387f9dfab3"
+    }
+  ],
+  "reference": "Model-selected examples, no pathology stage gold; outline is the separate H&E-constrained candidate boundary."
+}
