@@ -1,14 +1,14 @@
 const root=document.querySelector('[data-wholecell-evidence]'),base=new URL('./wholecell/',import.meta.url);
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc=s=>String(s??'').replaceAll('CellSTP','NuClass (previous whole-slide version)').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const f=(n,d=2)=>Number.isFinite(n)?n.toLocaleString('en-US',{maximumFractionDigits:d}):'—';
-const get=async p=>{const r=await fetch(new URL(p,base));if(!r.ok)throw Error(`Evidence dataset unavailable (${r.status})`);return r.json();};
+const get=async p=>{const url=new URL(p,base);url.searchParams.set('v',manifest?.data_revision||'wholecell-v6');const r=await fetch(url);if(!r.ok)throw Error(`Evidence dataset unavailable (${r.status})`);return r.json();};
 let manifest,schema,indices,regions,slide='all',stage='all',kind='all',search='',page=0,sort='nuclei';
 const stageColors={E:'#ce9237',P:'#529ab9',S:'#a061b6',Unassigned:'#99a3a8'};
 const compColors={'B-rich':'#7763c4','T-rich':'#2f9b9e','B/T segregated':'#d09838','B/T mixed':'#c35d93','B/T intermediate':'#587da3','Low lymphoid / discordant':'#8a979e','Unscored':'#b2bac0'};
 if(root){root.classList.add('wc-evidence');root.innerHTML='<div class="wc-await">Loading cell morphology and TLS evidence…</div>';init().catch(e=>{root.innerHTML=`<div class="wc-await">${esc(e.message)}. The original image reviewer remains available.</div>`;});}
 async function init(){
-  [manifest,schema]=await Promise.all([get('manifest.json'),get('schema.json')]);
-  indices=await Promise.all(manifest.slides.map(s=>get(s.id+'/index.json')));regions=indices.flatMap(x=>x.regions.filter(r=>!r.control).map(r=>({...r,slide:x.slide})));
+  [manifest,schema]=await Promise.all([get('manifest-v6.json'),get('schema.json')]);
+  indices=await Promise.all(manifest.slides.map(s=>get(s.id+'/analysis-v6.json')));regions=indices.flatMap(x=>x.regions.filter(r=>!r.control).map(r=>({...r,slide:x.slide})));
   const predicted=regions.reduce((s,r)=>(s[r.science?.stage||'Unassigned']++,s),{E:0,P:0,S:0,Unassigned:0});
   root.innerHTML=`<header class="wc-topline"><div><div class="wc-eyebrow">Whole-cell morphology / spatial organisation / model decisions</div>
     <h2>From cell contours to inspectable TLS evidence.</h2><p class="wc-subtitle">Explore the same S03 and S07 cells at three scales: measured nuclear and cytoplasmic geometry, predicted cellular neighbourhoods, and candidate-level composition. Every measurement and stage label has an explicit source.</p></div>
@@ -37,7 +37,7 @@ async function init(){
     <section id="panel-audit" role="tabpanel" aria-labelledby="tab-audit" hidden><h3>Does whole-cell shape add explanatory information?</h3>
       <p>Fixed linear surrogates predict frozen v15 scores from nuclei, neighbourhood, a 5 µm expansion baseline, or measured whole cells. Each direction trains on one slide and evaluates the other. R² ↑ and absolute error ↓ describe fidelity to v15, rather than cell-typing accuracy.</p><div id="evidence-fidelity" class="wc-await">Loading decision audit…</div>
       <h3>Native image-intervention examples</h3><p class="wc-small">For a fixed set of cells, blur a nuclear, cytoplasmic or surrounding region and compare the score change with an equal-area, same-shape translated sham. This tests local image dependence; it does not identify a biological cause.</p><div id="evidence-interventions">No completed native intervention result has been loaded.</div>
-      <h3>Low-optical-density controls</h3><p class="wc-small">These image-selected regions are a background stress check, not pathologist-negative ground truth. Raw instances and QC rejections are both retained.</p><div id="evidence-controls"></div>
+      <h3>Low-optical-density controls</h3><p class="wc-small">These image-selected regions are a background stress check, not pathologist-negative ground truth. Raw instances and QC rejections are both retained. These counts precede the whole-slide tissue display filter.</p><div id="evidence-controls"></div>
     </section>
     <section id="panel-sources" role="tabpanel" aria-labelledby="tab-sources" hidden>
       <h3>A separate evidence profile for every candidate</h3><p>${esc(schema.score_policy)}</p>
@@ -46,7 +46,7 @@ async function init(){
       <div class="wc-note">The released first checkpoint has four output slots. We preserve all scores and route only Immature → E and Mature → the P/S head. Unexpected first-stage labels remain unassigned. Crop-handling sensitivity is retained for each region.</div>
       <h3>Definitions and score directions</h3>${schema.metrics.map(m=>`<article class="wc-card"><strong>${esc(m.label)}</strong> <span class="wc-small">${esc(m.unit)}</span><p>${esc(m.formula)}</p><p>${esc(m.direction)}</p>${sourceLinks(m.source)}</article>`).join('')}
       <h3>Research beyond MorphLink</h3>${schema.sources.map(s=>`<article class="wc-card"><a href="${s.url}" target="_blank" rel="noopener">${esc(s.title)} ↗</a><p>${esc(s.evidence)}</p><p><strong>Application:</strong> ${esc(s.application)}</p></article>`).join('')}
-      <h3>Validation needed for a maturity or clinical score</h3><p>${esc(schema.next_validation)}</p>
+      <p><a href="${new URL('FULLSLIDE_PROVENANCE.json',base)}" target="_blank" rel="noopener">Full-slide inference and background-filter provenance ↗</a></p><h3>Validation needed for a maturity or clinical score</h3><p>${esc(schema.next_validation)}</p>
     </section>`;
   root.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{
     for(const t of root.querySelectorAll('[data-tab]'))t.setAttribute('aria-selected',t===b);for(const p of root.querySelectorAll('[role=tabpanel]'))p.hidden=p.id!=='panel-'+b.dataset.tab;
@@ -57,7 +57,7 @@ async function init(){
   root.querySelector('#evidence-prev').onclick=()=>{page=Math.max(0,page-1);renderRegions();};root.querySelector('#evidence-next').onclick=()=>{page++;renderRegions();};
   root.addEventListener('click',e=>{const b=e.target.closest('[data-open-region]');if(b)openRegion(b.dataset.slide,b.dataset.openRegion,b.dataset.mode||'tls');});
   renderRegions();loadAudit();
-  import('./explainability.mjs?v=1').then(m=>m.enhance({root,manifest,schema,indices,regions,openRegion})).catch(e=>{const p=document.createElement('p');p.className='wc-note';p.textContent='Additional explanation charts could not load: '+e.message;root.prepend(p);console.error(e);});
+  import('./explainability.mjs?v=2').then(m=>m.enhance({root,manifest,schema,indices,regions,openRegion})).catch(e=>{const p=document.createElement('p');p.className='wc-note';p.textContent='Additional explanation charts could not load: '+e.message;root.prepend(p);console.error(e);});
 }
 function metric(value,label){return `<div class="wc-metric"><strong>${esc(value)}</strong><span>${esc(label)}</span></div>`;}
 function sourceLinks(ids){return ids.map(id=>{const s=schema.sources.find(s=>s.id===id);return s?`<a href="${s.url}" target="_blank" rel="noopener">${esc(id)}</a>`:'';}).join(' · ');}

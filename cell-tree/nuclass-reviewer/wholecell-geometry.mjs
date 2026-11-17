@@ -25,7 +25,7 @@ export function cellRings(chunk,cell){
   }return result;
 }
 const q=v=>Math.round(Math.max(0,Math.min(1,Number.isFinite(v)?v:0))*255);
-function paint(d,o,r,kind){d.setUint8(o,r.leaf);d.setUint8(o+1,r.cellstp);d.setUint8(o+2,(r.flags&1)?1:0);d.setUint8(o+3,kind);
+function paint(d,o,r,kind){d.setUint8(o,r.leaf);d.setUint8(o+1,r.cellstp);d.setUint8(o+2,((r.flags&1)?1:0)+((r.flags&64)?2:0));d.setUint8(o+3,kind);
   d.setUint8(o+4,q(r.features[3]));d.setUint8(o+5,q(Math.log2(Math.max(1,r.features[0])/32)/4));d.setUint8(o+6,q(r.features[8]/10));}
 
 // Native rings and holes are retained. Overview simplification is drawing-only;
