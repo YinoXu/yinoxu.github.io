@@ -1,5 +1,7 @@
 import {makeResolutionTable,resolveCells} from './resolution.mjs';
-import {createWholeCellViewer} from './wholecell.mjs?v=5';
+import {createWholeCellViewer} from './wholecell.mjs?v=6';
+import {loadPointBinary,loadPointIndex,validatePointBase} from './point-data.mjs?v=1';
+import {createShardReader} from './wholecell-shards.mjs?v=4';
 const $ = id => document.getElementById(id);
 const fmt = n => n.toLocaleString('en-US');
 const S = {slide:'S07', mode:'fine', step:0, appliedMode:'fine', appliedStep:0, labels:null, supportReady:false, resolving:false, selected:new Set(Array.from({length:47},(_,i)=>i)), meta:null, data:null,
@@ -17,6 +19,7 @@ let resolver, resolutionTable, resolutionVersion=0, resolverBusy=false;
 const gl = $('cells').getContext('webgl', {alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:false});
 let gpu, fallback;
 let wholeCell;
+let pointReader;
 if (!gl) fallback = $('cells').getContext('2d');
 
 function shader(type, source) {
@@ -65,7 +68,7 @@ function updatePalette(){
   gl.useProgram(gpu.p);gl.uniform3fv(gpu.u.colors,new Float32Array(rgb));
   gl.uniform1fv(gpu.u.enabled,new Float32Array(taxonomy.leaves.map((_,i)=>S.selected.has(i)?1:0)));
 }
-function updateSelectedInfo(){if(S.cell){$('cell-info').innerHTML=`<h3 class="cell-name">${label(taxonomy.leaves[S.cell.leaf])}</h3><div class="cell-meta">${S.slide} · x ${fmt(S.cell.x)} · y ${fmt(S.cell.y)}<br>Displayed as ${label(nodeForCell(S.cell.i))}<br>Posterior support ≥ ${ (S.appliedStep/20).toFixed(2)}</div>`;}}
+function updateSelectedInfo(){if(S.cell){$('cell-info').innerHTML=`<h3 class="cell-name">${label(taxonomy.leaves[S.cell.leaf])}</h3><div class="cell-meta">NuClass v15 · step59712<br>${S.slide} · x ${fmt(S.cell.x)} · y ${fmt(S.cell.y)}<br>Displayed as ${label(nodeForCell(S.cell.i))}<br>Posterior support ≥ ${ (S.appliedStep/20).toFixed(2)}</div>`;}}
 function applyLabels(labels,mode,step){
   S.labels=labels;S.appliedMode=mode;S.appliedStep=step;S.resolving=false;
   uploadLabels();updateSelectedInfo();$('export').disabled=!S.ready;
@@ -78,7 +81,7 @@ function startResolver(){
   $('support').disabled=true;$('retry-support').hidden=true;$('support-status').textContent='Loading posterior controls…';
   const epoch=S.epoch;
   try{
-    resolver=new Worker(new URL('./resolution-worker.js',import.meta.url),{type:'module'});const owner=resolver;
+    resolver=new Worker(new URL('./resolution-worker.js?v=15',import.meta.url),{type:'module'});const owner=resolver;
     resolver.onmessage=({data})=>{
       if(epoch!==S.epoch||resolver!==owner)return;
       if(data.type==='ready'){S.supportReady=true;$('support').disabled=false;requestResolution();}
@@ -89,7 +92,7 @@ function startResolver(){
       }else supportError('Posterior data could not load.');
     };
     resolver.onerror=()=>{if(epoch===S.epoch&&resolver===owner)supportError('Posterior controls could not start.');};
-    const leaves=S.data.leaf.slice();resolver.postMessage({type:'init',leaves:leaves.buffer,taxonomy,url:new URL(`data/${S.slide}/support.bin.gz`,location.href).href},[leaves.buffer]);
+    const leaves=S.data.leaf.slice();resolver.postMessage({type:'init',leaves:leaves.buffer,taxonomy,descriptor:S.meta.point_support,base:manifest.point_base},[leaves.buffer]);
   }catch{supportError('Posterior controls could not start.');}
 }
 function dispatchResolution(){
@@ -133,19 +136,21 @@ async function selectSlide(id){
   abortSlide?.abort();abortSlide=new AbortController();const signal=abortSlide.signal,epoch=++S.epoch;
   resolver?.terminate();resolverBusy=false;resolutionVersion++;S.supportReady=false;S.resolving=false;S.labels=null;$('support').disabled=true;$('retry-support').hidden=true;$('support-status').textContent='Loading posterior controls…';
   selectedEpoch++;S.slide=id;S.meta=null;S.data=null;S.ready=false;S.cell=null;S.fit=true;visible=[];probabilities.clear();
+  pointReader?.clear();
   wholeCell?.setSlide(id);
   tiles.clear();queue=[];$('sample').value=id;$('mobile-sample').textContent=id;$('export').disabled=true;
   $('cell-info').innerHTML='<p class="subtle">Zoom into the tissue and click a nucleus to inspect its predicted type and 47-class posterior.</p>';$('probabilities').replaceChildren();$('export-cell').hidden=true;
   $('legend').textContent='Loading cell map…';$('visible-count').textContent='';$('field').value='whole';
   status(`Loading ${id} tissue…`);request();renderFilters();
   try{
-    const meta=await json(`data/${id}/slide.json`,signal);if(epoch!==S.epoch)return;S.meta=meta;
+    const meta=await loadPointIndex(manifest.remote_indexes[id],manifest.point_base,signal);if(epoch!==S.epoch)return;S.meta=meta;
+    if(meta.point_model?.name!=='NuClass v15'||meta.point_model.sha256!==manifest.provenance.sourceModel.sha256)throw Error('Cell-type model revision mismatch');
     S.meta.chunkMap=new Map(S.meta.chunks.map(c=>[c.key,c]));
     overview=makeImage(`data/${id}/overview.jpg`,()=>{if(epoch===S.epoch)drawMini();});
-    initialOverlay=makeImage(`data/${id}/overlay-fine.webp`);
+    initialOverlay=makeImage(`data/${id}/overlay-v15.webp?v=${manifest.data_revision}`);
     $('field').innerHTML='<option value="whole">Whole slide</option>'+S.meta.fields.map(f=>`<option value="${f.id}">${f.label}</option>`).join('');fit();
     status(`Loading ${fmt(S.meta.valid)} cells · preview available`);
-    const buffer=await binary(`data/${id}/cells.bin.gz`,signal);if(epoch!==S.epoch)return;
+    const buffer=await loadPointBinary(S.meta.point_cells,manifest.point_base,signal);if(epoch!==S.epoch)return;
     const n=new DataView(buffer).getUint32(0,true);if(n!==S.meta.valid||buffer.byteLength!==4+n*9)throw Error('Cell data integrity check failed.');
     S.data={n,xy:new Float32Array(buffer,4,n*2),leaf:new Uint8Array(buffer,4+n*8,n)};S.labels=resolveCells(S.data.leaf,null,resolutionTable,S.mode,0);S.appliedMode=S.mode;S.appliedStep=0;uploadCells();S.ready=true;startResolver();
     status(`${fmt(n)} cells · all zoom levels`);$('export').disabled=S.resolving;changed();updateStatistics();
@@ -227,8 +232,8 @@ function draw(){
   const fov=S.w*S.meta.mpp[0]/S.scale,um=[10,20,50,100,200,500,1000,2000,5000,10000].filter(v=>v<fov*.22).pop()||10;
   $('scale-label').textContent=um>=1000?`${um/1000} mm`:`${um} μm`;$('scale-line').style.width=`${um/S.meta.mpp[0]*S.scale}px`;
   const badges=[];
-  if(S.layers.has('types'))badges.push(`NUCLASS · ${S.appliedMode.toUpperCase()}`);
-  if(S.layers.has('wholecell'))badges.push('WHOLE CELL v6 · '+['v15 TYPES','NUCLASS TYPES','N:C','CELL AREA','NUCLEAR DISPLACEMENT'][+$('wc-colour').value]);
+  if(S.layers.has('types'))badges.push(`NUCLASS v15 · ${S.appliedMode.toUpperCase()}`);
+  if(S.layers.has('wholecell'))badges.push('WHOLE CELL v6 · '+['v15 TYPES','PREVIOUS TYPES','N:C','CELL AREA','NUCLEAR DISPLACEMENT'][+$('wc-colour').value]);
   if(S.layers.has('tls'))badges.push('TLS · '+($('wc-tls-colour').value==='stage'?'SCIENCE PREDICTION':'COMPOSITION'));
   $('overlay-badge').textContent=S.clean||S.held||!badges.length?'ORIGINAL H&E':badges.join(' + ');
   $('view-size').textContent=`${fov>=1000?(fov/1000).toFixed(1)+' mm':Math.round(fov)+' μm'} field`;
@@ -252,7 +257,7 @@ function updateStatistics(){
   }
   $('legend').innerHTML=counts.size?[...counts].sort((a,b)=>b[1]-a[1]).map(([n,c])=>`<div class="legend-row"><i class="swatch" style="background:${color(n)}"></i><span>${label(n)}</span><span class="count">${fmt(c)}</span></div>`).join(''):'<div class="empty">No selected cells in this view.</div>';
   $('visible-count').textContent=fmt(total);
-  if(!loadError)status(`${S.layers.has('types')?fmt(total)+' visible NuClass nuclei · ':''}${S.layers.has('wholecell')?'v6 whole-cell boundaries · ':''}${S.layers.has('tls')?'TLS candidates · ':''}${S.layers.size?'layers can be combined':'clean H&E'}`);
+  if(!loadError)status(`${S.layers.has('types')?fmt(total)+' visible NuClass v15 nuclei · ':''}${S.layers.has('wholecell')?'v6 whole-cell boundaries · ':''}${S.layers.has('tls')?'TLS candidates · ':''}${S.layers.size?'layers can be combined':'clean H&E'}`);
 }
 function renderFilters(){
   if(!taxonomy)return;const counts=manifest.slides.find(s=>s.id===S.slide).counts,search=$('search').value.toLowerCase();
@@ -284,7 +289,7 @@ async function selectAt(px,py){
   if(innerWidth<=800){$('settings-panel').classList.add('open');$('toggle-settings').setAttribute('aria-expanded','true');}
   try{
     let data=probabilities.get(best.chunk.key);
-    if(!data){data=new Uint16Array(await binary(`data/${sid}/probabilities/${best.chunk.key}.bin.gz`,abortSlide.signal));if(sid!==S.slide)return;if(data.length!==best.chunk.count*47)throw Error('Incomplete posterior data.');probabilities.set(best.chunk.key,data);if(probabilities.size>12)probabilities.delete(probabilities.keys().next().value);}
+    if(!data){data=new Uint16Array(await pointReader.read(sid,best.chunk,'posterior',abortSlide.signal));if(sid!==S.slide)return;if(data.length!==best.chunk.count*47)throw Error('Incomplete v15 posterior data.');probabilities.set(best.chunk.key,data);if(probabilities.size>12)probabilities.delete(probabilities.keys().next().value);}
     if(epoch!==selectedEpoch)return;const offset=(best.i-best.chunk.start)*47;best.p=Array.from(data.subarray(offset,offset+47),v=>v/65535);
     const rows=taxonomy.leaves.map((n,i)=>({n,p:best.p[i]})).sort((a,b)=>b.p-a.p);
     $('probabilities').innerHTML=rows.map(({n,p})=>`<div class="prob-row"><span>${label(n)}</span><span>${(p*100).toFixed(2)}%</span><i style="width:${p*100}%;background:${color(n)}"></i></div>`).join('');$('export-cell').hidden=false;
@@ -294,7 +299,7 @@ function download(name,rows){const quote=v=>'"'+String(v).replaceAll('"','""')+'
 async function exportView(){
   if(!S.ready||S.resolving)return;
   const epoch=S.epoch,b=bounds(),chunks=viewportChunks(b),mode=S.appliedMode,step=S.appliedStep,labels=S.labels,sid=S.slide,chosen=new Set(S.selected),data=S.data;
-  const parts=['slide,native_x,native_y,leaf_prediction,displayed_label,posterior_support\n'];
+  const parts=['slide,native_x,native_y,leaf_prediction,displayed_label,posterior_support,model,step\n'];
   $('export').disabled=true;$('export').textContent='Exporting…';
   try{
     let k=0;
@@ -303,12 +308,12 @@ async function exportView(){
       let text='';
       for(let i=c.start;i<c.start+c.count;i++){
         const x=data.xy[i*2],y=data.xy[i*2+1],li=data.leaf[i];
-        if(chosen.has(li)&&x>=b[0]&&x<=b[2]&&y>=b[1]&&y<=b[3])text+=`${sid},${x},${y},${taxonomy.leaves[li]},${taxonomy.nodes[labels[i]]},${(step/20).toFixed(2)}\n`;
+        if(chosen.has(li)&&x>=b[0]&&x<=b[2]&&y>=b[1]&&y<=b[3])text+=`${sid},${x},${y},${taxonomy.leaves[li]},${taxonomy.nodes[labels[i]]},${(step/20).toFixed(2)},NuClass v15,59712\n`;
       }
       if(text)parts.push(new TextEncoder().encode(text));
       if(++k%32===0)await new Promise(r=>setTimeout(r,0));
     }
-    const url=URL.createObjectURL(new Blob(parts,{type:'text/csv'})),a=document.createElement('a');a.href=url;a.download=`NuClass_${sid}_${mode}_p${(step/20).toFixed(2)}_visible.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    const url=URL.createObjectURL(new Blob(parts,{type:'text/csv'})),a=document.createElement('a');a.href=url;a.download=`NuClass_v15_${sid}_${mode}_p${(step/20).toFixed(2)}_visible.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }finally{$('export').disabled=!S.ready||S.resolving;$('export').textContent='Export view';}
 }
 function openField(id){const f=S.meta?.fields.find(f=>f.id===id);if(!f){fit();return;}S.fit=false;S.cx=f.origin[0]+f.width/2;S.cy=f.origin[1]+f.height/2;S.scale=Math.min(S.w/f.width,S.h/f.height)*.94;changed();}
@@ -324,7 +329,7 @@ function wire(){
   $('clean').onclick=()=>{S.clean=!S.clean;$('clean').setAttribute('aria-pressed',S.clean);request();};$('search').oninput=renderFilters;
   document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>setPreset(b.dataset.preset));
   $('filters').onchange=e=>{if(e.target.dataset.leaf===undefined)return;const i=+e.target.dataset.leaf;e.target.checked?S.selected.add(i):S.selected.delete(i);clearExcludedSelection();renderFilters();updatePalette();changed();};
-  $('export').onclick=exportView;$('export-cell').onclick=()=>{if(S.cell?.p)download(`NuClass_${S.slide}_${S.cell.x}_${S.cell.y}_posterior.csv`,[['cell_type','posterior','encoding'],...taxonomy.leaves.map((n,i)=>[n,S.cell.p[i],'rounded to 1/65535'])]);};
+  $('export').onclick=exportView;$('export-cell').onclick=()=>{if(S.cell?.p)download(`NuClass_v15_${S.slide}_${S.cell.x}_${S.cell.y}_posterior.csv`,[['cell_type','posterior','encoding','model','step','checkpoint_sha256'],...taxonomy.leaves.map((n,i)=>[n,S.cell.p[i],'rounded to 1/65535','NuClass v15',59712,manifest.provenance.sourceModel.sha256])]);};
   for(const name of ['types','settings'])$('toggle-'+name).onclick=()=>{const el=$(name+'-panel'),open=el.classList.toggle('open');$('toggle-'+name).setAttribute('aria-expanded',open);};
   for(const canvas of [$('original'),$('tissue')]){
     const pointers=new Map();let last=null,moved=false;
@@ -352,7 +357,7 @@ function updateLayers(){
   $('wholecell-controls').hidden=!whole&&!tls;$('type-resolution-controls').hidden=!types;$('celltype-filter-controls').hidden=!types&&!whole;
   for(const id of ['point-style-controls','original-legend','original-selected-panel','export'])$(id).hidden=!types;
   $('wc-tls-settings').hidden=!tls;$('wc-geometry-settings').hidden=!whole;$('wc-selected-panel').hidden=!types&&!whole;
-  $('analysis-mode-help').textContent='Choose any combination. Cell types: complete NuClass point layer. Whole-cell: v6 boundaries + v15 in processed regions. TLS: candidate composition / stage predictions.';
+  $('analysis-mode-help').textContent='Choose any combination. Cell types: frozen NuClass v15, step59712, for every supplied valid nucleus. Whole-cell: v6 boundaries + the same v15 identity; unmatched masks stay untyped. TLS: candidate composition / separate stage predictions.';
   const url=new URL(location.href);url.searchParams.set('layers',[...layers].join(','));url.searchParams.set('mode',S.analysisMode);history.replaceState(null,'',url);changed();
 }
 function setLayer(layer,enabled){if(!['types','wholecell','tls'].includes(layer))return;enabled?S.layers.add(layer):S.layers.delete(layer);updateLayers();}
@@ -364,7 +369,7 @@ function navigateRegion(sid,b){
   if(sid!==S.slide){selectSlide(sid).then(()=>navigateRegion(sid,b));return;}
   if(!S.meta)return;S.fit=false;S.cx=(b[0]+b[2])/2;S.cy=(b[1]+b[3])/2;S.scale=Math.min(S.w/Math.max(1,b[2]-b[0]),S.h/Math.max(1,b[3]-b[1]))*.82;changed();
 }
-async function init(){try{manifest=await json('data/manifest.json');taxonomy=manifest.taxonomy;resolutionTable=makeResolutionTable(taxonomy);initGPU();
+async function init(){try{manifest=await json('data/manifest-v15.json?v=15');validatePointBase(manifest.point_base);if(manifest.provenance.sourceModel.name!=='NuClass v15'||manifest.provenance.sourceModel.step!==59712)throw Error('Expected frozen NuClass v15');pointReader=createShardReader(()=>manifest.point_base);taxonomy=manifest.taxonomy;resolutionTable=makeResolutionTable(taxonomy);initGPU();
   wholeCell=createWholeCellViewer({canvas:$('wholecells'),state:S,taxonomy,request,navigate:navigateRegion});
   document.querySelectorAll('[data-analysis-mode]').forEach(b=>b.onclick=()=>setLayer(b.dataset.analysisMode,!S.layers.has(b.dataset.analysisMode)));
   const initialParams=new URLSearchParams(location.search);setAnalysisMode(initialParams.has('layers')?initialParams.get('layers'):initialParams.get('mode')||'types');wire();renderFilters();const requested=new URLSearchParams(location.search).get('slide');await selectSlide(manifest.slides.some(s=>s.id===requested)?requested:'S07');

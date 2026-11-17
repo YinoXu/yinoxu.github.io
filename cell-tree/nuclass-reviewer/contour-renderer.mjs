@@ -5,19 +5,19 @@ export function createContourRenderer(gl,state){
   function program(vertex,fragment,names,uniforms){const p=gl.createProgram();gl.attachShader(p,compile(gl.VERTEX_SHADER,vertex));gl.attachShader(p,compile(gl.FRAGMENT_SHADER,fragment));gl.linkProgram(p);if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(p));
     const a={},u={};for(const n of names)a[n]=gl.getAttribLocation(p,'a_'+n);for(const n of uniforms)u[n]=gl.getUniformLocation(p,'u_'+n);return {p,a,u};}
   const vertex=`precision highp float;attribute vec2 a_xy;attribute vec4 a_style,a_values;
-    uniform vec2 u_center,u_view,u_origin,u_units,u_parts;uniform float u_scale,u_mode,u_failed,u_unknown,u_alpha;
+    uniform vec2 u_center,u_view,u_origin,u_units,u_parts;uniform float u_scale,u_mode,u_failed,u_unknown,u_background,u_alpha;
     uniform vec3 u_colors[48];uniform float u_enabled[47];varying mediump vec4 v_color;varying mediump float v_dash;
     void main(){vec2 p=(u_origin+a_xy*u_units-u_center)*u_scale/u_view*2.;gl_Position=vec4(p.x,-p.y,0.,1.);
       int li=int(u_mode<.5?a_style.x:a_style.y);float visible=1.;
       if(mod(a_style.w,2.)<.5?u_parts.x<.5:u_parts.y<.5)visible=0.;
-      if(a_style.z<.5&&u_failed<.5)visible=0.;if(li>46&&u_unknown<.5)visible=0.;if(li<47&&u_enabled[li]<.5)visible=0.;
+      if(a_style.z>1.5&&u_background<.5)visible=0.;if(mod(a_style.z,2.)<.5&&u_failed<.5)visible=0.;if(li>46&&u_unknown<.5)visible=0.;if(li<47&&u_enabled[li]<.5)visible=0.;
       vec3 c=u_colors[int(min(float(li),47.))];float alpha=u_alpha;
       if(u_mode>1.5){float t=u_mode<2.5?a_values.x:(u_mode<3.5?a_values.y:a_values.z);c=mix(vec3(.04,.7,.65),vec3(.68,.08,.82),t);}
-      if(a_style.z<.5||li>46){c=vec3(.45,.50,.55);alpha*=.65;}
+      if(mod(a_style.z,2.)<.5||li>46){c=vec3(.45,.50,.55);alpha*=.65;}
       if(visible<.5)gl_Position=vec4(3.,3.,0.,1.);v_color=vec4(c,alpha*visible);v_dash=a_values.w;
     }`;
   const fragment=`precision mediump float;varying mediump vec4 v_color;varying mediump float v_dash;uniform float u_dpr;void main(){if(v_color.a<.005)discard;if(v_dash>.5&&mod((gl_FragCoord.x+gl_FragCoord.y)/u_dpr,12.)<4.)discard;gl_FragColor=v_color;}`;
-  const geometry=program(vertex,fragment,['xy','style','values'],['center','view','origin','units','parts','scale','mode','failed','unknown','alpha','colors','enabled','dpr']);
+  const geometry=program(vertex,fragment,['xy','style','values'],['center','view','origin','units','parts','scale','mode','failed','unknown','background','alpha','colors','enabled','dpr']);
   const composite=program(`attribute vec2 a_xy;varying highp vec2 v_uv;void main(){gl_Position=vec4(a_xy,0.,1.);v_uv=a_xy*.5+.5;}`,
     `precision highp float;varying highp vec2 v_uv;uniform sampler2D u_lines,u_fills;uniform vec2 u_pixel;
      uniform float u_radius,u_halo,u_halo_radius;
@@ -49,7 +49,7 @@ export function createContourRenderer(gl,state){
   function dispose(g){if(g?.gpu)for(const b of Object.values(g.gpu))gl.deleteBuffer(b);}
   function draw(g,o,kind){if(!g||(kind==='fills'&&!g.fillCount)||(kind==='lines'&&!g.lineCount))return;ensure();reset();blend();gl.bindFramebuffer(gl.FRAMEBUFFER,targets[kind].framebuffer);gl.viewport(0,0,gl.drawingBufferWidth,gl.drawingBufferHeight);gl.useProgram(geometry.p);
     const {u,a}=geometry;gl.uniform2f(u.center,state.cx,state.cy);gl.uniform2f(u.view,state.w,state.h);gl.uniform1f(u.scale,state.scale);gl.uniform2fv(u.origin,g.origin);gl.uniform2fv(u.units,g.units);
-    gl.uniform2fv(u.parts,kind==='fills'?o.fillParts:o.parts||[1,1]);gl.uniform1f(u.alpha,kind==='fills'?o.fillAlpha??.3:o.alpha??.95);gl.uniform1f(u.mode,o.mode||0);gl.uniform1f(u.failed,o.failed===false?0:1);gl.uniform1f(u.unknown,o.unknown===false?0:1);gl.uniform3fv(u.colors,o.palette);gl.uniform1fv(u.enabled,o.enabled);gl.uniform1f(u.dpr,state.dpr);
+    gl.uniform2fv(u.parts,kind==='fills'?o.fillParts:o.parts||[1,1]);gl.uniform1f(u.alpha,kind==='fills'?o.fillAlpha??.3:o.alpha??.95);gl.uniform1f(u.mode,o.mode||0);gl.uniform1f(u.failed,o.failed===false?0:1);gl.uniform1f(u.unknown,o.unknown===false?0:1);gl.uniform1f(u.background,o.background===true?1:0);gl.uniform3fv(u.colors,o.palette);gl.uniform1fv(u.enabled,o.enabled);gl.uniform1f(u.dpr,state.dpr);
     gl.bindBuffer(gl.ARRAY_BUFFER,g.gpu[kind]);const stride=kind==='fills'?g.fillStride:g.lineStride,offset=g.compact?4:8;
     attribute(a.xy,2,g.compact?gl.UNSIGNED_SHORT:gl.FLOAT,false,stride,0);attribute(a.style,4,gl.UNSIGNED_BYTE,false,stride,offset);attribute(a.values,4,gl.UNSIGNED_BYTE,true,stride,offset+4);
     gl.drawArrays(kind==='fills'?gl.TRIANGLES:gl.LINES,0,kind==='fills'?g.fillCount:g.lineVertices);
