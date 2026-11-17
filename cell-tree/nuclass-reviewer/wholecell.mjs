@@ -3,6 +3,7 @@ import {parseWholeCell,readCompressed} from './wholecell-format.mjs?v=4';
 import {createShardReader} from './wholecell-shards.mjs?v=4';
 import {parseOverview,cellRings,insideRing as insideCellRing} from './wholecell-geometry.mjs?v=5';
 import {createContourRenderer,ringsGeometry} from './contour-renderer.mjs?v=5';
+import {loadTLSBoundaries,tlsRings,tlsBounds} from './tls-boundaries.mjs?v=2';
 const base=new URL('./wholecell/',import.meta.url);
 const $=id=>document.getElementById(id), fmt=n=>Number(n).toLocaleString('en-US');
 const text=(node,value)=>{if(node)node.textContent=value;};
@@ -16,7 +17,7 @@ const fixed=(x,n=2)=>Number.isFinite(x)?x.toFixed(n):'Unavailable';
 export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}){
   const gl=canvas.getContext('webgl',{alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:true});
   const tlsCanvas=$('tlscells'),tlsGL=tlsCanvas.getContext('webgl',{alpha:true,antialias:false,premultipliedAlpha:false,preserveDrawingBuffer:true});
-  let manifest,index,colourTouched=false,epoch=0,abort,cache=new Map(),pending=new Map(),failed=new Set(),currentRegion=null,selected=null,geometryBase=base;
+  let manifest,index,colourTouched=false,epoch=0,abort,cache=new Map(),pending=new Map(),failed=new Set(),currentRegion=null,selected=null,geometryBase=base,boundaryLoadError=false;
   const overviewCache=new Map(),overviewPending=new Map(),nativeJobs=new Map();
   const nativeBudget=96*1024*1024,overviewBudget=192*1024*1024;
   let renderer=null,tlsRenderer=null,worker=null,workerID=0,activeNative=0,activeOverview=0,neededNative=new Set(),neededOverview=new Set(),pickEpoch=0,overviewQueue=[],overviewPaintTimer=0,geometryVersion=0,lastDrawKey=null,lastStyleKey=null,paintedOverview=new Set();
@@ -27,9 +28,10 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
     <details id="wc-tls-settings" open><summary>TLS interpretation</summary>
     <label class="wc-label" for="wc-tls-colour">TLS contour colours</label><select id="wc-tls-colour"><option value="composition">NuClass composition phenotype</option><option value="stage">Science E/P/S prediction</option></select>
     <label class="wc-label" for="wc-tls-filter">Show TLS candidates</label><select id="wc-tls-filter"><option value="all">All candidate types</option></select>
-    <label class="wc-label" for="wc-tls-boundary">TLS boundary</label><select id="wc-tls-boundary"><option value="refined">H&E-constrained refinement ·5µm</option><option value="raw">Original density mask ·25µm</option></select>
+    <label class="wc-label" for="wc-tls-boundary">TLS boundary</label><select id="wc-tls-boundary"><option value="continuous">Continuous outer boundary · v2</option><option value="refined">Previous H&E refinement · 5 µm</option><option value="raw">Original density mask · 25 µm</option></select>
+    <p id="wc-boundary-status" class="wc-source" role="status"></p>
     <label class="setting" for="wc-tls-width">TLS line width <input id="wc-tls-width" type="range" min="1" max="6" step="0.25" value="2.75"></label><div id="wc-tls-counts" class="wc-tls-counts"></div><div id="wc-tls-legend"></div>
-    <p class="wc-source">E: early TLS · P: primary follicle · S: secondary follicle. These are model predictions. The refined boundary preserves white spaces and neighbouring candidate identities. Counts, composition and Science stages use the original25µm candidates; boundary sensitivity is separate. Neither outline is pathology gold. Dashed stage outlines indicate crop-sensitive predictions.</p></details>
+    <p class="wc-source">The continuous boundary fills internal holes and closes narrow clefts around each candidate, with a smoothed outer edge. Internal lumina are enclosed. Original counts, composition and E/P/S predictions use the original 25 µm candidates; the new envelope area is reported separately. Boundaries are unreviewed predictions. Dashed stage outlines indicate crop-sensitive predictions.</p></details>
     <div id="wc-geometry-settings"><label class="check"><input id="wc-show" type="checkbox" checked> Whole-cell contours</label>
     <label class="check wc-check"><input id="wc-nuclei" type="checkbox"> Nuclear contours</label>
     <label class="wc-label" for="wc-cell-style">Whole-cell style</label><select id="wc-cell-style"><option value="outline">Outline</option><option value="filled">Colour fill + outline</option></select>
@@ -66,7 +68,7 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
   $('wc-region').onchange=()=>openRegion($('wc-region').value);
   $('wc-tls-colour').onchange=()=>{dispose(tlsGeometry||{});tlsGeometry=null;$('wc-tls-filter').value='all';renderTLSControls();request();};
   $('wc-tls-filter').onchange=()=>{dispose(tlsGeometry||{});tlsGeometry=null;request();};
-  $('wc-tls-boundary').onchange=()=>{dispose(tlsGeometry||{});tlsGeometry=null;if(currentRegion)openRegion(currentRegion.id,false);request();};
+  $('wc-tls-boundary').onchange=()=>{dispose(tlsGeometry||{});tlsGeometry=null;updateBoundaryStatus();if(currentRegion)openRegion(currentRegion.id,false);request();};
   $('wc-retry').onclick=()=>{atlas.retry();failed.clear();$('wc-retry').hidden=true;request();};
   $('wc-save-review').onclick=saveReview;$('wc-export-review').onclick=exportReviews;
   $('wc-export-view').onclick=exportView;
@@ -108,8 +110,15 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
     for(const x of cache.values())dispose(x);cache.clear();for(const x of overviewCache.values())dispose(x);overviewCache.clear();index=null;currentRegion=null;selected=null;failed.clear();neededNative.clear();neededOverview.clear();
     if(tlsGeometry)dispose(tlsGeometry);tlsGeometry=null;
     $('tls-labels').replaceChildren();text($('wc-region-summary'),'');text($('wc-cell-info'),'Click a cell in a processed region to inspect its actual boundary and measurements.');
+    text($('wc-boundary-status'),'Loading continuous TLS boundaries…');
     try{await ready;const descriptor=manifest.remote_indexes?.[sid];if(descriptor&&![`${sid}/index.json`,`${sid}/index.json.gz`].includes(descriptor.file))throw Error('Unexpected full-slide index path');const response=await fetch(descriptor?new URL(descriptor.file,geometryBase):new URL(`${sid}/index.json?v=6`,base),{signal:abort.signal});if(!response.ok)throw Error('No whole-cell analysis for this slide');let m;if(descriptor){const bytes=await response.arrayBuffer();if(bytes.byteLength!==descriptor.bytes)throw Error('Full-slide index length mismatch');const digest=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');if(digest!==descriptor.sha256)throw Error('Full-slide index integrity mismatch');const decoded=await readCompressed(new Response(bytes));if(descriptor.decoded_bytes&&decoded.byteLength!==descriptor.decoded_bytes)throw Error('Full-slide decoded index length mismatch');m=JSON.parse(new TextDecoder().decode(decoded));}else m=await response.json();if(e!==epoch)return;
-      if(m.overview_policy?.gpu_bytes>overviewBudget)throw Error('Whole-cell overview exceeds the graphics budget');index=m;atlas.setSlide(m);
+      let boundaryError=null;
+      try{await loadTLSBoundaries(m,manifest,base,abort.signal);}catch(error){if(error.name==='AbortError')throw error;boundaryError=error;}
+      if(e!==epoch)return;
+      $('wc-tls-boundary').querySelector('[value="continuous"]').disabled=!!boundaryError;
+      if(boundaryError&&$('wc-tls-boundary').value==='continuous')$('wc-tls-boundary').value='refined';
+      boundaryLoadError=!!boundaryError;
+      if(m.overview_policy?.gpu_bytes>overviewBudget)throw Error('Whole-cell overview exceeds the graphics budget');index=m;updateBoundaryStatus();atlas.setSlide(m);
       if(m.whole_slide_coverage&&!colourTouched){$('wc-colour').value='0';text($('wc-scale'),'Frozen v15 calls across the complete slide. Gray indicates an unlinked instance or geometry QC failure.');}
       $('wc-region').innerHTML='<option value="">Choose a region</option>'+m.regions.map(c=>`<option value="${escape(c.id)}">${escape(c.label)}</option>`).join('');
       message(`${fmt(m.summary.cells)} predicted cells · ${m.whole_slide_coverage?'complete whole-slide grid':'processed-region coverage'}.`);renderTLSControls();
@@ -194,19 +203,24 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
     const r=index?.regions.find(c=>c.id===id);if(!r)return;currentRegion=r;$('wc-region').value=id;
     const m=r.metrics||{};const lines=[r.label,r.control?(r.posthoc?'Post-hoc glass-background stress audit. Raw masks are hidden by the tissue filter; enable raw background predictions to inspect them.':'Prespecified image-only control; not pathology-negative gold.'):'Previously detected candidate; pathology status unreviewed.'];
     const count=n=>Number.isFinite(n)?fmt(n):'Unavailable';
-    if(!r.control)lines.push(`v15 T ${count(m.T)} · B ${count(m.B)} · ${fixed(m.area_mm2,3)} mm²`,
+    if(!r.control)lines.push(`Original candidate: v15 T ${count(m.T)} · B ${count(m.B)} · ${fixed(m.area_mm2,3)} mm²`,
       `Lymphoid fraction ${fixed(m.lymphoid_fraction_score,1)}% · B/T zoning ${fixed(m.zoning_score,1)}/100`,
       `Usable whole-cell links ${fixed(m.quality_score,1)}% of original candidate nuclei`,
       `Composition: ${r.composition_type||'Unscored'}`,
       `Science stage: ${stageLabels[r.science?.stage]||'Unassigned'} · model prediction`,
       r.science?.stable===false?'Stage changes with crop handling. Inspect before interpreting.':'Pathology stage is unverified.');
-    if(r.boundary_refinement){const q=r.boundary_refinement,c=q.composition_comparison;
+    if($('wc-tls-boundary').value==='continuous'&&r.continuous_boundary){const q=r.continuous_boundary.audit;
+      lines.push(`Displayed envelope v2: ${fixed(q.area_mm2,3)} mm² · ${q.area_change_pct>=0?'+':''}${fixed(q.area_change_pct,1)}% vs previous refinement`,
+        `One continuous outline · ${q.previous_holes} previous internal holes filled`,
+        q.review_required?'Envelope area changed by over 10%; visual review recommended.':'Counts and stage predictions retain the original candidate boundary.');
+    }
+    if($('wc-tls-boundary').value==='refined'&&r.boundary_refinement){const q=r.boundary_refinement,c=q.composition_comparison;
       lines.push(`Boundary comparison: refined area ${q.area_change_pct>=0?'+':''}${fixed(q.area_change_pct,1)}% · mask agreement IoU ${fixed(q.raw_refined_IoU,3)} (not accuracy)`,
         q.review_required?'Boundary change requires visual review.':'Original candidate metrics remain the analysis baseline.');
       if(c)lines.push(`Boundary sensitivity: nuclei ${fmt(c.raw.nuclei)}→${fmt(c.refined.nuclei)} · B ${fmt(c.raw.B)}→${fmt(c.refined.B)} · T ${fmt(c.raw.T)}→${fmt(c.refined.T)}`);
     }
     text($('wc-region-summary'),lines.join('\n'));
-    const selectedEpoch=epoch;const tryNavigate=()=>{if(selectedEpoch!==epoch)return;if(S.meta){if(move)navigate(S.slide,r.bounds);}else setTimeout(tryNavigate,50);};tryNavigate();restoreReview();
+    const selectedEpoch=epoch;const tryNavigate=()=>{if(selectedEpoch!==epoch)return;if(S.meta){if(move)navigate(S.slide,regionBounds(r));}else setTimeout(tryNavigate,50);};tryNavigate();restoreReview();
     const url=new URL(location.href);url.searchParams.set('candidate',id);history.replaceState(null,'',url);
   }
   const compNames=['B-rich','T-rich','B/T segregated','B/T mixed','B/T intermediate','Low lymphoid / discordant','Unscored'];
@@ -214,13 +228,18 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
   const stageLabels={E:'E · Early TLS',P:'P · Primary follicle-like TLS',S:'S · Secondary follicle-like TLS',Unassigned:'Unassigned'};
   const stageNames=['E','P','S','Unassigned'],stageColors=['#ce9237','#529ab9','#a061b6','#8a979e'];
   let tlsGeometry=null;
-  function regionRings(r){return $('wc-tls-boundary').value==='refined'&&r.refined_rings?r.refined_rings:(r.raw_rings||r.rings||[]);}
+  function updateBoundaryStatus(){
+    const mode=$('wc-tls-boundary').value;
+    text($('wc-boundary-status'),boundaryLoadError?'Continuous boundaries could not load; showing a historical boundary. Reload to retry.':mode==='continuous'?`${index?.regions.filter(r=>!r.control).length||0} continuous boundaries · no internal holes`:mode==='refined'?'Previous refinement · internal holes retained for comparison':'Original density boundary · historical analysis baseline');
+  }
+  function regionRings(r){return tlsRings(r,$('wc-tls-boundary').value);}
+  function regionBounds(r){return tlsBounds(r,$('wc-tls-boundary').value);}
   function tlsClass(r){return $('wc-tls-colour').value==='stage'?(r.science?.stage||'Unassigned'):(r.composition_type||'Unscored');}
   function renderTLSControls(){
     if(!index)return;const stage=$('wc-tls-colour').value==='stage',names=stage?stageNames:compNames,colors=stage?stageColors:compColors;
     const candidates=index.regions.filter(r=>!r.control),count=Object.fromEntries(names.map(n=>[n,candidates.filter(r=>tlsClass(r)===n).length]));
     $('wc-tls-filter').innerHTML='<option value="all">All candidate types</option>'+names.map(n=>`<option value="${escape(n)}">${escape(n)} · ${count[n]}</option>`).join('');
-    text($('wc-tls-counts'),`${candidates.length} candidate regions · ${fixed(index.summary.candidate_area_mm2,2)} mm² total · ${fixed(index.summary.candidate_density,2)} candidates / mm² tissue`);
+    text($('wc-tls-counts'),`${candidates.length} candidate regions · ${fixed(index.summary.candidate_area_mm2,2)} mm² original area · ${fixed(index.summary.candidate_density,2)} candidates / mm² tissue`);
     $('wc-tls-legend').innerHTML=names.filter(n=>count[n]).map(n=>`<div class="wc-legend"><i style="background:${colors[names.indexOf(n)]}"></i>${escape(stage?stageLabels[n]:n)} <b>${count[n]}</b></div>`).join('');
   }
   function drawTLS(b,withCells=false){
@@ -233,10 +252,10 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
     }
     const o={palette:palette(colors),enabled:new Float32Array(47).fill(1),mode:0,parts:[1,1],width:+$('wc-tls-width').value,alpha:1,failed:true,unknown:true};
     tlsRenderer.stroke(tlsGeometry,o);tlsRenderer.present({...o,halo:true});
-    const visible=selected.filter(r=>intersects(r.bounds,b));
+    const visible=selected.filter(r=>intersects(regionBounds(r),b));
     const annotated=visible.sort((a,z)=>(z.id===currentRegion?.id)-(a.id===currentRegion?.id)||(z.metrics?.area_mm2||0)-(a.metrics?.area_mm2||0)),boxes=[];
     for(const r of annotated){if(boxes.length>=8)break;const label=`${r.slide||S.slide} C${String(r.candidate_id).padStart(3,'0')} · ${tlsClass(r)}`;
-      const w=Math.min(S.w-20,label.length*5.6+12),h=20,x=Math.max(w/2+5,Math.min(S.w-w/2-5,((r.bounds[0]+r.bounds[2])/2-S.cx)*S.scale+S.w/2)),y=Math.max(60,Math.min(S.h-25,((r.bounds[1]+r.bounds[3])/2-S.cy)*S.scale+S.h/2));
+      const bounds=regionBounds(r),w=Math.min(S.w-20,label.length*5.6+12),h=20,x=Math.max(w/2+5,Math.min(S.w-w/2-5,((bounds[0]+bounds[2])/2-S.cx)*S.scale+S.w/2)),y=Math.max(60,Math.min(S.h-25,((bounds[1]+bounds[3])/2-S.cy)*S.scale+S.h/2));
       const box=[x-w/2,y-h/2,x+w/2,y+h/2];if(boxes.some(b=>intersects(b,[box[0]-5,box[1]-5,box[2]+5,box[3]+5])))continue;
       const span=document.createElement('span');span.textContent=label;span.style.left=`${x}px`;span.style.top=`${y}px`;$('tls-labels').append(span);boxes.push(box);}
     if(!withCells)message(`${visible.length} candidates intersect this view · ${selected.length}/${index.summary.candidates} selected on ${S.slide}. Click a contour to inspect composition and stage evidence.`);
@@ -245,8 +264,8 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
   function insideRing(x,y,ring){let inside=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){
     const [xi,yi]=ring[i],[xj,yj]=ring[j];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)inside=!inside;}return inside;}
   function pickRegion(x,y){const filter=$('wc-tls-filter').value;
-    const r=index?.regions.find(r=>!r.control&&(filter==='all'||tlsClass(r)===filter)&&x>=r.bounds[0]&&x<=r.bounds[2]&&y>=r.bounds[1]&&y<=r.bounds[3]&&
-      regionRings(r).reduce((v,ring)=>v!==insideRing(x,y,ring),false));
+    const r=index?.regions.find(r=>{const b=regionBounds(r);return !r.control&&(filter==='all'||tlsClass(r)===filter)&&x>=b[0]&&x<=b[2]&&y>=b[1]&&y<=b[3]&&
+      regionRings(r).reduce((v,ring)=>v!==insideRing(x,y,ring),false);});
     if(r)openRegion(r.id);return r||null;
   }
   function clearSelection(){pickEpoch++;selected=null;request();}
@@ -324,7 +343,8 @@ export function createWholeCellViewer({canvas,state:S,taxonomy,request,navigate}
   function saveReview(){
     if(!currentRegion){text($('wc-review-state'),'Choose a candidate or control before saving a review.');return;}
     const criteria=Object.fromEntries(manifest.schema.criteria.map(c=>[c.id,$('wc-review-'+c.id).value]));
-    const r={version:'0.1',slide:S.slide,region:currentRegion.id,utc:new Date().toISOString(),criteria,note:$('wc-review-note').value,
+    const r={version:'0.2',slide:S.slide,region:currentRegion.id,utc:new Date().toISOString(),criteria,note:$('wc-review-note').value,
+      boundary:$('wc-tls-boundary').value,boundary_revision:$('wc-tls-boundary').value==='continuous'?2:1,
       scope:'Local expert observation; not new ground truth or an automatic TLS diagnosis',no_matching_IHC:true};
     try{localStorage.setItem(reviewKey(),JSON.stringify(r));text($('wc-review-state'),'Saved in this browser. No annotation was uploaded.');}
     catch{text($('wc-review-state'),'Browser storage unavailable. Export your review before leaving.');download(`review_${currentRegion.id}.json`,JSON.stringify(r,null,2),'application/json');}

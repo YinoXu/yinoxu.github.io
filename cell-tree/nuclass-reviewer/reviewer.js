@@ -1,5 +1,5 @@
 import {makeResolutionTable,resolveCells} from './resolution.mjs';
-import {createWholeCellViewer} from './wholecell.mjs?v=6';
+import {createWholeCellViewer} from './wholecell.mjs?v=7';
 import {loadPointBinary,loadPointIndex,validatePointBase} from './point-data.mjs?v=1';
 import {createShardReader} from './wholecell-shards.mjs?v=4';
 const $ = id => document.getElementById(id);
