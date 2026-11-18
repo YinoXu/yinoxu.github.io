@@ -12,10 +12,11 @@
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; connect-src 'self' https://kaimwopilugeilwnhclv.supabase.co; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
+      content="default-src 'self'; connect-src 'self' https://bnhogvsocrvydfdkjgcp.supabase.co; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"
     />
     <title>Betty Compute Monitor</title>
     <link rel="icon" href="../favicon.svg?v=9" type="image/svg+xml" />
+    <link rel="stylesheet" href="queue.css?v=20261117-1" />
     <style>
       :root {
         color-scheme: light;
@@ -1300,7 +1301,7 @@
           </div>
           <p class="section-note">
             Pending queue statistics are aggregated for the lab Slurm account.
-            Running allocations are listed separately above.
+            Per-user and per-task details are listed below.
           </p>
         </div>
 
@@ -1335,6 +1336,41 @@
         </div>
       </section>
 
+      <section class="section" aria-labelledby="lab-jobs-heading">
+        <div class="section-heading"><div><p class="eyebrow">LIVE LAB QUEUE</p>
+          <h2 id="lab-jobs-heading">Who is waiting, and why</h2></div></div>
+        <article class="panel lab-jobs-panel">
+          <div class="lab-jobs-heading"><div><h3>Queue by username</h3>
+            <p class="resource-meta">Current running and pending tasks. Array elements count separately; completed jobs are not included.</p></div>
+            <span class="lab-feed-status" id="lab-feed-status" role="status">Loading live details…</span></div>
+          <p id="lab-jobs-summary" class="lab-jobs-summary" aria-live="polite"></p>
+          <div class="lab-table-scroll" tabindex="0" aria-label="Queue summary by username">
+            <table class="lab-table"><thead><tr>
+              <th scope="col">Username</th><th scope="col">Active tasks</th><th scope="col">Running</th><th scope="col">Pending</th>
+              <th scope="col">Median queued</th><th scope="col">Longest queued</th><th scope="col">Earliest expected start</th><th scope="col">Pending reasons</th>
+            </tr></thead><tbody id="lab-users-body"><tr><td colspan="8">Loading…</td></tr></tbody></table>
+          </div>
+          <div class="lab-detail-heading"><h3>Individual tasks</h3><button type="button" id="lab-reset-filters">Reset filters</button></div>
+          <div class="lab-job-filters">
+            <label>Username<select id="lab-user-filter"><option value="all">All users</option></select></label>
+            <label>Status<select id="lab-state-filter"><option value="all">All active tasks</option><option value="pending">Pending</option><option value="running">Running</option></select></label>
+            <label>Pending reason<select id="lab-reason-filter"><option value="all">All reasons</option></select></label>
+            <span id="lab-visible-count" class="resource-meta" aria-live="polite"></span>
+          </div>
+          <div class="lab-table-scroll lab-task-scroll" tabindex="0" aria-label="Individual task queue details">
+            <table class="lab-table lab-task-table"><thead><tr>
+              <th scope="col">Username / task</th><th scope="col">Status</th><th scope="col">Partition / resources</th>
+              <th scope="col">Submitted</th><th scope="col">Already queued</th>
+              <th scope="col">Why pending</th><th scope="col">Expected start / remaining</th><th scope="col">Runtime</th>
+            </tr></thead><tbody id="lab-tasks-body"><tr><td colspan="8">Loading…</td></tr></tbody></table>
+          </div>
+          <div class="lab-queue-notes">
+            <p><strong>Already queued</strong> is time since submission, including holds and dependencies. For running tasks, it stops at their actual start. <strong>Eligible wait</strong> starts when Slurm marks a pending task eligible; an unknown eligibility time is shown as unavailable.</p>
+            <p><strong>Expected remaining wait</strong> uses Slurm’s scheduled start, not an average of previous jobs. Predictions can move. Missing or outdated predictions are shown explicitly. Times are Eastern (America/New_York); durations are measured at the snapshot time.</p>
+          </div>
+        </article>
+      </section>
+
       <section class="section" aria-labelledby="storage-heading">
         <div class="section-heading">
           <div>
@@ -1363,13 +1399,13 @@
           </div>
           <div>
             <strong>What is shown</strong>
-            Aggregate GPU and CPU allocations, resource-pool availability, queue
-            statistics, anonymous node states, and storage quotas.
+            GPU and CPU allocations, resource-pool availability, queue statistics,
+            lab usernames, active task counts, per-task queue durations and pending
+            reasons, Slurm start estimates, anonymous node states, and storage quotas.
           </div>
           <div>
             <strong>What is withheld</strong>
-            Member usernames, individual job details, job IDs and names, commands
-            and scripts, environment variables,
+            Job IDs and names, commands and scripts, environment variables,
             filesystem paths, stdout/stderr and other logs, SSH credentials,
             passwords, and collector tokens are not sent to this page.
           </div>
@@ -1393,14 +1429,15 @@
       <span>For operational awareness only—not a scheduler guarantee</span>
     </footer>
 
+    <script src="queue.js?v=20261117-1"></script>
     <script>
       (() => {
         "use strict";
 
         const API_URL =
-          "https://kaimwopilugeilwnhclv.supabase.co/rest/v1/monitor_snapshots" +
+          "https://bnhogvsocrvydfdkjgcp.supabase.co/rest/v1/monitor_snapshots" +
           "?source_id=eq.betty-public&select=payload,observed_at&limit=1";
-        const API_KEY = "sb_publishable_tCs3OT7S9GmSRAfqTaYA2g_Kky4xYPR";
+        const API_KEY = "sb_publishable_YFgnEJoOcPjL0mJSxBZHwg_Kn7T-dim";
         const REFRESH_MS = 120_000;
         const els = Object.fromEntries(
           Array.from(document.querySelectorAll("[id]")).map((element) => [
@@ -1950,6 +1987,7 @@
           renderResources(payload);
           renderNodes(payload);
           renderQueue(payload);
+          window.BettyQueue.render(payload, currentObservedAt);
           renderStorage(payload);
           renderNotices(payload);
           drawHistory();
@@ -1975,7 +2013,7 @@
               payload?.schema_version === "monitor.public.v1" &&
               payload?.privacy === "public_aggregate";
             const isV2 =
-              payload?.schema_version === "monitor.public.v2" &&
+              ["monitor.public.v2", "monitor.public.v3"].includes(payload?.schema_version) &&
               payload?.privacy === "lab_authorized_operational";
             if (
               !payload ||
