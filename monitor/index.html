@@ -583,6 +583,182 @@
         line-height: 1.5;
       }
 
+
+      /* Job details are intentionally opt-in: the public feed has no identities. */
+      .job-explorer {
+        margin-top: 16px;
+        padding: 20px;
+      }
+
+      .job-controls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .job-controls-group {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .job-controls button,
+      .local-import button {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: var(--ink);
+        padding: 8px 12px;
+        font-size: 0.73rem;
+        font-weight: 750;
+        cursor: pointer;
+      }
+
+      .job-controls button[aria-pressed="true"] {
+        border-color: var(--green);
+        background: var(--green-soft);
+        color: #315c49;
+      }
+
+      .job-controls select {
+        padding: 8px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: var(--ink);
+        font: inherit;
+        font-size: 0.73rem;
+      }
+
+      .job-source {
+        color: var(--muted);
+        font-size: 0.7rem;
+      }
+
+      .job-explorer-summary {
+        margin: 14px 0;
+        color: var(--muted);
+        font-size: 0.74rem;
+        line-height: 1.5;
+      }
+
+      .jobs-table-shell {
+        max-height: 410px;
+        overflow: auto;
+        border: 1px solid var(--line-soft);
+        border-radius: 6px;
+      }
+
+      .jobs-table {
+        width: 100%;
+        min-width: 820px;
+        border-collapse: collapse;
+      }
+
+      .jobs-table th,
+      .jobs-table td {
+        border-bottom: 1px solid var(--line-soft);
+        padding: 11px 13px;
+        font-size: 0.71rem;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .jobs-table th {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        background: var(--paper);
+        color: var(--muted);
+        font-size: 0.66rem;
+        text-transform: uppercase;
+        letter-spacing: 0.045em;
+      }
+
+      .jobs-table tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .jobs-table tbody tr:hover td {
+        background: var(--surface-strong);
+      }
+
+      .jobs-table .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+
+      .jobs-table .job-empty {
+        text-align: center;
+        padding: 26px 14px;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .job-state {
+        display: inline-block;
+        border-radius: 4px;
+        padding: 3px 6px;
+        background: var(--amber-soft);
+        color: #765019;
+        font-size: 0.66rem;
+        font-weight: 800;
+      }
+
+      .job-state[data-status="running"] {
+        background: var(--green-soft);
+        color: #315c49;
+      }
+
+      .local-import {
+        margin-top: 17px;
+        border-top: 1px solid var(--line-soft);
+        padding-top: 15px;
+      }
+
+      .local-import summary {
+        cursor: pointer;
+        color: var(--blue);
+        font-size: 0.75rem;
+        font-weight: 770;
+      }
+
+      .local-import p {
+        color: var(--muted);
+        font-size: 0.71rem;
+        line-height: 1.6;
+      }
+
+      .local-import code {
+        overflow-wrap: anywhere;
+        font-size: 0.69rem;
+      }
+
+      .local-import textarea {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--surface-strong);
+        color: var(--ink);
+        font: 0.72rem/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        resize: vertical;
+      }
+
+      .local-import .import-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .local-import .import-feedback {
+        margin-bottom: 0;
+      }
+
       .compact-panel {
         min-height: 100%;
         padding: 20px;
@@ -1333,6 +1509,68 @@
             </p>
           </article>
         </div>
+
+        <article class="panel job-explorer" aria-labelledby="job-explorer-heading">
+          <div class="compact-title">
+            <h3 id="job-explorer-heading">Lab job explorer</h3>
+            <span>Running &amp; pending jobs</span>
+          </div>
+          <div class="job-controls">
+            <div class="job-controls-group">
+              <button type="button" id="job-usernames-toggle" aria-pressed="false">Show usernames</button>
+              <label for="job-state-filter" class="job-source">Status</label>
+              <select id="job-state-filter" aria-label="Filter job state">
+                <option value="all">All jobs</option>
+                <option value="pending">Pending</option>
+                <option value="running">Running</option>
+              </select>
+            </div>
+            <span class="job-source" id="job-source">Checking detail availability…</span>
+          </div>
+          <p class="job-explorer-summary" id="job-explorer-summary" role="status">
+            The public telemetry stream provides aggregate counts. User-level detail
+            appears only if supplied by an authorized feed or imported locally.
+          </p>
+          <div class="jobs-table-shell">
+            <table class="jobs-table" aria-labelledby="job-explorer-heading">
+              <thead>
+                <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Partition</th>
+                  <th scope="col">CPU</th>
+                  <th scope="col">Already queued</th>
+                  <th scope="col">Runtime</th>
+                  <th scope="col">Pending reason</th>
+                  <th scope="col">Estimated start</th>
+                </tr>
+              </thead>
+              <tbody id="job-explorer-body">
+                <tr><td colspan="8" class="job-empty">Loading job visibility…</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <details class="local-import">
+            <summary>Load Slurm jobs locally to see individual wait times</summary>
+            <p>
+              Run this in a Betty SSH terminal, replacing YOUR_LAB_ACCOUNT with the
+              Slurm account you want to inspect. Paste its output below.
+              Data stays in this browser tab; the page does not upload or store it.
+            </p>
+            <p><code>squeue -r --noheader --account=YOUR_LAB_ACCOUNT --format='%u|%t|%P|%V|%S|%R|%i|%C'</code></p>
+            <textarea id="job-import-text" rows="4" spellcheck="false"
+              aria-label="Paste Slurm queue output"
+              placeholder="Paste the output from the squeue command…"></textarea>
+            <div class="import-actions">
+              <button type="button" id="job-import-button">Load local queue</button>
+              <button type="button" id="job-clear-button">Clear local queue</button>
+            </div>
+            <p class="import-feedback" id="job-import-feedback" role="status">
+              Importing is optional. Queue time means elapsed time since submission,
+              not how long a job will still wait.
+            </p>
+          </details>
+        </article>
       </section>
 
       <section class="section" aria-labelledby="storage-heading">
@@ -1413,6 +1651,10 @@
         let currentObservedAt = null;
         let historyPoints = [];
         let connectionError = false;
+        let localJobs = null;
+        let localImportedAt = null;
+        let showUsernames = false;
+        let jobFilter = 'all';
 
         const finite = (value) =>
           typeof value === "number" && Number.isFinite(value) ? value : null;
@@ -1796,6 +2038,166 @@
           renderBarList(els["reason-bars"], reasons, "var(--amber)");
         }
 
+
+        // Detailed user-level records are never inferred from public aggregate counts.
+        // A locally pasted squeue export stays in memory; it is never uploaded.
+        function jobTimestamp(value) {
+          if (!value || typeof value !== "string" || /^(n\/a|unknown|none|-)$/i.test(value.trim())) {
+            return null;
+          }
+          const stamp = new Date(value).getTime();
+          return Number.isFinite(stamp) ? stamp : null;
+        }
+
+        function jobStatus(value) {
+          const code = String(value || "").trim().toUpperCase();
+          if (code === "PD" || code === "PENDING" || code === "CF" || code === "CONFIGURING") return "pending";
+          if (code === "R" || code === "RUNNING" || code === "CG" || code === "COMPLETING") return "running";
+          return null;
+        }
+
+        function parseSlurmPaste(raw) {
+          if (raw.length > 300000) throw new Error("Paste is too large (300 KB limit).");
+          const lines = raw.trim().split(/\r?\n/).filter(Boolean);
+          if (!lines.length) throw new Error("Paste at least one squeue row.");
+          if (lines.length > 2000) throw new Error("Limit the export to 2,000 job rows.");
+          const jobs = [];
+          let invalid = 0;
+          lines.forEach((line) => {
+            const fields = line.split("|").map((part) => part.trim());
+            const status = jobStatus(fields[1]);
+            if (fields.length !== 8 || !status || !fields[0]) {
+              invalid += 1;
+              return;
+            }
+            jobs.push({
+              username: fields[0],
+              state: status,
+              partition: fields[2],
+              submitted_at: fields[3],
+              started_at: status === "running" ? fields[4] : null,
+              estimated_start_at: status === "pending" ? fields[4] : null,
+              reason: status === "pending" ? fields[5].replace(/^\(|\)$/g, "") : null,
+              allocated_cpu_cores: Number(fields[7]),
+            });
+          });
+          if (!jobs.length) {
+            throw new Error("No valid rows. Use the exact eight-column squeue command shown above.");
+          }
+          return { jobs, invalid };
+        }
+
+        function jobDetailRows() {
+          if (localJobs !== null) return localJobs;
+          if (!currentPayload || currentPayload.privacy !== "lab_authorized_operational" ||
+              currentPayload.schema_version !== "monitor.public.v2") return null;
+          const running = Array.isArray(currentPayload.running_allocations)
+            ? currentPayload.running_allocations.map((item) => ({ ...item, state: "running" }))
+            : [];
+          const pending = Array.isArray(currentPayload.pending_allocations)
+            ? currentPayload.pending_allocations.map((item) => ({ ...item, state: "pending" }))
+            : [];
+          return running.length || pending.length ||
+            Array.isArray(currentPayload.running_allocations) ||
+            Array.isArray(currentPayload.pending_allocations)
+            ? pending.concat(running) : null;
+        }
+
+        function jobWaitSeconds(item, anchor) {
+          const explicit = finite(item.wait_seconds);
+          if (explicit !== null) return Math.max(0, explicit);
+          const submitted = jobTimestamp(item.submitted_at || item.submit_time || item.submitted);
+          if (submitted === null) return null;
+          const started = jobTimestamp(item.started_at || item.start_at || item.start_time);
+          const until = item.state === "running" ? started : anchor;
+          return until === null ? null : Math.max(0, Math.round((until - submitted) / 1000));
+        }
+
+        function jobRuntimeSeconds(item, anchor) {
+          if (item.state !== "running") return null;
+          const explicit = finite(item.runtime_seconds);
+          if (explicit !== null) return Math.max(0, explicit);
+          const started = jobTimestamp(item.started_at || item.start_at || item.start_time);
+          return started === null || anchor === null ? null
+            : Math.max(0, Math.round((anchor - started) / 1000));
+        }
+
+        function jobStartText(item) {
+          if (item.state !== "pending") return "—";
+          const estimate = item.estimated_start_at || item.estimated_start ||
+            item.start_estimate_at;
+          return jobTimestamp(estimate) === null ? "Not available" : formatDate(estimate);
+        }
+
+        function renderJobExplorer() {
+          const all = jobDetailRows();
+          const referenceTime = localJobs !== null
+            ? localImportedAt
+            : (jobTimestamp(currentObservedAt) || Date.now());
+          const available = Array.isArray(all);
+          const source = localJobs !== null ? "Local Slurm export · not uploaded"
+            : available ? "Detailed snapshot" : "Aggregate-only public snapshot";
+          els["job-source"].textContent = source;
+          const rows = available ? all.slice() : [];
+          rows.sort((a, b) =>
+            Number(b.state === "pending") - Number(a.state === "pending") ||
+            (jobWaitSeconds(b, referenceTime) ?? -1) -
+            (jobWaitSeconds(a, referenceTime) ?? -1));
+          const pending = rows.filter((row) => row.state === "pending").length;
+          const running = rows.filter((row) => row.state === "running").length;
+          const users = new Set(rows.map((row) => row.username).filter(Boolean)).size;
+          els["job-explorer-summary"].textContent = available
+            ? rows.length + " records · " + pending + " pending / " + running +
+              " running · " + users + " users · " +
+              (localJobs !== null ? "captured " + formatDate(new Date(localImportedAt).toISOString()) :
+              "latest detailed snapshot") +
+              ". Queue durations are elapsed, not estimates of remaining wait."
+            : "The public snapshot does not provide usernames or per-job submission times. " +
+              "Load a Slurm export locally to inspect each user's queue and running times.";
+          const visible = rows.filter((row) => jobFilter === "all" || row.state === jobFilter);
+          els["job-explorer-body"].replaceChildren();
+          if (!visible.length) {
+            const tr = create("tr");
+            const td = create("td", "job-empty",
+              !available ? "Per-user job data is not in the public feed. Expand the local import option below." :
+              "No " + (jobFilter === "all" ? "" : jobFilter + " ") + "jobs in this dataset.");
+            td.colSpan = 8;
+            tr.append(td);
+            els["job-explorer-body"].append(tr);
+            return;
+          }
+          visible.slice(0, 500).forEach((item) => {
+            const tr = create("tr");
+            const status = create("span", "job-state", item.state === "pending" ? "Pending" : "Running");
+            status.dataset.status = item.state;
+            const stateTd = create("td");
+            stateTd.append(status);
+            const timeQueued = jobWaitSeconds(item, referenceTime);
+            const timeRunning = jobRuntimeSeconds(item, referenceTime);
+            const reason = item.state === "pending"
+              ? (item.reason || item.pending_reason || "—") : "—";
+            tr.append(
+              create("td", "mono", showUsernames ? item.username || "—" : "••••"),
+              stateTd,
+              create("td", "", item.partition || "—"),
+              create("td", "", formatNumber(finite(item.allocated_cpu_cores) ??
+                finite(item.requested_cpu_cores))),
+              create("td", "", formatDuration(timeQueued)),
+              create("td", "", formatDuration(timeRunning)),
+              create("td", "", String(reason).replace(/^\(|\)$/g, "")),
+              create("td", "", jobStartText(item)),
+            );
+            els["job-explorer-body"].append(tr);
+          });
+          if (visible.length > 500) {
+            const tr = create("tr");
+            const td = create("td", "job-empty", "Showing the first 500 records. Filter by status to narrow the list.");
+            td.colSpan = 8;
+            tr.append(td);
+            els["job-explorer-body"].append(tr);
+          }
+        }
+
         function renderStorage(payload) {
           const storage = Array.isArray(payload.storage) ? payload.storage : [];
           els["storage-grid"].replaceChildren();
@@ -1950,6 +2352,7 @@
           renderResources(payload);
           renderNodes(payload);
           renderQueue(payload);
+          renderJobExplorer();
           renderStorage(payload);
           renderNotices(payload);
           drawHistory();
@@ -2005,6 +2408,39 @@
           }
         }
 
+
+        els["job-usernames-toggle"].addEventListener("click", () => {
+          showUsernames = !showUsernames;
+          els["job-usernames-toggle"].setAttribute("aria-pressed", String(showUsernames));
+          els["job-usernames-toggle"].textContent = showUsernames ? "Hide usernames" : "Show usernames";
+          renderJobExplorer();
+        });
+        els["job-state-filter"].addEventListener("change", (event) => {
+          jobFilter = event.target.value;
+          renderJobExplorer();
+        });
+        els["job-import-button"].addEventListener("click", () => {
+          try {
+            const result = parseSlurmPaste(els["job-import-text"].value);
+            localJobs = result.jobs;
+            localImportedAt = Date.now();
+            els["job-import-text"].value = "";
+            els["job-import-feedback"].textContent = "Loaded " + result.jobs.length +
+              " records into this tab only" +
+              (result.invalid ? "; skipped " + result.invalid + " malformed rows." : ".");
+            renderJobExplorer();
+          } catch (error) {
+            els["job-import-feedback"].textContent = error.message;
+          }
+        });
+        els["job-clear-button"].addEventListener("click", () => {
+          localJobs = null;
+          localImportedAt = null;
+          els["job-import-text"].value = "";
+          els["job-import-feedback"].textContent = "Local queue cleared. The public aggregate snapshot remains available.";
+          renderJobExplorer();
+        });
+
         els["refresh-button"].addEventListener("click", () => loadSnapshot({ manual: true }));
         window.addEventListener("resize", () => window.requestAnimationFrame(drawHistory));
         document.addEventListener("visibilitychange", () => {
@@ -2012,6 +2448,7 @@
         });
         window.setInterval(loadSnapshot, REFRESH_MS);
         window.setInterval(updateFreshness, 30_000);
+        renderJobExplorer();
         loadSnapshot();
       })();
     </script>
