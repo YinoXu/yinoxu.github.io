@@ -43,7 +43,26 @@
     "B_cytoplasmic_area_um2": 34.318749999999994,
     "wholecell_contours": false,
     "TLS_boundary": "Exact frozen25um candidate raster, contour interpolation",
-    "HE_sha256": "f69f97f986fe61b96227552e71cae265f748f938ca71d6cbe2057a8d674ea9fd"
+    "HE_sha256": "f69f97f986fe61b96227552e71cae265f748f938ca71d6cbe2057a8d674ea9fd",
+    "display_encoding": {
+      "point_area_pt2": 7.5,
+      "opacity": 1.0,
+      "color": "coarse-group argmax",
+      "colors": {
+        "B": "#2344A0",
+        "T": "#A52276",
+        "Plasma": "#700D47",
+        "MonoMac": "#9A4600",
+        "DC": "#006F87",
+        "Neutrophil": "#806000",
+        "Endothelium": "#00634E",
+        "Stroma": "#573080",
+        "Epithelial": "#3C6876",
+        "Other": "#5B626B"
+      },
+      "TLS_linewidth_pt": 1.65,
+      "point_size_is_not_cell_size": true
+    }
   },
   {
     "sample": "P1_B",
@@ -89,7 +108,26 @@
     "B_cytoplasmic_area_um2": 30.70625,
     "wholecell_contours": false,
     "TLS_boundary": "Exact frozen25um candidate raster, contour interpolation",
-    "HE_sha256": "44fc498e7d747844300935459c791a15cc7b686ec4d224a7a395a43bf6b2df1d"
+    "HE_sha256": "44fc498e7d747844300935459c791a15cc7b686ec4d224a7a395a43bf6b2df1d",
+    "display_encoding": {
+      "point_area_pt2": 7.5,
+      "opacity": 1.0,
+      "color": "coarse-group argmax",
+      "colors": {
+        "B": "#2344A0",
+        "T": "#A52276",
+        "Plasma": "#700D47",
+        "MonoMac": "#9A4600",
+        "DC": "#006F87",
+        "Neutrophil": "#806000",
+        "Endothelium": "#00634E",
+        "Stroma": "#573080",
+        "Epithelial": "#3C6876",
+        "Other": "#5B626B"
+      },
+      "TLS_linewidth_pt": 1.65,
+      "point_size_is_not_cell_size": true
+    }
   },
   {
     "sample": "P2_A",
@@ -135,7 +173,26 @@
     "B_cytoplasmic_area_um2": 20.23,
     "wholecell_contours": false,
     "TLS_boundary": "Exact frozen25um candidate raster, contour interpolation",
-    "HE_sha256": "ecdb63ac14da73e35a4a8f0fcd2d91bd35cb7020b1ace553549259896b2b29cc"
+    "HE_sha256": "ecdb63ac14da73e35a4a8f0fcd2d91bd35cb7020b1ace553549259896b2b29cc",
+    "display_encoding": {
+      "point_area_pt2": 7.5,
+      "opacity": 1.0,
+      "color": "coarse-group argmax",
+      "colors": {
+        "B": "#2344A0",
+        "T": "#A52276",
+        "Plasma": "#700D47",
+        "MonoMac": "#9A4600",
+        "DC": "#006F87",
+        "Neutrophil": "#806000",
+        "Endothelium": "#00634E",
+        "Stroma": "#573080",
+        "Epithelial": "#3C6876",
+        "Other": "#5B626B"
+      },
+      "TLS_linewidth_pt": 1.65,
+      "point_size_is_not_cell_size": true
+    }
   },
   {
     "sample": "P2_B",
@@ -181,7 +238,26 @@
     "B_cytoplasmic_area_um2": 25.2875,
     "wholecell_contours": false,
     "TLS_boundary": "Exact frozen25um candidate raster, contour interpolation",
-    "HE_sha256": "b8d8bcd7bee353eceb23c06ae93d740b9d85ee0be52fd37ea1e07748570384ac"
+    "HE_sha256": "b8d8bcd7bee353eceb23c06ae93d740b9d85ee0be52fd37ea1e07748570384ac",
+    "display_encoding": {
+      "point_area_pt2": 7.5,
+      "opacity": 1.0,
+      "color": "coarse-group argmax",
+      "colors": {
+        "B": "#2344A0",
+        "T": "#A52276",
+        "Plasma": "#700D47",
+        "MonoMac": "#9A4600",
+        "DC": "#006F87",
+        "Neutrophil": "#806000",
+        "Endothelium": "#00634E",
+        "Stroma": "#573080",
+        "Epithelial": "#3C6876",
+        "Other": "#5B626B"
+      },
+      "TLS_linewidth_pt": 1.65,
+      "point_size_is_not_cell_size": true
+    }
   },
   {
     "sample": "P3_A",
@@ -227,7 +303,26 @@
     "B_cytoplasmic_area_um2": 22.939375,
     "wholecell_contours": false,
     "TLS_boundary": "Exact frozen25um candidate raster, contour interpolation",
-    "HE_sha256": "d146707575601a0da902d56715096799596cd8c56cf97d7d2d322b4d15b225f5"
+    "HE_sha256": "d146707575601a0da902d56715096799596cd8c56cf97d7d2d322b4d15b225f5",
+    "display_encoding": {
+      "point_area_pt2": 7.5,
+      "opacity": 1.0,
+      "color": "coarse-group argmax",
+      "colors": {
+        "B": "#2344A0",
+        "T": "#A52276",
+        "Plasma": "#700D47",
+        "MonoMac": "#9A4600",
+        "DC": "#006F87",
+        "Neutrophil": "#806000",
+        "Endothelium": "#00634E",
+        "Stroma": "#573080",
+        "Epithelial": "#3C6876",
+        "Other": "#5B626B"
+      },
+      "TLS_linewidth_pt": 1.65,
+      "point_size_is_not_cell_size": true
+    }
   },
   {
     "sample": "P3_B",
@@ -273,7 +368,26 @@
     "B_cytoplasmic_area_um2": 21.31375,
     "wholecell_contours": false,
     "TLS_boundary": "Exact frozen25um candidate raster, contour interpolation",
-    "HE_sha256": "c47e68c3e8a8643f4f526227a4432efef1cae8e09f270ea7a086af8611332bd6"
+    "HE_sha256": "c47e68c3e8a8643f4f526227a4432efef1cae8e09f270ea7a086af8611332bd6",
+    "display_encoding": {
+      "point_area_pt2": 7.5,
+      "opacity": 1.0,
+      "color": "coarse-group argmax",
+      "colors": {
+        "B": "#2344A0",
+        "T": "#A52276",
+        "Plasma": "#700D47",
+        "MonoMac": "#9A4600",
+        "DC": "#006F87",
+        "Neutrophil": "#806000",
+        "Endothelium": "#00634E",
+        "Stroma": "#573080",
+        "Epithelial": "#3C6876",
+        "Other": "#5B626B"
+      },
+      "TLS_linewidth_pt": 1.65,
+      "point_size_is_not_cell_size": true
+    }
   },
   {
     "sample": "P4_A",
@@ -319,7 +433,26 @@
     "B_cytoplasmic_area_um2": 24.023125,
     "wholecell_contours": false,
     "TLS_boundary": "Exact frozen25um candidate raster, contour interpolation",
-    "HE_sha256": "8fdfcb39e9a86cd5f92e14bdf3da8f84f0c827286d1225d22a429ca501183bc9"
+    "HE_sha256": "8fdfcb39e9a86cd5f92e14bdf3da8f84f0c827286d1225d22a429ca501183bc9",
+    "display_encoding": {
+      "point_area_pt2": 7.5,
+      "opacity": 1.0,
+      "color": "coarse-group argmax",
+      "colors": {
+        "B": "#2344A0",
+        "T": "#A52276",
+        "Plasma": "#700D47",
+        "MonoMac": "#9A4600",
+        "DC": "#006F87",
+        "Neutrophil": "#806000",
+        "Endothelium": "#00634E",
+        "Stroma": "#573080",
+        "Epithelial": "#3C6876",
+        "Other": "#5B626B"
+      },
+      "TLS_linewidth_pt": 1.65,
+      "point_size_is_not_cell_size": true
+    }
   },
   {
     "sample": "P4_B",
@@ -365,7 +498,26 @@
     "B_cytoplasmic_area_um2": 20.410625,
     "wholecell_contours": false,
     "TLS_boundary": "Exact frozen25um candidate raster, contour interpolation",
-    "HE_sha256": "8614294815819cf67d4b688af75dfade32fba449750c25d52cff64a2635d4493"
+    "HE_sha256": "8614294815819cf67d4b688af75dfade32fba449750c25d52cff64a2635d4493",
+    "display_encoding": {
+      "point_area_pt2": 7.5,
+      "opacity": 1.0,
+      "color": "coarse-group argmax",
+      "colors": {
+        "B": "#2344A0",
+        "T": "#A52276",
+        "Plasma": "#700D47",
+        "MonoMac": "#9A4600",
+        "DC": "#006F87",
+        "Neutrophil": "#806000",
+        "Endothelium": "#00634E",
+        "Stroma": "#573080",
+        "Epithelial": "#3C6876",
+        "Other": "#5B626B"
+      },
+      "TLS_linewidth_pt": 1.65,
+      "point_size_is_not_cell_size": true
+    }
   },
   {
     "sample": "P5_A",
@@ -411,7 +563,26 @@
     "B_cytoplasmic_area_um2": 19.688125,
     "wholecell_contours": false,
     "TLS_boundary": "Exact frozen25um candidate raster, contour interpolation",
-    "HE_sha256": "281324d0b5fb919531b0c73b96649df644f890ae7a7517aab83db8f13200e30b"
+    "HE_sha256": "281324d0b5fb919531b0c73b96649df644f890ae7a7517aab83db8f13200e30b",
+    "display_encoding": {
+      "point_area_pt2": 7.5,
+      "opacity": 1.0,
+      "color": "coarse-group argmax",
+      "colors": {
+        "B": "#2344A0",
+        "T": "#A52276",
+        "Plasma": "#700D47",
+        "MonoMac": "#9A4600",
+        "DC": "#006F87",
+        "Neutrophil": "#806000",
+        "Endothelium": "#00634E",
+        "Stroma": "#573080",
+        "Epithelial": "#3C6876",
+        "Other": "#5B626B"
+      },
+      "TLS_linewidth_pt": 1.65,
+      "point_size_is_not_cell_size": true
+    }
   },
   {
     "sample": "P5_B",
@@ -457,7 +628,26 @@
     "B_cytoplasmic_area_um2": 18.965625,
     "wholecell_contours": false,
     "TLS_boundary": "Exact frozen25um candidate raster, contour interpolation",
-    "HE_sha256": "599fde13ab1de901cd16e8d009f1c9fe6240f6d939f5b64793d7378e45ee675a"
+    "HE_sha256": "599fde13ab1de901cd16e8d009f1c9fe6240f6d939f5b64793d7378e45ee675a",
+    "display_encoding": {
+      "point_area_pt2": 7.5,
+      "opacity": 1.0,
+      "color": "coarse-group argmax",
+      "colors": {
+        "B": "#2344A0",
+        "T": "#A52276",
+        "Plasma": "#700D47",
+        "MonoMac": "#9A4600",
+        "DC": "#006F87",
+        "Neutrophil": "#806000",
+        "Endothelium": "#00634E",
+        "Stroma": "#573080",
+        "Epithelial": "#3C6876",
+        "Other": "#5B626B"
+      },
+      "TLS_linewidth_pt": 1.65,
+      "point_size_is_not_cell_size": true
+    }
   },
   {
     "sample": "P6_A",
@@ -503,7 +693,26 @@
     "B_cytoplasmic_area_um2": 20.049375,
     "wholecell_contours": false,
     "TLS_boundary": "Exact frozen25um candidate raster, contour interpolation",
-    "HE_sha256": "a5e6c4514c906b1f0b6f3a1999346cb18aaee09db39b2283840452b44b99d8c8"
+    "HE_sha256": "a5e6c4514c906b1f0b6f3a1999346cb18aaee09db39b2283840452b44b99d8c8",
+    "display_encoding": {
+      "point_area_pt2": 7.5,
+      "opacity": 1.0,
+      "color": "coarse-group argmax",
+      "colors": {
+        "B": "#2344A0",
+        "T": "#A52276",
+        "Plasma": "#700D47",
+        "MonoMac": "#9A4600",
+        "DC": "#006F87",
+        "Neutrophil": "#806000",
+        "Endothelium": "#00634E",
+        "Stroma": "#573080",
+        "Epithelial": "#3C6876",
+        "Other": "#5B626B"
+      },
+      "TLS_linewidth_pt": 1.65,
+      "point_size_is_not_cell_size": true
+    }
   },
   {
     "sample": "P6_B",
@@ -549,6 +758,25 @@
     "B_cytoplasmic_area_um2": 23.12,
     "wholecell_contours": false,
     "TLS_boundary": "Exact frozen25um candidate raster, contour interpolation",
-    "HE_sha256": "0d8855bf705c20ebaa4234d325325eb03d258499e459392a7afad7a4e5654aeb"
+    "HE_sha256": "0d8855bf705c20ebaa4234d325325eb03d258499e459392a7afad7a4e5654aeb",
+    "display_encoding": {
+      "point_area_pt2": 7.5,
+      "opacity": 1.0,
+      "color": "coarse-group argmax",
+      "colors": {
+        "B": "#2344A0",
+        "T": "#A52276",
+        "Plasma": "#700D47",
+        "MonoMac": "#9A4600",
+        "DC": "#006F87",
+        "Neutrophil": "#806000",
+        "Endothelium": "#00634E",
+        "Stroma": "#573080",
+        "Epithelial": "#3C6876",
+        "Other": "#5B626B"
+      },
+      "TLS_linewidth_pt": 1.65,
+      "point_size_is_not_cell_size": true
+    }
   }
 ]
