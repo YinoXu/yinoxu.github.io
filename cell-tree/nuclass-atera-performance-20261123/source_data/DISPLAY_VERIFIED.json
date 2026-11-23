@@ -1,0 +1,282 @@
+{
+  "PASS": true,
+  "probability_and_confusion_replays": [
+    {
+      "organ": "breast",
+      "model": "NuClass_v15",
+      "provided": 485985,
+      "scored": 277710,
+      "TLS8_CM_exact": true,
+      "native47_CM_exact": true,
+      "probability_sha256": "d3c1b286134946b1d9b6b27a66cf03e209db18cbd78e3df67ae939f9d5c76ced"
+    },
+    {
+      "organ": "breast",
+      "model": "CellSTP_v7_1",
+      "provided": 485985,
+      "scored": 277710,
+      "TLS8_CM_exact": true,
+      "native47_CM_exact": true,
+      "probability_sha256": "f147921625475c1d10bf7b35da71bfe39dafa514c58a1a9e59296ef1bb6ce2cb"
+    },
+    {
+      "organ": "colorectal",
+      "model": "NuClass_v15",
+      "provided": 446777,
+      "scored": 317552,
+      "TLS8_CM_exact": true,
+      "native47_CM_exact": true,
+      "probability_sha256": "a70e0f8a5a7b1cd1748a20f9adb5962d5dc998f395d84d87a9fd10e6d3caa3d7"
+    },
+    {
+      "organ": "colorectal",
+      "model": "CellSTP_v7_1",
+      "provided": 446777,
+      "scored": 317552,
+      "TLS8_CM_exact": true,
+      "native47_CM_exact": true,
+      "probability_sha256": "1e0bf979429421b6a24e3dc7c82fee721ab687d6ea8f22ef73566f6593efadcd"
+    },
+    {
+      "organ": "kidney",
+      "model": "NuClass_v15",
+      "provided": 399120,
+      "scored": 322116,
+      "TLS8_CM_exact": true,
+      "native47_CM_exact": true,
+      "probability_sha256": "d7738027e6a5a8f0ca9469790995d4367afb3f18509dca4356545e6d7771d3ca"
+    },
+    {
+      "organ": "kidney",
+      "model": "CellSTP_v7_1",
+      "provided": 399120,
+      "scored": 322116,
+      "TLS8_CM_exact": true,
+      "native47_CM_exact": true,
+      "probability_sha256": "da92418ad0b64c0c4113650f53c88a3eac3f699f0f4860d31425dfa78a3e2765"
+    },
+    {
+      "organ": "brain",
+      "model": "NuClass_v15",
+      "provided": 91431,
+      "scored": 77762,
+      "TLS8_CM_exact": true,
+      "native47_CM_exact": true,
+      "probability_sha256": "ce07b91a42b42a94813e1c4c4a238fca4ac120016a968f47ee9f5e3467833e56"
+    },
+    {
+      "organ": "brain",
+      "model": "CellSTP_v7_1",
+      "provided": 91431,
+      "scored": 77762,
+      "TLS8_CM_exact": true,
+      "native47_CM_exact": true,
+      "probability_sha256": "73cb133d90f055dd47c6686c5fdbfa59b9ce642b71760c250968611a0f792d10"
+    }
+  ],
+  "all_prior_inputs_unchanged": {
+    "/home/yinuo/VESSEL/nuclass_atera_external_benchmark_20261114/derived/multiresolution_20261115/SUMMARY.csv": "a5dee3a1e7cf4300c44bfa8bafdb848676a1fc722294cc9656b16f9e839603cd",
+    "/home/yinuo/VESSEL/nuclass_atera_external_benchmark_20261114/derived/multiresolution_20261115/PER_TYPE.csv": "a94be8f93ae40351b6efc0401c7e1d4ac47646e549615571362ccf446130c2e0",
+    "/home/yinuo/VESSEL/nuclass_atera_external_benchmark_20261114/derived/multiresolution_20261115/CONFUSIONS.json": "8a327a3f1cfc2b700e595e7885fcf391cbbeb40fc06e87ba38088fced763b99e",
+    "/home/yinuo/VESSEL/nuclass_atera_external_benchmark_20261114/provenance/FROZEN_FINE_REFERENCE_MAPPING.csv": "f7cf3eabda009fcbc6c1e599d6948a68b13bd765c84ab9c187736076457dd694",
+    "/home/yinuo/VESSEL/nuclass_atera_external_benchmark_20261114/provenance/HOLDOUT_AND_ORGAN_AUDIT.json": "40e0c143699528ea420f068a6f2e427e391650dab99a8146c2eb4d744e6a94a0"
+  },
+  "patches": [
+    {
+      "organ": "breast",
+      "patch": 1,
+      "origin": [
+        6609,
+        8809
+      ],
+      "canonical_mpp": 0.5,
+      "width_um": 256,
+      "provided_centroids": 283,
+      "intersecting_nuclear_polygons": 292,
+      "selection": "nearest provided centroid to componentwise spatial quantile; before model predictions",
+      "image_array_sha256": "dd53738660bec01f441d29d2448fa2c0adb7649aefe865a350aa28d4fded7a9a",
+      "resolved_TLS8_reference": 234,
+      "resolved_native47_reference": 195
+    },
+    {
+      "organ": "breast",
+      "patch": 2,
+      "origin": [
+        9258,
+        13101
+      ],
+      "canonical_mpp": 0.5,
+      "width_um": 256,
+      "provided_centroids": 562,
+      "intersecting_nuclear_polygons": 590,
+      "selection": "nearest provided centroid to componentwise spatial quantile; before model predictions",
+      "image_array_sha256": "92043ce05043acef86e5fa485201e53162262a57cb5ef08af2cb2809233119ac",
+      "resolved_TLS8_reference": 180,
+      "resolved_native47_reference": 75
+    },
+    {
+      "organ": "breast",
+      "patch": 3,
+      "origin": [
+        11995,
+        18421
+      ],
+      "canonical_mpp": 0.5,
+      "width_um": 256,
+      "provided_centroids": 404,
+      "intersecting_nuclear_polygons": 436,
+      "selection": "nearest provided centroid to componentwise spatial quantile; before model predictions",
+      "image_array_sha256": "4ea775bbcc61f9decf38b8cb91bcd2dad614cb855ddb96258386ad8dd2a5a46c",
+      "resolved_TLS8_reference": 191,
+      "resolved_native47_reference": 64
+    },
+    {
+      "organ": "colorectal",
+      "patch": 1,
+      "origin": [
+        5050,
+        6065
+      ],
+      "canonical_mpp": 0.5,
+      "width_um": 256,
+      "provided_centroids": 468,
+      "intersecting_nuclear_polygons": 489,
+      "selection": "nearest provided centroid to componentwise spatial quantile; before model predictions",
+      "image_array_sha256": "6ec4361eb297741d7e6f331eeb2f15386c27ab7f5bf3ef3deab6ce0cc427beb2",
+      "resolved_TLS8_reference": 322,
+      "resolved_native47_reference": 321
+    },
+    {
+      "organ": "colorectal",
+      "patch": 2,
+      "origin": [
+        7382,
+        10564
+      ],
+      "canonical_mpp": 0.5,
+      "width_um": 256,
+      "provided_centroids": 711,
+      "intersecting_nuclear_polygons": 727,
+      "selection": "nearest provided centroid to componentwise spatial quantile; before model predictions",
+      "image_array_sha256": "5cbc58a93d2b346c8d96074932112b96e1d1f004252f9c3e94252b86a661de7c",
+      "resolved_TLS8_reference": 538,
+      "resolved_native47_reference": 508
+    },
+    {
+      "organ": "colorectal",
+      "patch": 3,
+      "origin": [
+        9839,
+        15987
+      ],
+      "canonical_mpp": 0.5,
+      "width_um": 256,
+      "provided_centroids": 459,
+      "intersecting_nuclear_polygons": 485,
+      "selection": "nearest provided centroid to componentwise spatial quantile; before model predictions",
+      "image_array_sha256": "bbe4f9896dcf1d62cfcf51941b40b07c9f65109778874215e9bb2e2c0b38487d",
+      "resolved_TLS8_reference": 312,
+      "resolved_native47_reference": 309
+    },
+    {
+      "organ": "kidney",
+      "patch": 1,
+      "origin": [
+        3243,
+        7382
+      ],
+      "canonical_mpp": 0.5,
+      "width_um": 256,
+      "provided_centroids": 478,
+      "intersecting_nuclear_polygons": 498,
+      "selection": "nearest provided centroid to componentwise spatial quantile; before model predictions",
+      "image_array_sha256": "791962b66332ec30a8654054b4162d91f85f088b7437c33a9ab456ea1edff7da",
+      "resolved_TLS8_reference": 423,
+      "resolved_native47_reference": 360
+    },
+    {
+      "organ": "kidney",
+      "patch": 2,
+      "origin": [
+        6110,
+        12494
+      ],
+      "canonical_mpp": 0.5,
+      "width_um": 256,
+      "provided_centroids": 389,
+      "intersecting_nuclear_polygons": 405,
+      "selection": "nearest provided centroid to componentwise spatial quantile; before model predictions",
+      "image_array_sha256": "23c0f5c6de09c34f9f668022ac68276fc4b05bbc3b065b262a6ae47e575f7334",
+      "resolved_TLS8_reference": 341,
+      "resolved_native47_reference": 316
+    },
+    {
+      "organ": "kidney",
+      "patch": 3,
+      "origin": [
+        8693,
+        16766
+      ],
+      "canonical_mpp": 0.5,
+      "width_um": 256,
+      "provided_centroids": 486,
+      "intersecting_nuclear_polygons": 506,
+      "selection": "nearest provided centroid to componentwise spatial quantile; before model predictions",
+      "image_array_sha256": "665aa31eb6f3d41e5eab867e182fae9159d2a8b219e9088e3132bd654607a3d0",
+      "resolved_TLS8_reference": 390,
+      "resolved_native47_reference": 356
+    },
+    {
+      "organ": "brain",
+      "patch": 1,
+      "origin": [
+        5163,
+        8097
+      ],
+      "canonical_mpp": 0.5,
+      "width_um": 256,
+      "provided_centroids": 92,
+      "intersecting_nuclear_polygons": 94,
+      "selection": "nearest provided centroid to componentwise spatial quantile; before model predictions",
+      "image_array_sha256": "b7eb6a8f25a8ccebeb2b1ddee5d56d762be3f8022fb5354f3e1a121ac70b5f0d",
+      "resolved_TLS8_reference": 80,
+      "resolved_native47_reference": 79
+    },
+    {
+      "organ": "brain",
+      "patch": 2,
+      "origin": [
+        9200,
+        12947
+      ],
+      "canonical_mpp": 0.5,
+      "width_um": 256,
+      "provided_centroids": 46,
+      "intersecting_nuclear_polygons": 47,
+      "selection": "nearest provided centroid to componentwise spatial quantile; before model predictions",
+      "image_array_sha256": "97886c274a89a0d78fad81eeadc33eb863a9210d9f3661a8f48b537fb9beda37",
+      "resolved_TLS8_reference": 38,
+      "resolved_native47_reference": 37
+    },
+    {
+      "organ": "brain",
+      "patch": 3,
+      "origin": [
+        12763,
+        17637
+      ],
+      "canonical_mpp": 0.5,
+      "width_um": 256,
+      "provided_centroids": 29,
+      "intersecting_nuclear_polygons": 28,
+      "selection": "nearest provided centroid to componentwise spatial quantile; before model predictions",
+      "image_array_sha256": "2237980b30cd13af934313f417488c34da253b7903ea5684d7293fd745e9ce56",
+      "resolved_TLS8_reference": 21,
+      "resolved_native47_reference": 19
+    }
+  ],
+  "composition_denominators_exact": true,
+  "original_predictions_unchanged": true,
+  "all_47_outputs_retained": true,
+  "neural_inference": false
+}

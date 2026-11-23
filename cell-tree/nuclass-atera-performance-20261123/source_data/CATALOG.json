@@ -1,0 +1,38 @@
+[
+  {
+    "organ": "breast",
+    "version": "1.1.1",
+    "sample": "Atera_v1_WTA_S4C_Breast_Cancer_FF",
+    "page": "https://www.10xgenomics.com/datasets/atera-wta-ff-human-breast-cancer",
+    "provider_cells": 485985,
+    "published": "2026-11-05",
+    "base": "https://cf.10xgenomics.com/samples/atera/1.1.1/Atera_v1_WTA_S4C_Breast_Cancer_FF/Atera_v1_WTA_S4C_Breast_Cancer_FF"
+  },
+  {
+    "organ": "colorectal",
+    "version": "1.1.1",
+    "sample": "Atera_v1_WTA_S4B_Colorectal_Cancer_FF",
+    "page": "https://www.10xgenomics.com/datasets/atera-wta-ff-human-crc",
+    "provider_cells": 446777,
+    "published": "2026-11-05",
+    "base": "https://cf.10xgenomics.com/samples/atera/1.1.1/Atera_v1_WTA_S4B_Colorectal_Cancer_FF/Atera_v1_WTA_S4B_Colorectal_Cancer_FF"
+  },
+  {
+    "organ": "kidney",
+    "version": "1.0.4",
+    "sample": "Atera_v1_WTA_Kidney_non_diseased_FFPE",
+    "page": "https://www.10xgenomics.com/datasets/atera-wta-ffpe-human-nd-kidney",
+    "provider_cells": 399120,
+    "published": "2026-10-15",
+    "base": "https://cf.10xgenomics.com/samples/atera/1.0.4/Atera_v1_WTA_Kidney_non_diseased_FFPE/Atera_v1_WTA_Kidney_non_diseased_FFPE"
+  },
+  {
+    "organ": "brain",
+    "version": "1.1.1",
+    "sample": "Atera_v1_WTA_S4A_Brain_Hippocampus_ND_FF",
+    "page": "https://www.10xgenomics.com/datasets/atera-wta-ff-human-nd-brain",
+    "provider_cells": 91431,
+    "published": "2026-11-03",
+    "base": "https://cf.10xgenomics.com/samples/atera/1.1.1/Atera_v1_WTA_S4A_Brain_Hippocampus_ND_FF/Atera_v1_WTA_S4A_Brain_Hippocampus_ND_FF"
+  }
+]

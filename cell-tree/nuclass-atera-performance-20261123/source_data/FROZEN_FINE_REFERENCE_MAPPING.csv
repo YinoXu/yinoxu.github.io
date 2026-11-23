@@ -1,0 +1,596 @@
+organ,official_full_hierarchy,cells,allowed_native47,native_names,unique_native47,reason
+breast,Inconsistent Annotation,176628,,,False,unresolved official reference
+breast,Epithelial cell|Epithelial cell of breast|Mammary luminal progenitor|Cycling mammary luminal progenitor,69853,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+breast,Epithelial cell|Epithelial cell of skin|Keratinocyte|Secretory cell,3862,20,Keratinocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Myeloid cell|Macrophage,10304,7|17,Macrophage|Microglia,False,macrophage parent includes microglia
+breast,Immune cell|Myeloid cell|Macrophage|LYVE1 macrophage,31017,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|T/NK cell|Cycling T/NK cell,13966,2|3|4|6,CD4_T|CD8_T|Treg|NK,False,T/NK parent or cycling mixed identity
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Memory CD4 T cell,3284,2,CD4_T,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|GZMK CD8 T cell,548,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|T/NK cell|NK cell,438,6,NK,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Treg cell,4576,4,Treg,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of breast|Mammary luminal cell|Secretoglobin mammary luminal cell,24383,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+breast,Epithelial cell|Epithelial cell of intestine|Transit-amplifying cell,7269,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of adrenal gland|Capsular cell,207,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Epithelial cell|Epithelial cell of breast|Mammary luminal progenitor|Secretoglobin mammary luminal progenitor,6043,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+breast,Epithelial cell|Epithelial cell of breast|Mammary luminal progenitor|SCGB3A1 mammary luminal progenitor,2356,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell,1036,2|4,CD4_T|Treg,False,CD4 parent includes Treg
+breast,Fibroblast|IGFBP6+APOD+ fibroblast,4147,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Epithelial cell|Epithelial cell of lung|Alveolar epithelial cell|AT1,44,23,Alveolar_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of lung|Neuroendocrine cell,446,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Endothelial cell|Venous EC,9740,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of breast|Mammary luminal progenitor|SAA2 mammary luminal progenitor,505,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+breast,Endothelial cell|Arterial EC,2112,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of ovary|CLDN3+ epithelial cell,3789,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Naive CD4 T cell,1366,2,CD4_T,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Myeloid cell|Dendritic cell|cDC|cDC2,3136,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of breast|Mammary luminal progenitor|SFN mammary luminal progenitor,2122,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+breast,Fibroblast|MMP1+ fibroblast,5711,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Epithelial cell|Epithelial cell of lung|Alveolar epithelial cell|AT2|Cycling AT2,2961,23,Alveolar_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of pancreas|Metallothionein+ epithelial cell,600,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Endothelial cell|Endothelial‑mesenchymal transition EC,524,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Mesothelial cell,4264,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Immune cell|Myeloid cell|Dendritic cell|cDC|cDC1,554,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|GZMB CD8 T cell,2566,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Myeloid cell|Macrophage|DIAPH3+ macrophage,274,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Endothelial cell|Capillary EC,4738,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell,2330,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+breast,Epithelial cell|Epithelial cell of breast|Lactocyte,576,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+breast,Fibroblast|Myofibroblast,8746,12,Myofibroblast,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Endothelial cell|Lymphatic EC,662,35,Lymphatic_endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of thymus|Cycling thymic epithelial cell,1272,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell,293,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Fibroblast,14398,12|13|31|32,Myofibroblast|Fibroblast|Ovarian_stroma|Meningeal_fibroblast,False,fibroblast parent includes named native descendants
+breast,Epithelial cell|Epithelial cell of lung|Club cell,1263,24,Airway_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Unassigned,15126,,,False,unresolved official reference
+breast,Epithelial cell|Epithelial cell of stomach|Surface mucous cell|CXCL2/3+ surface mucous cell,117,25,Gastric_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Fibroblast|Cycling fibroblast,30,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Immune cell|Lymphoid cell|B cell|Plasma cell,3500,15,Plasma,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Fibroblast|CFD+MGP+ fibroblast|CXCL14+ fibroblast|CXCL14+POSTN+ fibroblast,1001,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Immune cell|Myeloid cell|Macrophage|Tissue resident macrophage|Alveolar macrophage,924,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Myeloid cell|Monocyte|CD14 monocyte,553,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Perivascular cell|Pericyte,5974,34,Pericyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Myeloid cell|Macrophage|M1 macrophage,6503,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of intestine|Enteroendocrine cell,4,27,Enteroendocrine,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Erythrocyte/Megakaryocyte|Red blood cell|Erythroblast|Early SOX4+ erythroblast,39,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Immune cell|Erythrocyte/Megakaryocyte|Red blood cell,1875,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Immune cell|Myeloid cell|Monocyte,445,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Myeloid cell|Dendritic cell|cDC,486,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of lung|Airway basal cell,669,24,Airway_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Perivascular cell|Vascular smooth muscle cell,1396,33,Smooth_muscle,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Fibroblast|IGFBP6+SFRP4+ fibroblast,13,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Fibroblast|POSTN fibroblast,696,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Epithelial cell|Epithelial cell of intestine|Tuft cell,69,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Myeloid cell|Granulocyte|Mast cell,304,10,Mast,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of thymus|Thymic myoid cell,61,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Immune cell|Myeloid cell|Cycling myeloid cell|G2/M phase myeloid cell,312,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Epithelial cell|Epithelial cell of breast|Mammary basal cell|CCSER1 mammary basal cell,2682,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+breast,Immune cell|Myeloid cell|Monocyte|CD16 monocyte,35,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of intestine|Colonocyte,80,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of ovary|Granulosa cell|PAX8+ granulosa cell,5,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Epithelial cell|Epithelial cell of pancreas|Pancreatic ductal cell|TUBA1A+ ductal cell,74,29,Ductal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Myeloid cell|Macrophage|LYVE1 macrophage|Cycling LYVE1 macrophage,25,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of lung|Multiciliated cell|CDC20B+ Multiciliated cell,1,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of skin|Keratinocyte|Granular keratinocyte,2,20,Keratinocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Muscle cell|Skeletal muscle cell|Skeletal muscle myoblast,54,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Epithelial cell|Epithelial cell of intestine|Paneth cell,44,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of ovary|Granulosa cell|OSR1+ granulosa cell,2,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Immune cell|Myeloid cell|Granulocyte|Neutrophil,50,9,Neutrophil,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell,105,2|3|4|5|6|15,CD4_T|CD8_T|Treg|B|NK|Plasma,False,lymphoid parent or unsupported ILC subtype
+breast,Epithelial cell|Epithelial cell of adrenal gland|Steroidogenic cell,3,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Epithelial cell|Epithelial cell of skin|Merkel cell carcinoma enriched epithelial cell,21,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Epithelial cell|Epithelial cell of thymus|Medullary thymic epithelial cell|Corneocyte-like mTEC,117,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Epithelial cell|Epithelial cell of liver|cholangiocyte|CXCL6+ cholangiocyte,40,22,Cholangiocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of stomach|Surface mucous cell|Cycling surface mucous cell|S phase surface mucous cell,306,25,Gastric_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Hematopoietic precursor cell|MPP|MPP-Cycling,22,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Epithelial cell|Mesothelial cell|GATA4+ mesothelial cell,24,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell,43,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Erythrocyte/Megakaryocyte|Red blood cell|Erythroblast|Late hemoglobin+ erythroblast,55,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Immune cell|Myeloid cell|Cycling myeloid cell,25,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Epithelial cell|Epithelial cell of ovary|GABRP+ epithelial cell,27,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Fibroblast|SPARCL1+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Epithelial cell|Epithelial cell of stomach|Surface mucous cell|Cycling surface mucous cell|G2/M phase surface mucous cell,140,25,Gastric_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|T/NK cell|NK cell|CD16 NK cell,165,6,NK,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Myeloid cell|Dendritic cell|mregDC,643,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Mesothelial cell|Cycling mesothelial cell,6,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|KLRB1 cytotoxic CD4 T,29,2|4,CD4_T|Treg,False,CD4 parent includes Treg
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|abT (entry) cell,59,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+breast,Endothelial cell|Capillary EC|Fetal MHC- capillary EC|Fetal MHC- Collagen+ capillary EC,42,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Hematopoietic precursor cell|HSC,75,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Immune cell|Myeloid cell|Monocyte|CD14 monocyte|MHCII low CD14 monocyte,2,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|Double negative T cell,5,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+breast,Immune cell|Cycling immune cell,5,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Treg cell|Differentiating Treg cell,28,4,Treg,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Myeloid cell|Dendritic cell|pDC,77,18,pDC,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of intestine|Goblet cell,47,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Fibroblast|CFD+MGP+ fibroblast,255,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Epithelial cell|Epithelial cell of breast|Mammary basal cell|CXCL14 mammary basal cell,1025,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+breast,Epithelial cell|Epithelial cell of skin|Keratinocyte|Basal keratinocyte,24,20,Keratinocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of skin|Keratinocyte|Cycling keratinocyte,92,20,Keratinocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of ovary|Granulosa cell|MT2A+ granulosa cell,16,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Immune cell|Lymphoid cell|T/NK cell|ILC,71,2|3|4|6,CD4_T|CD8_T|Treg|NK,False,T/NK parent or cycling mixed identity
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Tfh cell,83,2,CD4_T,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of stomach|SCGB2A1+ endocrine cell,2,25,Gastric_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|Naive T cell,8,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+breast,Immune cell|Hematopoietic precursor cell|MPP,55,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|GZMK CD8 T cell|GZMK+IL7R+ CD8 T cell,27,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of bladder|Basal cell of bladder|DKK1+MMP1+ basal cell of bladder,95,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Epithelial cell|Epithelial cell of kidney|Renal intercalated cell|Podocyte,1,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Hematopoietic precursor cell,70,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Epithelial cell|Epithelial cell of breast|Mammary luminal cell|KRT17 mammary luminal cell,172,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+breast,Epithelial cell|Epithelial cell of breast|Mammary luminal cell|PIP mammary luminal cell,1170,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+breast,Immune cell|Lymphoid cell|B cell,108,5|15,B|Plasma,False,B-lineage parent includes plasma
+breast,Epithelial cell|Epithelial cell of intestine|Enterocyte,14,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of breast|Mammary basal cell|KRT6B mammary basal cell,141,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+breast,Immune cell|Lymphoid cell|B cell|Memory B cell,103,5,B,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Hematopoietic precursor cell|Pre-cDC,6,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Naive CD8 T cell,6,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|T/NK cell|NK cell|CD56 NK cell,5,6,NK,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Fibroblast|Metallothionein+ fibroblast|Metallothionein+ Collagen- fibroblast,62,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Immune cell|Myeloid cell|Osteoclast,55,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Epithelial cell|Epithelial cell of lung|Pulmonary ionocyte,18,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Epithelial cell|Epithelial cell of kidney|Renal intercalated cell|Type B intercalated cell,6,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of pancreas|Pancreatic ductal cell|TFF1+ ductal cell,3,29,Ductal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Fibroblast|TNC fibroblast,183,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Epithelial cell|Epithelial cell of lung|Multiciliated cell,10,24,Airway_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of testis|Luminal cell,14,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Fibroblast|PLAC9+ fibroblast,183,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Neuron,21,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of adrenal gland|Sympathoadrenal cell,7,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Epithelial cell|Epithelial cell of bladder|Basal cell of bladder|FOS+ basal cell of bladder,4,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Endothelial cell,97,11|35,Endothelial|Lymphatic_endothelial,False,endothelial parent includes lymphatic
+breast,Immune cell|Lymphoid cell|B cell|B cell precursor|ProB cell,10,5,B,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of lung|Aerocyte,6,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Epithelial cell|Epithelial cell of thymus|Medullary thymic epithelial cell,5,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Epithelial cell|Epithelial cell of liver|cholangiocyte|SPINK1+SGMS2+ cholangiocyte,2,22,Cholangiocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of bladder|Basal cell of bladder|MMP7+ basal cell of bladder,6,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Immune cell|Myeloid cell|Monocyte|CD14 monocyte|MHCII high CD14 monocyte,2,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Myeloid cell|Dendritic cell,19,8|18,DC|pDC,False,DC parent includes pDC
+breast,Adipocyte,32,36,Adipocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Fibroblast|CCL2+SFRP2+ fibroblast,20,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Fibroblast|CFD+MGP+ fibroblast|APOE+ fibroblast,920,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Fibroblast|C3+ fibroblast,123,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Epithelial cell|Epithelial cell of eye|Eye melanocyte,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Immune cell|Erythrocyte/Megakaryocyte|Red blood cell|Erythroblast|Intermediate EPCAM+ erythroblast,2,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Germ cell|Oocyte|Mitotic oocyte,1,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Endothelial cell|Tip EC,8,11|35,Endothelial|Lymphatic_endothelial,False,endothelial parent includes lymphatic
+breast,Fibroblast|F3+ fibroblast,9,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Immune cell|Myeloid cell|Monocyte/DC,24,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Myeloid cell|Macrophage|Cycling macrophage,6,7|17,Macrophage|Microglia,False,macrophage parent includes microglia
+breast,Endothelial cell|Endocardial cell,3,11|35,Endothelial|Lymphatic_endothelial,False,endothelial parent includes lymphatic
+breast,Immune cell|Lymphoid cell|B cell|Plasma cell|Plasma cell precursor,2,15,Plasma,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Endothelial cell|Arterial EC|SRGN+ arterial EC,24,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of intestine|Squamous epithelial cell,6,19,Squamous_Epithelial,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Fibroblast|PLA2G2A+IGFBP4+APOC1+ fibroblast,15,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Endothelial cell|Cycling EC,13,11|35,Endothelial|Lymphatic_endothelial,False,endothelial parent includes lymphatic
+breast,Fibroblast|GREB1+ fibroblast,11,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Immune cell|Myeloid cell|Macrophage|Tissue resident macrophage|Hofbauer cell,6,7|17,Macrophage|Microglia,False,macrophage parent includes microglia
+breast,Fibroblast|RNASE1+ fibroblast,2,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Immune cell|Lymphoid cell|T/NK cell|NK cell|CD56 NK cell|GZMK NK cell,2,6,NK,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|KLRB1 CD8 T cell,3,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|GZMK CD8 T cell|GZMK+IL7R- CD8 T cell,5,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Fibroblast|CDCA7+ fibroblast|Cycling CDCA7+ fibroblast,5,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of ovary|Granulosa cell|TAC1+ granulosa cell,3,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Fibroblast|PCOLCE2 fibroblast,23,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Epithelial cell|Epithelial cell of testis|Leydig cell|IL1RAPL1+ Leyding cell,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Epithelial cell|Epithelial cell of stomach|Surface mucous cell|GKN1/2+ surface mucous cell,1,25,Gastric_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Erythrocyte/Megakaryocyte|Red blood cell|Fetal HBG+ erythrocyte,4,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Glial cell,4,42|43|44|45|46,Astrocyte|Oligodendrocyte|OPC|Schwann|Satellite_glia,False,glial parent
+breast,Epithelial cell|Epithelial cell of gingiva|Melanocyte,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Epithelial cell|Epithelial cell of kidney|Renal epithelial cell - distal tubules,1,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of lung|Alveolar epithelial cell|AT2,1,23,Alveolar_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Myeloid cell|Macrophage|Tissue resident macrophage|Microglia,2,17,Microglia,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of intestine|Enterocyte|BEST4 enterocyte,1,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Immune cell|Lymphoid cell|B cell|Naive B cell,3,5,B,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Fibroblast|CXCL+ fibroblast,137,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Fibroblast|WISP2+ fibroblast,8,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Perivascular cell|Pericyte|CCL19/21 pericyte,11,34,Pericyte,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of adrenal gland|Sympathoblast,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Perivascular cell|Cycling perivascular cell,1,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Epithelial cell|Epithelial cell of testis|Leydig cell|INSL3+ Leydig cell,2,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Fibroblast|Metallothionein+ fibroblast,3,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Fibroblast|CFD+MGP+ fibroblast|FGFBP2+ fibroblast,46,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Fibroblast|CFD+MGP+ fibroblast|APCDD1+ fibroblast,14,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Fibroblast|CFD+MGP+ fibroblast|CXCL14+ fibroblast|PTGDS+CXCL14+ fibroblast,18,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Unannotated,10,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Epithelial cell|Epithelial cell of testis|Leydig cell|Leydig cell progenitor,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+breast,Germ cell|Oocyte|Retinoid acid responsive oocyte,1,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+breast,Perivascular cell|Vascular smooth muscle cell|Metallothionein+ smooth muscle cell,1,33,Smooth_muscle,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Fibroblast|CFD+MGP+ fibroblast|COCH+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Fibroblast|C2orf40+ fibroblast,3,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Fibroblast|CFD+MGP+ fibroblast|CXCL14+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Immune cell|Lymphoid cell|B cell|Germinal center B cell,1,5,B,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Epithelial cell|Epithelial cell of kidney|Renal intercalated cell|Type A intercalated cell,1,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+breast,Fibroblast|CD55+SEMA3C+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+breast,Immune cell|Lymphoid cell|T/NK cell,1,2|3|4|6,CD4_T|CD8_T|Treg|NK,False,T/NK parent or cycling mixed identity
+colorectal,Epithelial cell|Epithelial cell of intestine|Tuft cell,6368,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Inconsistent Annotation,97413,,,False,unresolved official reference
+colorectal,Epithelial cell|Epithelial cell of intestine|Goblet cell,14785,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of intestine|Enterocyte,30768,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of intestine|Transit-amplifying cell,105730,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of intestine|Paneth cell,21549,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of intestine|Colonocyte,2547,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Treg cell,4914,4,Treg,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|B cell|Memory B cell,239,5,B,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Endothelial cell|Capillary EC,2387,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Fibroblast|F3+ fibroblast,1436,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|GZMB CD8 T cell,409,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|T/NK cell|Cycling T/NK cell,2560,2|3|4|6,CD4_T|CD8_T|Treg|NK,False,T/NK parent or cycling mixed identity
+colorectal,Fibroblast|MMP1+ fibroblast,11051,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Immune cell|Myeloid cell|Dendritic cell,7,8|18,DC|pDC,False,DC parent includes pDC
+colorectal,Perivascular cell|Pericyte,3906,34,Pericyte,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|B cell|Plasma cell,3862,15,Plasma,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Erythrocyte/Megakaryocyte|Red blood cell,4193,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+colorectal,Immune cell|Myeloid cell|Granulocyte|Mast cell,273,10,Mast,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Myeloid cell|Macrophage,4448,7|17,Macrophage|Microglia,False,macrophage parent includes microglia
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell,126,2|4,CD4_T|Treg,False,CD4 parent includes Treg
+colorectal,Unassigned,24793,,,False,unresolved official reference
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|GZMK CD8 T cell,144,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Memory CD4 T cell,1083,2,CD4_T,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Myeloid cell|Macrophage|LYVE1 macrophage,16937,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Myeloid cell|Dendritic cell|cDC|cDC1,286,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Fibroblast|Myofibroblast,33204,12,Myofibroblast,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of intestine|Enterocyte|BEST4 enterocyte,14764,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|B cell,174,5|15,B|Plasma,False,B-lineage parent includes plasma
+colorectal,Epithelial cell|Mesothelial cell,333,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+colorectal,Epithelial cell|Epithelial cell of lung|Airway basal cell,3000,24,Airway_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Myeloid cell|Monocyte,147,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of lung|Alveolar epithelial cell|AT2|Cycling AT2,308,23,Alveolar_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Endothelial cell|Lymphatic EC,347,35,Lymphatic_endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Myeloid cell|Monocyte|CD14 monocyte,95,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Myeloid cell|Macrophage|Tissue resident macrophage|Alveolar macrophage,5403,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell,415,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+colorectal,Fibroblast|IGFBP6+APOD+ fibroblast,5642,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Immune cell|Myeloid cell|Dendritic cell|mregDC,357,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Endothelial cell|Venous EC,3182,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|B cell|Naive B cell,6,5,B,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Fibroblast,3001,12|13|31|32,Myofibroblast|Fibroblast|Ovarian_stroma|Meningeal_fibroblast,False,fibroblast parent includes named native descendants
+colorectal,Immune cell|Lymphoid cell|B cell|B cell precursor|ProB cell,107,5,B,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Perivascular cell|Vascular smooth muscle cell,1667,33,Smooth_muscle,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Glial cell,137,42|43|44|45|46,Astrocyte|Oligodendrocyte|OPC|Schwann|Satellite_glia,False,glial parent
+colorectal,Endothelial cell|Endothelial‑mesenchymal transition EC,1731,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Tfh cell,30,2,CD4_T,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Naive CD4 T cell,231,2,CD4_T,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Myeloid cell|Dendritic cell|cDC,635,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Fibroblast|CFD+MGP+ fibroblast|CXCL14+ fibroblast|CXCL14+POSTN+ fibroblast,235,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Immune cell|Myeloid cell|Monocyte|CD16 monocyte,8,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell,50,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Fibroblast|Cycling fibroblast,158,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Immune cell|Myeloid cell|Dendritic cell|cDC|cDC2,1985,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|GZMK CD8 T cell|GZMK+IL7R+ CD8 T cell,14,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Myeloid cell|Macrophage|M1 macrophage,3650,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|T/NK cell|NK cell|CD16 NK cell,23,6,NK,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of stomach|Surface mucous cell|Cycling surface mucous cell|S phase surface mucous cell,13,25,Gastric_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of lung|Pulmonary ionocyte,4,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+colorectal,Endothelial cell|Arterial EC,818,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of bladder|Basal cell of bladder|MMP7+ basal cell of bladder,4,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+colorectal,Epithelial cell|Epithelial cell of lung|Club cell,172,24,Airway_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|abT (entry) cell,70,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+colorectal,Immune cell|Lymphoid cell|T/NK cell|NK cell,24,6,NK,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of lung|Alveolar epithelial cell|AT1,3,23,Alveolar_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|T/NK cell|ILC,25,2|3|4|6,CD4_T|CD8_T|Treg|NK,False,T/NK parent or cycling mixed identity
+colorectal,Fibroblast|POSTN fibroblast,163,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Fibroblast|PLAC9+ fibroblast,484,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Epithelial cell|Epithelial cell of intestine|Enteroendocrine cell,8,27,Enteroendocrine,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Fibroblast|CFD+MGP+ fibroblast|APOE+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Fibroblast|Metallothionein+ fibroblast|Metallothionein+ Collagen- fibroblast,3,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Fibroblast|GREB1+ fibroblast,2,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Fibroblast|CCL11+ fibroblast,18,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Epithelial cell|Epithelial cell of stomach|Surface mucous cell|CXCL2/3+ surface mucous cell,48,25,Gastric_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|Double negative T cell,4,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+colorectal,Epithelial cell|Epithelial cell of pancreas|Metallothionein+ epithelial cell,20,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+colorectal,Epithelial cell|Epithelial cell of bladder|Basal cell of bladder|DKK1+MMP1+ basal cell of bladder,140,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+colorectal,Immune cell|Myeloid cell|Dendritic cell|pDC,11,18,pDC,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of testis|Peritubular myoid cell|Peritubular myoid cell progenitor,2,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+colorectal,Immune cell|Myeloid cell|Cycling myeloid cell|G2/M phase myeloid cell,683,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+colorectal,Epithelial cell|Epithelial cell of stomach|Surface mucous cell|Cycling surface mucous cell|G2/M phase surface mucous cell,28,25,Gastric_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Hematopoietic precursor cell|HSC,9,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+colorectal,Neuron|Neuron of brain|Miscellaneous neuron|Upper rhombic lip-derived neuron,1,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of ovary|CLDN3+ epithelial cell,15,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+colorectal,Epithelial cell|Epithelial cell of lung|Multiciliated cell,16,24,Airway_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Fibroblast|CFD+MGP+ fibroblast,44,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Epithelial cell|Epithelial cell of stomach|Surface mucous cell|GKN1/2+ surface mucous cell,19,25,Gastric_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Endothelial cell|Cycling EC,19,11|35,Endothelial|Lymphatic_endothelial,False,endothelial parent includes lymphatic
+colorectal,Epithelial cell|Epithelial cell of pancreas|Pancreatic ductal cell|TFF1+ ductal cell,12,29,Ductal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell,3,2|3|4|5|6|15,CD4_T|CD8_T|Treg|B|NK|Plasma,False,lymphoid parent or unsupported ILC subtype
+colorectal,Immune cell|Myeloid cell|Macrophage|DIAPH3+ macrophage,24,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Myeloid cell|Granulocyte|Neutrophil,20,9,Neutrophil,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Myeloid cell|Cycling myeloid cell|S phase myeloid cell,54,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+colorectal,Fibroblast|C3+ fibroblast,114,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Neuron,98,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Fibroblast|CFD+MGP+ fibroblast|CXCL14+ fibroblast|PTGDS+CXCL14+ fibroblast,3,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|GZMK CD8 T cell|GZMK+IL7R- CD8 T cell,2,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of pancreas|Pancreatic ductal cell|TUBA1A+ ductal cell,1,29,Ductal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Fibroblast|CCL2+SFRP2+ fibroblast,17,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Treg cell|Differentiating Treg cell,12,4,Treg,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Fibroblast|FBLN2+APOD+ fibroblast,9,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Perivascular cell|Vascular smooth muscle cell|Metallothionein+ smooth muscle cell,1,33,Smooth_muscle,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Endothelial cell,37,11|35,Endothelial|Lymphatic_endothelial,False,endothelial parent includes lymphatic
+colorectal,Endothelial cell|Tip EC,8,11|35,Endothelial|Lymphatic_endothelial,False,endothelial parent includes lymphatic
+colorectal,Perivascular cell|Cycling perivascular cell,8,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+colorectal,Fibroblast|MDK+NREP+ fibroblast|ADAMDEC1+ fibroblast,15,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|KLRB1 cytotoxic CD4 T,8,2|4,CD4_T|Treg,False,CD4 parent includes Treg
+colorectal,Fibroblast|SPARCL1+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Fibroblast|TNC fibroblast,27,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Epithelial cell|Epithelial cell of intestine|Squamous epithelial cell,1,19,Squamous_Epithelial,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Myeloid cell|Monocyte/DC,6,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|B cell|Cycling B,3,5|15,B|Plasma,False,B-lineage parent includes plasma
+colorectal,Epithelial cell|Epithelial cell of intestine|Microfold cell,7,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Hematopoietic precursor cell,24,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+colorectal,Fibroblast|KCNN3+ fibroblast,39,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Fibroblast|CDCA7+ fibroblast|Cycling CDCA7+ fibroblast,1,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Erythrocyte/Megakaryocyte|Red blood cell|Erythroblast|Late hemoglobin+ erythroblast,8,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+colorectal,Immune cell|Hematopoietic precursor cell|MPP,3,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+colorectal,Epithelial cell|Epithelial cell of liver|cholangiocyte|CXCL6+ cholangiocyte,8,22,Cholangiocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Myeloid cell|Osteoclast,2,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+colorectal,Endothelial cell|Capillary EC|Fetal MHC- capillary EC|Fetal MHC- Collagen+ capillary EC,1,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Endothelial cell|Arterial EC|SRGN+ arterial EC,3,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of lung|Neuroendocrine cell,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+colorectal,Epithelial cell|Epithelial cell of testis|Leydig cell|Leydig cell progenitor,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+colorectal,Immune cell|Myeloid cell|Macrophage|Tissue resident macrophage|Hofbauer cell,1,7|17,Macrophage|Microglia,False,macrophage parent includes microglia
+colorectal,Immune cell|Myeloid cell|Cycling myeloid cell,5,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell,10,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Fibroblast|PLA2G2A+IGFBP4+APOC1+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Epithelial cell|Epithelial cell of adrenal gland|Capsular cell,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|KLRB1 CD8 T cell,6,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|B cell|Plasma cell|Plasma cell precursor,1,15,Plasma,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Immune cell|Lymphoid cell|T/NK cell|T cell|MAIT cell,1,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+colorectal,Epithelial cell|Epithelial cell of testis|Luminal cell,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+colorectal,Perivascular cell|Vascular smooth muscle cell|PCP4+ vascular smooth muscle cell,22,33,Smooth_muscle,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Unannotated,6,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+colorectal,Epithelial cell|Epithelial cell of breast|Mammary luminal cell|Secretoglobin mammary luminal cell,3,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+colorectal,Fibroblast|PCOLCE2 fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+colorectal,Epithelial cell|Epithelial cell of skin|Keratinocyte|Secretory cell,3,20,Keratinocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Neuron|Neuron of brain|Excitatory neuron|Pyramidal neuron,1,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of breast|Mammary luminal cell|PIP mammary luminal cell,5,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+colorectal,Immune cell|Lymphoid cell|T/NK cell,1,2|3|4|6,CD4_T|CD8_T|Treg|NK,False,T/NK parent or cycling mixed identity
+colorectal,Perivascular cell|Pericyte|CCL19/21 pericyte,1,34,Pericyte,True,identity at native47 resolution; finer Azimuth state retained separately
+colorectal,Epithelial cell|Epithelial cell of adrenal gland|Steroidogenic cell,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Memory CD4 T cell,2617,2,CD4_T,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Inconsistent Annotation,54787,,,False,unresolved official reference
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell,8270,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Treg cell|Differentiating Treg cell,732,4,Treg,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|B cell,3857,5|15,B|Plasma,False,B-lineage parent includes plasma
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Naive CD4 T cell,2583,2,CD4_T,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell,2495,2|4,CD4_T|Treg,False,CD4 parent includes Treg
+kidney,Immune cell|Lymphoid cell|B cell|Memory B cell,1054,5,B,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Perivascular cell|Vascular smooth muscle cell,10771,33,Smooth_muscle,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Unassigned,15079,,,False,unresolved official reference
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Treg cell,2513,4,Treg,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|GZMK CD8 T cell,795,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Myeloid cell|Macrophage,18815,7|17,Macrophage|Microglia,False,macrophage parent includes microglia
+kidney,Immune cell|Myeloid cell|Macrophage|LYVE1 macrophage,12442,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|T/NK cell|ILC,270,2|3|4|6,CD4_T|CD8_T|Treg|NK,False,T/NK parent or cycling mixed identity
+kidney,Immune cell|Lymphoid cell|B cell|Plasma cell,6452,15,Plasma,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Perivascular cell|Pericyte,21718,34,Pericyte,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell,469,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Myeloid cell|Dendritic cell|cDC|cDC2,1950,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Tfh cell,101,2,CD4_T,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of kidney|Renal epithelial cell - distal tubules,30724,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of kidney|Renal intercalated cell|Type A intercalated cell,7367,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Erythrocyte/Megakaryocyte|Red blood cell,2185,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+kidney,Epithelial cell|Epithelial cell of kidney|Renal epithelial cell - proximal tubules,71339,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of kidney|Renal epithelial cell - Loop of Henle,37110,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|abT (entry) cell,207,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Naive CD8 T cell,10,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Fibroblast,20571,12|13|31|32,Myofibroblast|Fibroblast|Ovarian_stroma|Meningeal_fibroblast,False,fibroblast parent includes named native descendants
+kidney,Immune cell|Myeloid cell|Dendritic cell|cDC,1640,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Myeloid cell|Monocyte|CD14 monocyte,39,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of lung|Multiciliated cell,220,24,Airway_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Endothelial cell|Capillary EC,18290,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|GZMB CD8 T cell,116,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Myeloid cell|Granulocyte|Mast cell,1114,10,Mast,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of testis|Luminal cell,65,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Epithelial cell|Epithelial cell of kidney|Renal intercalated cell|Type B intercalated cell,4126,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|B cell|Naive B cell,50,5,B,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Glial cell,107,42|43|44|45|46,Astrocyte|Oligodendrocyte|OPC|Schwann|Satellite_glia,False,glial parent
+kidney,Epithelial cell|Epithelial cell of skin|Keratinocyte|Secretory cell,9,20,Keratinocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Myeloid cell|Macrophage|Tissue resident macrophage|Alveolar macrophage,347,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Fibroblast|MMP1+ fibroblast,105,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|KLRB1 cytotoxic CD4 T,17,2|4,CD4_T|Treg,False,CD4 parent includes Treg
+kidney,Endothelial cell|Lymphatic EC,1317,35,Lymphatic_endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|T/NK cell|Cycling T/NK cell,532,2|3|4|6,CD4_T|CD8_T|Treg|NK,False,T/NK parent or cycling mixed identity
+kidney,Immune cell|Lymphoid cell|T/NK cell|NK cell,95,6,NK,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Myeloid cell|Granulocyte|Neutrophil,262,9,Neutrophil,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|T/NK cell|NK cell|CD16 NK cell,35,6,NK,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Endothelial cell|Venous EC,14842,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell,35,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of ovary|CLDN3+ epithelial cell,305,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Fibroblast|NR4A3 fibroblast,123,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Fibroblast|IGFBP6+APOD+ fibroblast,362,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Fibroblast|CFD+MGP+ fibroblast|APOE+ fibroblast,39,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Fibroblast|PCOLCE2 fibroblast,581,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Fibroblast|CFD+MGP+ fibroblast,679,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Fibroblast|CD55+SEMA3C+ fibroblast,40,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Fibroblast|Metallothionein+ fibroblast|Metallothionein+ Collagen- fibroblast,365,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Fibroblast|C3+ fibroblast,40,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Epithelial cell|Epithelial cell of bladder|Basal cell of bladder|MMP7+ basal cell of bladder,10,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|gdT cell,4,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+kidney,Epithelial cell|Mesothelial cell,49,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Immune cell|Myeloid cell|Dendritic cell|cDC|cDC1,62,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Myeloid cell|Monocyte,178,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of kidney|Renal intercalated cell|Podocyte,7417,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of lung|Alveolar epithelial cell|AT2|Cycling AT2,23,23,Alveolar_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of lung|Alveolar epithelial cell|AT1,24,23,Alveolar_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of bladder|Basal cell of bladder|DKK1+MMP1+ basal cell of bladder,76,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|GZMK CD8 T cell|GZMK+IL7R+ CD8 T cell,15,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of lung|Club cell,114,24,Airway_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|T/NK cell|T cell|MAIT cell,4,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+kidney,Endothelial cell|Arterial EC,3949,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of ovary|Granulosa cell|PAX8+ granulosa cell,11,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Immune cell|Myeloid cell|Cycling myeloid cell,7,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+kidney,Immune cell|Myeloid cell|Monocyte/DC,78,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Neuron,678,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of intestine|Enterocyte,24,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of pancreas|Pancreatic ductal cell|TUBA1A+ ductal cell,15,29,Ductal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Lymphoid cell|B cell|Plasma cell|Plasma cell precursor,3,15,Plasma,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Myeloid cell|Macrophage|M1 macrophage,28,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of lung|Airway basal cell,6,24,Airway_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of liver|cholangiocyte|CXCL6+ cholangiocyte,9,22,Cholangiocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Fibroblast|Myofibroblast,510,12,Myofibroblast,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Fibroblast|POSTN fibroblast,1436,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Epithelial cell|Epithelial cell of ovary|AFP+ epithelial cell,2,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Immune cell|Myeloid cell|Cycling myeloid cell|G2/M phase myeloid cell,1,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+kidney,Immune cell|Myeloid cell|Dendritic cell|mregDC,4,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of ovary|Granulosa cell|MT2A+ granulosa cell,7,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Fibroblast|Metallothionein+ fibroblast,266,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Fibroblast|GREB1+ fibroblast,50,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Immune cell|Lymphoid cell|B cell|B cell precursor|ProB cell,16,5,B,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of lung|Pulmonary ionocyte,4,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Immune cell|Hematopoietic precursor cell,258,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+kidney,Fibroblast|IGFBP6+SFRP4+ fibroblast,14,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Fibroblast|PLA2G2A+IGFBP4+APOC1+ fibroblast,11,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Adipocyte,6,36,Adipocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Fibroblast|CFD+MGP+ fibroblast|CXCL14+ fibroblast|PTGDS+CXCL14+ fibroblast,6,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Perivascular cell|Pericyte|SPRR2F+ pericyte,1,34,Pericyte,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Endothelial cell|Endothelial‑mesenchymal transition EC,44,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Fibroblast|PLAC9+ fibroblast,19,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Fibroblast|SCN7A fibroblast,37,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Epithelial cell|Epithelial cell of pancreas|Metallothionein+ epithelial cell,10,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Epithelial cell|Epithelial cell of breast|Mammary luminal cell|Secretoglobin mammary luminal cell,4,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+kidney,Endothelial cell,120,11|35,Endothelial|Lymphatic_endothelial,False,endothelial parent includes lymphatic
+kidney,Muscle cell|Skeletal muscle cell|Skeletal muscle myoblast,1,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+kidney,Immune cell|Myeloid cell|Monocyte|CD16 monocyte,2,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Fibroblast|TNC fibroblast,24,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Immune cell|Lymphoid cell,1,2|3|4|5|6|15,CD4_T|CD8_T|Treg|B|NK|Plasma,False,lymphoid parent or unsupported ILC subtype
+kidney,Immune cell|Myeloid cell|Macrophage|DIAPH3+ macrophage,35,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Fibroblast|KCNN3+ fibroblast,30,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Epithelial cell|Epithelial cell of lung|Aerocyte,75,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Epithelial cell|Epithelial cell of lung|Neuroendocrine cell,2,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Perivascular cell|Pericyte|CCL19/21 pericyte,7,34,Pericyte,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Fibroblast|CLU+ fibroblast,5,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Immune cell|Myeloid cell|Macrophage|Tissue resident macrophage|Microglia,3,17,Microglia,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of adrenal gland|Sympathoadrenal cell,2,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Fibroblast|FBLN2+APOD+ fibroblast,3,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Perivascular cell|Vascular smooth muscle cell|Metallothionein+ smooth muscle cell,5,33,Smooth_muscle,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Fibroblast|RNASE1+ fibroblast,4,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Immune cell|Erythrocyte/Megakaryocyte|Red blood cell|Erythroblast|Late hemoglobin+ erythroblast,5,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+kidney,Epithelial cell|Epithelial cell of pancreas|Acinar cell,2,28,Acinar,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Unannotated,19,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+kidney,Perivascular cell|Vascular smooth muscle cell|PCP4+ vascular smooth muscle cell,1,33,Smooth_muscle,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of intestine|Tuft cell,7,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Fibroblast|CFD+MGP+ fibroblast|CXCL14+ fibroblast|CXCL14+POSTN+ fibroblast,44,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Endothelial cell|Tip EC,3,11|35,Endothelial|Lymphatic_endothelial,False,endothelial parent includes lymphatic
+kidney,Immune cell|Erythrocyte/Megakaryocyte|Red blood cell|Fetal HBG+ erythrocyte,1,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+kidney,Immune cell|Erythrocyte/Megakaryocyte|Red blood cell|Erythroblast|Early SOX4+ erythroblast,1,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+kidney,Epithelial cell|Epithelial cell of testis|Leydig cell|Leydig cell progenitor,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Epithelial cell|Epithelial cell of adrenal gland|Steroidogenic cell,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Fibroblast|CCL11+ fibroblast,3,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Immune cell|Myeloid cell|Macrophage|Tissue resident macrophage|Hofbauer cell,5,7|17,Macrophage|Microglia,False,macrophage parent includes microglia
+kidney,Epithelial cell|Epithelial cell of testis|Peritubular myoid cell|Peritubular myoid cell progenitor,2,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Glial cell|Glial cell of brain|Astrocyte,1,42,Astrocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of skin|Merkel cell carcinoma enriched epithelial cell,2,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Fibroblast|G0S2+PPP1R14A+ fibroblast,2,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Immune cell|Lymphoid cell|B cell|Germinal center B cell,2,5,B,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Epithelial cell|Epithelial cell of intestine|Goblet cell,2,26,Intestinal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Hematopoietic precursor cell|EoBaMa Progenitor,1,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+kidney,Epithelial cell|Epithelial cell of stomach|Surface mucous cell|CXCL2/3+ surface mucous cell,1,25,Gastric_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Immune cell|Hematopoietic precursor cell|HSC,3,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+kidney,Immune cell|Hematopoietic precursor cell|MPP,2,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+kidney,Epithelial cell|Epithelial cell of gingiva|Melanocyte,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+kidney,Epithelial cell|Epithelial cell of breast|Mammary basal cell|CCSER1 mammary basal cell,1,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+kidney,Epithelial cell|Epithelial cell of breast|Mammary luminal progenitor|SCGB3A1 mammary luminal progenitor,1,0|1,Carcinoma_or_other_epithelial|Myoepithelial,False,mammary epithelial identities cannot establish malignancy; basal not forced to myoepithelial
+kidney,Fibroblast|C2orf40+ fibroblast,4,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Fibroblast|CCL2+SFRP2+ fibroblast,4,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Immune cell|Myeloid cell|Dendritic cell,3,8|18,DC|pDC,False,DC parent includes pDC
+kidney,Fibroblast|SPARCL1+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Epithelial cell|Epithelial cell of intestine|Squamous epithelial cell,2,19,Squamous_Epithelial,True,identity at native47 resolution; finer Azimuth state retained separately
+kidney,Fibroblast|CFD+MGP+ fibroblast|COCH+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+kidney,Endothelial cell|Endocardial cell,1,11|35,Endothelial|Lymphatic_endothelial,False,endothelial parent includes lymphatic
+kidney,Fibroblast|CFD+MGP+ fibroblast|C7+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+brain,Glial cell|Glial cell of brain|Oligodendrocyte,26350,43,Oligodendrocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Endothelial cell|Capillary EC,2928,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Neuron|Neuron of brain|Excitatory neuron|Pyramidal neuron,9532,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Neuron|Neuron of brain|Excitatory neuron|Cortical excitatory neuron|Upper-layer excitatory neuron|L2/3 excitatory neuron,8113,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Glial cell|Glial cell of brain|Astrocyte|Protoplasmic astrocyte,3428,42,Astrocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Myeloid cell|Macrophage|Tissue resident macrophage|Microglia,5375,17,Microglia,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Inconsistent Annotation,9126,,,False,unresolved official reference
+brain,Neuron|Neuron of brain|Inhibitory neuron|MGE-derived inhibitory neuron|SST inhibitory neuron,429,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Glial cell|Glial cell of brain|Oligodendrocyte|Oligodendrocyte progenitor cell,3475,44,OPC,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Unassigned,4475,,,False,unresolved official reference
+brain,Neuron|Neuron of brain|Inhibitory neuron|CGE-derived inhibitory neuron|VIP inhibitory neuron,538,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Neuron,43,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Myeloid cell|Macrophage|LYVE1 macrophage,761,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Glial cell|Glial cell of brain|Astrocyte|Fibrous astrocyte,7252,42,Astrocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Glial cell,31,42|43|44|45|46,Astrocyte|Oligodendrocyte|OPC|Schwann|Satellite_glia,False,glial parent
+brain,Immune cell|Myeloid cell|Macrophage,935,7|17,Macrophage|Microglia,False,macrophage parent includes microglia
+brain,Neuron|Neuron of brain|Inhibitory neuron|CXCL14 inhibitory neuron,360,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Endothelial cell,1763,11|35,Endothelial|Lymphatic_endothelial,False,endothelial parent includes lymphatic
+brain,Neuron|Neuron of brain|Inhibitory neuron|CGE-derived inhibitory neuron|SV2C inhibitory neuron,535,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Perivascular cell|Vascular smooth muscle cell,1024,33,Smooth_muscle,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Perivascular cell|Pericyte,1721,34,Pericyte,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Neuron|Neuron of brain|Excitatory neuron|Hippocampal excitatory neurons|Hippocampal dentate gyrus neuron,131,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Lymphoid cell|T/NK cell|T cell,92,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+brain,Endothelial cell|Arterial EC,930,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell,6,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Memory CD4 T cell,25,2,CD4_T,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Lymphoid cell|T/NK cell|NK cell,3,6,NK,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell,14,2|4,CD4_T|Treg,False,CD4 parent includes Treg
+brain,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Naive CD4 T cell,10,2,CD4_T,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Lymphoid cell|B cell|Plasma cell,127,15,Plasma,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Neuron|Neuron of brain|Excitatory neuron|Cortical excitatory neuron|Deep-layer excitatory neuron|L6 excitatory neuron,87,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Myeloid cell|Monocyte|CD14 monocyte,9,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Epithelial cell|Epithelial cell of bladder|Basal cell of bladder|DKK1+MMP1+ basal cell of bladder,2,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+brain,Neuron|Neuron of brain|Inhibitory neuron|PVALB inhibitory neuron,259,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Neuron|Neuron of brain|Excitatory neuron|Cortical excitatory neuron|Deep-layer excitatory neuron|L5/6 excitatory neuron,91,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Endothelial cell|Venous EC,400,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Lymphoid cell|T/NK cell|T cell|abT (entry) cell,2,2|3|4,CD4_T|CD8_T|Treg,False,T parent; no forced CD4/CD8/Treg
+brain,Immune cell|Myeloid cell|Granulocyte|Neutrophil,17,9,Neutrophil,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Myeloid cell|Monocyte,20,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell,9,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Myeloid cell|Macrophage|DIAPH3+ macrophage,2,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Fibroblast|POSTN fibroblast,3,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+brain,Epithelial cell|Epithelial cell of eye|Eye melanocyte,9,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+brain,Epithelial cell|Epithelial cell of kidney|Renal epithelial cell - proximal tubules,145,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Epithelial cell|Epithelial cell of eye|Ciliary body cell,74,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+brain,Epithelial cell|Epithelial cell of kidney|Renal epithelial cell - distal tubules,3,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Glial cell|Glial cell of brain|Astrocyte,269,42,Astrocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Fibroblast,6,12|13|31|32,Myofibroblast|Fibroblast|Ovarian_stroma|Meningeal_fibroblast,False,fibroblast parent includes named native descendants
+brain,Epithelial cell|Epithelial cell of eye|Retinal pigment epithelial cell,3,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+brain,Fibroblast|IGFBP6+APOD+ fibroblast,6,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+brain,Fibroblast|CFD+MGP+ fibroblast,59,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+brain,Epithelial cell|Epithelial cell of kidney|Renal intercalated cell|Type A intercalated cell,1,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|GZMB CD8 T cell,2,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Neuron|Neuron of brain|Excitatory neuron|Cortical excitatory neuron|Deep-layer excitatory neuron|L5 excitatory neuron,40,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Myeloid cell|Macrophage|M1 macrophage,60,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Myeloid cell|Monocyte/DC,4,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Myeloid cell|Macrophage|Tissue resident macrophage|Hofbauer cell,38,7|17,Macrophage|Microglia,False,macrophage parent includes microglia
+brain,Neuron|Neuron of brain|Excitatory neuron|Hippocampal excitatory neurons|Hippocampal CA1-3 neuron,28,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Erythrocyte/Megakaryocyte|Red blood cell,49,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+brain,Immune cell|Myeloid cell|Monocyte|CD14 monocyte|MHCII high CD14 monocyte,1,16,Monocyte,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Neuron|Neuron of brain|Excitatory neuron|Hippocampal excitatory neurons|Hippocampal CA4 neuron,22,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Erythrocyte/Megakaryocyte|Megakaryocyte,5,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+brain,Immune cell|Lymphoid cell|T/NK cell|T cell|CD8 T cell|Memory CD8 T cell|GZMK CD8 T cell,8,3,CD8_T,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Myeloid cell|Dendritic cell|cDC,28,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Fibroblast|Metallothionein+ fibroblast|Metallothionein+ Collagen- fibroblast,29,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+brain,Immune cell|Myeloid cell|Dendritic cell|cDC|cDC2,7,8,DC,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Fibroblast|Metallothionein+ fibroblast,3,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+brain,Neuron|Neuron of brain|Miscellaneous neuron|Splatter neuron,2,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Fibroblast|F3+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+brain,Immune cell|Myeloid cell|Macrophage|Tissue resident macrophage|Alveolar macrophage,4,7,Macrophage,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Fibroblast|MMP1+ fibroblast,3,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+brain,Epithelial cell|Epithelial cell of lung|Multiciliated cell,6,24,Airway_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Fibroblast|PCOLCE2 fibroblast,3,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+brain,Epithelial cell|Epithelial cell of eye|Epithelial cell of conjunctiva,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+brain,Immune cell|Myeloid cell|Granulocyte|Mast cell,2,10,Mast,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Muscle cell|Skeletal muscle cell|Skeletal muscle myoblast,3,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+brain,Epithelial cell|Epithelial cell of lung|Neuroendocrine cell,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+brain,Immune cell|Lymphoid cell|T/NK cell|T cell|CD4 T cell|Treg cell,3,4,Treg,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Lymphoid cell|B cell,7,5|15,B|Plasma,False,B-lineage parent includes plasma
+brain,Endothelial cell|Endothelial‑mesenchymal transition EC,2,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Endothelial cell|Capillary EC|Fetal MHC- capillary EC,1,11,Endothelial,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Lymphoid cell|B cell|Memory B cell,1,5,B,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Neuron|Neuron of brain|Excitatory neuron|Cortical excitatory neuron|Deep-layer excitatory neuron|L5b excitatory neuron,44,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Fibroblast|G0S2+PPP1R14A+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+brain,Unannotated,2,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+brain,Neuron|Neuron of brain|Excitatory neuron|Cortical excitatory neuron|Deep-layer excitatory neuron|TSHZ2 L4/5 excitatory neuron,1,40,Neuron,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Immune cell|Hematopoietic precursor cell|GMP|Late GMP,1,,,False,no defensible native47 identity; not relabeled to nearest convenient class
+brain,Fibroblast|PLAC9+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+brain,Epithelial cell|Mesothelial cell,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+brain,Fibroblast|PLA2G2A+IGFBP4+APOC1+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+brain,Immune cell|Lymphoid cell|B cell|Naive B cell,1,5,B,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Fibroblast|FBLN2+APOD+ fibroblast,1,13,Fibroblast,True,specific fibroblast state; native47 Fibroblast
+brain,Epithelial cell|Epithelial cell of lung|Aerocyte,1,0|1|19|20|21|22|23|24|25|26|27|28|29|30,Carcinoma_or_other_epithelial|Myoepithelial|Squamous_Epithelial|Keratinocyte|Hepatocyte|Cholangiocyte|Alveolar_epithelium|Airway_epithelium|Gastric_epithelium|Intestinal_epithelium|Enteroendocrine|Acinar|Ductal_epithelium|Renal_epithelium,False,epithelial parent or identity without defensible native47 leaf
+brain,Epithelial cell|Epithelial cell of kidney|Renal intercalated cell|Podocyte,1,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Epithelial cell|Epithelial cell of kidney|Renal epithelial cell - Loop of Henle,1,30,Renal_epithelium,True,identity at native47 resolution; finer Azimuth state retained separately
+brain,Fibroblast|Myofibroblast,2,12,Myofibroblast,True,identity at native47 resolution; finer Azimuth state retained separately

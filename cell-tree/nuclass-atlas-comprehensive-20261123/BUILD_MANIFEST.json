@@ -1,10 +1,11 @@
 {
-  "built": "2026-11-23T17:04:13.152281+00:00",
+  "built": "2026-11-23T17:14:17.024491+00:00",
   "data_patients": 196,
   "TLS": 6706,
   "real_TLS_examples": 12,
   "real_cell_examples": 12,
   "visible_key_sections": [
+    "model-performance",
     "dataset",
     "composition",
     "patterns",

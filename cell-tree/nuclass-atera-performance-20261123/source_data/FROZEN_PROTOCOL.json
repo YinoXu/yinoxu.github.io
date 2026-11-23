@@ -1,0 +1,405 @@
+{
+  "utc": "2026-11-15T03:29:56Z",
+  "study": "User-requested additive exploratory multiresolution analysis of already exposed frozen benchmark predictions, not new independent confirmation",
+  "groups": {
+    "broad3": {
+      "Parenchymal_or_tumor": [
+        0,
+        1,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        14,
+        38
+      ],
+      "Immune": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        15,
+        7,
+        8,
+        9,
+        10,
+        16,
+        17,
+        18
+      ],
+      "Stromal_and_vascular": [
+        12,
+        13,
+        31,
+        32,
+        33,
+        34,
+        36,
+        37,
+        11,
+        35
+      ]
+    },
+    "lineage7_strict": {
+      "Epithelial": [
+        0,
+        1,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "Lymphoid": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        15
+      ],
+      "Myeloid": [
+        7,
+        8,
+        9,
+        10,
+        16,
+        17,
+        18
+      ],
+      "Vascular": [
+        11,
+        35
+      ],
+      "Stromal": [
+        12,
+        13,
+        31,
+        32,
+        33,
+        34,
+        36,
+        37
+      ],
+      "Neural": [
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "Other_defined": [
+        14,
+        38
+      ]
+    },
+    "lineage7_organ_assumption": {
+      "Epithelial": [
+        0,
+        1,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ],
+      "Lymphoid": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        15
+      ],
+      "Myeloid": [
+        7,
+        8,
+        9,
+        10,
+        16,
+        17,
+        18
+      ],
+      "Vascular": [
+        11,
+        35
+      ],
+      "Stromal": [
+        12,
+        13,
+        31,
+        32,
+        33,
+        34,
+        36,
+        37
+      ],
+      "Neural": [
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46
+      ],
+      "Other_defined": [
+        14,
+        38
+      ]
+    },
+    "TLS8": {
+      "T_cell": [
+        2,
+        3,
+        4
+      ],
+      "B_cell": [
+        5
+      ],
+      "Plasma": [
+        15
+      ],
+      "NK": [
+        6
+      ],
+      "Myeloid": [
+        7,
+        8,
+        9,
+        10,
+        16,
+        17,
+        18
+      ],
+      "Vascular": [
+        11,
+        35
+      ],
+      "Stromal": [
+        12,
+        13,
+        31,
+        32,
+        33,
+        34,
+        36,
+        37
+      ],
+      "Other_parenchymal_or_tumor": [
+        0,
+        1,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        14,
+        38
+      ]
+    },
+    "native47": {
+      "Carcinoma_or_other_epithelial": [
+        0
+      ],
+      "Myoepithelial": [
+        1
+      ],
+      "CD4_T": [
+        2
+      ],
+      "CD8_T": [
+        3
+      ],
+      "Treg": [
+        4
+      ],
+      "B": [
+        5
+      ],
+      "NK": [
+        6
+      ],
+      "Macrophage": [
+        7
+      ],
+      "DC": [
+        8
+      ],
+      "Neutrophil": [
+        9
+      ],
+      "Mast": [
+        10
+      ],
+      "Endothelial": [
+        11
+      ],
+      "Myofibroblast": [
+        12
+      ],
+      "Fibroblast": [
+        13
+      ],
+      "Melanoma": [
+        14
+      ],
+      "Plasma": [
+        15
+      ],
+      "Monocyte": [
+        16
+      ],
+      "Microglia": [
+        17
+      ],
+      "pDC": [
+        18
+      ],
+      "Squamous_Epithelial": [
+        19
+      ],
+      "Keratinocyte": [
+        20
+      ],
+      "Hepatocyte": [
+        21
+      ],
+      "Cholangiocyte": [
+        22
+      ],
+      "Alveolar_epithelium": [
+        23
+      ],
+      "Airway_epithelium": [
+        24
+      ],
+      "Gastric_epithelium": [
+        25
+      ],
+      "Intestinal_epithelium": [
+        26
+      ],
+      "Enteroendocrine": [
+        27
+      ],
+      "Acinar": [
+        28
+      ],
+      "Ductal_epithelium": [
+        29
+      ],
+      "Renal_epithelium": [
+        30
+      ],
+      "Ovarian_stroma": [
+        31
+      ],
+      "Meningeal_fibroblast": [
+        32
+      ],
+      "Smooth_muscle": [
+        33
+      ],
+      "Pericyte": [
+        34
+      ],
+      "Lymphatic_endothelial": [
+        35
+      ],
+      "Adipocyte": [
+        36
+      ],
+      "Osteoblast_chondro": [
+        37
+      ],
+      "Meningioma": [
+        38
+      ],
+      "Glioma": [
+        39
+      ],
+      "Neuron": [
+        40
+      ],
+      "Neural_progenitor": [
+        41
+      ],
+      "Astrocyte": [
+        42
+      ],
+      "Oligodendrocyte": [
+        43
+      ],
+      "OPC": [
+        44
+      ],
+      "Schwann": [
+        45
+      ],
+      "Satellite_glia": [
+        46
+      ]
+    }
+  },
+  "scopes": [
+    "full_resolvable: global multiclass score is N/A if any positive reference class cannot be output by this organ head",
+    "common_supported: identical intersection of output capability and resolved reference for all3; all output probability mass retained"
+  ],
+  "tumor_handling": "Strict lineage keeps original Cyto tumor output unresolved. Organ-assumption sensitivity maps tumor to epithelial in breast/CRC/kidney and neural in brain; this is an explicit assumption and does NOT validate malignancy.",
+  "coarse_reference": "Original coherent full hierarchy; explicit generic immune/myeloid/lymphoid/perivascular parents may support coarse labels only. Inconsistent/Unassigned remain excluded; no exact fine label imputation.",
+  "fine": "Original primary fine masks/labels unchanged. Released Cyto fine P/R/F1 only for exact matching organ-head identities; all unsupported subtypes N/A. Full native47 Cyto summary N/A. For partial fine projection use native23 argmax then semantic map, not summed unresolved probability mass.",
+  "comparison": "Per organ, pooled cells and equal-organ mean kept separate; support and coverage always displayed. MacroF1 over same positive reference classes in each compared scope. MicroF1=multiclass accuracy.",
+  "constraints": "No target fitting, new neural inference, retraining, threshold, prior primary result or prediction overwrite. Same provided centroids; not an instance segmentation benchmark.",
+  "raw_upload": false
+}

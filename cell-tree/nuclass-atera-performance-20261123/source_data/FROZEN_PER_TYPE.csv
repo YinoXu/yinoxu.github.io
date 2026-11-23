@@ -1,0 +1,865 @@
+organ,view,model,cell_type,available,reference_cells,predicted_cells,TP,Precision,Recall,F1,Specificity,NA_reason
+breast,broad3,NuClass_v15,Parenchymal_or_tumor,True,139233,151093,130824.0,0.8658508335925555,0.9396048350606537,0.9012213856147917,0.8672912861005807,
+breast,broad3,NuClass_v15,Immune,True,90575,62580,45930.0,0.7339405560882071,0.507093568865581,0.5997845320100552,0.9173250045930553,
+breast,broad3,NuClass_v15,Stromal_and_vascular,True,62158,78293,44243.0,0.5650952192405452,0.7117828758969079,0.6300133142519455,0.8518328343660795,
+breast,broad3,CellSTP_v7_1,Parenchymal_or_tumor,True,139233,161814,132002.0,0.8157637781650537,0.9480654729841345,0.8769527681724116,0.8048097005886089,
+breast,broad3,CellSTP_v7_1,Immune,True,90575,29855,25485.0,0.8536258583151901,0.28136903118962187,0.42323341360126215,0.9783009171214205,
+breast,broad3,CellSTP_v7_1,Stromal_and_vascular,True,62158,100297,49144.0,0.4899847453064399,0.7906303291611699,0.6050167738758425,0.7774098377776231,
+breast,broad3,CytoFormer_released_UNI2_23,Parenchymal_or_tumor,True,139233,165727,130010.0,0.784482914672926,0.9337585198911178,0.8526364113326338,0.7661474599464425,
+breast,broad3,CytoFormer_released_UNI2_23,Immune,True,90575,52348,35125.0,0.6709902957133033,0.38780016560861164,0.4915234077090461,0.9144797930394108,
+breast,broad3,CytoFormer_released_UNI2_23,Stromal_and_vascular,True,62158,73891,35678.0,0.4828463547658037,0.5739888670806654,0.524487500826908,0.8337177121771218,
+breast,lineage7_strict,NuClass_v15,Epithelial,True,139208,152358,131155.0,0.8608343506740703,0.9421513131429228,0.8996590823347029,0.8611942154982226,
+breast,lineage7_strict,NuClass_v15,Lymphoid,True,34775,9775,6110.0,0.6250639386189258,0.17570093457943925,0.2742985409652076,0.9857496131204654,
+breast,lineage7_strict,NuClass_v15,Myeloid,True,55795,52501,27946.0,0.5322946229595626,0.5008692535173402,0.5161040112284849,0.896026523716369,
+breast,lineage7_strict,NuClass_v15,Vascular,True,17963,14742,8626.0,0.5851309184642518,0.480209319156043,0.5275034398410029,0.9776786691873663,
+breast,lineage7_strict,NuClass_v15,Stromal,True,44195,62067,25567.0,0.41192582209547746,0.5785043556963457,0.48120682840526247,0.8526835804751257,
+breast,lineage7_strict,NuClass_v15,Neural,True,25,518,0.0,0.0,0.0,0.0,0.9982256384961088,
+breast,lineage7_strict,NuClass_v15,Other_defined,True,0,0,0.0,,,,1.0,no positive reference
+breast,lineage7_strict,CellSTP_v7_1,Epithelial,True,139208,168097,133863.0,0.7963437776997805,0.9616042181483823,0.8712061307170401,0.7758865619660498,
+breast,lineage7_strict,CellSTP_v7_1,Lymphoid,True,34775,4693,3370.0,0.7180907734924356,0.09690869877785765,0.17077125772777946,0.9948558630718624,
+breast,lineage7_strict,CellSTP_v7_1,Myeloid,True,55795,25014,15036.0,0.6011033821060207,0.26948651312841654,0.372136766944276,0.9577500571631818,
+breast,lineage7_strict,CellSTP_v7_1,Vascular,True,17963,25290,11070.0,0.4377224199288256,0.6162667705839782,0.5118720088779969,0.9481018109621238,
+breast,lineage7_strict,CellSTP_v7_1,Stromal,True,44195,68860,25026.0,0.36343305257043274,0.5662631519402648,0.4427225686612711,0.8230830703163469,
+breast,lineage7_strict,CellSTP_v7_1,Neural,True,25,7,0.0,0.0,0.0,0.0,0.9999760221418393,
+breast,lineage7_strict,CellSTP_v7_1,Other_defined,True,0,0,0.0,,,,1.0,no positive reference
+breast,lineage7_strict,CytoFormer_released_UNI2_23,Epithelial,True,139208,2643,2134.0,0.8074158153613318,0.015329578759841388,0.03008790914410191,0.9966678232178746,
+breast,lineage7_strict,CytoFormer_released_UNI2_23,Lymphoid,True,34775,39077,12315.0,0.315147017427131,0.3541337167505392,0.33350484753290366,0.895943014005428,
+breast,lineage7_strict,CytoFormer_released_UNI2_23,Myeloid,True,55795,8003,4447.0,0.5556666250156191,0.07970248230128148,0.13940875889526316,0.9849427944750726,
+breast,lineage7_strict,CytoFormer_released_UNI2_23,Vascular,True,17963,29109,8921.0,0.306468789721392,0.4966319657072872,0.3790363698164514,0.9263206300775918,
+breast,lineage7_strict,CytoFormer_released_UNI2_23,Stromal,True,44195,44646,15314.0,0.34300945213456974,0.3465097861749067,0.3447507344581893,0.881614103630038,
+breast,lineage7_strict,CytoFormer_released_UNI2_23,Neural,False,25,0,,,,,,unsupported by organ head
+breast,lineage7_strict,CytoFormer_released_UNI2_23,Other_defined,False,0,0,,,,,,unsupported by organ head
+breast,lineage7_organ_assumption,NuClass_v15,Epithelial,True,139208,152358,131155.0,0.8608343506740703,0.9421513131429228,0.8996590823347029,0.8611942154982226,
+breast,lineage7_organ_assumption,NuClass_v15,Lymphoid,True,34775,9775,6110.0,0.6250639386189258,0.17570093457943925,0.2742985409652076,0.9857496131204654,
+breast,lineage7_organ_assumption,NuClass_v15,Myeloid,True,55795,52501,27946.0,0.5322946229595626,0.5008692535173402,0.5161040112284849,0.896026523716369,
+breast,lineage7_organ_assumption,NuClass_v15,Vascular,True,17963,14742,8626.0,0.5851309184642518,0.480209319156043,0.5275034398410029,0.9776786691873663,
+breast,lineage7_organ_assumption,NuClass_v15,Stromal,True,44195,62067,25567.0,0.41192582209547746,0.5785043556963457,0.48120682840526247,0.8526835804751257,
+breast,lineage7_organ_assumption,NuClass_v15,Neural,True,25,518,0.0,0.0,0.0,0.0,0.9982256384961088,
+breast,lineage7_organ_assumption,NuClass_v15,Other_defined,True,0,0,0.0,,,,1.0,no positive reference
+breast,lineage7_organ_assumption,CellSTP_v7_1,Epithelial,True,139208,168097,133863.0,0.7963437776997805,0.9616042181483823,0.8712061307170401,0.7758865619660498,
+breast,lineage7_organ_assumption,CellSTP_v7_1,Lymphoid,True,34775,4693,3370.0,0.7180907734924356,0.09690869877785765,0.17077125772777946,0.9948558630718624,
+breast,lineage7_organ_assumption,CellSTP_v7_1,Myeloid,True,55795,25014,15036.0,0.6011033821060207,0.26948651312841654,0.372136766944276,0.9577500571631818,
+breast,lineage7_organ_assumption,CellSTP_v7_1,Vascular,True,17963,25290,11070.0,0.4377224199288256,0.6162667705839782,0.5118720088779969,0.9481018109621238,
+breast,lineage7_organ_assumption,CellSTP_v7_1,Stromal,True,44195,68860,25026.0,0.36343305257043274,0.5662631519402648,0.4427225686612711,0.8230830703163469,
+breast,lineage7_organ_assumption,CellSTP_v7_1,Neural,True,25,7,0.0,0.0,0.0,0.0,0.9999760221418393,
+breast,lineage7_organ_assumption,CellSTP_v7_1,Other_defined,True,0,0,0.0,,,,1.0,no positive reference
+breast,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Epithelial,True,139208,173250,131948.0,0.7616046176046176,0.9478478248376531,0.8445807116476455,0.7296157849600335,
+breast,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Lymphoid,True,34775,38506,12228.0,0.31756089960006234,0.35163191948238676,0.33372907029107135,0.897824920485563,
+breast,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Myeloid,True,55795,7669,4329.0,0.5644803755378798,0.07758759745496908,0.13642379931929913,0.9858574053843483,
+breast,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Vascular,True,17963,28720,8849.0,0.3081128133704735,0.4926237265490174,0.37911016858385277,0.9274775728289988,
+breast,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Stromal,True,44195,43816,15062.0,0.34375570567829106,0.34080778368593734,0.34227539739350765,0.8839469499447059,
+breast,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Neural,False,25,0,,,,,,unsupported by organ head
+breast,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Other_defined,False,0,0,,,,,,unsupported by organ head
+breast,TLS8,NuClass_v15,T_cell,True,16295,7625,4407.0,0.5779672131147541,0.27045105860693464,0.3684782608695652,0.9876900713425014,
+breast,TLS8,NuClass_v15,B_cell,True,117,6,0.0,0.0,0.0,0.0,0.9999783856221158,
+breast,TLS8,NuClass_v15,Plasma,True,3502,89,18.0,0.20224719101123595,0.005139920045688178,0.010025062656641603,0.9997410724705333,
+breast,TLS8,NuClass_v15,NK,True,610,43,8.0,0.18604651162790697,0.013114754098360656,0.02450229709035222,0.9998736918080116,
+breast,TLS8,NuClass_v15,Myeloid,True,55795,52087,28449.0,0.5461823487626472,0.5098843982435702,0.5274095771305686,0.8934817385034811,
+breast,TLS8,NuClass_v15,Vascular,True,17963,14381,8632.0,0.6002364230582018,0.4805433390858988,0.5337620578778135,0.977866924353313,
+breast,TLS8,NuClass_v15,Stromal,True,44195,60670,25640.0,0.4226141420801055,0.5801561262586266,0.48900967911123827,0.849988223454596,
+breast,TLS8,NuClass_v15,Other_parenchymal_or_tumor,True,139233,142809,131597.0,0.9214895419756458,0.9451566798101025,0.9331730735138738,0.9190334857052074,
+breast,TLS8,CellSTP_v7_1,T_cell,True,16295,2984,2029.0,0.6799597855227882,0.12451672292114145,0.21048809585559417,0.9963468048887784,
+breast,TLS8,CellSTP_v7_1,B_cell,True,117,119,4.0,0.03361344537815126,0.03418803418803419,0.03389830508474576,0.9995857244238868,
+breast,TLS8,CellSTP_v7_1,Plasma,True,3502,149,30.0,0.20134228187919462,0.008566533409480296,0.016433853738701727,0.9995660228731474,
+breast,TLS8,CellSTP_v7_1,NK,True,610,6,2.0,0.3333333333333333,0.003278688524590164,0.006493506493506494,0.9999855647780584,
+breast,TLS8,CellSTP_v7_1,Myeloid,True,55795,25248,15294.0,0.6057509505703422,0.274110583385608,0.37742926594523896,0.9551449879458351,
+breast,TLS8,CellSTP_v7_1,Vascular,True,17963,24485,11073.0,0.4522360628956504,0.6164337805489061,0.5217206935544666,0.9483651399246189,
+breast,TLS8,CellSTP_v7_1,Stromal,True,44195,67748,25045.0,0.3696788097065596,0.5666930648263379,0.4474598679685197,0.8171295205875425,
+breast,TLS8,CellSTP_v7_1,Other_parenchymal_or_tumor,True,139233,156971,133908.0,0.8530747717731301,0.9617547564155049,0.9041606460412418,0.8334524866945413,
+breast,TLS8,CytoFormer_released_UNI2_23,T_cell,False,16295,0,,,,,,unsupported by organ head
+breast,TLS8,CytoFormer_released_UNI2_23,B_cell,False,117,0,,,,,,unsupported by organ head
+breast,TLS8,CytoFormer_released_UNI2_23,Plasma,True,3502,1,1.0,1.0,0.00028555111364934324,0.0005709391949757351,1.0,
+breast,TLS8,CytoFormer_released_UNI2_23,NK,False,610,0,,,,,,unsupported by organ head
+breast,TLS8,CytoFormer_released_UNI2_23,Myeloid,True,55795,7490,4369.0,0.5833110814419226,0.07830450757236311,0.13807379315793633,0.9859360565982471,
+breast,TLS8,CytoFormer_released_UNI2_23,Vascular,True,17963,28128,8859.0,0.3149530716723549,0.49318042643211046,0.38441344297151286,0.925816275067662,
+breast,TLS8,CytoFormer_released_UNI2_23,Stromal,True,44195,43158,15132.0,0.35061865702766576,0.34239167326620656,0.3464563323526381,0.879982014003383,
+breast,TLS8,CytoFormer_released_UNI2_23,Other_parenchymal_or_tumor,True,139233,162306,131996.0,0.8132539770556849,0.9480223797519266,0.8754821101084769,0.7811188861688223,
+breast,native47,NuClass_v15,Carcinoma_or_other_epithelial,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,NuClass_v15,Myoepithelial,True,0,1137,0.0,0.0,,,0.9910430830070662,no positive reference
+breast,native47,NuClass_v15,CD4_T,True,4733,996,400.0,0.40160642570281124,0.08451299387280795,0.139640425903299,0.9951230688661954,
+breast,native47,NuClass_v15,CD8_T,True,3491,1489,188.0,0.1262592343854936,0.05385276425093097,0.07550200803212852,0.9894613203726205,
+breast,native47,NuClass_v15,Treg,True,4604,720,106.0,0.14722222222222223,0.023023457862728063,0.039819684447783624,0.9949810768614564,
+breast,native47,NuClass_v15,B,True,117,54,3.0,0.05555555555555555,0.02564102564102564,0.03508771929824561,0.9995978679114363,
+breast,native47,NuClass_v15,NK,True,610,56,17.0,0.30357142857142855,0.027868852459016394,0.05105105105105105,0.9996912871741694,
+breast,native47,NuClass_v15,Macrophage,True,38743,48240,22990.0,0.476575456053068,0.5933975169708077,0.5286090385477622,0.7137123290777568,
+breast,native47,NuClass_v15,DC,True,4831,21,7.0,0.3333333333333333,0.001448975367418754,0.0028854080791426216,0.9998853492752436,
+breast,native47,NuClass_v15,Neutrophil,True,50,0,0.0,,0.0,0.0,1.0,
+breast,native47,NuClass_v15,Mast,True,304,1,0.0,0.0,0.0,0.0,0.9999921034136943,
+breast,native47,NuClass_v15,Endothelial,True,17180,16554,9839.0,0.5943578591277032,0.5727008149010477,0.5833283927195114,0.9388216215231275,
+breast,native47,NuClass_v15,Myofibroblast,True,8746,392,107.0,0.2729591836734694,0.0122341641893437,0.02341869117968921,0.9975887304877533,
+breast,native47,NuClass_v15,Fibroblast,True,13637,36300,6952.0,0.19151515151515153,0.5097895431546527,0.27843082283677434,0.7409800183576926,
+breast,native47,NuClass_v15,Melanoma,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,NuClass_v15,Plasma,True,3502,143,29.0,0.20279720279720279,0.008280982295830954,0.015912208504801097,0.999076466918883,
+breast,native47,NuClass_v15,Monocyte,True,1061,0,0.0,,0.0,0.0,1.0,
+breast,native47,NuClass_v15,Microglia,True,2,0,0.0,,0.0,0.0,1.0,
+breast,native47,NuClass_v15,pDC,True,77,0,0.0,,0.0,0.0,1.0,
+breast,native47,NuClass_v15,Squamous_Epithelial,True,6,7341,0.0,0.0,0.0,0.0,0.9421672509552133,
+breast,native47,NuClass_v15,Keratinocyte,True,3980,0,0.0,,0.0,0.0,1.0,
+breast,native47,NuClass_v15,Hepatocyte,True,0,476,0.0,0.0,,,0.9962502264831693,no positive reference
+breast,native47,NuClass_v15,Cholangiocyte,True,42,0,0.0,,0.0,0.0,1.0,
+breast,native47,NuClass_v15,Alveolar_epithelium,True,3006,185,32.0,0.17297297297297298,0.010645375914836993,0.02005640864932623,0.9987654819058377,
+breast,native47,NuClass_v15,Airway_epithelium,True,1942,8708,351.0,0.040307762976573264,0.18074150360453142,0.06591549295774649,0.9331434651477212,
+breast,native47,NuClass_v15,Gastric_epithelium,True,566,0,0.0,,0.0,0.0,1.0,
+breast,native47,NuClass_v15,Intestinal_epithelium,True,7524,1085,333.0,0.3069124423963134,0.04425837320574163,0.07736090138227436,0.9937027391409933,
+breast,native47,NuClass_v15,Enteroendocrine,True,4,6,0.0,0.0,0.0,0.0,0.9999527324578334,
+breast,native47,NuClass_v15,Acinar,True,0,8,0.0,0.0,,,0.9999369785963558,no positive reference
+breast,native47,NuClass_v15,Ductal_epithelium,True,77,0,0.0,,0.0,0.0,1.0,
+breast,native47,NuClass_v15,Renal_epithelium,True,9,10,0.0,0.0,0.0,0.0,0.9999212176598493,
+breast,native47,NuClass_v15,Ovarian_stroma,True,0,143,0.0,0.0,,,0.9988734924098597,no positive reference
+breast,native47,NuClass_v15,Meningeal_fibroblast,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,NuClass_v15,Smooth_muscle,True,1397,1028,378.0,0.36770428015564205,0.2705798138869005,0.3117525773195876,0.9948225323392595,
+breast,native47,NuClass_v15,Pericyte,True,5985,1733,512.0,0.2954414310444316,0.08554720133667502,0.1326768592899715,0.9899054201527828,
+breast,native47,NuClass_v15,Lymphatic_endothelial,True,662,1,1.0,1.0,0.0015105740181268882,0.0030165912518853697,1.0,
+breast,native47,NuClass_v15,Adipocyte,True,32,2,1.0,0.5,0.03125,0.058823529411764705,0.9999921203381951,
+breast,native47,NuClass_v15,Osteoblast_chondro,True,0,3,0.0,0.0,,,0.9999763669736335,no positive reference
+breast,native47,NuClass_v15,Meningioma,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,NuClass_v15,Glioma,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,NuClass_v15,Neuron,True,21,60,0.0,0.0,0.0,0.0,0.9995272612669398,
+breast,native47,NuClass_v15,Neural_progenitor,True,0,41,0.0,0.0,,,0.9996770153063234,no positive reference
+breast,native47,NuClass_v15,Astrocyte,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,NuClass_v15,Oligodendrocyte,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,NuClass_v15,OPC,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,NuClass_v15,Schwann,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,NuClass_v15,Satellite_glia,True,0,8,0.0,0.0,,,0.9999369785963558,no positive reference
+breast,native47,CellSTP_v7_1,Carcinoma_or_other_epithelial,True,0,33860,0.0,0.0,,,0.7332619090758699,no positive reference
+breast,native47,CellSTP_v7_1,Myoepithelial,True,0,179,0.0,0.0,,,0.9985898960934607,no positive reference
+breast,native47,CellSTP_v7_1,CD4_T,True,4733,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,CD8_T,True,3491,230,16.0,0.06956521739130435,0.004583213978802635,0.00859983875302338,0.9982665046577561,
+breast,native47,CellSTP_v7_1,Treg,True,4604,1093,190.0,0.17383348581884722,0.04126846220677671,0.0667017728629103,0.9926187498467348,
+breast,native47,CellSTP_v7_1,B,True,117,330,7.0,0.021212121212121213,0.05982905982905983,0.03131991051454139,0.9974531634390967,
+breast,native47,CellSTP_v7_1,NK,True,610,6,2.0,0.3333333333333333,0.003278688524590164,0.006493506493506494,0.9999683371460687,
+breast,native47,CellSTP_v7_1,Macrophage,True,38743,27891,14712.0,0.5274819834355169,0.3797331130784916,0.44157637242248704,0.8505748429669607,
+breast,native47,CellSTP_v7_1,DC,True,4831,5,3.0,0.6,0.000620989443179466,0.0012406947890818859,0.9999836213250348,
+breast,native47,CellSTP_v7_1,Neutrophil,True,50,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,Mast,True,304,4,3.0,0.75,0.009868421052631578,0.01948051948051948,0.9999921034136943,
+breast,native47,CellSTP_v7_1,Endothelial,True,17180,26254,12082.0,0.4601965414793936,0.7032596041909197,0.5563383524427867,0.8708831005548419,
+breast,native47,CellSTP_v7_1,Myofibroblast,True,8746,9319,1579.0,0.16943878098508425,0.18053967528012807,0.17481317464710766,0.9345149964042472,
+breast,native47,CellSTP_v7_1,Fibroblast,True,13637,27076,5428.0,0.20047274338897916,0.3980347583779424,0.2666470169233414,0.8089387841558991,
+breast,native47,CellSTP_v7_1,Melanoma,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,CellSTP_v7_1,Plasma,True,3502,210,36.0,0.17142857142857143,0.010279840091376356,0.01939655172413793,0.9985903968761899,
+breast,native47,CellSTP_v7_1,Monocyte,True,1061,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,Microglia,True,2,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,pDC,True,77,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,Squamous_Epithelial,True,6,17,0.0,0.0,0.0,0.0,0.9998660731870642,
+breast,native47,CellSTP_v7_1,Keratinocyte,True,3980,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,Hepatocyte,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,CellSTP_v7_1,Cholangiocyte,True,42,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,Alveolar_epithelium,True,3006,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,Airway_epithelium,True,1942,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,Gastric_epithelium,True,566,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,Intestinal_epithelium,True,7524,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,Enteroendocrine,True,4,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,Acinar,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,CellSTP_v7_1,Ductal_epithelium,True,77,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,Renal_epithelium,True,9,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,Ovarian_stroma,True,0,6,0.0,0.0,,,0.9999527339472668,no positive reference
+breast,native47,CellSTP_v7_1,Meningeal_fibroblast,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,CellSTP_v7_1,Smooth_muscle,True,1397,51,48.0,0.9411764705882353,0.03435934144595562,0.06629834254143646,0.9999761039954119,
+breast,native47,CellSTP_v7_1,Pericyte,True,5985,105,30.0,0.2857142857142857,0.005012531328320802,0.009852216748768473,0.9993799398128245,
+breast,native47,CellSTP_v7_1,Lymphatic_endothelial,True,662,8,8.0,1.0,0.012084592145015106,0.023880597014925373,1.0,
+breast,native47,CellSTP_v7_1,Adipocyte,True,32,294,11.0,0.03741496598639456,0.34375,0.06748466257668712,0.997770055709209,
+breast,native47,CellSTP_v7_1,Osteoblast_chondro,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,CellSTP_v7_1,Meningioma,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,CellSTP_v7_1,Glioma,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,CellSTP_v7_1,Neuron,True,21,0,0.0,,0.0,0.0,1.0,
+breast,native47,CellSTP_v7_1,Neural_progenitor,True,0,3,0.0,0.0,,,0.9999763669736335,no positive reference
+breast,native47,CellSTP_v7_1,Astrocyte,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,CellSTP_v7_1,Oligodendrocyte,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,CellSTP_v7_1,OPC,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,CellSTP_v7_1,Schwann,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,CellSTP_v7_1,Satellite_glia,True,0,0,0.0,,,,1.0,no positive reference
+breast,native47,CytoFormer_released_UNI2_23,Carcinoma_or_other_epithelial,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Myoepithelial,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,CD4_T,False,4733,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,CD8_T,False,3491,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Treg,False,4604,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,B,False,117,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,NK,False,610,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Macrophage,True,38743,5427,3065.0,0.5647687488483508,0.07911106522468575,0.13878197871858727,0.9732193473774916,
+breast,native47,CytoFormer_released_UNI2_23,DC,False,4831,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Neutrophil,False,50,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Mast,False,304,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Endothelial,False,17180,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Myofibroblast,False,8746,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Fibroblast,False,13637,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Melanoma,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Plasma,True,3502,1,1.0,1.0,0.00028555111364934324,0.0005709391949757351,1.0,
+breast,native47,CytoFormer_released_UNI2_23,Monocyte,False,1061,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Microglia,False,2,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,pDC,False,77,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Squamous_Epithelial,False,6,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Keratinocyte,False,3980,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Hepatocyte,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Cholangiocyte,False,42,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Alveolar_epithelium,False,3006,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Airway_epithelium,False,1942,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Gastric_epithelium,False,566,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Intestinal_epithelium,False,7524,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Enteroendocrine,False,4,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Acinar,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Ductal_epithelium,False,77,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Renal_epithelium,False,9,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Ovarian_stroma,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Meningeal_fibroblast,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Smooth_muscle,False,1397,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Pericyte,False,5985,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Lymphatic_endothelial,False,662,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Adipocyte,False,32,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Osteoblast_chondro,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Meningioma,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Glioma,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Neuron,False,21,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Neural_progenitor,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Astrocyte,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Oligodendrocyte,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,OPC,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Schwann,False,0,0,,,,,,unsupported by organ head
+breast,native47,CytoFormer_released_UNI2_23,Satellite_glia,False,0,0,,,,,,unsupported by organ head
+colorectal,broad3,NuClass_v15,Parenchymal_or_tumor,True,200924,207721,197602.0,0.951285618690455,0.9834663852999144,0.9671083703458992,0.9152469973365496,
+colorectal,broad3,NuClass_v15,Immune,True,49595,15575,10775.0,0.6918138041733547,0.21725980441576773,0.33067362283259166,0.9822697000254873,
+colorectal,broad3,NuClass_v15,Stromal_and_vascular,True,69799,97022,62758.0,0.6468429840654697,0.8991246292926833,0.7523992782683235,0.8632279387990531,
+colorectal,broad3,CellSTP_v7_1,Parenchymal_or_tumor,True,200924,213552,198790.0,0.9308739791713494,0.9893790687025941,0.9592352753838582,0.8763589460106873,
+colorectal,broad3,CellSTP_v7_1,Immune,True,49595,4558,3397.0,0.7452830188679245,0.06849480794434923,0.125459346665928,0.9957114836936647,
+colorectal,broad3,CellSTP_v7_1,Stromal_and_vascular,True,69799,102208,63237.0,0.6187089073262367,0.9059871917935787,0.735284029138349,0.8444389447506976,
+colorectal,broad3,CytoFormer_released_UNI2_23,Parenchymal_or_tumor,True,200924,203461,184352.0,0.9060802807417638,0.917521052736358,0.9117647786144392,0.8399500812436136,
+colorectal,broad3,CytoFormer_released_UNI2_23,Immune,True,49595,56822,21807.0,0.3837774101580374,0.43970158282084887,0.40984053299754736,0.8706611554984246,
+colorectal,broad3,CytoFormer_released_UNI2_23,Stromal_and_vascular,True,69799,60035,40129.0,0.6684267510618805,0.5749222768234502,0.618158571714651,0.9205409569733234,
+colorectal,lineage7_strict,NuClass_v15,Epithelial,True,200688,207579,197840.0,0.9530829226463178,0.9858088176672247,0.969169685524424,0.9185906545180975,
+colorectal,lineage7_strict,NuClass_v15,Lymphoid,True,14557,2214,1268.0,0.5727190605239386,0.0871058597238442,0.15121340409039413,0.9969060802391411,
+colorectal,lineage7_strict,NuClass_v15,Myeloid,True,35038,14722,7329.0,0.49782638228501563,0.209172897996461,0.2945739549839228,0.9740851093662367,
+colorectal,lineage7_strict,NuClass_v15,Vascular,True,8533,17630,4734.0,0.2685195689166194,0.5547872963787648,0.36188510491916065,0.9586381641195054,
+colorectal,lineage7_strict,NuClass_v15,Stromal,True,61266,76822,47203.0,0.6144463825466663,0.7704599614794503,0.6836654886738891,0.8856638821549342,
+colorectal,lineage7_strict,NuClass_v15,Neural,True,236,1351,88.0,0.06513693560325684,0.3728813559322034,0.11090107120352867,0.9960541361276173,
+colorectal,lineage7_strict,NuClass_v15,Other_defined,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,lineage7_strict,CellSTP_v7_1,Epithelial,True,200688,216592,199076.0,0.9191290537046612,0.9919676313481623,0.9541602760736196,0.8535818774554877,
+colorectal,lineage7_strict,CellSTP_v7_1,Lymphoid,True,14557,1792,1109.0,0.6188616071428571,0.0761832795218795,0.13566578995657227,0.9977662291789993,
+colorectal,lineage7_strict,CellSTP_v7_1,Myeloid,True,35038,2926,1397.0,0.4774436090225564,0.039870997203036704,0.07359603835212307,0.9946403533370723,
+colorectal,lineage7_strict,CellSTP_v7_1,Vascular,True,8533,34049,5972.0,0.17539428470733354,0.699871088714403,0.2804941054905829,0.9099475600173196,
+colorectal,lineage7_strict,CellSTP_v7_1,Stromal,True,61266,64634,39813.0,0.6159761116440263,0.6498384095583195,0.6324543288324067,0.9041852601022189,
+colorectal,lineage7_strict,CellSTP_v7_1,Neural,True,236,325,57.0,0.1753846153846154,0.24152542372881355,0.20320855614973263,0.9991627145543954,
+colorectal,lineage7_strict,CellSTP_v7_1,Other_defined,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,lineage7_strict,CytoFormer_released_UNI2_23,Epithelial,True,200688,1435,1352.0,0.9421602787456446,0.006736825320896117,0.013377992608461184,0.9993061940984703,
+colorectal,lineage7_strict,CytoFormer_released_UNI2_23,Lymphoid,True,14557,35992,4960.0,0.13780840186708157,0.3407295459229237,0.19624522740311381,0.8985089661533028,
+colorectal,lineage7_strict,CytoFormer_released_UNI2_23,Myeloid,True,35038,14587,4524.0,0.3101391650099404,0.12911695873052115,0.18232745591939548,0.9647258833426808,
+colorectal,lineage7_strict,CytoFormer_released_UNI2_23,Vascular,True,8533,16557,3399.0,0.20529081355317993,0.39833587249501934,0.27094459944200877,0.9577978414612633,
+colorectal,lineage7_strict,CytoFormer_released_UNI2_23,Stromal,True,61266,45028,27621.0,0.6134183174913387,0.45083733228870826,0.5197094850132651,0.9328049966802032,
+colorectal,lineage7_strict,CytoFormer_released_UNI2_23,Neural,False,236,0,,,,,,unsupported by organ head
+colorectal,lineage7_strict,CytoFormer_released_UNI2_23,Other_defined,False,0,0,,,,,,unsupported by organ head
+colorectal,lineage7_organ_assumption,NuClass_v15,Epithelial,True,200688,207579,197840.0,0.9530829226463178,0.9858088176672247,0.969169685524424,0.9185906545180975,
+colorectal,lineage7_organ_assumption,NuClass_v15,Lymphoid,True,14557,2214,1268.0,0.5727190605239386,0.0871058597238442,0.15121340409039413,0.9969060802391411,
+colorectal,lineage7_organ_assumption,NuClass_v15,Myeloid,True,35038,14722,7329.0,0.49782638228501563,0.209172897996461,0.2945739549839228,0.9740851093662367,
+colorectal,lineage7_organ_assumption,NuClass_v15,Vascular,True,8533,17630,4734.0,0.2685195689166194,0.5547872963787648,0.36188510491916065,0.9586381641195054,
+colorectal,lineage7_organ_assumption,NuClass_v15,Stromal,True,61266,76822,47203.0,0.6144463825466663,0.7704599614794503,0.6836654886738891,0.8856638821549342,
+colorectal,lineage7_organ_assumption,NuClass_v15,Neural,True,236,1351,88.0,0.06513693560325684,0.3728813559322034,0.11090107120352867,0.9960541361276173,
+colorectal,lineage7_organ_assumption,NuClass_v15,Other_defined,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,lineage7_organ_assumption,CellSTP_v7_1,Epithelial,True,200688,216592,199076.0,0.9191290537046612,0.9919676313481623,0.9541602760736196,0.8535818774554877,
+colorectal,lineage7_organ_assumption,CellSTP_v7_1,Lymphoid,True,14557,1792,1109.0,0.6188616071428571,0.0761832795218795,0.13566578995657227,0.9977662291789993,
+colorectal,lineage7_organ_assumption,CellSTP_v7_1,Myeloid,True,35038,2926,1397.0,0.4774436090225564,0.039870997203036704,0.07359603835212307,0.9946403533370723,
+colorectal,lineage7_organ_assumption,CellSTP_v7_1,Vascular,True,8533,34049,5972.0,0.17539428470733354,0.699871088714403,0.2804941054905829,0.9099475600173196,
+colorectal,lineage7_organ_assumption,CellSTP_v7_1,Stromal,True,61266,64634,39813.0,0.6159761116440263,0.6498384095583195,0.6324543288324067,0.9041852601022189,
+colorectal,lineage7_organ_assumption,CellSTP_v7_1,Neural,True,236,325,57.0,0.1753846153846154,0.24152542372881355,0.20320855614973263,0.9991627145543954,
+colorectal,lineage7_organ_assumption,CellSTP_v7_1,Other_defined,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Epithelial,True,200688,210503,187523.0,0.8908329097447543,0.9344006617236705,0.9120968114574493,0.8079077154559893,
+colorectal,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Lymphoid,True,14557,34735,4883.0,0.1405786670505254,0.3354399945043622,0.1981254564635235,0.9023681895336554,
+colorectal,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Myeloid,True,35038,13881,4355.0,0.3137382032994741,0.12429362406530053,0.17804942864735585,0.9666082445316881,
+colorectal,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Vascular,True,8533,16405,3387.0,0.20646144468149955,0.3969295675612329,0.2716336514556099,0.9582468688358965,
+colorectal,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Stromal,True,61266,44794,27506.0,0.614055453855427,0.44896027160252017,0.5186875353573449,0.9332643639114927,
+colorectal,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Neural,False,236,0,,,,,,unsupported by organ head
+colorectal,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Other_defined,False,0,0,,,,,,unsupported by organ head
+colorectal,TLS8,NuClass_v15,T_cell,True,7529,683,237.0,0.34699853587115664,0.031478283968654534,0.05772040915733073,0.9985613970576377,
+colorectal,TLS8,NuClass_v15,B_cell,True,352,302,176.0,0.5827814569536424,0.5,0.5382262996941896,0.9996027742749054,
+colorectal,TLS8,NuClass_v15,Plasma,True,3863,413,158.0,0.38256658595641646,0.04090085425834843,0.07390084190832553,0.9991870929487486,
+colorectal,TLS8,NuClass_v15,NK,True,47,1,0.0,0.0,0.0,0.0,0.9999968504433001,
+colorectal,TLS8,NuClass_v15,Myeloid,True,35038,14865,7455.0,0.5015136226034309,0.2127689936640219,0.2987796324870248,0.9737712113381992,
+colorectal,TLS8,NuClass_v15,Vascular,True,8533,17285,4736.0,0.27399479317327163,0.5550216805343958,0.36687582306917654,0.959390846517528,
+colorectal,TLS8,NuClass_v15,Stromal,True,61266,76024,47253.0,0.6215537198779333,0.7712760748212711,0.6883676888338554,0.8877386981731347,
+colorectal,TLS8,NuClass_v15,Other_parenchymal_or_tumor,True,200924,207979,197934.0,0.9517018545141577,0.9851187513686767,0.9681220240497135,0.9138714545392187,
+colorectal,TLS8,CellSTP_v7_1,T_cell,True,7529,997,271.0,0.27181544633901705,0.03599415593040244,0.06357025568848229,0.997658238259742,
+colorectal,TLS8,CellSTP_v7_1,B_cell,True,352,217,141.0,0.6497695852534562,0.4005681818181818,0.4956063268892794,0.9997604035308953,
+colorectal,TLS8,CellSTP_v7_1,Plasma,True,3863,142,95.0,0.6690140845070423,0.024592285788247476,0.04744069912609238,0.9998501700729066,
+colorectal,TLS8,CellSTP_v7_1,NK,True,47,0,0.0,,0.0,0.0,1.0,
+colorectal,TLS8,CellSTP_v7_1,Myeloid,True,35038,3026,1433.0,0.4735624586913417,0.040898453108054116,0.07529424127784784,0.9943613413848518,
+colorectal,TLS8,CellSTP_v7_1,Vascular,True,8533,33405,5975.0,0.1788654393054932,0.7002226649478496,0.28494444179503076,0.9112352314906204,
+colorectal,TLS8,CellSTP_v7_1,Stromal,True,61266,63961,39793.0,0.6221447444536514,0.6495119642215911,0.635533870491188,0.9056991017847249,
+colorectal,TLS8,CellSTP_v7_1,Other_parenchymal_or_tumor,True,200924,215804,199150.0,0.9228281218142389,0.9911707909458303,0.9557793092856731,0.8572041019309257,
+colorectal,TLS8,CytoFormer_released_UNI2_23,T_cell,False,7529,0,,,,,,unsupported by organ head
+colorectal,TLS8,CytoFormer_released_UNI2_23,B_cell,False,352,0,,,,,,unsupported by organ head
+colorectal,TLS8,CytoFormer_released_UNI2_23,Plasma,True,3863,773,110.0,0.1423027166882277,0.028475278281128655,0.04745470232959448,0.9978864416667463,
+colorectal,TLS8,CytoFormer_released_UNI2_23,NK,False,47,0,,,,,,unsupported by organ head
+colorectal,TLS8,CytoFormer_released_UNI2_23,Myeloid,True,35038,16200,5083.0,0.31376543209876545,0.14507106570009703,0.19840743198407432,0.9606497377121134,
+colorectal,TLS8,CytoFormer_released_UNI2_23,Vascular,True,8533,16668,3420.0,0.20518358531317496,0.40079690612914565,0.27141780088091744,0.957128849682382,
+colorectal,TLS8,CytoFormer_released_UNI2_23,Stromal,True,61266,46707,28682.0,0.6140835420814867,0.46815525740214803,0.5312809683902457,0.9296684173150309,
+colorectal,TLS8,CytoFormer_released_UNI2_23,Other_parenchymal_or_tumor,True,200924,210485,188024.0,0.8932893080267003,0.9357966196173677,0.9140490363604102,0.8074133141269678,
+colorectal,native47,NuClass_v15,Carcinoma_or_other_epithelial,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,NuClass_v15,Myoepithelial,True,0,2906,0.0,0.0,,,0.99056478189581,no positive reference
+colorectal,native47,NuClass_v15,CD4_T,True,1344,32,6.0,0.1875,0.004464285714285714,0.00872093023255814,0.9999152130597976,
+colorectal,native47,NuClass_v15,CD8_T,True,635,66,2.0,0.030303030303030304,0.0031496062992125984,0.005706134094151213,0.9997917751171265,
+colorectal,native47,NuClass_v15,Treg,True,4926,116,21.0,0.1810344827586207,0.004263093788063338,0.008330027766759222,0.9996865400288383,
+colorectal,native47,NuClass_v15,B,True,352,286,177.0,0.6188811188811189,0.5028409090909091,0.554858934169279,0.9996456932223389,
+colorectal,native47,NuClass_v15,NK,True,47,2,0.0,0.0,0.0,0.0,0.999993505397015,
+colorectal,native47,NuClass_v15,Macrophage,True,26014,23277,8217.0,0.35300940842892126,0.31586837856538785,0.33340772149073866,0.9465921462793593,
+colorectal,native47,NuClass_v15,DC,True,3264,1,1.0,1.0,0.00030637254901960784,0.0006125574272588055,1.0,
+colorectal,native47,NuClass_v15,Neutrophil,True,20,62,0.0,0.0,0.0,0.0,0.9997986849581947,
+colorectal,native47,NuClass_v15,Mast,True,273,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,NuClass_v15,Endothelial,True,8122,27076,5593.0,0.20656670113753878,0.6886234917508003,0.3178021478493096,0.9283596722612573,
+colorectal,native47,NuClass_v15,Myofibroblast,True,33204,3568,1675.0,0.4694506726457399,0.050445729430189136,0.091101925378005,0.9931111280937148,
+colorectal,native47,NuClass_v15,Fibroblast,True,19464,43106,9815.0,0.22769452048438732,0.5042642827784628,0.3137286239411859,0.8846189837487133,
+colorectal,native47,NuClass_v15,Melanoma,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,NuClass_v15,Plasma,True,3863,577,204.0,0.3535528596187175,0.05280869790318406,0.0918918918918919,0.998773558849447,
+colorectal,native47,NuClass_v15,Monocyte,True,256,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,NuClass_v15,Microglia,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,NuClass_v15,pDC,True,11,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,NuClass_v15,Squamous_Epithelial,True,1,8711,0.0,0.0,0.0,0.0,0.9717169814996396,
+colorectal,native47,NuClass_v15,Keratinocyte,True,3,2,0.0,0.0,0.0,0.0,0.9999935063248396,
+colorectal,native47,NuClass_v15,Hepatocyte,True,0,1651,0.0,0.0,,,0.9946395233688858,no positive reference
+colorectal,native47,NuClass_v15,Cholangiocyte,True,8,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,NuClass_v15,Alveolar_epithelium,True,311,20,0.0,0.0,0.0,0.0,0.9999349982449526,
+colorectal,native47,NuClass_v15,Airway_epithelium,True,3188,61711,258.0,0.004180778143280777,0.0809284818067754,0.007950815883141497,0.7983871761475294,
+colorectal,native47,NuClass_v15,Gastric_epithelium,True,108,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,NuClass_v15,Intestinal_epithelium,True,196517,103805,101994.0,0.9825538268869515,0.5190085336128681,0.6792309587709192,0.9837546421715495,
+colorectal,native47,NuClass_v15,Enteroendocrine,True,8,1,0.0,0.0,0.0,0.0,0.9999967531097091,
+colorectal,native47,NuClass_v15,Acinar,True,0,8,0.0,0.0,,,0.9999740255523628,no positive reference
+colorectal,native47,NuClass_v15,Ductal_epithelium,True,13,21140,2.0,9.46073793755913e-05,0.15384615384615385,0.0001890984730298303,0.9313661187991507,
+colorectal,native47,NuClass_v15,Renal_epithelium,True,0,146,0.0,0.0,,,0.9995259663306223,no positive reference
+colorectal,native47,NuClass_v15,Ovarian_stroma,True,0,914,0.0,0.0,,,0.9970324193574571,no positive reference
+colorectal,native47,NuClass_v15,Meningeal_fibroblast,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,NuClass_v15,Smooth_muscle,True,1690,6499,669.0,0.10293891367902755,0.39585798816568046,0.16338991329832703,0.9809666835343857,
+colorectal,native47,NuClass_v15,Pericyte,True,3907,951,212.0,0.22292323869610936,0.05426158177629895,0.08727871552079045,0.9975697824314015,
+colorectal,native47,NuClass_v15,Lymphatic_endothelial,True,347,8,6.0,0.75,0.01729106628242075,0.03380281690140845,0.9999934990638651,
+colorectal,native47,NuClass_v15,Adipocyte,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,NuClass_v15,Osteoblast_chondro,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,NuClass_v15,Meningioma,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,NuClass_v15,Glioma,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,NuClass_v15,Neuron,True,99,30,22.0,0.7333333333333333,0.2222222222222222,0.34108527131782945,0.9999740172006132,
+colorectal,native47,NuClass_v15,Neural_progenitor,True,0,2,0.0,0.0,,,0.9999935063880907,no positive reference
+colorectal,native47,NuClass_v15,Astrocyte,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,NuClass_v15,Oligodendrocyte,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,NuClass_v15,OPC,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,NuClass_v15,Schwann,True,0,1319,0.0,0.0,,,0.9957174629458271,no positive reference
+colorectal,native47,NuClass_v15,Satellite_glia,True,0,2,0.0,0.0,,,0.9999935063880907,no positive reference
+colorectal,native47,CellSTP_v7_1,Carcinoma_or_other_epithelial,True,0,213266,0.0,0.0,,,0.3075666812772935,no positive reference
+colorectal,native47,CellSTP_v7_1,Myoepithelial,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,CD4_T,True,1344,51,5.0,0.09803921568627451,0.003720238095238095,0.007168458781362007,0.999849992336565,
+colorectal,native47,CellSTP_v7_1,CD8_T,True,635,11,0.0,0.0,0.0,0.0,0.9999642113482561,
+colorectal,native47,CellSTP_v7_1,Treg,True,4926,656,119.0,0.18140243902439024,0.024157531465692245,0.042637047653170904,0.9982281262682755,
+colorectal,native47,CellSTP_v7_1,B,True,352,238,157.0,0.6596638655462185,0.4460227272727273,0.5322033898305085,0.9997367078074262,
+colorectal,native47,CellSTP_v7_1,NK,True,47,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,CellSTP_v7_1,Macrophage,True,26014,3198,992.0,0.31019387116948094,0.03813331283155224,0.0679172942626318,0.9921767778680124,
+colorectal,native47,CellSTP_v7_1,DC,True,3264,2,1.0,0.5,0.00030637254901960784,0.000612369871402327,0.999996718417227,
+colorectal,native47,CellSTP_v7_1,Neutrophil,True,20,36,2.0,0.05555555555555555,0.1,0.07142857142857142,0.9998896014286874,
+colorectal,native47,CellSTP_v7_1,Mast,True,273,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,CellSTP_v7_1,Endothelial,True,8122,45252,6567.0,0.1451206576504906,0.8085446934252647,0.24607486791321617,0.8709953880476068,
+colorectal,native47,CellSTP_v7_1,Myofibroblast,True,33204,33781,13833.0,0.4094905420206625,0.41660643295988437,0.41301783981488394,0.9274066472337158,
+colorectal,native47,CellSTP_v7_1,Fibroblast,True,19464,2311,578.0,0.2501081782778018,0.029695848746403616,0.05308840413318025,0.9939937129805809,
+colorectal,native47,CellSTP_v7_1,Melanoma,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,Plasma,True,3863,182,119.0,0.6538461538461539,0.030805073776857365,0.0588380716934487,0.9997928531032578,
+colorectal,native47,CellSTP_v7_1,Monocyte,True,256,1,0.0,0.0,0.0,0.0,0.9999967504931127,
+colorectal,native47,CellSTP_v7_1,Microglia,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,pDC,True,11,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,CellSTP_v7_1,Squamous_Epithelial,True,1,7,0.0,0.0,0.0,0.0,0.999977272284525,
+colorectal,native47,CellSTP_v7_1,Keratinocyte,True,3,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,CellSTP_v7_1,Hepatocyte,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,Cholangiocyte,True,8,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,CellSTP_v7_1,Alveolar_epithelium,True,311,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,CellSTP_v7_1,Airway_epithelium,True,3188,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,CellSTP_v7_1,Gastric_epithelium,True,108,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,CellSTP_v7_1,Intestinal_epithelium,True,196517,70,70.0,1.0,0.0003562032801233481,0.0007121528890516667,1.0,
+colorectal,native47,CellSTP_v7_1,Enteroendocrine,True,8,0,0.0,,0.0,0.0,1.0,
+colorectal,native47,CellSTP_v7_1,Acinar,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,Ductal_epithelium,True,13,11,0.0,0.0,0.0,0.0,0.9999642836269652,
+colorectal,native47,CellSTP_v7_1,Renal_epithelium,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,Ovarian_stroma,True,0,176,0.0,0.0,,,0.999428562151983,no positive reference
+colorectal,native47,CellSTP_v7_1,Meningeal_fibroblast,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,Smooth_muscle,True,1690,8081,552.0,0.0683083776760302,0.32662721893491126,0.11298741172858459,0.9754199245849725,
+colorectal,native47,CellSTP_v7_1,Pericyte,True,3907,299,108.0,0.3612040133779264,0.02764269260302022,0.05135520684736091,0.9993718923469522,
+colorectal,native47,CellSTP_v7_1,Lymphatic_endothelial,True,347,6,3.0,0.5,0.008645533141210375,0.0169971671388102,0.9999902485957978,
+colorectal,native47,CellSTP_v7_1,Adipocyte,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,Osteoblast_chondro,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,Meningioma,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,Glioma,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,Neuron,True,99,39,35.0,0.8974358974358975,0.35353535353535354,0.5072463768115942,0.9999870086003066,
+colorectal,native47,CellSTP_v7_1,Neural_progenitor,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,Astrocyte,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,Oligodendrocyte,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,OPC,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CellSTP_v7_1,Schwann,True,0,321,0.0,0.0,,,0.9989577752885599,no positive reference
+colorectal,native47,CellSTP_v7_1,Satellite_glia,True,0,0,0.0,,,,1.0,no positive reference
+colorectal,native47,CytoFormer_released_UNI2_23,Carcinoma_or_other_epithelial,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Myoepithelial,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,CD4_T,False,1344,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,CD8_T,False,635,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Treg,False,4926,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,B,False,352,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,NK,False,47,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Macrophage,True,26014,15618,3826.0,0.24497374823921117,0.1470746521104021,0.1838009223674097,0.9581815796099737,
+colorectal,native47,CytoFormer_released_UNI2_23,DC,False,3264,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Neutrophil,False,20,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Mast,False,273,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Endothelial,False,8122,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Myofibroblast,False,33204,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Fibroblast,False,19464,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Melanoma,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Plasma,True,3863,731,111.0,0.1518467852257182,0.028734144447320736,0.04832390074009578,0.9979614114923783,
+colorectal,native47,CytoFormer_released_UNI2_23,Monocyte,False,256,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Microglia,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,pDC,False,11,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Squamous_Epithelial,False,1,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Keratinocyte,False,3,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Hepatocyte,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Cholangiocyte,False,8,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Alveolar_epithelium,False,311,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Airway_epithelium,False,3188,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Gastric_epithelium,False,108,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Intestinal_epithelium,False,196517,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Enteroendocrine,False,8,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Acinar,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Ductal_epithelium,False,13,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Renal_epithelium,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Ovarian_stroma,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Meningeal_fibroblast,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Smooth_muscle,False,1690,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Pericyte,False,3907,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Lymphatic_endothelial,False,347,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Adipocyte,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Osteoblast_chondro,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Meningioma,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Glioma,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Neuron,False,99,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Neural_progenitor,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Astrocyte,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Oligodendrocyte,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,OPC,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Schwann,False,0,0,,,,,,unsupported by organ head
+colorectal,native47,CytoFormer_released_UNI2_23,Satellite_glia,False,0,0,,,,,,unsupported by organ head
+kidney,broad3,NuClass_v15,Parenchymal_or_tumor,True,159957,158420,151088.0,0.9537179649034213,0.9445538488468777,0.9491137864858329,0.9560481719708187,
+kidney,broad3,NuClass_v15,Immune,True,70364,55580,44174.0,0.7947822957898525,0.6277926212267637,0.7014863748967796,0.955516902485063,
+kidney,broad3,NuClass_v15,Stromal_and_vascular,True,96455,112776,82360.0,0.7302972263602184,0.8538696801617335,0.7872638375766497,0.8679408304062591,
+kidney,broad3,CellSTP_v7_1,Parenchymal_or_tumor,True,159957,158788,151113.0,0.951665113232738,0.9447101408503535,0.9481748733313464,0.9539920512651436,
+kidney,broad3,CellSTP_v7_1,Immune,True,70364,52641,42830.0,0.8136243612393381,0.6086919447444716,0.6963944555099386,0.9617373601859507,
+kidney,broad3,CellSTP_v7_1,Stromal_and_vascular,True,96455,115347,84061.0,0.7287662444623614,0.8715048468197605,0.7937696527889255,0.8641634935589894,
+kidney,broad3,CytoFormer_released_UNI2_23,Parenchymal_or_tumor,True,159957,148556,145827.0,0.981629823097014,0.911663759635402,0.9453540045314136,0.9836409521697169,
+kidney,broad3,CytoFormer_released_UNI2_23,Immune,True,70364,42435,34810.0,0.8203134205255096,0.49471320561650844,0.6172040532274222,0.970262702213625,
+kidney,broad3,CytoFormer_released_UNI2_23,Stromal_and_vascular,True,96455,135785,89285.0,0.6575468571638988,0.9256648177906796,0.7689028591112642,0.7981078581631723,
+kidney,lineage7_strict,NuClass_v15,Epithelial,True,159171,160292,151448.0,0.9448256931100741,0.9514798549987121,0.948141099282233,0.9472330777721428,
+kidney,lineage7_strict,NuClass_v15,Lymphoid,True,33349,30816,20467.0,0.6641679646936657,0.6137215508710906,0.6379490376373412,0.964730580348775,
+kidney,lineage7_strict,NuClass_v15,Myeloid,True,37015,23636,12852.0,0.5437468268742596,0.34721059030122925,0.4238017510016323,0.9627831212620056,
+kidney,lineage7_strict,NuClass_v15,Vascular,True,38566,50879,31306.0,0.6153029737219678,0.8117512835139761,0.7000055900273912,0.9320877138197842,
+kidney,lineage7_strict,NuClass_v15,Stromal,True,57889,61152,38237.0,0.6252779958137101,0.6605227245245211,0.6424173184029032,0.9147783269551893,
+kidney,lineage7_strict,NuClass_v15,Neural,True,786,1,1.0,1.0,0.001272264631043257,0.0025412960609911056,1.0,
+kidney,lineage7_strict,NuClass_v15,Other_defined,True,0,0,0.0,,,,1.0,no positive reference
+kidney,lineage7_strict,CellSTP_v7_1,Epithelial,True,159171,160425,151395.0,0.9437120149602618,0.9511468797708125,0.9474148612623438,0.9461233256764416,
+kidney,lineage7_strict,CellSTP_v7_1,Lymphoid,True,33349,22316,17057.0,0.7643394873633268,0.5114696092836367,0.6128446959489805,0.9820773139486141,
+kidney,lineage7_strict,CellSTP_v7_1,Myeloid,True,37015,30604,16034.0,0.5239184420337211,0.4331757395650412,0.4742454043981721,0.9497171807109998,
+kidney,lineage7_strict,CellSTP_v7_1,Vascular,True,38566,46035,30006.0,0.6518084066471164,0.7780428356583519,0.7093533173366745,0.9443843031123139,
+kidney,lineage7_strict,CellSTP_v7_1,Stromal,True,57889,67378,41516.0,0.616165513965983,0.7171656100468138,0.6628401733896397,0.9038183326081216,
+kidney,lineage7_strict,CellSTP_v7_1,Neural,True,786,18,15.0,0.8333333333333334,0.019083969465648856,0.03731343283582089,0.9999907972637198,
+kidney,lineage7_strict,CellSTP_v7_1,Other_defined,True,0,0,0.0,,,,1.0,no positive reference
+kidney,lineage7_strict,CytoFormer_released_UNI2_23,Epithelial,True,159171,148153,145469.0,0.981883593312319,0.9139164797607604,0.9466816779685283,0.9839861579308493,
+kidney,lineage7_strict,CytoFormer_released_UNI2_23,Lymphoid,True,33349,26094,18082.0,0.6929562351498428,0.5422051635731207,0.6083811382332655,0.9726950825929448,
+kidney,lineage7_strict,CytoFormer_released_UNI2_23,Myeloid,True,37015,14489,8015.0,0.5531782731727517,0.21653383763339187,0.3112379621000311,0.9776574487249837,
+kidney,lineage7_strict,CytoFormer_released_UNI2_23,Vascular,True,38566,46857,28787.0,0.6143585803615255,0.746434683399886,0.6739870994931108,0.9373026612539468,
+kidney,lineage7_strict,CytoFormer_released_UNI2_23,Stromal,True,57889,90475,47087.0,0.5204421110804089,0.8134015097859697,0.6347496697312016,0.8386385358905414,
+kidney,lineage7_strict,CytoFormer_released_UNI2_23,Neural,False,786,0,,,,,,unsupported by organ head
+kidney,lineage7_strict,CytoFormer_released_UNI2_23,Other_defined,False,0,0,,,,,,unsupported by organ head
+kidney,lineage7_organ_assumption,NuClass_v15,Epithelial,True,159171,160292,151448.0,0.9448256931100741,0.9514798549987121,0.948141099282233,0.9472330777721428,
+kidney,lineage7_organ_assumption,NuClass_v15,Lymphoid,True,33349,30816,20467.0,0.6641679646936657,0.6137215508710906,0.6379490376373412,0.964730580348775,
+kidney,lineage7_organ_assumption,NuClass_v15,Myeloid,True,37015,23636,12852.0,0.5437468268742596,0.34721059030122925,0.4238017510016323,0.9627831212620056,
+kidney,lineage7_organ_assumption,NuClass_v15,Vascular,True,38566,50879,31306.0,0.6153029737219678,0.8117512835139761,0.7000055900273912,0.9320877138197842,
+kidney,lineage7_organ_assumption,NuClass_v15,Stromal,True,57889,61152,38237.0,0.6252779958137101,0.6605227245245211,0.6424173184029032,0.9147783269551893,
+kidney,lineage7_organ_assumption,NuClass_v15,Neural,True,786,1,1.0,1.0,0.001272264631043257,0.0025412960609911056,1.0,
+kidney,lineage7_organ_assumption,NuClass_v15,Other_defined,True,0,0,0.0,,,,1.0,no positive reference
+kidney,lineage7_organ_assumption,CellSTP_v7_1,Epithelial,True,159171,160425,151395.0,0.9437120149602618,0.9511468797708125,0.9474148612623438,0.9461233256764416,
+kidney,lineage7_organ_assumption,CellSTP_v7_1,Lymphoid,True,33349,22316,17057.0,0.7643394873633268,0.5114696092836367,0.6128446959489805,0.9820773139486141,
+kidney,lineage7_organ_assumption,CellSTP_v7_1,Myeloid,True,37015,30604,16034.0,0.5239184420337211,0.4331757395650412,0.4742454043981721,0.9497171807109998,
+kidney,lineage7_organ_assumption,CellSTP_v7_1,Vascular,True,38566,46035,30006.0,0.6518084066471164,0.7780428356583519,0.7093533173366745,0.9443843031123139,
+kidney,lineage7_organ_assumption,CellSTP_v7_1,Stromal,True,57889,67378,41516.0,0.616165513965983,0.7171656100468138,0.6628401733896397,0.9038183326081216,
+kidney,lineage7_organ_assumption,CellSTP_v7_1,Neural,True,786,18,15.0,0.8333333333333334,0.019083969465648856,0.03731343283582089,0.9999907972637198,
+kidney,lineage7_organ_assumption,CellSTP_v7_1,Other_defined,True,0,0,0.0,,,,1.0,no positive reference
+kidney,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Epithelial,True,159171,149264,146240.0,0.9797405938471433,0.9187603269439785,0.9482711106067729,0.9819575788311804,
+kidney,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Lymphoid,True,33349,26050,18072.0,0.6937428023032629,0.5419053045068818,0.6084950925099749,0.9728109546837884,
+kidney,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Myeloid,True,37015,14386,7995.0,0.5557486445155012,0.21599351614210455,0.31108344195638216,0.977943891690048,
+kidney,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Vascular,True,38566,46777,28781.0,0.6152810141736323,0.7462791059482445,0.6744782817571447,0.9375594184795809,
+kidney,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Stromal,True,57889,90299,47046.0,0.521002447424667,0.8126932577864534,0.6349501983966314,0.8391406055331794,
+kidney,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Neural,False,786,0,,,,,,unsupported by organ head
+kidney,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Other_defined,False,0,0,,,,,,unsupported by organ head
+kidney,TLS8,NuClass_v15,T_cell,True,20982,25324,13909.0,0.5492418259358711,0.6629015346487466,0.6007428842914525,0.9620932873737273,
+kidney,TLS8,NuClass_v15,B_cell,True,1122,1,0.0,0.0,0.0,0.0,0.9999968846769721,
+kidney,TLS8,NuClass_v15,Plasma,True,6455,916,522.0,0.5698689956331878,0.08086754453911696,0.14163614163614163,0.9987518255343549,
+kidney,TLS8,NuClass_v15,NK,True,130,0,0.0,,0.0,0.0,1.0,
+kidney,TLS8,NuClass_v15,Myeloid,True,37015,24091,13191.0,0.5475488771740484,0.35636903957854926,0.43174156383988477,0.9617679348722031,
+kidney,TLS8,NuClass_v15,Vascular,True,38566,50823,31334.0,0.6165318851701002,0.8124773116216356,0.7010706015281523,0.9312678539940046,
+kidney,TLS8,NuClass_v15,Stromal,True,57889,61135,38343.0,0.6271857364848287,0.6623538150598559,0.6442902271810728,0.9137408364777256,
+kidney,TLS8,NuClass_v15,Other_parenchymal_or_tumor,True,159957,159826,151483.0,0.947799481936606,0.9470232625017974,0.9474112132289709,0.9485504967346863,
+kidney,TLS8,CellSTP_v7_1,T_cell,True,20982,18019,11570.0,0.6421000055496976,0.5514250309789344,0.593318120048204,0.9785842847370274,
+kidney,TLS8,CellSTP_v7_1,B_cell,True,1122,0,0.0,,0.0,0.0,1.0,
+kidney,TLS8,CellSTP_v7_1,Plasma,True,6455,637,462.0,0.7252747252747253,0.0715724244771495,0.13028764805414553,0.9994456077881018,
+kidney,TLS8,CellSTP_v7_1,NK,True,130,0,0.0,,0.0,0.0,1.0,
+kidney,TLS8,CellSTP_v7_1,Myeloid,True,37015,30445,16169.0,0.531088848743636,0.4368229096312306,0.4793655499555292,0.9499265172693185,
+kidney,TLS8,CellSTP_v7_1,Vascular,True,38566,45907,30014.0,0.6538000740627791,0.7782502722605403,0.710617593787364,0.9439499206489156,
+kidney,TLS8,CellSTP_v7_1,Stromal,True,57889,67136,41557.0,0.6189972592945663,0.7178738620463301,0.6647790441911617,0.9031930877616595,
+kidney,TLS8,CellSTP_v7_1,Other_parenchymal_or_tumor,True,159957,159972,151441.0,0.9466719175855774,0.9467606919359578,0.946716302679657,0.9473911407939122,
+kidney,TLS8,CytoFormer_released_UNI2_23,T_cell,False,20982,0,,,,,,unsupported by organ head
+kidney,TLS8,CytoFormer_released_UNI2_23,B_cell,False,1122,0,,,,,,unsupported by organ head
+kidney,TLS8,CytoFormer_released_UNI2_23,Plasma,True,6455,1010,557.0,0.5514851485148515,0.08628969790859799,0.1492297387809779,0.9985649161600578,
+kidney,TLS8,CytoFormer_released_UNI2_23,NK,False,130,0,,,,,,unsupported by organ head
+kidney,TLS8,CytoFormer_released_UNI2_23,Myeloid,True,37015,14295,8030.0,0.5617348723329836,0.21693907875185736,0.31299941531865133,0.9780253313737939,
+kidney,TLS8,CytoFormer_released_UNI2_23,Vascular,True,38566,46664,28781.0,0.6167709583404766,0.7462791059482445,0.6753725214126481,0.9369317580673603,
+kidney,TLS8,CytoFormer_released_UNI2_23,Stromal,True,57889,89574,47081.0,0.5256101100765848,0.8132978631518941,0.6385466184737867,0.8391799475451033,
+kidney,TLS8,CytoFormer_released_UNI2_23,Other_parenchymal_or_tumor,True,159957,148794,146256.0,0.9829428605992178,0.9143457304150491,0.9474042189337039,0.9843486947995486,
+kidney,native47,NuClass_v15,Carcinoma_or_other_epithelial,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,NuClass_v15,Myoepithelial,True,0,33,0.0,0.0,,,0.9998781635930664,no positive reference
+kidney,native47,NuClass_v15,CD4_T,True,5300,2,1.0,0.5,0.00018867924528301886,0.0003772161448509996,0.9999962343017454,
+kidney,native47,NuClass_v15,CD8_T,True,1440,16117,1026.0,0.06365948997952472,0.7125,0.11687645953181067,0.9439860438357182,
+kidney,native47,NuClass_v15,Treg,True,3245,5,0.0,0.0,0.0,0.0,0.9999813160943164,
+kidney,native47,NuClass_v15,B,True,1122,8,1.0,0.125,0.00089126559714795,0.0017699115044247787,0.9999740484108359,
+kidney,native47,NuClass_v15,NK,True,130,0,0.0,,0.0,0.0,1.0,
+kidney,native47,NuClass_v15,Macrophage,True,12852,7406,3215.0,0.43410748042128006,0.25015561780267664,0.3174054694441702,0.9837560028371763,
+kidney,native47,NuClass_v15,DC,True,3656,1503,385.0,0.25615435795076513,0.10530634573304158,0.14925373134328357,0.9958158526042388,
+kidney,native47,NuClass_v15,Neutrophil,True,262,8,5.0,0.625,0.019083969465648856,0.037037037037037035,0.9999889132387016,
+kidney,native47,NuClass_v15,Mast,True,1114,48,23.0,0.4791666666666667,0.02064631956912029,0.039586919104991396,0.9999073185018221,
+kidney,native47,NuClass_v15,Endothelial,True,37125,44629,30483.0,0.6830312128884806,0.8210909090909091,0.7457249798175013,0.9394771745176058,
+kidney,native47,NuClass_v15,Myofibroblast,True,510,0,0.0,,0.0,0.0,1.0,
+kidney,native47,NuClass_v15,Fibroblast,True,4299,25343,2801.0,0.11052361598863591,0.6515468713654339,0.18898859726064368,0.9154324044478459,
+kidney,native47,NuClass_v15,Melanoma,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,NuClass_v15,Plasma,True,6455,874,574.0,0.6567505720823799,0.08892331525948877,0.15663801337153774,0.9988653555219364,
+kidney,native47,NuClass_v15,Monocyte,True,297,146,12.0,0.0821917808219178,0.04040404040404041,0.05417607223476298,0.9995047272673512,
+kidney,native47,NuClass_v15,Microglia,True,3,0,0.0,,0.0,0.0,1.0,
+kidney,native47,NuClass_v15,pDC,True,0,3,0.0,0.0,,,0.999988923963006,no positive reference
+kidney,native47,NuClass_v15,Squamous_Epithelial,True,2,0,0.0,,0.0,0.0,1.0,
+kidney,native47,NuClass_v15,Keratinocyte,True,9,0,0.0,,0.0,0.0,1.0,
+kidney,native47,NuClass_v15,Hepatocyte,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,NuClass_v15,Cholangiocyte,True,9,0,0.0,,0.0,0.0,1.0,
+kidney,native47,NuClass_v15,Alveolar_epithelium,True,47,1,0.0,0.0,0.0,0.0,0.9999963073469026,
+kidney,native47,NuClass_v15,Airway_epithelium,True,340,0,0.0,,0.0,0.0,1.0,
+kidney,native47,NuClass_v15,Gastric_epithelium,True,1,0,0.0,,0.0,0.0,1.0,
+kidney,native47,NuClass_v15,Intestinal_epithelium,True,32,2,0.0,0.0,0.0,0.0,0.9999926151028532,
+kidney,native47,NuClass_v15,Enteroendocrine,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,NuClass_v15,Acinar,True,2,0,0.0,,0.0,0.0,1.0,
+kidney,native47,NuClass_v15,Ductal_epithelium,True,15,0,0.0,,0.0,0.0,1.0,
+kidney,native47,NuClass_v15,Renal_epithelium,True,158083,155998,150737.0,0.9662752086565213,0.9535307401807911,0.9598606728837465,0.9533483488809279,
+kidney,native47,NuClass_v15,Ovarian_stroma,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,NuClass_v15,Meningeal_fibroblast,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,NuClass_v15,Smooth_muscle,True,10777,14308,8031.0,0.561294380766005,0.7451981070798923,0.640302969902332,0.9758649328278439,
+kidney,native47,NuClass_v15,Pericyte,True,21726,100,67.0,0.67,0.0030838626530424375,0.006139466691102355,0.9998675385041484,
+kidney,native47,NuClass_v15,Lymphatic_endothelial,True,1317,4319,177.0,0.040981708728872426,0.13439635535307518,0.06281050390347764,0.984632964554163,
+kidney,native47,NuClass_v15,Adipocyte,True,6,0,0.0,,0.0,0.0,1.0,
+kidney,native47,NuClass_v15,Osteoblast_chondro,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,NuClass_v15,Meningioma,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,NuClass_v15,Glioma,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,NuClass_v15,Neuron,True,678,0,0.0,,0.0,0.0,1.0,
+kidney,native47,NuClass_v15,Neural_progenitor,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,NuClass_v15,Astrocyte,True,1,0,0.0,,0.0,0.0,1.0,
+kidney,native47,NuClass_v15,Oligodendrocyte,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,NuClass_v15,OPC,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,NuClass_v15,Schwann,True,0,2,0.0,0.0,,,0.9999926159753374,no positive reference
+kidney,native47,NuClass_v15,Satellite_glia,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,CellSTP_v7_1,Carcinoma_or_other_epithelial,True,0,3051,0.0,0.0,,,0.988735670377139,no positive reference
+kidney,native47,CellSTP_v7_1,Myoepithelial,True,0,2,0.0,0.0,,,0.9999926159753374,no positive reference
+kidney,native47,CellSTP_v7_1,CD4_T,True,5300,355,94.0,0.2647887323943662,0.017735849056603775,0.03324491600353669,0.9990171527555497,
+kidney,native47,CellSTP_v7_1,CD8_T,True,1440,10353,821.0,0.07930068579155801,0.5701388888888889,0.13923513948952768,0.9646196388471318,
+kidney,native47,CellSTP_v7_1,Treg,True,3245,22,4.0,0.18181818181818182,0.0012326656394453005,0.002448729721456994,0.9999327379395389,
+kidney,native47,CellSTP_v7_1,B,True,1122,25,8.0,0.32,0.0071301247771836,0.013949433304272014,0.99993697471203,
+kidney,native47,CellSTP_v7_1,NK,True,130,0,0.0,,0.0,0.0,1.0,
+kidney,native47,CellSTP_v7_1,Macrophage,True,12852,13936,5331.0,0.38253444316877155,0.4147992530345472,0.3980140361355831,0.9666476746394421,
+kidney,native47,CellSTP_v7_1,DC,True,3656,415,128.0,0.30843373493975906,0.0350109409190372,0.06288381233112257,0.9989258941837357,
+kidney,native47,CellSTP_v7_1,Neutrophil,True,262,13,8.0,0.6153846153846154,0.030534351145038167,0.05818181818181818,0.9999815220645027,
+kidney,native47,CellSTP_v7_1,Mast,True,1114,91,31.0,0.34065934065934067,0.027827648114901255,0.051452282157676346,0.999777564404373,
+kidney,native47,CellSTP_v7_1,Endothelial,True,37125,41019,29546.0,0.7203003486189327,0.7958518518518518,0.7561936936936937,0.9509134471398623,
+kidney,native47,CellSTP_v7_1,Myofibroblast,True,510,1,0.0,0.0,0.0,0.0,0.9999963010227672,
+kidney,native47,CellSTP_v7_1,Fibroblast,True,4299,27739,3010.0,0.10851148202891236,0.7001628285647825,0.18790186653349147,0.9072277495160491,
+kidney,native47,CellSTP_v7_1,Melanoma,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,CellSTP_v7_1,Plasma,True,6455,688,513.0,0.7456395348837209,0.07947327652982185,0.14363712725745484,0.999338124054463,
+kidney,native47,CellSTP_v7_1,Monocyte,True,297,363,21.0,0.05785123966942149,0.0707070707070707,0.06363636363636363,0.9987359457121948,
+kidney,native47,CellSTP_v7_1,Microglia,True,3,0,0.0,,0.0,0.0,1.0,
+kidney,native47,CellSTP_v7_1,pDC,True,0,6,0.0,0.0,,,0.9999778479260121,no positive reference
+kidney,native47,CellSTP_v7_1,Squamous_Epithelial,True,2,0,0.0,,0.0,0.0,1.0,
+kidney,native47,CellSTP_v7_1,Keratinocyte,True,9,0,0.0,,0.0,0.0,1.0,
+kidney,native47,CellSTP_v7_1,Hepatocyte,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,CellSTP_v7_1,Cholangiocyte,True,9,0,0.0,,0.0,0.0,1.0,
+kidney,native47,CellSTP_v7_1,Alveolar_epithelium,True,47,10,0.0,0.0,0.0,0.0,0.999963073469026,
+kidney,native47,CellSTP_v7_1,Airway_epithelium,True,340,0,0.0,,0.0,0.0,1.0,
+kidney,native47,CellSTP_v7_1,Gastric_epithelium,True,1,0,0.0,,0.0,0.0,1.0,
+kidney,native47,CellSTP_v7_1,Intestinal_epithelium,True,32,0,0.0,,0.0,0.0,1.0,
+kidney,native47,CellSTP_v7_1,Enteroendocrine,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,CellSTP_v7_1,Acinar,True,2,2,0.0,0.0,0.0,0.0,0.9999926159208131,
+kidney,native47,CellSTP_v7_1,Ductal_epithelium,True,15,31,0.0,0.0,0.0,0.0,0.9998855412789839,
+kidney,native47,CellSTP_v7_1,Renal_epithelium,True,158083,152712,147581.0,0.9664008067473414,0.9335665441571832,0.9496999629981178,0.9545011172986202,
+kidney,native47,CellSTP_v7_1,Ovarian_stroma,True,0,29,0.0,0.0,,,0.9998929316423917,no positive reference
+kidney,native47,CellSTP_v7_1,Meningeal_fibroblast,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,CellSTP_v7_1,Smooth_muscle,True,10777,11265,6985.0,0.6200621393697292,0.6481395564628375,0.6337900372017058,0.9835433985189058,
+kidney,native47,CellSTP_v7_1,Pericyte,True,21726,3736,2111.0,0.5650428265524625,0.09716468747123262,0.16581572539470585,0.993477274825492,
+kidney,native47,CellSTP_v7_1,Lymphatic_endothelial,True,1317,4967,279.0,0.05617072679685927,0.21184510250569477,0.08879694462126034,0.9826072761540117,
+kidney,native47,CellSTP_v7_1,Adipocyte,True,6,4,0.0,0.0,0.0,0.0,0.9999852316235246,
+kidney,native47,CellSTP_v7_1,Osteoblast_chondro,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,CellSTP_v7_1,Meningioma,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,CellSTP_v7_1,Glioma,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,CellSTP_v7_1,Neuron,True,678,3,0.0,0.0,0.0,0.0,0.9999888961680676,
+kidney,native47,CellSTP_v7_1,Neural_progenitor,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,CellSTP_v7_1,Astrocyte,True,1,0,0.0,,0.0,0.0,1.0,
+kidney,native47,CellSTP_v7_1,Oligodendrocyte,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,CellSTP_v7_1,OPC,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,CellSTP_v7_1,Schwann,True,0,17,0.0,0.0,,,0.9999372357903675,no positive reference
+kidney,native47,CellSTP_v7_1,Satellite_glia,True,0,0,0.0,,,,1.0,no positive reference
+kidney,native47,CytoFormer_released_UNI2_23,Carcinoma_or_other_epithelial,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Myoepithelial,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,CD4_T,False,5300,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,CD8_T,False,1440,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Treg,False,3245,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,B,False,1122,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,NK,False,130,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Macrophage,True,12852,8416,2967.0,0.35254277566539927,0.230859010270775,0.2790107203310137,0.9788800905415829,
+kidney,native47,CytoFormer_released_UNI2_23,DC,False,3656,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Neutrophil,False,262,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Mast,False,1114,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Endothelial,False,37125,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Myofibroblast,False,510,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Fibroblast,False,4299,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Melanoma,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Plasma,True,6455,877,558.0,0.636259977194983,0.08644461657629744,0.15220949263502456,0.9987934947049925,
+kidney,native47,CytoFormer_released_UNI2_23,Monocyte,False,297,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Microglia,False,3,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,pDC,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Squamous_Epithelial,False,2,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Keratinocyte,False,9,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Hepatocyte,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Cholangiocyte,False,9,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Alveolar_epithelium,False,47,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Airway_epithelium,False,340,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Gastric_epithelium,False,1,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Intestinal_epithelium,False,32,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Enteroendocrine,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Acinar,False,2,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Ductal_epithelium,False,15,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Renal_epithelium,False,158083,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Ovarian_stroma,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Meningeal_fibroblast,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Smooth_muscle,False,10777,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Pericyte,False,21726,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Lymphatic_endothelial,False,1317,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Adipocyte,False,6,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Osteoblast_chondro,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Meningioma,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Glioma,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Neuron,False,678,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Neural_progenitor,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Astrocyte,False,1,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Oligodendrocyte,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,OPC,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Schwann,False,0,0,,,,,,unsupported by organ head
+kidney,native47,CytoFormer_released_UNI2_23,Satellite_glia,False,0,0,,,,,,unsupported by organ head
+brain,broad3,NuClass_v15,Parenchymal_or_tumor,True,61309,46554,42097.0,0.904261717575289,0.6866365460209757,0.7805642342601262,0.7292223572296477,
+brain,broad3,NuClass_v15,Immune,True,7572,17241,2749.0,0.15944550780117162,0.36304807184363447,0.2215773989441019,0.7935524310155705,
+brain,broad3,NuClass_v15,Stromal_and_vascular,True,8888,13974,6817.0,0.4878345498783455,0.766989198919892,0.5963607733356662,0.8960961658512507,
+brain,broad3,CellSTP_v7_1,Parenchymal_or_tumor,True,61309,52202,46887.0,0.8981839776253784,0.7647653688691709,0.8261225784285223,0.6770959902794653,
+brain,broad3,CellSTP_v7_1,Immune,True,7572,3119,537.0,0.17217056748957998,0.07091917591125198,0.10045832943597419,0.9632178013305412,
+brain,broad3,CellSTP_v7_1,Stromal_and_vascular,True,8888,22448,7925.0,0.3530381325730577,0.8916516651665166,0.5058080163390349,0.7891581132678097,
+brain,broad3,CytoFormer_released_UNI2_23,Parenchymal_or_tumor,True,61309,71989,59267.0,0.8232785564461237,0.9666933076709782,0.8892406487719245,0.22709599027946537,
+brain,broad3,CytoFormer_released_UNI2_23,Immune,True,7572,2243,386.0,0.17209094962104324,0.05097728473322768,0.07865511971472236,0.9735458780289756,
+brain,broad3,CytoFormer_released_UNI2_23,Stromal_and_vascular,True,8888,3537,2831.0,0.8003958156629912,0.31851935193519354,0.45569416498993964,0.9897504391631945,
+brain,lineage7_strict,NuClass_v15,Epithelial,True,249,3588,211.0,0.058807134894091416,0.8473895582329317,0.10998175658066198,0.956437048503612,
+brain,lineage7_strict,NuClass_v15,Lymphoid,True,309,1526,18.0,0.011795543905635648,0.05825242718446602,0.019618528610354225,0.9805318874257681,
+brain,lineage7_strict,NuClass_v15,Myeloid,True,7263,15363,2461.0,0.1601900670441971,0.338840699435495,0.21753734641562805,0.8170084815476697,
+brain,lineage7_strict,NuClass_v15,Vascular,True,6024,6674,3539.0,0.530266706622715,0.5874833997343958,0.557410615845015,0.9563035751620322,
+brain,lineage7_strict,NuClass_v15,Stromal,True,2864,7102,1235.0,0.17389467755561813,0.4312150837988827,0.2478426650612081,0.9216741205527,
+brain,lineage7_strict,NuClass_v15,Neural,True,61060,43514,38981.0,0.895826630509721,0.638404847690796,0.7455199189090979,0.7287090789394937,
+brain,lineage7_strict,NuClass_v15,Other_defined,True,0,2,0.0,0.0,,,0.9999742828119174,no positive reference
+brain,lineage7_strict,CellSTP_v7_1,Epithelial,True,249,2996,195.0,0.065086782376502,0.7831325301204819,0.12018489984591679,0.9638673890608875,
+brain,lineage7_strict,CellSTP_v7_1,Lymphoid,True,309,25,8.0,0.32,0.025889967637540454,0.04790419161676647,0.9997805318874258,
+brain,lineage7_strict,CellSTP_v7_1,Myeloid,True,7263,3730,612.0,0.1640750670241287,0.08426270136307311,0.1113435822796325,0.9557768133208522,
+brain,lineage7_strict,CellSTP_v7_1,Vascular,True,6024,16980,5102.0,0.30047114252061247,0.8469455511288181,0.44357503042949054,0.8344414244895114,
+brain,lineage7_strict,CellSTP_v7_1,Stromal,True,2864,4770,845.0,0.17714884696016772,0.2950418994413408,0.2213780455855384,0.9476002937053601,
+brain,lineage7_strict,CellSTP_v7_1,Neural,True,61060,49222,43933.0,0.8925480476209825,0.7195054045201441,0.7967392684209572,0.6834640014363517,
+brain,lineage7_strict,CellSTP_v7_1,Other_defined,True,0,46,0.0,0.0,,,0.9994085046740989,no positive reference
+brain,lineage7_strict,CytoFormer_released_UNI2_23,Epithelial,False,249,0,,,,,,unsupported by organ head
+brain,lineage7_strict,CytoFormer_released_UNI2_23,Lymphoid,False,309,0,,,,,,unsupported by organ head
+brain,lineage7_strict,CytoFormer_released_UNI2_23,Myeloid,True,7263,2243,347.0,0.15470352206865803,0.04777640093625224,0.07300652219650747,0.9731086716024168,
+brain,lineage7_strict,CytoFormer_released_UNI2_23,Vascular,True,6024,3537,1374.0,0.3884648006785411,0.22808764940239043,0.2874176341386884,0.9698515575998328,
+brain,lineage7_strict,CytoFormer_released_UNI2_23,Stromal,False,2864,0,,,,,,unsupported by organ head
+brain,lineage7_strict,CytoFormer_released_UNI2_23,Neural,False,61060,0,,,,,,unsupported by organ head
+brain,lineage7_strict,CytoFormer_released_UNI2_23,Other_defined,False,0,0,,,,,,unsupported by organ head
+brain,lineage7_organ_assumption,NuClass_v15,Epithelial,True,249,3588,211.0,0.058807134894091416,0.8473895582329317,0.10998175658066198,0.956437048503612,
+brain,lineage7_organ_assumption,NuClass_v15,Lymphoid,True,309,1526,18.0,0.011795543905635648,0.05825242718446602,0.019618528610354225,0.9805318874257681,
+brain,lineage7_organ_assumption,NuClass_v15,Myeloid,True,7263,15363,2461.0,0.1601900670441971,0.338840699435495,0.21753734641562805,0.8170084815476697,
+brain,lineage7_organ_assumption,NuClass_v15,Vascular,True,6024,6674,3539.0,0.530266706622715,0.5874833997343958,0.557410615845015,0.9563035751620322,
+brain,lineage7_organ_assumption,NuClass_v15,Stromal,True,2864,7102,1235.0,0.17389467755561813,0.4312150837988827,0.2478426650612081,0.9216741205527,
+brain,lineage7_organ_assumption,NuClass_v15,Neural,True,61060,43514,38981.0,0.895826630509721,0.638404847690796,0.7455199189090979,0.7287090789394937,
+brain,lineage7_organ_assumption,NuClass_v15,Other_defined,True,0,2,0.0,0.0,,,0.9999742828119174,no positive reference
+brain,lineage7_organ_assumption,CellSTP_v7_1,Epithelial,True,249,2996,195.0,0.065086782376502,0.7831325301204819,0.12018489984591679,0.9638673890608875,
+brain,lineage7_organ_assumption,CellSTP_v7_1,Lymphoid,True,309,25,8.0,0.32,0.025889967637540454,0.04790419161676647,0.9997805318874258,
+brain,lineage7_organ_assumption,CellSTP_v7_1,Myeloid,True,7263,3730,612.0,0.1640750670241287,0.08426270136307311,0.1113435822796325,0.9557768133208522,
+brain,lineage7_organ_assumption,CellSTP_v7_1,Vascular,True,6024,16980,5102.0,0.30047114252061247,0.8469455511288181,0.44357503042949054,0.8344414244895114,
+brain,lineage7_organ_assumption,CellSTP_v7_1,Stromal,True,2864,4770,845.0,0.17714884696016772,0.2950418994413408,0.2213780455855384,0.9476002937053601,
+brain,lineage7_organ_assumption,CellSTP_v7_1,Neural,True,61060,49222,43933.0,0.8925480476209825,0.7195054045201441,0.7967392684209572,0.6834640014363517,
+brain,lineage7_organ_assumption,CellSTP_v7_1,Other_defined,True,0,46,0.0,0.0,,,0.9994085046740989,no positive reference
+brain,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Epithelial,False,249,0,,,,,,unsupported by organ head
+brain,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Lymphoid,False,309,0,,,,,,unsupported by organ head
+brain,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Myeloid,True,7263,2243,347.0,0.15470352206865803,0.04777640093625224,0.07300652219650747,0.9731086716024168,
+brain,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Vascular,True,6024,3537,1374.0,0.3884648006785411,0.22808764940239043,0.2874176341386884,0.9698515575998328,
+brain,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Stromal,False,2864,0,,,,,,unsupported by organ head
+brain,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Neural,True,61060,71989,59047.0,0.8202225339982497,0.9670324271208647,0.8875978023134334,0.22544736369621163,
+brain,lineage7_organ_assumption,CytoFormer_released_UNI2_23,Other_defined,False,0,0,,,,,,unsupported by organ head
+brain,TLS8,NuClass_v15,T_cell,True,171,919,10.0,0.01088139281828074,0.05847953216374269,0.01834862385321101,0.9882847237437332,
+brain,TLS8,NuClass_v15,B_cell,True,2,69,0.0,0.0,0.0,0.0,0.9991126543209876,
+brain,TLS8,NuClass_v15,Plasma,True,126,12,0.0,0.0,0.0,0.0,0.9998454325312999,
+brain,TLS8,NuClass_v15,NK,True,3,1,0.0,0.0,0.0,0.0,0.9999871397523117,
+brain,TLS8,NuClass_v15,Myeloid,True,7263,14905,2489.0,0.16699094263669909,0.3426958557070081,0.22455792132804042,0.8238840267237834,
+brain,TLS8,NuClass_v15,Vascular,True,6024,6668,3539.0,0.5307438512297541,0.5874833997343958,0.5576741254333438,0.9563829490646519,
+brain,TLS8,NuClass_v15,Stromal,True,2864,6954,1234.0,0.17745182628702905,0.4308659217877095,0.2513750254634345,0.9236294694117333,
+brain,TLS8,NuClass_v15,Other_parenchymal_or_tumor,True,61309,48234,43514.0,0.9021437160509185,0.7097489764961099,0.7944642743032416,0.7131222269494925,
+brain,TLS8,CellSTP_v7_1,T_cell,True,171,16,7.0,0.4375,0.04093567251461988,0.0748663101604278,0.9998840071657795,
+brain,TLS8,CellSTP_v7_1,B_cell,True,2,0,0.0,,0.0,0.0,1.0,
+brain,TLS8,CellSTP_v7_1,Plasma,True,126,1,0.0,0.0,0.0,0.0,0.9999871193776083,
+brain,TLS8,CellSTP_v7_1,NK,True,3,0,0.0,,0.0,0.0,1.0,
+brain,TLS8,CellSTP_v7_1,Myeloid,True,7263,3392,568.0,0.16745283018867924,0.0782045986506953,0.10661661191928672,0.9599426942226131,
+brain,TLS8,CellSTP_v7_1,Vascular,True,6024,16066,5077.0,0.3160089630275115,0.8427954847277557,0.4596650067904029,0.84681758621651,
+brain,TLS8,CellSTP_v7_1,Stromal,True,2864,4402,844.0,0.19173103134938665,0.2946927374301676,0.23231489127442884,0.9524953937354802,
+brain,TLS8,CellSTP_v7_1,Other_parenchymal_or_tumor,True,61309,53885,48328.0,0.8968729702143453,0.7882692589994944,0.8390714794173307,0.6622500455843919,
+brain,TLS8,CytoFormer_released_UNI2_23,T_cell,False,171,0,,,,,,unsupported by organ head
+brain,TLS8,CytoFormer_released_UNI2_23,B_cell,False,2,0,,,,,,unsupported by organ head
+brain,TLS8,CytoFormer_released_UNI2_23,Plasma,False,126,0,,,,,,unsupported by organ head
+brain,TLS8,CytoFormer_released_UNI2_23,NK,False,3,0,,,,,,unsupported by organ head
+brain,TLS8,CytoFormer_released_UNI2_23,Myeloid,True,7263,2243,347.0,0.15470352206865803,0.04777640093625224,0.07300652219650747,0.9731060015035674,
+brain,TLS8,CytoFormer_released_UNI2_23,Vascular,True,6024,3533,1374.0,0.3889046136427965,0.22808764940239043,0.2875379303128597,0.9699043742507457,
+brain,TLS8,CytoFormer_released_UNI2_23,Stromal,False,2864,0,,,,,,unsupported by organ head
+brain,TLS8,CytoFormer_released_UNI2_23,Other_parenchymal_or_tumor,True,61309,71986,59267.0,0.8233128663906871,0.9666933076709782,0.8892606624404517,0.22694949249377014,
+brain,native47,NuClass_v15,Carcinoma_or_other_epithelial,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,NuClass_v15,Myoepithelial,True,0,29,0.0,0.0,,,0.9996122424420704,no positive reference
+brain,native47,NuClass_v15,CD4_T,True,35,2,0.0,0.0,0.0,0.0,0.9999732455788319,
+brain,native47,NuClass_v15,CD8_T,True,25,780,2.0,0.002564102564102564,0.08,0.004968944099378882,0.9895939222085496,
+brain,native47,NuClass_v15,Treg,True,3,6,0.0,0.0,0.0,0.0,0.9999197710801487,
+brain,native47,NuClass_v15,B,True,2,130,0.0,0.0,0.0,0.0,0.9982617299798093,
+brain,native47,NuClass_v15,NK,True,3,9,0.0,0.0,0.0,0.0,0.999879656620223,
+brain,native47,NuClass_v15,Macrophage,True,827,14250,232.0,0.016280701754385965,0.28053204353083433,0.030775353186973536,0.8104702414753522,
+brain,native47,NuClass_v15,DC,True,35,0,0.0,,0.0,0.0,1.0,
+brain,native47,NuClass_v15,Neutrophil,True,17,1,0.0,0.0,0.0,0.0,0.9999866260097363,
+brain,native47,NuClass_v15,Mast,True,2,0,0.0,,0.0,0.0,1.0,
+brain,native47,NuClass_v15,Endothelial,True,4261,6201,2627.0,0.42364134816965004,0.6165219432058202,0.502198432422099,0.9493250907441017,
+brain,native47,NuClass_v15,Myofibroblast,True,2,0,0.0,,0.0,0.0,1.0,
+brain,native47,NuClass_v15,Fibroblast,True,111,6006,42.0,0.006993006993006993,0.3783783783783784,0.01373222167729279,0.9201371220439755,
+brain,native47,NuClass_v15,Melanoma,True,0,2,0.0,0.0,,,0.9999732580994531,no positive reference
+brain,native47,NuClass_v15,Plasma,True,126,19,0.0,0.0,0.0,0.0,0.999745523217658,
+brain,native47,NuClass_v15,Monocyte,True,34,0,0.0,,0.0,0.0,1.0,
+brain,native47,NuClass_v15,Microglia,True,5375,2729,459.0,0.16819347746427263,0.0853953488372093,0.11327739387956565,0.9672976632955887,
+brain,native47,NuClass_v15,pDC,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,NuClass_v15,Squamous_Epithelial,True,0,1835,0.0,0.0,,,0.9754643062482451,no positive reference
+brain,native47,NuClass_v15,Keratinocyte,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,NuClass_v15,Hepatocyte,True,0,3,0.0,0.0,,,0.9999598871491797,no positive reference
+brain,native47,NuClass_v15,Cholangiocyte,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,NuClass_v15,Alveolar_epithelium,True,0,15,0.0,0.0,,,0.9997994357458985,no positive reference
+brain,native47,NuClass_v15,Airway_epithelium,True,6,261,0.0,0.0,0.0,0.0,0.996509901983071,
+brain,native47,NuClass_v15,Gastric_epithelium,True,0,41,0.0,0.0,,,0.9994517910387891,no positive reference
+brain,native47,NuClass_v15,Intestinal_epithelium,True,0,152,0.0,0.0,,,0.9979676155584377,no positive reference
+brain,native47,NuClass_v15,Enteroendocrine,True,0,4,0.0,0.0,,,0.9999465161989063,no positive reference
+brain,native47,NuClass_v15,Acinar,True,0,34,0.0,0.0,,,0.9995453876907032,no positive reference
+brain,native47,NuClass_v15,Ductal_epithelium,True,0,28,0.0,0.0,,,0.9996256133923438,no positive reference
+brain,native47,NuClass_v15,Renal_epithelium,True,151,170,116.0,0.6823529411764706,0.7682119205298014,0.7227414330218068,0.9992765079450147,
+brain,native47,NuClass_v15,Ovarian_stroma,True,0,19,0.0,0.0,,,0.9997459519448048,no positive reference
+brain,native47,NuClass_v15,Meningeal_fibroblast,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,NuClass_v15,Smooth_muscle,True,1024,1064,704.0,0.6616541353383458,0.6875,0.6743295019157088,0.9951196366840642,
+brain,native47,NuClass_v15,Pericyte,True,1721,103,43.0,0.4174757281553398,0.024985473561882625,0.047149122807017545,0.9991788471013303,
+brain,native47,NuClass_v15,Lymphatic_endothelial,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,NuClass_v15,Adipocyte,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,NuClass_v15,Osteoblast_chondro,True,0,12,0.0,0.0,,,0.9998395485967188,no positive reference
+brain,native47,NuClass_v15,Meningioma,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,NuClass_v15,Glioma,True,0,3015,0.0,0.0,,,0.9596865849255907,no positive reference
+brain,native47,NuClass_v15,Neuron,True,20255,32033,7202.0,0.22483064339899478,0.35556652678351025,0.27547429620563035,0.5446693805699196,
+brain,native47,NuClass_v15,Neural_progenitor,True,0,3033,0.0,0.0,,,0.9594459078206689,no positive reference
+brain,native47,NuClass_v15,Astrocyte,True,10949,1040,803.0,0.7721153846153846,0.0733400310530642,0.13395612644924515,0.9962875939849624,
+brain,native47,NuClass_v15,Oligodendrocyte,True,26350,1562,1213.0,0.7765685019206146,0.04603415559772296,0.08691602178274577,0.9927950618303433,
+brain,native47,NuClass_v15,OPC,True,3475,201,17.0,0.0845771144278607,0.004892086330935252,0.009249183895538629,0.9974198614577783,
+brain,native47,NuClass_v15,Schwann,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,NuClass_v15,Satellite_glia,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,CellSTP_v7_1,Carcinoma_or_other_epithelial,True,0,3012,0.0,0.0,,,0.959726697776411,no positive reference
+brain,native47,CellSTP_v7_1,Myoepithelial,True,0,3,0.0,0.0,,,0.9999598871491797,no positive reference
+brain,native47,CellSTP_v7_1,CD4_T,True,35,5,1.0,0.2,0.02857142857142857,0.05,0.9999464911576638,
+brain,native47,CellSTP_v7_1,CD8_T,True,25,4,2.0,0.5,0.08,0.13793103448275862,0.9999732491573484,
+brain,native47,CellSTP_v7_1,Treg,True,3,1,0.0,0.0,0.0,0.0,0.9999866285133581,
+brain,native47,CellSTP_v7_1,B,True,2,0,0.0,,0.0,0.0,1.0,
+brain,native47,CellSTP_v7_1,NK,True,3,2,0.0,0.0,0.0,0.0,0.9999732570267162,
+brain,native47,CellSTP_v7_1,Macrophage,True,827,2183,43.0,0.019697663765460376,0.05199516324062878,0.02857142857142857,0.9710662231956951,
+brain,native47,CellSTP_v7_1,DC,True,35,0,0.0,,0.0,0.0,1.0,
+brain,native47,CellSTP_v7_1,Neutrophil,True,17,0,0.0,,0.0,0.0,1.0,
+brain,native47,CellSTP_v7_1,Mast,True,2,37,0.0,0.0,0.0,0.0,0.999505261609638,
+brain,native47,CellSTP_v7_1,Endothelial,True,4261,17468,3677.0,0.21049919853446303,0.8629429711335367,0.3384417138386488,0.8044606397459165,
+brain,native47,CellSTP_v7_1,Myofibroblast,True,2,4,0.0,0.0,0.0,0.0,0.9999465147686095,
+brain,native47,CellSTP_v7_1,Fibroblast,True,111,1947,26.0,0.01335387776065742,0.23423423423423423,0.025267249757045675,0.9742762259299927,
+brain,native47,CellSTP_v7_1,Melanoma,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,CellSTP_v7_1,Plasma,True,126,4,0.0,0.0,0.0,0.0,0.9999464259405596,
+brain,native47,CellSTP_v7_1,Monocyte,True,34,0,0.0,,0.0,0.0,1.0,
+brain,native47,CellSTP_v7_1,Microglia,True,5375,1907,313.0,0.1641321447299423,0.05823255813953488,0.08596539412249382,0.9770363327282681,
+brain,native47,CellSTP_v7_1,pDC,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,CellSTP_v7_1,Squamous_Epithelial,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,CellSTP_v7_1,Keratinocyte,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,CellSTP_v7_1,Hepatocyte,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,CellSTP_v7_1,Cholangiocyte,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,CellSTP_v7_1,Alveolar_epithelium,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,CellSTP_v7_1,Airway_epithelium,True,6,0,0.0,,0.0,0.0,1.0,
+brain,native47,CellSTP_v7_1,Gastric_epithelium,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,CellSTP_v7_1,Intestinal_epithelium,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,CellSTP_v7_1,Enteroendocrine,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,CellSTP_v7_1,Acinar,True,0,76,0.0,0.0,,,0.9989838077792189,no positive reference
+brain,native47,CellSTP_v7_1,Ductal_epithelium,True,0,18,0.0,0.0,,,0.9997593228950782,no positive reference
+brain,native47,CellSTP_v7_1,Renal_epithelium,True,151,0,0.0,,0.0,0.0,1.0,
+brain,native47,CellSTP_v7_1,Ovarian_stroma,True,0,16,0.0,0.0,,,0.999786064795625,no positive reference
+brain,native47,CellSTP_v7_1,Meningeal_fibroblast,True,0,208,0.0,0.0,,,0.9972188423431253,no positive reference
+brain,native47,CellSTP_v7_1,Smooth_muscle,True,1024,533,438.0,0.8217636022514071,0.427734375,0.5626204238921002,0.9987121263471836,
+brain,native47,CellSTP_v7_1,Pericyte,True,1721,181,38.0,0.20994475138121546,0.022080185938407902,0.03995793901156677,0.9980429189248371,
+brain,native47,CellSTP_v7_1,Lymphatic_endothelial,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,CellSTP_v7_1,Adipocyte,True,0,25,0.0,0.0,,,0.9996657262431641,no positive reference
+brain,native47,CellSTP_v7_1,Osteoblast_chondro,True,0,466,0.0,0.0,,,0.9937691371725789,no positive reference
+brain,native47,CellSTP_v7_1,Meningioma,True,0,103,0.0,0.0,,,0.9986227921218361,no positive reference
+brain,native47,CellSTP_v7_1,Glioma,True,0,1091,0.0,0.0,,,0.9854122932516814,no positive reference
+brain,native47,CellSTP_v7_1,Neuron,True,20255,42905,9575.0,0.2231674629996504,0.4727227844976549,0.3031982267257758,0.3888216525470349,
+brain,native47,CellSTP_v7_1,Neural_progenitor,True,0,2020,0.0,0.0,,,0.9729906804476595,no positive reference
+brain,native47,CellSTP_v7_1,Astrocyte,True,10949,329,277.0,0.8419452887537994,0.025299114074344688,0.04912218478453627,0.9991854636591478,
+brain,native47,CellSTP_v7_1,Oligodendrocyte,True,26350,240,165.0,0.6875,0.0062618595825426945,0.01241068070703272,0.9984516608517929,
+brain,native47,CellSTP_v7_1,OPC,True,3475,0,0.0,,0.0,0.0,1.0,
+brain,native47,CellSTP_v7_1,Schwann,True,0,1,0.0,0.0,,,0.9999866290497266,no positive reference
+brain,native47,CellSTP_v7_1,Satellite_glia,True,0,0,0.0,,,,1.0,no positive reference
+brain,native47,CytoFormer_released_UNI2_23,Carcinoma_or_other_epithelial,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Myoepithelial,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,CD4_T,False,35,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,CD8_T,False,25,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Treg,False,3,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,B,False,2,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,NK,False,3,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Macrophage,False,827,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,DC,False,35,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Neutrophil,False,17,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Mast,False,2,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Endothelial,False,4261,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Myofibroblast,False,2,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Fibroblast,False,111,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Melanoma,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Plasma,False,126,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Monocyte,False,34,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Microglia,True,5375,2097,227.0,0.10824988078206962,0.04223255813953489,0.06076017130620985,0.973060189587115,
+brain,native47,CytoFormer_released_UNI2_23,pDC,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Squamous_Epithelial,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Keratinocyte,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Hepatocyte,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Cholangiocyte,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Alveolar_epithelium,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Airway_epithelium,False,6,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Gastric_epithelium,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Intestinal_epithelium,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Enteroendocrine,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Acinar,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Ductal_epithelium,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Renal_epithelium,False,151,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Ovarian_stroma,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Meningeal_fibroblast,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Smooth_muscle,False,1024,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Pericyte,False,1721,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Lymphatic_endothelial,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Adipocyte,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Osteoblast_chondro,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Meningioma,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Glioma,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Neuron,False,20255,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Neural_progenitor,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Astrocyte,False,10949,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Oligodendrocyte,False,26350,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,OPC,False,3475,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Schwann,False,0,0,,,,,,unsupported by organ head
+brain,native47,CytoFormer_released_UNI2_23,Satellite_glia,False,0,0,,,,,,unsupported by organ head

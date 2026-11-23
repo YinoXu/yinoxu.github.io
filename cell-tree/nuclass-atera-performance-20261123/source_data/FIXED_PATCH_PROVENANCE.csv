@@ -1,0 +1,13 @@
+organ,patch,origin,canonical_mpp,width_um,provided_centroids,intersecting_nuclear_polygons,selection,image_array_sha256,resolved_TLS8_reference,resolved_native47_reference
+breast,1,"[6609, 8809]",0.5,256,283,292,nearest provided centroid to componentwise spatial quantile; before model predictions,dd53738660bec01f441d29d2448fa2c0adb7649aefe865a350aa28d4fded7a9a,234,195
+breast,2,"[9258, 13101]",0.5,256,562,590,nearest provided centroid to componentwise spatial quantile; before model predictions,92043ce05043acef86e5fa485201e53162262a57cb5ef08af2cb2809233119ac,180,75
+breast,3,"[11995, 18421]",0.5,256,404,436,nearest provided centroid to componentwise spatial quantile; before model predictions,4ea775bbcc61f9decf38b8cb91bcd2dad614cb855ddb96258386ad8dd2a5a46c,191,64
+colorectal,1,"[5050, 6065]",0.5,256,468,489,nearest provided centroid to componentwise spatial quantile; before model predictions,6ec4361eb297741d7e6f331eeb2f15386c27ab7f5bf3ef3deab6ce0cc427beb2,322,321
+colorectal,2,"[7382, 10564]",0.5,256,711,727,nearest provided centroid to componentwise spatial quantile; before model predictions,5cbc58a93d2b346c8d96074932112b96e1d1f004252f9c3e94252b86a661de7c,538,508
+colorectal,3,"[9839, 15987]",0.5,256,459,485,nearest provided centroid to componentwise spatial quantile; before model predictions,bbe4f9896dcf1d62cfcf51941b40b07c9f65109778874215e9bb2e2c0b38487d,312,309
+kidney,1,"[3243, 7382]",0.5,256,478,498,nearest provided centroid to componentwise spatial quantile; before model predictions,791962b66332ec30a8654054b4162d91f85f088b7437c33a9ab456ea1edff7da,423,360
+kidney,2,"[6110, 12494]",0.5,256,389,405,nearest provided centroid to componentwise spatial quantile; before model predictions,23c0f5c6de09c34f9f668022ac68276fc4b05bbc3b065b262a6ae47e575f7334,341,316
+kidney,3,"[8693, 16766]",0.5,256,486,506,nearest provided centroid to componentwise spatial quantile; before model predictions,665aa31eb6f3d41e5eab867e182fae9159d2a8b219e9088e3132bd654607a3d0,390,356
+brain,1,"[5163, 8097]",0.5,256,92,94,nearest provided centroid to componentwise spatial quantile; before model predictions,b7eb6a8f25a8ccebeb2b1ddee5d56d762be3f8022fb5354f3e1a121ac70b5f0d,80,79
+brain,2,"[9200, 12947]",0.5,256,46,47,nearest provided centroid to componentwise spatial quantile; before model predictions,97886c274a89a0d78fad81eeadc33eb863a9210d9f3661a8f48b537fb9beda37,38,37
+brain,3,"[12763, 17637]",0.5,256,29,28,nearest provided centroid to componentwise spatial quantile; before model predictions,2237980b30cd13af934313f417488c34da253b7903ea5684d7293fd745e9ce56,21,19
