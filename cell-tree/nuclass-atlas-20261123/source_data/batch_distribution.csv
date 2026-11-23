@@ -1,0 +1,197 @@
+patient,project,cohort_role,batch,age_at_initial_pathologic_diagnosis,gender,stage_group,TLS_count,TLS_tissue_area_mm2
+TCGA-05-4245,TCGA-LUAD,Internal comparison,Newly expanded,81.0,MALE,III,4,24.785
+TCGA-05-4382,TCGA-LUAD,Training,Previously measured,68.0,MALE,I,20,35.1325
+TCGA-05-4398,TCGA-LUAD,Training,Newly expanded,47.0,FEMALE,III,73,103.008125
+TCGA-05-4403,TCGA-LUAD,Internal comparison,Newly expanded,76.0,MALE,I,18,61.008125
+TCGA-05-4422,TCGA-LUAD,Internal comparison,Previously measured,68.0,MALE,I,20,44.28625
+TCGA-18-3409,TCGA-LUSC,Training,Previously measured,74.0,MALE,I,0,235.3925
+TCGA-21-1070,TCGA-LUSC,Internal comparison,Newly expanded,60.0,FEMALE,III,5,60.1575
+TCGA-21-1082,TCGA-LUSC,Training,Newly expanded,61.0,MALE,I,6,64.08625
+TCGA-21-1083,TCGA-LUSC,Training,Newly expanded,75.0,MALE,I,0,42.995625
+TCGA-21-5786,TCGA-LUSC,Training,Newly expanded,64.0,MALE,I,13,82.29375
+TCGA-22-1002,TCGA-LUSC,Training,Newly expanded,69.0,MALE,I,9,148.84375
+TCGA-22-1016,TCGA-LUSC,Training,Newly expanded,65.0,MALE,I,3,95.94625
+TCGA-22-1017,TCGA-LUSC,Training,Newly expanded,62.0,MALE,I,19,146.24125
+TCGA-22-4599,TCGA-LUSC,Training,Previously measured,73.0,FEMALE,I,21,207.1975
+TCGA-22-4605,TCGA-LUSC,Training,Newly expanded,78.0,FEMALE,I,42,262.310625
+TCGA-22-4613,TCGA-LUSC,Training,Newly expanded,73.0,FEMALE,I,63,124.4875
+TCGA-22-5480,TCGA-LUSC,Training,Previously measured,66.0,FEMALE,I,10,82.11375
+TCGA-22-5482,TCGA-LUSC,Training,Newly expanded,81.0,MALE,I,44,195.09375
+TCGA-22-5492,TCGA-LUSC,Internal comparison,Newly expanded,73.0,FEMALE,III,31,178.264375
+TCGA-33-4582,TCGA-LUSC,Internal comparison,Newly expanded,55.0,MALE,I,1,69.7675
+TCGA-34-2600,TCGA-LUSC,Internal comparison,Previously measured,76.0,FEMALE,I,29,333.388125
+TCGA-34-5928,TCGA-LUSC,Training,Newly expanded,83.0,FEMALE,II,66,251.43125
+TCGA-34-8454,TCGA-LUSC,Training,Newly expanded,62.0,FEMALE,III,202,417.674375
+TCGA-37-4132,TCGA-LUSC,Training,Newly expanded,61.0,FEMALE,IV,35,140.596875
+TCGA-37-4133,TCGA-LUSC,Internal comparison,Newly expanded,63.0,MALE,III,19,133.159375
+TCGA-37-5819,TCGA-LUSC,Training,Newly expanded,64.0,MALE,III,28,142.92625
+TCGA-37-A5EL,TCGA-LUSC,Internal comparison,Previously measured,53.0,MALE,II,1,71.903125
+TCGA-38-4628,TCGA-LUAD,Training,Previously measured,65.0,FEMALE,II,3,63.37
+TCGA-39-5029,TCGA-LUSC,Training,Newly expanded,67.0,MALE,III,40,277.280625
+TCGA-39-5030,TCGA-LUSC,Training,Previously measured,81.0,FEMALE,III,130,209.99
+TCGA-39-5034,TCGA-LUSC,Internal comparison,Previously measured,73.0,FEMALE,II,20,224.044375
+TCGA-39-5040,TCGA-LUSC,Training,Previously measured,59.0,MALE,III,149,258.63875
+TCGA-43-2578,TCGA-LUSC,Training,Newly expanded,59.0,FEMALE,I,20,37.46625
+TCGA-43-3920,TCGA-LUSC,Training,Newly expanded,71.0,MALE,I,9,145.016875
+TCGA-43-5668,TCGA-LUSC,Training,Newly expanded,78.0,MALE,II,69,105.925
+TCGA-43-6143,TCGA-LUSC,Training,Previously measured,70.0,MALE,I,0,79.371875
+TCGA-43-6770,TCGA-LUSC,Training,Previously measured,59.0,FEMALE,I,16,99.534375
+TCGA-43-8115,TCGA-LUSC,Training,Previously measured,72.0,FEMALE,II,6,33.06375
+TCGA-43-A475,TCGA-LUSC,Training,Newly expanded,67.0,FEMALE,II,22,49.6625
+TCGA-44-2657,TCGA-LUAD,Training,Previously measured,74.0,FEMALE,I,45,37.26375
+TCGA-44-2659,TCGA-LUAD,Training,Newly expanded,65.0,FEMALE,II,7,27.786875
+TCGA-44-3398,TCGA-LUAD,Internal comparison,Previously measured,77.0,FEMALE,I,8,52.0875
+TCGA-44-5644,TCGA-LUAD,Training,Previously measured,51.0,FEMALE,I,15,127.335
+TCGA-44-6144,TCGA-LUAD,Training,Newly expanded,58.0,MALE,I,0,24.634375
+TCGA-44-6146,TCGA-LUAD,Training,Previously measured,64.0,MALE,II,0,57.376875
+TCGA-44-6148,TCGA-LUAD,Training,Previously measured,60.0,MALE,I,14,63.78
+TCGA-44-7667,TCGA-LUAD,Internal comparison,Newly expanded,49.0,FEMALE,II,0,82.35625
+TCGA-44-7669,TCGA-LUAD,Internal comparison,Previously measured,59.0,MALE,II,6,63.64625
+TCGA-44-A479,TCGA-LUAD,Training,Previously measured,73.0,FEMALE,I,150,157.7725
+TCGA-44-A47F,TCGA-LUAD,Training,Previously measured,74.0,MALE,II,0,32.30875
+TCGA-44-A47G,TCGA-LUAD,Training,Newly expanded,73.0,FEMALE,I,15,54.0275
+TCGA-46-3768,TCGA-LUSC,Training,Newly expanded,58.0,MALE,III,6,56.3975
+TCGA-49-4494,TCGA-LUAD,Training,Previously measured,77.0,MALE,III,55,438.36625
+TCGA-49-4501,TCGA-LUAD,Training,Newly expanded,67.0,FEMALE,I,52,534.684375
+TCGA-49-6743,TCGA-LUAD,Training,Newly expanded,81.0,FEMALE,III,7,456.36375
+TCGA-49-6761,TCGA-LUAD,Internal comparison,Newly expanded,68.0,FEMALE,III,87,387.3725
+TCGA-49-AAQV,TCGA-LUAD,Training,Newly expanded,63.0,FEMALE,II,14,337.16125
+TCGA-49-AAR4,TCGA-LUAD,Training,Previously measured,51.0,MALE,III,3,89.78375
+TCGA-49-AAR9,TCGA-LUAD,Training,Previously measured,61.0,MALE,II,0,28.635
+TCGA-50-8457,TCGA-LUAD,Training,Newly expanded,63.0,FEMALE,I,37,261.06
+TCGA-51-4081,TCGA-LUSC,Training,Newly expanded,55.0,MALE,II,0,85.968125
+TCGA-53-7626,TCGA-LUAD,Training,Previously measured,76.0,FEMALE,II,68,161.518125
+TCGA-55-1595,TCGA-LUAD,Training,Newly expanded,74.0,FEMALE,I,18,131.344375
+TCGA-55-6543,TCGA-LUAD,Internal comparison,Newly expanded,60.0,FEMALE,I,8,120.98125
+TCGA-55-6642,TCGA-LUAD,Training,Previously measured,63.0,MALE,I,4,42.865625
+TCGA-55-6969,TCGA-LUAD,Training,Newly expanded,52.0,MALE,I,27,105.46625
+TCGA-55-6970,TCGA-LUAD,Training,Newly expanded,67.0,FEMALE,III,75,171.885
+TCGA-55-6975,TCGA-LUAD,Training,Newly expanded,61.0,MALE,II,2,30.915
+TCGA-55-6978,TCGA-LUAD,Training,Newly expanded,81.0,MALE,II,8,59.93
+TCGA-55-6981,TCGA-LUAD,Training,Newly expanded,53.0,FEMALE,III,0,43.30125
+TCGA-55-7281,TCGA-LUAD,Internal comparison,Previously measured,70.0,FEMALE,I,8,20.793125
+TCGA-55-7283,TCGA-LUAD,Internal comparison,Newly expanded,76.0,FEMALE,III,14,45.995625
+TCGA-55-7576,TCGA-LUAD,Training,Previously measured,54.0,MALE,I,12,34.568125
+TCGA-55-7727,TCGA-LUAD,Training,Newly expanded,70.0,MALE,III,32,273.8075
+TCGA-55-7728,TCGA-LUAD,Training,Newly expanded,64.0,FEMALE,I,11,28.549375
+TCGA-55-7907,TCGA-LUAD,Internal comparison,Newly expanded,77.0,MALE,II,53,93.175
+TCGA-55-7913,TCGA-LUAD,Training,Newly expanded,61.0,FEMALE,I,3,18.45375
+TCGA-55-7994,TCGA-LUAD,Internal comparison,Newly expanded,81.0,MALE,II,4,57.745625
+TCGA-55-8094,TCGA-LUAD,Training,Previously measured,51.0,MALE,IV,5,18.365
+TCGA-55-8097,TCGA-LUAD,Training,Previously measured,60.0,FEMALE,I,16,17.621875
+TCGA-55-8205,TCGA-LUAD,Internal comparison,Newly expanded,76.0,FEMALE,II,25,48.851875
+TCGA-55-8206,TCGA-LUAD,Internal comparison,Previously measured,56.0,MALE,I,16,54.20875
+TCGA-55-8301,TCGA-LUAD,Training,Previously measured,58.0,MALE,I,8,5.33625
+TCGA-55-8507,TCGA-LUAD,Internal comparison,Previously measured,53.0,MALE,I,7,180.363125
+TCGA-55-8510,TCGA-LUAD,Internal comparison,Newly expanded,55.0,FEMALE,I,20,36.169375
+TCGA-55-8620,TCGA-LUAD,Internal comparison,Previously measured,60.0,MALE,IV,18,56.42125
+TCGA-55-A4DF,TCGA-LUAD,Internal comparison,Newly expanded,88.0,MALE,I,18,38.039375
+TCGA-55-A4DG,TCGA-LUAD,Internal comparison,Previously measured,71.0,MALE,I,4,18.541875
+TCGA-56-6545,TCGA-LUSC,Training,Newly expanded,77.0,FEMALE,I,19,66.663125
+TCGA-56-7731,TCGA-LUSC,Training,Previously measured,66.0,FEMALE,I,32,41.654375
+TCGA-56-8082,TCGA-LUSC,Internal comparison,Newly expanded,80.0,FEMALE,II,5,6.7925
+TCGA-56-8304,TCGA-LUSC,Training,Previously measured,73.0,FEMALE,I,15,28.099375
+TCGA-56-8305,TCGA-LUSC,Training,Newly expanded,72.0,MALE,I,11,72.83125
+TCGA-56-8309,TCGA-LUSC,Training,Previously measured,66.0,MALE,I,26,44.4875
+TCGA-56-8629,TCGA-LUSC,Training,Newly expanded,63.0,MALE,II,45,59.685
+TCGA-56-A49D,TCGA-LUSC,Training,Newly expanded,67.0,MALE,III,51,263.589375
+TCGA-56-A4BY,TCGA-LUSC,Training,Newly expanded,66.0,MALE,I,29,91.883125
+TCGA-56-A4ZJ,TCGA-LUSC,Training,Newly expanded,75.0,FEMALE,I,1,11.75875
+TCGA-58-A46K,TCGA-LUSC,Training,Newly expanded,59.0,MALE,III,86,283.5525
+TCGA-58-A46L,TCGA-LUSC,Training,Newly expanded,73.0,MALE,III,18,270.871875
+TCGA-60-2696,TCGA-LUSC,Training,Previously measured,76.0,FEMALE,II,2,228.64125
+TCGA-60-2704,TCGA-LUSC,Training,Previously measured,73.0,MALE,II,82,325.930625
+TCGA-60-2712,TCGA-LUSC,Training,Newly expanded,79.0,FEMALE,II,24,305.05125
+TCGA-60-2725,TCGA-LUSC,Training,Newly expanded,74.0,MALE,I,181,278.058125
+TCGA-62-A46S,TCGA-LUAD,Training,Newly expanded,73.0,MALE,I,46,254.02125
+TCGA-62-A470,TCGA-LUAD,Training,Newly expanded,84.0,MALE,I,17,260.394375
+TCGA-62-A471,TCGA-LUAD,Training,Newly expanded,64.0,MALE,II,103,250.7975
+TCGA-62-A472,TCGA-LUAD,Training,Previously measured,70.0,MALE,II,83,219.05625
+TCGA-63-A5MG,TCGA-LUSC,Training,Newly expanded,68.0,MALE,I,6,78.8425
+TCGA-63-A5MH,TCGA-LUSC,Training,Newly expanded,68.0,MALE,I,0,9.165
+TCGA-63-A5MJ,TCGA-LUSC,Training,Previously measured,54.0,MALE,II,8,49.26125
+TCGA-63-A5MM,TCGA-LUSC,Training,Newly expanded,69.0,FEMALE,II,2,121.3675
+TCGA-63-A5MN,TCGA-LUSC,Training,Newly expanded,78.0,FEMALE,II,26,89.47375
+TCGA-63-A5MR,TCGA-LUSC,Training,Newly expanded,70.0,FEMALE,I,20,71.419375
+TCGA-63-A5MT,TCGA-LUSC,Training,Newly expanded,74.0,MALE,II,11,146.0675
+TCGA-63-A5MV,TCGA-LUSC,Training,Previously measured,69.0,MALE,II,15,107.2775
+TCGA-63-A5MY,TCGA-LUSC,Internal comparison,Newly expanded,63.0,MALE,I,0,74.124375
+TCGA-64-1680,TCGA-LUAD,Internal comparison,Newly expanded,63.0,MALE,IV,9,77.153125
+TCGA-64-5774,TCGA-LUAD,Training,Newly expanded,60.0,MALE,I,0,54.066875
+TCGA-66-2727,TCGA-LUSC,Internal comparison,Previously measured,55.0,FEMALE,I,49,68.36375
+TCGA-66-2753,TCGA-LUSC,Training,Newly expanded,69.0,MALE,I,13,48.034375
+TCGA-66-2767,TCGA-LUSC,Training,Newly expanded,62.0,MALE,III,12,76.0625
+TCGA-66-2783,TCGA-LUSC,Internal comparison,Newly expanded,67.0,MALE,III,37,60.88125
+TCGA-66-2785,TCGA-LUSC,Internal comparison,Newly expanded,65.0,MALE,I,5,57.213125
+TCGA-66-2789,TCGA-LUSC,Training,Newly expanded,73.0,MALE,III,8,60.901875
+TCGA-67-3774,TCGA-LUAD,Training,Previously measured,73.0,FEMALE,I,9,24.265625
+TCGA-67-6216,TCGA-LUAD,Training,Previously measured,57.0,FEMALE,I,77,79.28125
+TCGA-69-7761,TCGA-LUAD,Training,Newly expanded,84.0,MALE,I,217,341.831875
+TCGA-69-7973,TCGA-LUAD,Internal comparison,Previously measured,42.0,FEMALE,I,31,148.760625
+TCGA-70-6723,TCGA-LUSC,Training,Newly expanded,65.0,MALE,II,0,96.104375
+TCGA-73-4666,TCGA-LUAD,Training,Newly expanded,52.0,FEMALE,IV,63,249.40375
+TCGA-73-7498,TCGA-LUAD,Internal comparison,Previously measured,58.0,FEMALE,I,42,171.135625
+TCGA-77-7138,TCGA-LUSC,Training,Previously measured,67.0,MALE,I,71,270.468125
+TCGA-77-8007,TCGA-LUSC,Training,Previously measured,68.0,MALE,II,85,447.258125
+TCGA-77-8156,TCGA-LUSC,Training,Previously measured,60.0,MALE,I,74,283.2525
+TCGA-77-A5G7,TCGA-LUSC,Training,Previously measured,63.0,MALE,I,56,258.18875
+TCGA-77-A5G8,TCGA-LUSC,Internal comparison,Newly expanded,70.0,MALE,II,23,252.23375
+TCGA-77-A5GB,TCGA-LUSC,Training,Previously measured,90.0,MALE,I,76,268.71875
+TCGA-78-7152,TCGA-LUAD,Training,Newly expanded,65.0,MALE,I,99,349.72625
+TCGA-78-7154,TCGA-LUAD,Internal comparison,Newly expanded,72.0,MALE,III,34,386.746875
+TCGA-78-7158,TCGA-LUAD,Training,Newly expanded,59.0,FEMALE,III,21,286.480625
+TCGA-78-7163,TCGA-LUAD,Training,Newly expanded,60.0,MALE,I,102,270.236875
+TCGA-78-7166,TCGA-LUAD,Internal comparison,Previously measured,84.0,MALE,II,24,341.641875
+TCGA-78-7633,TCGA-LUAD,Training,Newly expanded,67.0,MALE,I,54,340.010625
+TCGA-83-5908,TCGA-LUAD,Internal comparison,Previously measured,59.0,FEMALE,I,74,165.493125
+TCGA-85-6560,TCGA-LUSC,Training,Newly expanded,59.0,MALE,II,1,98.559375
+TCGA-85-7696,TCGA-LUSC,Training,Newly expanded,64.0,MALE,I,8,129.75375
+TCGA-85-7697,TCGA-LUSC,Training,Newly expanded,49.0,MALE,II,19,129.50375
+TCGA-85-7710,TCGA-LUSC,Training,Newly expanded,59.0,FEMALE,I,2,121.726875
+TCGA-85-8287,TCGA-LUSC,Training,Previously measured,72.0,MALE,I,138,169.0575
+TCGA-85-8352,TCGA-LUSC,Training,Newly expanded,67.0,MALE,III,71,198.165625
+TCGA-85-8353,TCGA-LUSC,Training,Newly expanded,72.0,MALE,III,80,258.768125
+TCGA-85-8355,TCGA-LUSC,Training,Previously measured,63.0,MALE,I,31,192.02125
+TCGA-85-8479,TCGA-LUSC,Training,Previously measured,66.0,MALE,I,10,59.67125
+TCGA-85-A4QQ,TCGA-LUSC,Training,Previously measured,68.0,MALE,I,9,112.9925
+TCGA-85-A5B5,TCGA-LUSC,Internal comparison,Newly expanded,58.0,MALE,I,41,247.885
+TCGA-86-6562,TCGA-LUAD,Internal comparison,Previously measured,52.0,MALE,II,11,172.919375
+TCGA-86-7953,TCGA-LUAD,Training,Newly expanded,69.0,FEMALE,I,53,377.5275
+TCGA-86-8358,TCGA-LUAD,Training,Newly expanded,44.0,MALE,I,23,148.426875
+TCGA-86-8359,TCGA-LUAD,Training,Previously measured,52.0,MALE,III,8,446.110625
+TCGA-86-8672,TCGA-LUAD,Training,Newly expanded,59.0,MALE,II,21,226.76875
+TCGA-86-8673,TCGA-LUAD,Training,Previously measured,61.0,MALE,I,6,278.921875
+TCGA-86-8674,TCGA-LUAD,Internal comparison,Newly expanded,50.0,MALE,II,21,141.9625
+TCGA-90-7964,TCGA-LUSC,Training,Newly expanded,70.0,MALE,I,0,92.59375
+TCGA-90-A4ED,TCGA-LUSC,Training,Previously measured,69.0,MALE,I,2,40.226875
+TCGA-91-A4BC,TCGA-LUAD,Training,Newly expanded,59.0,MALE,II,7,21.731875
+TCGA-92-7341,TCGA-LUSC,Training,Previously measured,71.0,MALE,I,34,180.6325
+TCGA-92-8063,TCGA-LUSC,Training,Newly expanded,52.0,MALE,III,15,167.874375
+TCGA-93-A4JO,TCGA-LUAD,Training,Newly expanded,70.0,MALE,I,83,202.13875
+TCGA-94-A4VJ,TCGA-LUSC,Training,Previously measured,71.0,FEMALE,I,24,181.930625
+TCGA-94-A5I6,TCGA-LUSC,Training,Newly expanded,62.0,MALE,II,42,238.209375
+TCGA-95-7562,TCGA-LUAD,Training,Previously measured,71.0,MALE,II,37,220.54625
+TCGA-96-A4JK,TCGA-LUSC,Training,Newly expanded,65.0,MALE,II,167,418.053125
+TCGA-97-7553,TCGA-LUAD,Training,Previously measured,58.0,FEMALE,I,51,217.280625
+TCGA-97-7554,TCGA-LUAD,Training,Newly expanded,83.0,FEMALE,III,95,468.905
+TCGA-97-7941,TCGA-LUAD,Training,Newly expanded,72.0,FEMALE,I,58,378.4125
+TCGA-97-8552,TCGA-LUAD,Training,Newly expanded,55.0,FEMALE,I,47,260.02125
+TCGA-97-A4M6,TCGA-LUAD,Training,Newly expanded,45.0,FEMALE,I,3,196.985
+TCGA-98-7454,TCGA-LUSC,Training,Previously measured,73.0,MALE,I,6,81.575625
+TCGA-98-A53B,TCGA-LUSC,Training,Previously measured,69.0,MALE,I,24,50.688125
+TCGA-98-A53J,TCGA-LUSC,Training,Newly expanded,77.0,MALE,I,62,107.959375
+TCGA-99-AA5R,TCGA-LUAD,Training,Previously measured,70.0,FEMALE,I,39,58.790625
+TCGA-J2-8192,TCGA-LUAD,Training,Newly expanded,65.0,FEMALE,II,21,692.93625
+TCGA-L9-A5IP,TCGA-LUAD,Training,Newly expanded,40.0,FEMALE,IV,0,148.55875
+TCGA-L9-A743,TCGA-LUAD,Training,Previously measured,56.0,MALE,II,42,136.851875
+TCGA-MF-A522,TCGA-LUSC,Training,Previously measured,54.0,MALE,I,57,63.59
+TCGA-MP-A4T9,TCGA-LUAD,Internal comparison,Newly expanded,54.0,FEMALE,III,42,103.76125
+TCGA-MP-A4TC,TCGA-LUAD,Training,Newly expanded,77.0,MALE,III,48,212.089375
+TCGA-MP-A4TJ,TCGA-LUAD,Training,Previously measured,62.0,FEMALE,I,226,278.199375
+TCGA-NC-A5HF,TCGA-LUSC,Training,Previously measured,74.0,MALE,III,2,175.624375
+TCGA-NC-A5HM,TCGA-LUSC,Internal comparison,Previously measured,76.0,MALE,I,79,271.066875
+TCGA-NC-A5HN,TCGA-LUSC,Training,Previously measured,77.0,MALE,II,97,349.349375
+TCGA-NJ-A4YG,TCGA-LUAD,Internal comparison,Previously measured,65.0,MALE,I,40,426.478125
+TCGA-NJ-A55A,TCGA-LUAD,Training,Newly expanded,76.0,FEMALE,I,53,185.966875
+TCGA-NJ-A55O,TCGA-LUAD,Training,Newly expanded,56.0,FEMALE,II,19,198.9925
+TCGA-O2-A52S,TCGA-LUSC,Training,Previously measured,57.0,FEMALE,III,31,361.830625

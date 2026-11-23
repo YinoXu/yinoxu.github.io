@@ -1,0 +1,74 @@
+{
+  "batch_patients": 196,
+  "new_patients": 117,
+  "TLS": 6706,
+  "nuclei": 175221101,
+  "training_patients": 152,
+  "comparison_patients": 44,
+  "no_TLS": 16,
+  "demographics": [
+    {
+      "cancer": "TCGA-LUAD",
+      "n": 97,
+      "new": 56,
+      "female": 46,
+      "male": 51,
+      "age_median": 64.0,
+      "age_Q1": 58.0,
+      "age_Q3": 73.0,
+      "OS_events": 32,
+      "TLS": 3296
+    },
+    {
+      "cancer": "TCGA-LUSC",
+      "n": 99,
+      "new": 61,
+      "female": 30,
+      "male": 69,
+      "age_median": 68.0,
+      "age_Q1": 62.5,
+      "age_Q3": 73.0,
+      "OS_events": 42,
+      "TLS": 3410
+    }
+  ],
+  "endpoints": [
+    {
+      "endpoint": "OS",
+      "train_n": 152,
+      "train_events": 60,
+      "comparison_n": 44,
+      "comparison_events": 14
+    },
+    {
+      "endpoint": "PFI",
+      "train_n": 152,
+      "train_events": 49,
+      "comparison_n": 44,
+      "comparison_events": 13
+    },
+    {
+      "endpoint": "DSS",
+      "train_n": 142,
+      "train_events": 31,
+      "comparison_n": 39,
+      "comparison_events": 8
+    },
+    {
+      "endpoint": "DFI",
+      "train_n": 104,
+      "train_events": 25,
+      "comparison_n": 25,
+      "comparison_events": 8
+    }
+  ],
+  "new_TLS_definitions": 32,
+  "new_patient_definitions": 86,
+  "old_patient_features": 964,
+  "candidate_pool": 1057,
+  "actual_Codex_feature_rounds": 2,
+  "models": 92,
+  "source_models": "Original NuClass v15 step59712 and WholeCell v6",
+  "sealed_test_used": false,
+  "comparison_scope": "Previously exposed development patients; internal, not independent validation"
+}

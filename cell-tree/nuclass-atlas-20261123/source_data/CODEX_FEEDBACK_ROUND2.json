@@ -1,0 +1,19 @@
+{
+  "time": 1795450439.0386221,
+  "feedback_source_sha256": "f2b73580e1b41fb26298312e75b40bbf633783378e9e58c569d13563bd4f1340",
+  "observation": "Interface heterogeneity is selected for OS/PFI/DFI; OS boosting nominates plasma\u2013stroma variability and T\u2013myeloid range. DSS nominates T nuclear assortativity, PFI T roundness. Refine scale contrasts and robust patient spread instead of repeating nuclear/cytoplasm ratios.",
+  "definitions": {
+    "R5R2__interface_contrast_25": "T\u2013epithelial minus T\u2013stromal boundary-crossing fraction at 25\u00b5m",
+    "R5R2__interface_contrast_100": "T\u2013epithelial minus T\u2013stromal boundary-crossing fraction at 100\u00b5m",
+    "R5R2__interface_scale_contrast": "Short minus longer-range interface contrast",
+    "R5R2__interface_graph_coupling": "Boundary-crossing contrast \u00d7 epithelial/stromal T-neighbor enrichment contrast",
+    "R5R2__plasma_stroma_radial_separation": "Plasma core/rim gradient minus stromal gradient",
+    "R5R2__plasma_stroma_scale_contrast": "Plasma\u2013stromal graph coupling at short versus longer scale",
+    "R5R2__T_morphology_interface": "T roundness spread \u00d7 interface contrast",
+    "R5R2__T_size_organization_interface": "T nuclear-size assortativity \u00d7 interface contrast"
+  },
+  "patient_definitions": 18,
+  "comparison_used": false,
+  "actual_Codex_definition_rounds_this_batch": 2,
+  "LLM_API_calls": 0
+}

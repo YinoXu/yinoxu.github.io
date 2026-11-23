@@ -1,0 +1,118 @@
+{
+  "built_utc": "2026-11-23T16:23:23.463924+00:00",
+  "batch": {
+    "batch_patients": 196,
+    "new_patients": 117,
+    "TLS": 6706,
+    "nuclei": 175221101,
+    "training_patients": 152,
+    "comparison_patients": 44,
+    "no_TLS": 16,
+    "demographics": [
+      {
+        "cancer": "TCGA-LUAD",
+        "n": 97,
+        "new": 56,
+        "female": 46,
+        "male": 51,
+        "age_median": 64.0,
+        "age_Q1": 58.0,
+        "age_Q3": 73.0,
+        "OS_events": 32,
+        "TLS": 3296
+      },
+      {
+        "cancer": "TCGA-LUSC",
+        "n": 99,
+        "new": 61,
+        "female": 30,
+        "male": 69,
+        "age_median": 68.0,
+        "age_Q1": 62.5,
+        "age_Q3": 73.0,
+        "OS_events": 42,
+        "TLS": 3410
+      }
+    ],
+    "endpoints": [
+      {
+        "endpoint": "OS",
+        "train_n": 152,
+        "train_events": 60,
+        "comparison_n": 44,
+        "comparison_events": 14
+      },
+      {
+        "endpoint": "PFI",
+        "train_n": 152,
+        "train_events": 49,
+        "comparison_n": 44,
+        "comparison_events": 13
+      },
+      {
+        "endpoint": "DSS",
+        "train_n": 142,
+        "train_events": 31,
+        "comparison_n": 39,
+        "comparison_events": 8
+      },
+      {
+        "endpoint": "DFI",
+        "train_n": 104,
+        "train_events": 25,
+        "comparison_n": 25,
+        "comparison_events": 8
+      }
+    ],
+    "new_TLS_definitions": 32,
+    "new_patient_definitions": 86,
+    "old_patient_features": 964,
+    "candidate_pool": 1057,
+    "actual_Codex_feature_rounds": 2,
+    "models": 92,
+    "source_models": "Original NuClass v15 step59712 and WholeCell v6",
+    "sealed_test_used": false,
+    "comparison_scope": "Previously exposed development patients; internal, not independent validation"
+  },
+  "files": {
+    "FIGURES.json": "1a7b3691f0113dc5efcde356528cc094dfefdbfc931ecfc84d0e1ada42998c3f",
+    "BATCH_STATISTICS.json": "0ea8b007f0cf6bca9c6c538d604ec3407f3f2e5ff39125608d03717048acfa7e",
+    "figures/fig11_spatial_example.pdf": "7fa0167ab02dfb9cb28ca2b0c992476196269b6d68d91391a454d74408e3ac64",
+    "figures/new_hypotheses.png": "b4e845b108378d1e6ffb631b1e5b05c5ef04fc3c32ed053db0deaaf9da984288",
+    "figures/feature_interpretability.pdf": "012c210cb3eb284ebcf2fbd79a9ec4b61dfeaf37cb4246a0c23733a3a44feebc",
+    "figures/candidate_tls_patterns.pdf": "f80e55595dfaaac82538c408ea43576b34128ec5de2fb43db318964bc77d81dc",
+    "figures/batch_distribution.svg": "aac5742424a118afe78cb301c19aa650f09414e1cfb1d4d807687ff53b33e144",
+    "figures/fig12_cell_contours.png": "d9aee3246c32f97796a7bae994dc4bea4d2d8c055b37c3bf86fe22a583a6fada",
+    "figures/fig11_spatial_example.png": "478dc017c120f083d7adec73a75810d1bb891a977ea96928d380c148e004520a",
+    "figures/survival_leads.pdf": "b1241bb15be8158c1d2a807cec84f80e6415a72f6949e7c42ef4de0b54aa072c",
+    "figures/survival_leads.svg": "c3f5c1f010fd13036ff3a8444c2d919e7b6348d4757b3ff4f8c2a5e996a18385",
+    "figures/feature_interpretability.png": "913e195104cb9b0705ef2ed15e23c4a5172101d60b8a0d263f39c1a1a5fdc0c1",
+    "figures/candidate_tls_patterns.svg": "10a55d753d5638f1e88269c5bdf686cbe8e5c22cd09c380ee070d5e32f38f549",
+    "figures/fig11_spatial_example.svg": "9e4c3c645c848869741174017657c528198bcefe8480cb114887a73fb2fc0e5d",
+    "figures/new_hypotheses.svg": "661548182ad846ce1e03881c7653851a103ee785035d29bc9b19922667b82ca1",
+    "figures/new_hypotheses.pdf": "44d9d00cb58a26accdfa33c7b597fa4b49433442cc27472ad354edc0ad475312",
+    "figures/candidate_tls_patterns.png": "70c0e01e6d9cb4e8aac94e9a72c0e42eb6ad144a51550d6652160673b116a087",
+    "figures/batch_distribution.png": "37018e5628a4d3e02a8d3d3613b837ad18a51c584c1293c188cc815304463d23",
+    "figures/feature_interpretability.svg": "62c42a91ffdaf90e6e156a88a06d90a5ade8327b044bdf358b629b307617a5b9",
+    "figures/survival_leads.png": "92d2519db3ab7711848da7ac20abb26a65e8e54b8e39076a7849647f845adb23",
+    "figures/fig12_raw_HE.png": "fbf3361e8d54303618d1fd108aa9a42bbd1156c0be5dad30a54f8cb3784df45a",
+    "figures/batch_distribution.pdf": "6055049ab3357479722a2e80b63367d2609bf621e0cee90ec3c1cd3fb84c4913",
+    "source_data/VERIFIED.json": "3f7a543eb957361238421586d4adf4e837d4d253347d4075b6b740c24c78bb3a",
+    "source_data/candidate_tls_profiles.csv": "c7ee736974945123eee4f889e1166e0bbb7373bd0899cc52718c94484dd2b7c3",
+    "source_data/all_training_priorities.csv": "635f7190a75c28174b7bd680db2b235809e18f3d1a906b14a644ce5751b30e8f",
+    "source_data/concept_correlations.csv": "13bf5877aef0cd59175fd7740b8be7b9ba82f9684a848e2e4757766c534f252b",
+    "source_data/highlighted_internal_comparisons.csv": "79cd2a4e2abea23364faa124ef60ba266968ffe72c37031f19654e0787f5cd53",
+    "source_data/SELECTED_TRAIN_ASSOCIATIONS.csv": "b46f57a4dae89b387a8bb03af410a88b33979279f3d3c9ccbd715f4e2924a7e3",
+    "source_data/PREDICTION_INTERVALS.csv": "b249b05f5c9e960c8cb2abaf989444a27b9f40cdc6f350a3c483ac31d77c17c4",
+    "source_data/candidate_tls_assignments.csv": "09a57e4a6f8f087768619ad8ef3274369879e8fe2ff08ae261ca2413822305a3",
+    "source_data/highlighted_hypotheses.csv": "33115b16ff3c2e5e31f4a2588e7f040c6235b6de38eeed1f17d39223aaba73a7",
+    "source_data/COMPLETE.json": "5e35b4b3d44d249c4ef88bae32582e8abd3ea37822d7437df5523ab28c329ea0",
+    "source_data/NEW_DEFINITIONS.json": "ad8b9f7c204f7966b1d658c0d68cf5ee544bb94c58d3fe06be8b7754c34a4163",
+    "source_data/endpoint_support.csv": "699ca3659272cd36fa3166b5f3749efca43f54ae4ffdb990c0dff005f9e38ac4",
+    "source_data/PHENOTYPE_LOCK.json": "ee42388996fc40ac0bbedd818a25280890caec6a6b7d281fb7da6ebb1644c717",
+    "source_data/demographics.csv": "6634f5b992929e7760e80774377b299d9bdce07489b41b9729eed89aaa172a85",
+    "source_data/CODEX_FEEDBACK_ROUND2.json": "8bf40c599217d0e8c64bdf63048a6e147baa36394c944dbf9900d4dd2507d5d3",
+    "source_data/batch_distribution.csv": "eab2b2cff6c6c97caa9324adc36e581f26f614e623cfe34b2c1704ac37ca9b61",
+    "source_data/MODEL_COMPARISONS.csv": "9e2da6a9f816f596509c0211ea471e4e3027dcaa118ad8b70c204d1292918223"
+  }
+}

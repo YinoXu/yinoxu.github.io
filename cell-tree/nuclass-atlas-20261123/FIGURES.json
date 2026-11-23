@@ -1,0 +1,22 @@
+[
+  {
+    "name": "batch_distribution",
+    "title": "The actual 196-patient batch: provenance, age, stage, TLS burden, endpoints and sex"
+  },
+  {
+    "name": "new_hypotheses",
+    "title": "New interpretable hypotheses and selected training-side adjusted associations"
+  },
+  {
+    "name": "feature_interpretability",
+    "title": "Cross-endpoint priorities and correlation among the new biological concepts"
+  },
+  {
+    "name": "candidate_tls_patterns",
+    "title": "Six outcome-free candidate TLS patterns and their within-patient mixtures"
+  },
+  {
+    "name": "survival_leads",
+    "title": "Selected internal prediction leads, uncertainty intervals and fixed-threshold survival curves"
+  }
+]

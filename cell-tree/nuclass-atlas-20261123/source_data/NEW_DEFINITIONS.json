@@ -1,0 +1,39 @@
+{
+  "TLS": {
+    "R5__myeloid_rim_peak": "Rim myeloid log density relative to mean core and adjacent exterior; radial peak, not angular enclosure",
+    "R5__myeloid_external_vs_T": "External/core myeloid contrast minus external/core T contrast",
+    "R5__myeloid_T_short_vs_long": "T–myeloid short-range versus longer-range kNN enrichment",
+    "R5__stroma_rim_peak": "Rim stromal peak; angular continuity is not measured",
+    "R5__stroma_penetration_vs_T": "Relative stromal penetration into core compared with T cells",
+    "R5__stroma_contact_vs_abundance": "T–stroma graph enrichment contrasted with rim stromal/T abundance",
+    "R5__epithelial_interface_vs_stroma": "Difference in fractions of T–epithelial and T–stromal edges crossing boundary; epithelial is not a malignancy label",
+    "R5__endothelial_access_B_vs_T": "Relative B versus T graph coupling to endothelial predictions; not measured HEV",
+    "R5__endothelial_radial_access": "Core/exterior endothelial density contrast",
+    "R5__endothelial_T_short_vs_long": "T–endothelial graph coupling scale contrast",
+    "R5__plasma_export_vs_B_gradient": "Relative plasma outward distribution compared with B cells; not lineage tracing",
+    "R5__B_plasma_crossing_scale": "Short versus longer-range B–plasma boundary-crossing fractions",
+    "R5__B_plasma_local_vs_remote": "Local versus extended B–plasma graph enrichment",
+    "R5__B_T_radial_separation": "B core/T exterior radial separation",
+    "R5__B_T_contact_scale": "B–T graph coupling scale contrast",
+    "R5__B_size_vs_T_size": "Ratio of probability-weighted median B and T whole-cell areas, log scale",
+    "R5__B_cytoplasm_vs_nucleus_spread": "B cytoplasmic versus nuclear 90–10 area spread, log contrast",
+    "R5__B_size_spatial_organization": "B nuclear size assortativity × B-core/T-exterior radial organization",
+    "R5__plasma_stroma_export_coupling": "Plasma–stromal graph coupling × relative outward plasma distribution",
+    "R5__myeloid_interface_coupling": "T–myeloid graph coupling × relative external myeloid distribution",
+    "R5__boundary_entropy_gradient": "Exterior minus core mean classifier entropy",
+    "R5__myeloid_soft_hard_radial_sensitivity": "Radial difference in normalized soft–hard myeloid count discrepancy",
+    "R5__stroma_soft_hard_radial_sensitivity": "Radial difference in normalized soft–hard stromal count discrepancy",
+    "R5__B_T_organization_confidence_weighted": "B/T radial organization attenuated by core mean entropy; not calibrated confidence"
+  },
+  "patient_tails": [
+    "C__outer50__MonoMac__soft_density",
+    "C__core__Endothelium__soft_density",
+    "C__rim__Stroma__soft_density",
+    "C__outer50__Plasma__soft_density",
+    "S__T_MonoMac__knn12_r25_soft_enrichment",
+    "S__B__outer50_vs_rim",
+    "M__B__cell_spread",
+    "U__outer200__Stroma__soft_hard_gap"
+  ],
+  "tail_definition": "Within-patient q90 minus median and range; positive-density top20% share requires>=5 TLS. These measure within-patient heterogeneity, not independent patients."
+}

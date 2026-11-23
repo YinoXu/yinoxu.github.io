@@ -1,0 +1,31 @@
+{
+  "time": 1795450681.0781481,
+  "saved_prediction_models_replayed": 92,
+  "max_prediction_error": 4.440892098500626e-16,
+  "all_C_recomputed": true,
+  "independent_HR_checks": [
+    {
+      "endpoint": "DFI",
+      "feature": "R5TAIL__C__core__Endothelium__soft_density__top20_share",
+      "logHR_error": 6.298295218698513e-13
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "R5__stroma_soft_hard_radial_sensitivity__median",
+      "logHR_error": 2.550071265261522e-12
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "R5R2__interface_contrast_25__median",
+      "logHR_error": 2.6205593250949732e-11
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "R5__epithelial_interface_vs_stroma__IQR",
+      "logHR_error": 1.1008727263117635e-10
+    }
+  ],
+  "original_19_predictions_preserved": true,
+  "model_refits": 0,
+  "bootstrap_model_refits": 0
+}

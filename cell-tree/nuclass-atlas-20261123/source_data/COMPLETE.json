@@ -1,0 +1,12 @@
+{
+  "time": 1795450610.7816708,
+  "patients": 196,
+  "models": 92,
+  "complete": 92,
+  "associations": 63,
+  "estimable": 62,
+  "sealed_test_used": false,
+  "CPTAC_used": false,
+  "repeated_CV": 0,
+  "LLM_API_calls": 0
+}
