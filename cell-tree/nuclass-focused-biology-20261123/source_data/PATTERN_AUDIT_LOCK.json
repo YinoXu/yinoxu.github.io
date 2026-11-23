@@ -1,0 +1,16 @@
+{
+  "scope": "No outcomes; assess original6 patterns without relabeling the cohort",
+  "BIC_diagnostic_k": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "patient_bootstrap_repetitions": 10,
+  "bootstrap": "Resample TRAIN patients, <=30TLS per sampled patient, refit imputation/clipping/scaling/PCA/GMM6; apply to fixed comparison-fold TLS, match components by maximum overlap. Stability is conditional on six components.",
+  "RNA": "6 original pattern fractions x9 panels, BH54; partial ranks with histology, age, sex, advancedstage, logTLScount, TLSareafraction. Patient bulkRNA, not local molecular validation."
+}

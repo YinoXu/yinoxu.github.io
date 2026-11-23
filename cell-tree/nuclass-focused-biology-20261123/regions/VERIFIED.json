@@ -1,0 +1,36 @@
+{
+  "PASS": true,
+  "regions": [
+    {
+      "sample": "interface_2_low",
+      "grid_shape": [
+        1600,
+        2100
+      ],
+      "pixel_um": 0.5,
+      "area_mm2": 0.10098925,
+      "contour_area_mm2": 0.10098578223192692,
+      "nuclei": 1503,
+      "one_component_no_holes": true,
+      "subpixel_vertex_fraction": 0.9286637373998449,
+      "HE_sensitive_support_pixels": 33917,
+      "mask_sha256": "5ed450167401f8fb9941b8b04f6f6f47e8a2e31be6357b73674e3965f8031632"
+    },
+    {
+      "sample": "interface_2_high",
+      "grid_shape": [
+        1800,
+        2048
+      ],
+      "pixel_um": 0.5,
+      "area_mm2": 0.134042,
+      "contour_area_mm2": 0.13404827690589427,
+      "nuclei": 2425,
+      "one_component_no_holes": true,
+      "subpixel_vertex_fraction": 0.9250185597624351,
+      "HE_sensitive_support_pixels": 36412,
+      "mask_sha256": "954a0f03466594fed8eded95ff9a7f1c0a923146d754cacbbda0f1f5bbf8ce85"
+    }
+  ],
+  "clinical_models_recomputed": false
+}

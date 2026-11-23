@@ -1,0 +1,59 @@
+{
+  "cox_independent_statsmodels": [
+    {
+      "feature": "interface25_IQR",
+      "endpoint": "OS",
+      "adjustment": "clinical_TLS",
+      "max_absolute_error": 6.605116453783921e-11,
+      "parameters": 7,
+      "events": 56
+    },
+    {
+      "feature": "interface25_IQR",
+      "endpoint": "OS",
+      "adjustment": "geometry_abundance_uncertainty",
+      "max_absolute_error": 4.32853752840856e-12,
+      "parameters": 11,
+      "events": 56
+    },
+    {
+      "feature": "Endothelial_soft_top20",
+      "endpoint": "DFI",
+      "adjustment": "clinical_TLS",
+      "max_absolute_error": 1.6115997425458772e-12,
+      "parameters": 7,
+      "events": 19
+    },
+    {
+      "feature": "Endothelial_soft_top20",
+      "endpoint": "DFI",
+      "adjustment": "geometry_abundance_uncertainty",
+      "max_absolute_error": 2.586078018396165e-09,
+      "parameters": 11,
+      "events": 19
+    },
+    {
+      "feature": "Plasma_soft_top20",
+      "endpoint": "DSS",
+      "adjustment": "clinical_TLS",
+      "max_absolute_error": 1.3703016499277965e-10,
+      "parameters": 7,
+      "events": 23
+    },
+    {
+      "feature": "Plasma_soft_top20",
+      "endpoint": "DSS",
+      "adjustment": "geometry_abundance_uncertainty",
+      "max_absolute_error": 1.3883783012147433e-10,
+      "parameters": 11,
+      "events": 23
+    }
+  ],
+  "within_patient_rho_max_error": 8.326672684688674e-17,
+  "RNA_comparisons": 117,
+  "RNA_q05": 0,
+  "maturity_matched_pairs": 53,
+  "original_sources_unchanged": true,
+  "original21_units_unchanged": true,
+  "scope": "Numerical verification of completed analysis; no new model selection or confirmatory claims."
+}

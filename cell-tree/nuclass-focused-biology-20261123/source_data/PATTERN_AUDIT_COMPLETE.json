@@ -1,0 +1,17 @@
+{
+  "original_k": 6,
+  "diagnostic_BIC_minimum": 6,
+  "comparison_patients": 42,
+  "comparison_TLS": 1011,
+  "bootstrap_rounds": 10,
+  "median_comparison_ARI": 0.3575285186251501,
+  "range_comparison_ARI": [
+    0.2117193664410561,
+    0.4898190492202729
+  ],
+  "RNA_tests": 54,
+  "RNA_q05": 0,
+  "silhouette_sample": 0.10763128615445541,
+  "outcomes_used": false,
+  "original_labels_unchanged": true
+}

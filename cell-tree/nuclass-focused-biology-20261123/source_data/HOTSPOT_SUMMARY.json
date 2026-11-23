@@ -1,0 +1,14 @@
+[
+  {
+    "theme": "endothelial",
+    "patients": 161,
+    "median_top20": 0.399294527338938,
+    "soft_hard_rho": 0.924091327352197
+  },
+  {
+    "theme": "plasma",
+    "patients": 161,
+    "median_top20": 0.4969842911963567,
+    "soft_hard_rho": 0.9495945479641131
+  }
+]

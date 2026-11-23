@@ -1,0 +1,11 @@
+{
+  "method": "H&E + WholeCell pixel-region refinement v2",
+  "pixel_um": 0.5,
+  "images": "WSI level-zero pixels registered by slide MPP; real 0.425um WholeCell masks",
+  "evidence": "0.45 whole-cell B/T occupied-area support + 0.30 H&E hematoxylin density + 0.25 B/T nuclear-query density; each scaled by local seed/background medians",
+  "seed": "Erosion by25um of the previous local region; background20\u2013100um away from that region; same method for both candidates",
+  "support": "Continuous score>=0.5 and local B/T fraction>=0.45; geodesic-connected aggregate with greatest seed overlap",
+  "regularization": "18um opening separates thin connections; 6um constrained restoration; 10um closing; enclosed lumens filled. Gaussian signed-distance regularization sigma6um changes the saved mask itself.",
+  "contour": "Marching squares on the continuous signed-distance zero level, not on a binary raster; no point simplification, no hand-drawn contour",
+  "scope": "Two local exploratory regions. Not trained TLS segmentation or pathology-validated boundaries. All cohort survival results retain their original masks."
+}

@@ -1,0 +1,8 @@
+{
+  "accepted_samples": [
+    "interface_2_low",
+    "interface_2_high"
+  ],
+  "visual_check": "Both raw H&E regions reviewed at enlarged resolution. Continuous yellow contour replaces the binary-raster staircase; full pixel masks and member IDs saved. Same parameters for both regions; no manually edited points.",
+  "limitations": "Algorithmic local refinement, not validated TLS boundaries. Other four hotspots retain local contour patches without TLS outlines. Cohort statistics still use original masks."
+}

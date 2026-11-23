@@ -1,0 +1,11 @@
+{
+  "patients": 111,
+  "TLS": 4457,
+  "effect": -0.006949183557585553,
+  "CI": [
+    -0.013888860481989417,
+    -9.506633181688776e-06
+  ],
+  "p": 0.04968698098709781,
+  "definition": "Within-patient fixed effects; each patient equal total weight; cluster SE by patient; adjust log TLS area, log core B density and raw47 entropy. Model-derived S labels and morphology."
+}

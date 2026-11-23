@@ -1,0 +1,12 @@
+{
+  "patients": 196,
+  "TLS": 6706,
+  "RNA_patients": 194,
+  "paired_maturity_patients": 111,
+  "RNA_associations": 117,
+  "RNA_q05": 0,
+  "hazard_attempts": 6,
+  "source_hashes_exact": true,
+  "GPU": false,
+  "sealed_used": false
+}

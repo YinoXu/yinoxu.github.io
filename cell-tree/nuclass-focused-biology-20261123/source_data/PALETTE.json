@@ -1,0 +1,14 @@
+{
+  "source": "nuclass-reviewer/data/manifest.json taxonomy.colors",
+  "groups": {
+    "B": "#D65B58",
+    "T": "#466CB0",
+    "Plasma": "#D8A338",
+    "MonoMac": "#98765D",
+    "DC": "#238C72",
+    "Neutrophil": "#829944",
+    "Endothelium": "#2A9DA6",
+    "Stroma": "#8797A0",
+    "Epithelial": "#ee7b31"
+  }
+}
