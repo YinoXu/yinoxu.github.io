@@ -1,0 +1,136 @@
+{
+  "pattern_counts": {
+    "1": 990,
+    "2": 842,
+    "3": 515,
+    "4": 2498,
+    "5": 1173,
+    "6": 688
+  },
+  "pattern_patient_support": {
+    "1": 93,
+    "2": 148,
+    "3": 93,
+    "4": 163,
+    "5": 136,
+    "6": 129
+  },
+  "composition": {
+    "1": {
+      "fraction_B": 0.2049088182861364,
+      "fraction_T": 0.3817071707304983,
+      "fraction_Plasma": 0.0562499474727411,
+      "fraction_MonoMac": 0.0943933116019045,
+      "fraction_DC": 0.0387230892995744,
+      "fraction_Neutrophil": 0.001343104647479,
+      "fraction_Endothelium": 0.0509642112491903,
+      "fraction_Stroma": 0.0647483569344653,
+      "fraction_Epithelial": 0.1069619897780102
+    },
+    "2": {
+      "fraction_B": 0.2485511674286104,
+      "fraction_T": 0.3686331567182271,
+      "fraction_Plasma": 0.0542542843862176,
+      "fraction_MonoMac": 0.0740705100674424,
+      "fraction_DC": 0.0279089685560453,
+      "fraction_Neutrophil": 0.0016401725412675,
+      "fraction_Endothelium": 0.0571540645835894,
+      "fraction_Stroma": 0.0919918633969222,
+      "fraction_Epithelial": 0.0757958123216778
+    },
+    "3": {
+      "fraction_B": 0.2647524117170828,
+      "fraction_T": 0.385082430450298,
+      "fraction_Plasma": 0.052788524925086,
+      "fraction_MonoMac": 0.0619133555362499,
+      "fraction_DC": 0.0254350339160519,
+      "fraction_Neutrophil": 0.0008240210314346,
+      "fraction_Endothelium": 0.0539900114034297,
+      "fraction_Stroma": 0.0551162762330574,
+      "fraction_Epithelial": 0.1000979347873093
+    },
+    "4": {
+      "fraction_B": 0.22223682707251,
+      "fraction_T": 0.4019395682705055,
+      "fraction_Plasma": 0.0622505840997185,
+      "fraction_MonoMac": 0.0774994491509165,
+      "fraction_DC": 0.0317498979467348,
+      "fraction_Neutrophil": 0.002175632976004,
+      "fraction_Endothelium": 0.0549820167528151,
+      "fraction_Stroma": 0.079204727226606,
+      "fraction_Epithelial": 0.0679612965041893
+    },
+    "5": {
+      "fraction_B": 0.3046591101868642,
+      "fraction_T": 0.3573055139785585,
+      "fraction_Plasma": 0.0575482091783513,
+      "fraction_MonoMac": 0.062968570004373,
+      "fraction_DC": 0.02463635642517,
+      "fraction_Neutrophil": 0.0009785446931267,
+      "fraction_Endothelium": 0.0492806032831088,
+      "fraction_Stroma": 0.0613333716686842,
+      "fraction_Epithelial": 0.081289720581763
+    },
+    "6": {
+      "fraction_B": 0.3381314296196116,
+      "fraction_T": 0.3493576428800815,
+      "fraction_Plasma": 0.0566416663149738,
+      "fraction_MonoMac": 0.0541645798599488,
+      "fraction_DC": 0.0222261413418046,
+      "fraction_Neutrophil": 0.0022199713392495,
+      "fraction_Endothelium": 0.0469356192190861,
+      "fraction_Stroma": 0.0549342839308126,
+      "fraction_Epithelial": 0.0753886654944313
+    }
+  },
+  "paired_morphology": [
+    {
+      "feature": "M__B__cell_median",
+      "label": "Whole-cell area",
+      "patients": 111,
+      "EP_median": 48.949375,
+      "S_median": 48.40749999999999,
+      "paired_difference_median": -0.27093749999999517,
+      "p": 0.11002970784063308,
+      "q_four_tests": 0.1467062771208441
+    },
+    {
+      "feature": "M__B__nucleus_median",
+      "label": "Nuclear area",
+      "patients": 111,
+      "EP_median": 24.92625,
+      "S_median": 25.1971875,
+      "paired_difference_median": -0.09031249999999957,
+      "p": 0.8961215341532631,
+      "q_four_tests": 0.8961215341532631
+    },
+    {
+      "feature": "M__B__cytoplasm_median",
+      "label": "Cytoplasmic area",
+      "patients": 111,
+      "EP_median": 22.939375,
+      "S_median": 22.578125,
+      "paired_difference_median": -0.3612499999999983,
+      "p": 0.01228628796710797,
+      "q_four_tests": 0.02457257593421594
+    },
+    {
+      "feature": "S__B__nuclear_mark_correlation50",
+      "label": "Nuclear-size neighbor correlation",
+      "patients": 111,
+      "EP_median": 0.016009997542616602,
+      "S_median": 0.020219823160909353,
+      "paired_difference_median": 0.004397454566411501,
+      "p": 0.0005340829738398927,
+      "q_four_tests": 0.0021363318953595708
+    }
+  ],
+  "morphology_n": {
+    "1": 990,
+    "2": 842,
+    "3": 515,
+    "4": 2498,
+    "5": 1173,
+    "6": 688
+  }
+}

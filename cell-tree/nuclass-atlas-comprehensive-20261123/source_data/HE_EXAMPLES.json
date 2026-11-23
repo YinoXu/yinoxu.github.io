@@ -1,0 +1,14 @@
+{
+  "utc": "2026-11-22T18:13:56.203768+00:00",
+  "patient": "TCGA-NJ-A4YG",
+  "file_id": "9a27f64f-3ee2-4456-bf3b-2409afa8e821",
+  "candidate_id": 39,
+  "cells": 12,
+  "selection": "Highest BIC-style candidate; each component posterior <=0.2 or >=0.8, six evenly spaced area ranks from 15th to 85th percentile",
+  "centroid_only": true,
+  "cell_contours_shown": false,
+  "outcomes_used": false,
+  "molecular_state_assigned": false,
+  "smaller_median_cell_area": 34.67999999999999,
+  "larger_median_cell_area": 81.100625
+}

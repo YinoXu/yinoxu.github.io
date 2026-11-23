@@ -1,0 +1,26 @@
+{
+  "created": "2026-11-23T16:49:58.576849+00:00",
+  "source_files": {
+    "/home/yinuo/VESSEL/nuclass_lung_tls_exploratory_20261122/broad_exploration_r5_20261123/COHORT.csv": "92018fa567dc615290d030935b4d08a13716c217826de8a4a83326105eb25265",
+    "/home/yinuo/VESSEL/nuclass_lung_tls_exploratory_20261122/broad_exploration_r5_20261123/TLS_FEATURES.csv": "005851e934535f63359475d68ca9280e227e598578269d3fdc4d676c8706f260",
+    "/home/yinuo/VESSEL/nuclass_lung_tls_exploratory_20261122/broad_exploration_r5_20261123/TLS_PHENOTYPES.csv": "6dd0cca43fdda63ee452d6559d49b65314fddfc236c3135e7c7db9035a2ed17a",
+    "/home/yinuo/VESSEL/nuclass_lung_tls_exploratory_20261122/broad_exploration_r5_20261123/PATIENT_WITH_PHENOTYPES.csv": "4f72ca8bea69cfb7480b7bc4999876db366f584ea36f1cd1537d90fdb752869d"
+  },
+  "analysis": "Descriptive profiles: all196. Outcome associations: fixed TRAIN only. One feature per adjusted model. No comparison refitting or cutpoint search.",
+  "stage": "Six pattern fractions; advanced III/IV vs I/II logistic adjusted age, sex, histology, TLS presence/density/area.",
+  "survival": "Six frozen pattern fractions plus eight listed morphology concepts x four endpoints; cancer-stratified Efron Cox adjusted age, sex, stage II, stage III/IV, TLS presence/density/area; feature clipped1\u201399% and scaled by SD.",
+  "morphology": {
+    "M__B__cell_median__median": "B whole-cell area",
+    "M__B__nucleus_median__median": "B nuclear area",
+    "M__B__cytoplasm_median__median": "B cytoplasmic area",
+    "M__B__roundness_median__median": "B nuclear circularity",
+    "M__B__cell_spread__median": "B cell-size spread (q90\u2013q10)",
+    "M__T__cell_median__median": "T whole-cell area",
+    "M__Plasma__cell_median__median": "Plasma whole-cell area",
+    "S__B__nuclear_mark_correlation50__median": "B nuclear-size neighbor correlation"
+  },
+  "composition": "Core/rim soft densities multiplied by their exact raster areas, then normalized over nine mapped coarse groups. Other probability mass is excluded; these are conditional model composition, not observed cell frequencies. TLS equally weighted within patient; patients equally weighted in summaries.",
+  "families": "BH separately over24 pattern-survival,32 morphology-survival and6 stage tests. These descriptive-family q values do not account for earlier adaptive discovery.",
+  "GPU": false,
+  "sealed_test_used": false
+}

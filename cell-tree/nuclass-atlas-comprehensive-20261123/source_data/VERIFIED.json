@@ -1,0 +1,368 @@
+{
+  "patients": 196,
+  "TLS": 6706,
+  "composition_patients": 180,
+  "zero_TLS": 16,
+  "composition_sum_max_error": 4.440892098500626e-16,
+  "area_replay": true,
+  "survival_attempts": 56,
+  "estimated": 56,
+  "independent_Cox_checks": [
+    {
+      "endpoint": "OS",
+      "feature": "R5PHE__P1_fraction",
+      "logHR_error": 3.314570840018405e-13
+    },
+    {
+      "endpoint": "OS",
+      "feature": "R5PHE__P2_fraction",
+      "logHR_error": 3.96971344684971e-12
+    },
+    {
+      "endpoint": "OS",
+      "feature": "R5PHE__P3_fraction",
+      "logHR_error": 2.397859688585413e-12
+    },
+    {
+      "endpoint": "OS",
+      "feature": "R5PHE__P4_fraction",
+      "logHR_error": 4.805508213578946e-10
+    },
+    {
+      "endpoint": "OS",
+      "feature": "R5PHE__P5_fraction",
+      "logHR_error": 2.4901637279972633e-09
+    },
+    {
+      "endpoint": "OS",
+      "feature": "R5PHE__P6_fraction",
+      "logHR_error": 6.760980664211047e-12
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "R5PHE__P1_fraction",
+      "logHR_error": 5.861644503113439e-12
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "R5PHE__P2_fraction",
+      "logHR_error": 7.660929945974004e-10
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "R5PHE__P3_fraction",
+      "logHR_error": 2.706685015008148e-09
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "R5PHE__P4_fraction",
+      "logHR_error": 7.185363415374013e-13
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "R5PHE__P5_fraction",
+      "logHR_error": 2.4053012220859316e-09
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "R5PHE__P6_fraction",
+      "logHR_error": 4.209888992967592e-09
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "R5PHE__P1_fraction",
+      "logHR_error": 7.852996031232351e-12
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "R5PHE__P2_fraction",
+      "logHR_error": 2.237082741274321e-10
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "R5PHE__P3_fraction",
+      "logHR_error": 1.0627559943188203e-10
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "R5PHE__P4_fraction",
+      "logHR_error": 5.482889420260761e-10
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "R5PHE__P5_fraction",
+      "logHR_error": 1.6812343184291478e-11
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "R5PHE__P6_fraction",
+      "logHR_error": 9.997666583494436e-11
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "R5PHE__P1_fraction",
+      "logHR_error": 1.1066245142465903e-10
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "R5PHE__P2_fraction",
+      "logHR_error": 4.803288322641208e-11
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "R5PHE__P3_fraction",
+      "logHR_error": 1.5543799580797213e-10
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "R5PHE__P4_fraction",
+      "logHR_error": 4.57023863198458e-11
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "R5PHE__P5_fraction",
+      "logHR_error": 3.357395195191515e-10
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "R5PHE__P6_fraction",
+      "logHR_error": 2.608809002158097e-10
+    },
+    {
+      "endpoint": "OS",
+      "feature": "M__B__cell_median__median",
+      "logHR_error": 1.2391074277751102e-11
+    },
+    {
+      "endpoint": "OS",
+      "feature": "M__B__nucleus_median__median",
+      "logHR_error": 2.438993451647775e-12
+    },
+    {
+      "endpoint": "OS",
+      "feature": "M__B__cytoplasm_median__median",
+      "logHR_error": 2.643940621993579e-12
+    },
+    {
+      "endpoint": "OS",
+      "feature": "M__B__roundness_median__median",
+      "logHR_error": 2.1174946344959533e-10
+    },
+    {
+      "endpoint": "OS",
+      "feature": "M__B__cell_spread__median",
+      "logHR_error": 2.3766275059067254e-10
+    },
+    {
+      "endpoint": "OS",
+      "feature": "M__T__cell_median__median",
+      "logHR_error": 1.2693034123767433e-10
+    },
+    {
+      "endpoint": "OS",
+      "feature": "M__Plasma__cell_median__median",
+      "logHR_error": 9.718190141505545e-11
+    },
+    {
+      "endpoint": "OS",
+      "feature": "S__B__nuclear_mark_correlation50__median",
+      "logHR_error": 2.324862524716309e-12
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "M__B__cell_median__median",
+      "logHR_error": 1.5444062695380012e-11
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "M__B__nucleus_median__median",
+      "logHR_error": 1.5136530917558844e-11
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "M__B__cytoplasm_median__median",
+      "logHR_error": 3.993415320646676e-11
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "M__B__roundness_median__median",
+      "logHR_error": 3.589501612610846e-11
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "M__B__cell_spread__median",
+      "logHR_error": 6.923975282013828e-13
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "M__T__cell_median__median",
+      "logHR_error": 1.28148047728871e-11
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "M__Plasma__cell_median__median",
+      "logHR_error": 5.439027006559627e-11
+    },
+    {
+      "endpoint": "PFI",
+      "feature": "S__B__nuclear_mark_correlation50__median",
+      "logHR_error": 8.489597913552416e-13
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "M__B__cell_median__median",
+      "logHR_error": 5.804116909313706e-11
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "M__B__nucleus_median__median",
+      "logHR_error": 8.057499112368305e-12
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "M__B__cytoplasm_median__median",
+      "logHR_error": 3.9465168910624016e-09
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "M__B__roundness_median__median",
+      "logHR_error": 5.099559663435116e-12
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "M__B__cell_spread__median",
+      "logHR_error": 1.4196606737404416e-10
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "M__T__cell_median__median",
+      "logHR_error": 7.712326055564489e-10
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "M__Plasma__cell_median__median",
+      "logHR_error": 1.110422864769589e-11
+    },
+    {
+      "endpoint": "DSS",
+      "feature": "S__B__nuclear_mark_correlation50__median",
+      "logHR_error": 2.8531194073977417e-10
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "M__B__cell_median__median",
+      "logHR_error": 1.008797975710074e-10
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "M__B__nucleus_median__median",
+      "logHR_error": 2.367761264832069e-10
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "M__B__cytoplasm_median__median",
+      "logHR_error": 5.0118326155867976e-11
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "M__B__roundness_median__median",
+      "logHR_error": 3.864852882173864e-12
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "M__B__cell_spread__median",
+      "logHR_error": 1.4875212173137697e-11
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "M__T__cell_median__median",
+      "logHR_error": 9.256434924109769e-10
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "M__Plasma__cell_median__median",
+      "logHR_error": 6.918959849500084e-11
+    },
+    {
+      "endpoint": "DFI",
+      "feature": "S__B__nuclear_mark_correlation50__median",
+      "logHR_error": 3.4091854339557415e-11
+    }
+  ],
+  "stage": [
+    {
+      "pattern": "P1",
+      "n": 152,
+      "advanced": 31,
+      "feature_SD": 0.21446061543342035,
+      "status": "ESTIMATED",
+      "OR": 1.2329427859514193,
+      "CI_low": 0.8235211593245144,
+      "CI_high": 1.8459123924351069,
+      "p": 0.3091612054279137,
+      "q_family": 0.7068017496435705
+    },
+    {
+      "pattern": "P2",
+      "n": 152,
+      "advanced": 31,
+      "feature_SD": 0.14402377904871227,
+      "status": "ESTIMATED",
+      "OR": 1.1257765651476812,
+      "CI_low": 0.7523810147017254,
+      "CI_high": 1.6844827951143204,
+      "p": 0.5644754359058775,
+      "q_family": 0.7068017496435705
+    },
+    {
+      "pattern": "P3",
+      "n": 152,
+      "advanced": 31,
+      "feature_SD": 0.10794411585888912,
+      "status": "ESTIMATED",
+      "OR": 1.0081989408734513,
+      "CI_low": 0.6782495271658533,
+      "CI_high": 1.4986595104986948,
+      "p": 0.9677956972452414,
+      "q_family": 0.9677956972452414
+    },
+    {
+      "pattern": "P4",
+      "n": 152,
+      "advanced": 31,
+      "feature_SD": 0.23301520782709387,
+      "status": "ESTIMATED",
+      "OR": 0.7415300475384403,
+      "CI_low": 0.4567617959860177,
+      "CI_high": 1.2038371340040752,
+      "p": 0.22643976507894703,
+      "q_family": 0.7068017496435705
+    },
+    {
+      "pattern": "P5",
+      "n": 152,
+      "advanced": 31,
+      "feature_SD": 0.15602881204163827,
+      "status": "ESTIMATED",
+      "OR": 1.1225093543001552,
+      "CI_low": 0.7381046545255964,
+      "CI_high": 1.7071119153166852,
+      "p": 0.5890014580363088,
+      "q_family": 0.7068017496435705
+    },
+    {
+      "pattern": "P6",
+      "n": 152,
+      "advanced": 31,
+      "feature_SD": 0.10905421730204123,
+      "status": "ESTIMATED",
+      "OR": 0.8108566741809108,
+      "CI_low": 0.49850005525961677,
+      "CI_high": 1.3189337476027165,
+      "p": 0.3982809531170627,
+      "q_family": 0.7068017496435705
+    }
+  ],
+  "source_hashes_unchanged": true,
+  "GPU": false
+}
