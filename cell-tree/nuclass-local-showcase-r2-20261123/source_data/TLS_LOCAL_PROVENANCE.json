@@ -1,0 +1,2128 @@
+[
+  {
+    "sample": "P1_A",
+    "patient": "TCGA-43-5668",
+    "file_id": "35b59dea-86f1-498d-8978-df5b6df164af",
+    "candidate_id": 6,
+    "phenotype": 1,
+    "histology": "TCGA-LUSC",
+    "pathological_stage": "II",
+    "predicted_EPS": "S",
+    "assignment_probability": 0.9180966895734723,
+    "area_mm2": 0.273125,
+    "candidate_nuclei": 2927,
+    "B_cell_area_um2": 60.14812499999999,
+    "bounds_um": [
+      27675,
+      3750,
+      28525,
+      4400
+    ],
+    "detail_bounds_um": [
+      27782.637916666663,
+      4111.752916666666,
+      27932.637916666663,
+      4261.752916666666
+    ],
+    "original_mask_sha256": "d98935bd67b189506622f3323f7da516c715dc83835656470aedf3b5ec25980f",
+    "display_boundary_rings": 1,
+    "display_holes": 0,
+    "display_outline": [
+      [
+        28062.5,
+        3812.5
+      ],
+      [
+        28037.5,
+        3837.5
+      ],
+      [
+        28012.5,
+        3837.5
+      ],
+      [
+        27987.5,
+        3862.5
+      ],
+      [
+        27937.5,
+        3862.5
+      ],
+      [
+        27912.5,
+        3887.5
+      ],
+      [
+        27887.5,
+        3887.5
+      ],
+      [
+        27862.5,
+        3912.5
+      ],
+      [
+        27837.5,
+        3912.5
+      ],
+      [
+        27787.5,
+        3962.5
+      ],
+      [
+        27787.5,
+        3987.5
+      ],
+      [
+        27762.5,
+        4012.5
+      ],
+      [
+        27787.5,
+        4037.5
+      ],
+      [
+        27762.5,
+        4062.5
+      ],
+      [
+        27787.5,
+        4087.5
+      ],
+      [
+        27787.5,
+        4137.5
+      ],
+      [
+        27762.5,
+        4162.5
+      ],
+      [
+        27762.5,
+        4187.5
+      ],
+      [
+        27737.5,
+        4212.5
+      ],
+      [
+        27837.5,
+        4312.5
+      ],
+      [
+        27937.5,
+        4312.5
+      ],
+      [
+        27962.5,
+        4337.5
+      ],
+      [
+        27987.5,
+        4337.5
+      ],
+      [
+        28012.5,
+        4312.5
+      ],
+      [
+        28062.5,
+        4312.5
+      ],
+      [
+        28087.5,
+        4287.5
+      ],
+      [
+        28162.5,
+        4287.5
+      ],
+      [
+        28187.5,
+        4262.5
+      ],
+      [
+        28287.5,
+        4262.5
+      ],
+      [
+        28312.5,
+        4287.5
+      ],
+      [
+        28412.5,
+        4287.5
+      ],
+      [
+        28437.5,
+        4262.5
+      ],
+      [
+        28437.5,
+        4237.5
+      ],
+      [
+        28462.5,
+        4212.5
+      ],
+      [
+        28462.5,
+        4112.5
+      ],
+      [
+        28412.5,
+        4062.5
+      ],
+      [
+        28387.5,
+        4062.5
+      ],
+      [
+        28362.5,
+        4037.5
+      ],
+      [
+        28337.5,
+        4037.5
+      ],
+      [
+        28187.5,
+        3887.5
+      ],
+      [
+        28187.5,
+        3862.5
+      ],
+      [
+        28162.5,
+        3837.5
+      ],
+      [
+        28137.5,
+        3837.5
+      ],
+      [
+        28112.5,
+        3812.5
+      ],
+      [
+        28087.5,
+        3837.5
+      ],
+      [
+        28062.5,
+        3812.5
+      ]
+    ],
+    "display_boundary_definition": "Largest component; two25um-grid radius closing (50um), including narrow exterior-connected inlets; hole-fill; Gaussian sigma0.65grid threshold0.5; exterior only. Not used for measurement.",
+    "composition_source": "Unchanged original frozen candidate pixels",
+    "composition": {
+      "B": 0.3965216279029846,
+      "T": 0.3856043219566345,
+      "Plasma": 0.022616708651185036,
+      "MonoMac": 0.09834667295217514,
+      "DC": 0.030431780964136124,
+      "Neutrophil": 0.00021361495601013303,
+      "Endothelium": 0.02065039612352848,
+      "Stroma": 0.017491117119789124,
+      "Epithelial": 0.02783360704779625,
+      "Other": 0.00029006818658672273
+    },
+    "wholecell_contours": true,
+    "nuclear_contours": true,
+    "contour_source": "Frozen WholeCell v6 replay, all saved nuclear measurements reproduced within1e-7",
+    "fields_replayed": 28,
+    "displayed_nuclei": 4180,
+    "wholecell_rings": 4344,
+    "nuclear_rings": 4204,
+    "selection": "Image-reviewed dense coherent candidates; outcomes unused",
+    "HE_sha256": "ec98590e5ddaef447588fc3a6f8d62c277abd406b1ef5862ec6740af854922e4"
+  },
+  {
+    "sample": "P1_B",
+    "patient": "TCGA-44-7669",
+    "file_id": "f057f0f9-7879-412c-b593-bfc41b27938d",
+    "candidate_id": 6,
+    "phenotype": 1,
+    "histology": "TCGA-LUAD",
+    "pathological_stage": "II",
+    "predicted_EPS": "P",
+    "assignment_probability": 0.9861024333678442,
+    "area_mm2": 0.1025,
+    "candidate_nuclei": 1086,
+    "B_cell_area_um2": 63.57999999999999,
+    "bounds_um": [
+      5525,
+      3275,
+      6025,
+      3725
+    ],
+    "detail_bounds_um": [
+      5740.163301282051,
+      3385.957532051282,
+      5890.163301282051,
+      3535.957532051282
+    ],
+    "original_mask_sha256": "10b52a12aaf3bc374459552aee98c0499111449a31953956afaf89cf836c2df4",
+    "display_boundary_rings": 1,
+    "display_holes": 0,
+    "display_outline": [
+      [
+        5787.5,
+        3337.5
+      ],
+      [
+        5762.5,
+        3362.5
+      ],
+      [
+        5737.5,
+        3362.5
+      ],
+      [
+        5712.5,
+        3387.5
+      ],
+      [
+        5662.5,
+        3387.5
+      ],
+      [
+        5637.5,
+        3412.5
+      ],
+      [
+        5612.5,
+        3412.5
+      ],
+      [
+        5612.5,
+        3437.5
+      ],
+      [
+        5587.5,
+        3462.5
+      ],
+      [
+        5587.5,
+        3537.5
+      ],
+      [
+        5612.5,
+        3562.5
+      ],
+      [
+        5612.5,
+        3587.5
+      ],
+      [
+        5687.5,
+        3662.5
+      ],
+      [
+        5787.5,
+        3662.5
+      ],
+      [
+        5812.5,
+        3637.5
+      ],
+      [
+        5837.5,
+        3637.5
+      ],
+      [
+        5887.5,
+        3587.5
+      ],
+      [
+        5912.5,
+        3587.5
+      ],
+      [
+        5962.5,
+        3537.5
+      ],
+      [
+        5962.5,
+        3462.5
+      ],
+      [
+        5937.5,
+        3437.5
+      ],
+      [
+        5937.5,
+        3412.5
+      ],
+      [
+        5862.5,
+        3337.5
+      ],
+      [
+        5787.5,
+        3337.5
+      ]
+    ],
+    "display_boundary_definition": "Largest component; two25um-grid radius closing (50um), including narrow exterior-connected inlets; hole-fill; Gaussian sigma0.65grid threshold0.5; exterior only. Not used for measurement.",
+    "composition_source": "Unchanged original frozen candidate pixels",
+    "composition": {
+      "B": 0.21525944769382477,
+      "T": 0.4573863744735718,
+      "Plasma": 0.08488894253969193,
+      "MonoMac": 0.06935423612594604,
+      "DC": 0.028702611103653908,
+      "Neutrophil": 0.00017448273138143122,
+      "Endothelium": 0.03976326808333397,
+      "Stroma": 0.028096510097384453,
+      "Epithelial": 0.0752212330698967,
+      "Other": 0.0011529343901202083
+    },
+    "wholecell_contours": true,
+    "nuclear_contours": true,
+    "contour_source": "Frozen WholeCell v6 replay, all saved nuclear measurements reproduced within1e-7",
+    "fields_replayed": 12,
+    "displayed_nuclei": 2061,
+    "wholecell_rings": 2134,
+    "nuclear_rings": 2067,
+    "selection": "Image-reviewed dense coherent candidates; outcomes unused",
+    "HE_sha256": "ce713b69550a1c49cd8e4556d1b4b4323b73eb3f9c2fbcb77b0ef6c6c3163eef"
+  },
+  {
+    "sample": "P2_A",
+    "patient": "TCGA-78-7166",
+    "file_id": "3ec17108-22e1-4454-bdb1-2fdbb0dd800b",
+    "candidate_id": 16,
+    "phenotype": 2,
+    "histology": "TCGA-LUAD",
+    "pathological_stage": "II",
+    "predicted_EPS": "P",
+    "assignment_probability": 0.9205022942973454,
+    "area_mm2": 0.14125,
+    "candidate_nuclei": 1556,
+    "B_cell_area_um2": 49.310625,
+    "bounds_um": [
+      16375,
+      13675,
+      16900,
+      14225
+    ],
+    "detail_bounds_um": [
+      16498.363049450545,
+      13794.730219780218,
+      16648.363049450545,
+      13944.730219780218
+    ],
+    "original_mask_sha256": "3312ea5c44764390a246eef1ff6973818698b59a03b2953f86f56b077d150069",
+    "display_boundary_rings": 1,
+    "display_holes": 0,
+    "display_outline": [
+      [
+        16512.5,
+        13737.5
+      ],
+      [
+        16437.5,
+        13812.5
+      ],
+      [
+        16437.5,
+        14062.5
+      ],
+      [
+        16487.5,
+        14112.5
+      ],
+      [
+        16512.5,
+        14112.5
+      ],
+      [
+        16537.5,
+        14137.5
+      ],
+      [
+        16562.5,
+        14137.5
+      ],
+      [
+        16587.5,
+        14162.5
+      ],
+      [
+        16637.5,
+        14162.5
+      ],
+      [
+        16712.5,
+        14087.5
+      ],
+      [
+        16737.5,
+        14112.5
+      ],
+      [
+        16787.5,
+        14112.5
+      ],
+      [
+        16812.5,
+        14087.5
+      ],
+      [
+        16812.5,
+        14062.5
+      ],
+      [
+        16837.5,
+        14037.5
+      ],
+      [
+        16837.5,
+        13937.5
+      ],
+      [
+        16812.5,
+        13912.5
+      ],
+      [
+        16812.5,
+        13887.5
+      ],
+      [
+        16787.5,
+        13887.5
+      ],
+      [
+        16737.5,
+        13837.5
+      ],
+      [
+        16712.5,
+        13837.5
+      ],
+      [
+        16612.5,
+        13737.5
+      ],
+      [
+        16587.5,
+        13762.5
+      ],
+      [
+        16562.5,
+        13737.5
+      ],
+      [
+        16512.5,
+        13737.5
+      ]
+    ],
+    "display_boundary_definition": "Largest component; two25um-grid radius closing (50um), including narrow exterior-connected inlets; hole-fill; Gaussian sigma0.65grid threshold0.5; exterior only. Not used for measurement.",
+    "composition_source": "Unchanged original frozen candidate pixels",
+    "composition": {
+      "B": 0.3871748149394989,
+      "T": 0.352597177028656,
+      "Plasma": 0.10244710743427277,
+      "MonoMac": 0.015674147754907608,
+      "DC": 0.0079033263027668,
+      "Neutrophil": 6.324215792119503e-05,
+      "Endothelium": 0.01674368977546692,
+      "Stroma": 0.044034481048583984,
+      "Epithelial": 0.07122011482715607,
+      "Other": 0.0021418656688183546
+    },
+    "wholecell_contours": true,
+    "nuclear_contours": true,
+    "contour_source": "Frozen WholeCell v6 replay, all saved nuclear measurements reproduced within1e-7",
+    "fields_replayed": 20,
+    "displayed_nuclei": 2167,
+    "wholecell_rings": 2234,
+    "nuclear_rings": 2173,
+    "selection": "Image-reviewed dense coherent candidates; outcomes unused",
+    "HE_sha256": "deb5c1d63c8d58871a5ab78138f572620e2ba19881d35222d46c6229b844df9b"
+  },
+  {
+    "sample": "P2_B",
+    "patient": "TCGA-MP-A4TC",
+    "file_id": "7be5baa2-49c1-47d7-935e-31da31bbf436",
+    "candidate_id": 49,
+    "phenotype": 2,
+    "histology": "TCGA-LUAD",
+    "pathological_stage": "III",
+    "predicted_EPS": "P",
+    "assignment_probability": 0.7910327449215433,
+    "area_mm2": 0.126875,
+    "candidate_nuclei": 1261,
+    "B_cell_area_um2": 40.46,
+    "bounds_um": [
+      8625,
+      14225,
+      9125,
+      14750
+    ],
+    "detail_bounds_um": [
+      8820.91983695652,
+      14325.718478260867,
+      8970.91983695652,
+      14475.718478260867
+    ],
+    "original_mask_sha256": "e427345515bbdb2fbd8cf3d471588337347ede0af54172de2159fdee982e39f3",
+    "display_boundary_rings": 1,
+    "display_holes": 0,
+    "display_outline": [
+      [
+        8862.5,
+        14287.5
+      ],
+      [
+        8837.5,
+        14312.5
+      ],
+      [
+        8812.5,
+        14312.5
+      ],
+      [
+        8787.5,
+        14337.5
+      ],
+      [
+        8762.5,
+        14312.5
+      ],
+      [
+        8737.5,
+        14337.5
+      ],
+      [
+        8712.5,
+        14337.5
+      ],
+      [
+        8687.5,
+        14362.5
+      ],
+      [
+        8687.5,
+        14462.5
+      ],
+      [
+        8712.5,
+        14487.5
+      ],
+      [
+        8712.5,
+        14562.5
+      ],
+      [
+        8787.5,
+        14637.5
+      ],
+      [
+        8812.5,
+        14637.5
+      ],
+      [
+        8837.5,
+        14662.5
+      ],
+      [
+        8862.5,
+        14662.5
+      ],
+      [
+        8887.5,
+        14687.5
+      ],
+      [
+        8912.5,
+        14687.5
+      ],
+      [
+        8987.5,
+        14612.5
+      ],
+      [
+        8987.5,
+        14587.5
+      ],
+      [
+        9037.5,
+        14537.5
+      ],
+      [
+        9037.5,
+        14487.5
+      ],
+      [
+        9062.5,
+        14462.5
+      ],
+      [
+        9062.5,
+        14337.5
+      ],
+      [
+        9012.5,
+        14287.5
+      ],
+      [
+        8862.5,
+        14287.5
+      ]
+    ],
+    "display_boundary_definition": "Largest component; two25um-grid radius closing (50um), including narrow exterior-connected inlets; hole-fill; Gaussian sigma0.65grid threshold0.5; exterior only. Not used for measurement.",
+    "composition_source": "Unchanged original frozen candidate pixels",
+    "composition": {
+      "B": 0.3629922866821289,
+      "T": 0.46159979701042175,
+      "Plasma": 0.01846287213265896,
+      "MonoMac": 0.014793294481933117,
+      "DC": 0.003078158013522625,
+      "Neutrophil": 4.1167855670209974e-05,
+      "Endothelium": 0.05218095704913139,
+      "Stroma": 0.061076126992702484,
+      "Epithelial": 0.021330349147319794,
+      "Other": 0.0044449251145124435
+    },
+    "wholecell_contours": true,
+    "nuclear_contours": true,
+    "contour_source": "Frozen WholeCell v6 replay, all saved nuclear measurements reproduced within1e-7",
+    "fields_replayed": 16,
+    "displayed_nuclei": 1722,
+    "wholecell_rings": 1736,
+    "nuclear_rings": 1730,
+    "selection": "Image-reviewed dense coherent candidates; outcomes unused",
+    "HE_sha256": "17b0ecf2beebcf9589f9b23f567e6f45c7f9a04b2fadaee4dbe5e460bf41b331"
+  },
+  {
+    "sample": "P3_A",
+    "patient": "TCGA-49-6761",
+    "file_id": "69d9593e-6189-453a-9042-28e6485f1a93",
+    "candidate_id": 17,
+    "phenotype": 3,
+    "histology": "TCGA-LUAD",
+    "pathological_stage": "III",
+    "predicted_EPS": "P",
+    "assignment_probability": 0.8116126724594867,
+    "area_mm2": 0.22125,
+    "candidate_nuclei": 2979,
+    "B_cell_area_um2": 43.169375,
+    "bounds_um": [
+      4650,
+      3750,
+      5400,
+      4325
+    ],
+    "detail_bounds_um": [
+      4769.567371794871,
+      3993.022628205128,
+      4919.567371794871,
+      4143.022628205128
+    ],
+    "original_mask_sha256": "39fdab9c0fcdee174831e03fabec803a3a30c3c142997ca73ed4d7bf22125613",
+    "display_boundary_rings": 1,
+    "display_holes": 0,
+    "display_outline": [
+      [
+        4962.5,
+        3812.5
+      ],
+      [
+        4887.5,
+        3887.5
+      ],
+      [
+        4862.5,
+        3887.5
+      ],
+      [
+        4812.5,
+        3937.5
+      ],
+      [
+        4787.5,
+        3937.5
+      ],
+      [
+        4762.5,
+        3962.5
+      ],
+      [
+        4737.5,
+        3962.5
+      ],
+      [
+        4737.5,
+        3987.5
+      ],
+      [
+        4712.5,
+        4012.5
+      ],
+      [
+        4712.5,
+        4112.5
+      ],
+      [
+        4787.5,
+        4187.5
+      ],
+      [
+        4812.5,
+        4187.5
+      ],
+      [
+        4837.5,
+        4212.5
+      ],
+      [
+        4887.5,
+        4212.5
+      ],
+      [
+        4912.5,
+        4187.5
+      ],
+      [
+        4937.5,
+        4212.5
+      ],
+      [
+        4962.5,
+        4212.5
+      ],
+      [
+        4987.5,
+        4237.5
+      ],
+      [
+        5037.5,
+        4237.5
+      ],
+      [
+        5062.5,
+        4262.5
+      ],
+      [
+        5187.5,
+        4262.5
+      ],
+      [
+        5187.5,
+        4237.5
+      ],
+      [
+        5262.5,
+        4162.5
+      ],
+      [
+        5262.5,
+        4137.5
+      ],
+      [
+        5287.5,
+        4112.5
+      ],
+      [
+        5287.5,
+        4087.5
+      ],
+      [
+        5312.5,
+        4062.5
+      ],
+      [
+        5312.5,
+        3987.5
+      ],
+      [
+        5337.5,
+        3962.5
+      ],
+      [
+        5312.5,
+        3937.5
+      ],
+      [
+        5312.5,
+        3912.5
+      ],
+      [
+        5287.5,
+        3887.5
+      ],
+      [
+        5287.5,
+        3837.5
+      ],
+      [
+        5112.5,
+        3837.5
+      ],
+      [
+        5087.5,
+        3812.5
+      ],
+      [
+        5062.5,
+        3837.5
+      ],
+      [
+        5037.5,
+        3812.5
+      ],
+      [
+        5012.5,
+        3812.5
+      ],
+      [
+        4987.5,
+        3837.5
+      ],
+      [
+        4962.5,
+        3812.5
+      ]
+    ],
+    "display_boundary_definition": "Largest component; two25um-grid radius closing (50um), including narrow exterior-connected inlets; hole-fill; Gaussian sigma0.65grid threshold0.5; exterior only. Not used for measurement.",
+    "composition_source": "Unchanged original frozen candidate pixels",
+    "composition": {
+      "B": 0.3523187041282654,
+      "T": 0.38442474603652954,
+      "Plasma": 0.013132404536008835,
+      "MonoMac": 0.032495107501745224,
+      "DC": 0.00764558045193553,
+      "Neutrophil": 0.00019725761376321316,
+      "Endothelium": 0.06456637382507324,
+      "Stroma": 0.02802295982837677,
+      "Epithelial": 0.11581548303365707,
+      "Other": 0.0013812172692269087
+    },
+    "wholecell_contours": true,
+    "nuclear_contours": true,
+    "contour_source": "Frozen WholeCell v6 replay, all saved nuclear measurements reproduced within1e-7",
+    "fields_replayed": 29,
+    "displayed_nuclei": 4664,
+    "wholecell_rings": 4769,
+    "nuclear_rings": 4682,
+    "selection": "Image-reviewed dense coherent candidates; outcomes unused",
+    "HE_sha256": "b970b37dc07709d6f7adca4598e9279bd73f08f6eee2a77ebb10dfbd0951c0e4"
+  },
+  {
+    "sample": "P3_B",
+    "patient": "TCGA-77-7138",
+    "file_id": "2e2c11da-ae5d-4e85-ad64-709b364b76ac",
+    "candidate_id": 28,
+    "phenotype": 3,
+    "histology": "TCGA-LUSC",
+    "pathological_stage": "I",
+    "predicted_EPS": "P",
+    "assignment_probability": 0.9828762096742932,
+    "area_mm2": 0.255625,
+    "candidate_nuclei": 3725,
+    "B_cell_area_um2": 43.35,
+    "bounds_um": [
+      18775,
+      4300,
+      19550,
+      4900
+    ],
+    "detail_bounds_um": [
+      19299.016944444444,
+      4539.565,
+      19449.016944444444,
+      4689.565
+    ],
+    "original_mask_sha256": "0f0fc5d8503d1900f7eafd4e46f09b6e4bc5de89f60dd493f87661ddc02fe7f8",
+    "display_boundary_rings": 1,
+    "display_holes": 0,
+    "display_outline": [
+      [
+        18962.5,
+        4362.5
+      ],
+      [
+        18937.5,
+        4387.5
+      ],
+      [
+        18912.5,
+        4387.5
+      ],
+      [
+        18862.5,
+        4437.5
+      ],
+      [
+        18862.5,
+        4512.5
+      ],
+      [
+        18837.5,
+        4537.5
+      ],
+      [
+        18837.5,
+        4562.5
+      ],
+      [
+        18862.5,
+        4587.5
+      ],
+      [
+        18862.5,
+        4637.5
+      ],
+      [
+        18837.5,
+        4662.5
+      ],
+      [
+        18837.5,
+        4712.5
+      ],
+      [
+        18937.5,
+        4812.5
+      ],
+      [
+        18962.5,
+        4812.5
+      ],
+      [
+        18987.5,
+        4837.5
+      ],
+      [
+        19087.5,
+        4837.5
+      ],
+      [
+        19112.5,
+        4812.5
+      ],
+      [
+        19262.5,
+        4812.5
+      ],
+      [
+        19287.5,
+        4787.5
+      ],
+      [
+        19312.5,
+        4812.5
+      ],
+      [
+        19337.5,
+        4812.5
+      ],
+      [
+        19387.5,
+        4762.5
+      ],
+      [
+        19412.5,
+        4762.5
+      ],
+      [
+        19437.5,
+        4737.5
+      ],
+      [
+        19462.5,
+        4737.5
+      ],
+      [
+        19462.5,
+        4712.5
+      ],
+      [
+        19487.5,
+        4687.5
+      ],
+      [
+        19462.5,
+        4662.5
+      ],
+      [
+        19462.5,
+        4562.5
+      ],
+      [
+        19437.5,
+        4537.5
+      ],
+      [
+        19437.5,
+        4512.5
+      ],
+      [
+        19387.5,
+        4462.5
+      ],
+      [
+        19387.5,
+        4437.5
+      ],
+      [
+        19362.5,
+        4412.5
+      ],
+      [
+        19337.5,
+        4412.5
+      ],
+      [
+        19312.5,
+        4387.5
+      ],
+      [
+        19287.5,
+        4412.5
+      ],
+      [
+        19237.5,
+        4362.5
+      ],
+      [
+        18962.5,
+        4362.5
+      ]
+    ],
+    "display_boundary_definition": "Largest component; two25um-grid radius closing (50um), including narrow exterior-connected inlets; hole-fill; Gaussian sigma0.65grid threshold0.5; exterior only. Not used for measurement.",
+    "composition_source": "Unchanged original frozen candidate pixels",
+    "composition": {
+      "B": 0.4290434718132019,
+      "T": 0.32809993624687195,
+      "Plasma": 0.018659595400094986,
+      "MonoMac": 0.013945616781711578,
+      "DC": 0.011004630476236343,
+      "Neutrophil": 2.8710701371892355e-05,
+      "Endothelium": 0.04213033244013786,
+      "Stroma": 0.026507968083024025,
+      "Epithelial": 0.12935668230056763,
+      "Other": 0.0012231142027303576
+    },
+    "wholecell_contours": true,
+    "nuclear_contours": true,
+    "contour_source": "Frozen WholeCell v6 replay, all saved nuclear measurements reproduced within1e-7",
+    "fields_replayed": 25,
+    "displayed_nuclei": 5676,
+    "wholecell_rings": 5755,
+    "nuclear_rings": 5739,
+    "selection": "Image-reviewed dense coherent candidates; outcomes unused",
+    "HE_sha256": "863637d1a170603ab43f36c95e70e1eb92f54f861b1fcf5c0cfe2b97a24970d1"
+  },
+  {
+    "sample": "P4_B",
+    "patient": "TCGA-56-8629",
+    "file_id": "c21f0d2c-73c1-463e-b6d2-94746a048b55",
+    "candidate_id": 53,
+    "phenotype": 4,
+    "histology": "TCGA-LUSC",
+    "pathological_stage": "II",
+    "predicted_EPS": "P",
+    "assignment_probability": 0.8687200432575631,
+    "area_mm2": 0.258125,
+    "candidate_nuclei": 2967,
+    "B_cell_area_um2": 51.47812499999999,
+    "bounds_um": [
+      4850,
+      8550,
+      5550,
+      9225
+    ],
+    "detail_bounds_um": [
+      5264.472076612903,
+      8940.151411290322,
+      5414.472076612903,
+      9090.151411290322
+    ],
+    "original_mask_sha256": "09c82b27b9a792091cf7a8aba7f79a4af25216ecd5775186b062b2fe845a8ac4",
+    "display_boundary_rings": 1,
+    "display_holes": 0,
+    "display_outline": [
+      [
+        5087.5,
+        8612.5
+      ],
+      [
+        5062.5,
+        8637.5
+      ],
+      [
+        5037.5,
+        8637.5
+      ],
+      [
+        5012.5,
+        8662.5
+      ],
+      [
+        4987.5,
+        8662.5
+      ],
+      [
+        4987.5,
+        8687.5
+      ],
+      [
+        4962.5,
+        8712.5
+      ],
+      [
+        4962.5,
+        8737.5
+      ],
+      [
+        4937.5,
+        8762.5
+      ],
+      [
+        4937.5,
+        8812.5
+      ],
+      [
+        4912.5,
+        8837.5
+      ],
+      [
+        4912.5,
+        8862.5
+      ],
+      [
+        4937.5,
+        8887.5
+      ],
+      [
+        4912.5,
+        8912.5
+      ],
+      [
+        4912.5,
+        8937.5
+      ],
+      [
+        4937.5,
+        8962.5
+      ],
+      [
+        4912.5,
+        8987.5
+      ],
+      [
+        4937.5,
+        9012.5
+      ],
+      [
+        4937.5,
+        9037.5
+      ],
+      [
+        4962.5,
+        9062.5
+      ],
+      [
+        4962.5,
+        9087.5
+      ],
+      [
+        5012.5,
+        9137.5
+      ],
+      [
+        5037.5,
+        9137.5
+      ],
+      [
+        5062.5,
+        9162.5
+      ],
+      [
+        5287.5,
+        9162.5
+      ],
+      [
+        5312.5,
+        9137.5
+      ],
+      [
+        5362.5,
+        9137.5
+      ],
+      [
+        5462.5,
+        9037.5
+      ],
+      [
+        5462.5,
+        8937.5
+      ],
+      [
+        5487.5,
+        8912.5
+      ],
+      [
+        5462.5,
+        8887.5
+      ],
+      [
+        5462.5,
+        8837.5
+      ],
+      [
+        5337.5,
+        8712.5
+      ],
+      [
+        5337.5,
+        8687.5
+      ],
+      [
+        5287.5,
+        8687.5
+      ],
+      [
+        5262.5,
+        8662.5
+      ],
+      [
+        5237.5,
+        8662.5
+      ],
+      [
+        5212.5,
+        8637.5
+      ],
+      [
+        5187.5,
+        8637.5
+      ],
+      [
+        5162.5,
+        8612.5
+      ],
+      [
+        5087.5,
+        8612.5
+      ]
+    ],
+    "display_boundary_definition": "Largest component; two25um-grid radius closing (50um), including narrow exterior-connected inlets; hole-fill; Gaussian sigma0.65grid threshold0.5; exterior only. Not used for measurement.",
+    "composition_source": "Unchanged original frozen candidate pixels",
+    "composition": {
+      "B": 0.4040525257587433,
+      "T": 0.3407285511493683,
+      "Plasma": 0.02031322941184044,
+      "MonoMac": 0.06758978962898254,
+      "DC": 0.0375184528529644,
+      "Neutrophil": 0.003349470440298319,
+      "Endothelium": 0.052463844418525696,
+      "Stroma": 0.06255733221769333,
+      "Epithelial": 0.006897272076457739,
+      "Other": 0.00452965684235096
+    },
+    "wholecell_contours": true,
+    "nuclear_contours": true,
+    "contour_source": "Frozen WholeCell v6 replay, all saved nuclear measurements reproduced within1e-7",
+    "fields_replayed": 29,
+    "displayed_nuclei": 4122,
+    "wholecell_rings": 4196,
+    "nuclear_rings": 4140,
+    "selection": "Image-reviewed dense coherent candidates; outcomes unused",
+    "HE_sha256": "6f2c6dabd2a76902052f5888641b62a1936e6213f680129ab279fa400a046cb0"
+  },
+  {
+    "sample": "P5_A",
+    "patient": "TCGA-97-7553",
+    "file_id": "9cb06996-ddb5-4280-88e9-9382148ed69d",
+    "candidate_id": 43,
+    "phenotype": 5,
+    "histology": "TCGA-LUAD",
+    "pathological_stage": "I",
+    "predicted_EPS": "P",
+    "assignment_probability": 0.977408395185262,
+    "area_mm2": 0.145,
+    "candidate_nuclei": 1928,
+    "B_cell_area_um2": 44.253125,
+    "bounds_um": [
+      10625,
+      13300,
+      11150,
+      13850
+    ],
+    "detail_bounds_um": [
+      10808.224456521737,
+      13597.69163043478,
+      10958.224456521737,
+      13747.69163043478
+    ],
+    "original_mask_sha256": "7627ebd0791dd08d9d9b68d2f90ccb459739cf8162298348b3f5d9061f360410",
+    "display_boundary_rings": 1,
+    "display_holes": 0,
+    "display_outline": [
+      [
+        10887.5,
+        13362.5
+      ],
+      [
+        10862.5,
+        13387.5
+      ],
+      [
+        10837.5,
+        13387.5
+      ],
+      [
+        10687.5,
+        13537.5
+      ],
+      [
+        10687.5,
+        13662.5
+      ],
+      [
+        10712.5,
+        13687.5
+      ],
+      [
+        10712.5,
+        13762.5
+      ],
+      [
+        10737.5,
+        13762.5
+      ],
+      [
+        10762.5,
+        13787.5
+      ],
+      [
+        10987.5,
+        13787.5
+      ],
+      [
+        11062.5,
+        13712.5
+      ],
+      [
+        11062.5,
+        13687.5
+      ],
+      [
+        11087.5,
+        13662.5
+      ],
+      [
+        11087.5,
+        13562.5
+      ],
+      [
+        11062.5,
+        13537.5
+      ],
+      [
+        11062.5,
+        13512.5
+      ],
+      [
+        11037.5,
+        13487.5
+      ],
+      [
+        11037.5,
+        13462.5
+      ],
+      [
+        10962.5,
+        13387.5
+      ],
+      [
+        10912.5,
+        13387.5
+      ],
+      [
+        10887.5,
+        13362.5
+      ]
+    ],
+    "display_boundary_definition": "Largest component; two25um-grid radius closing (50um), including narrow exterior-connected inlets; hole-fill; Gaussian sigma0.65grid threshold0.5; exterior only. Not used for measurement.",
+    "composition_source": "Unchanged original frozen candidate pixels",
+    "composition": {
+      "B": 0.32345840334892273,
+      "T": 0.4672725796699524,
+      "Plasma": 0.022504420951008797,
+      "MonoMac": 0.0339667908847332,
+      "DC": 0.006731622852385044,
+      "Neutrophil": 6.686376582365483e-05,
+      "Endothelium": 0.08710306137800217,
+      "Stroma": 0.037937749177217484,
+      "Epithelial": 0.016558850184082985,
+      "Other": 0.00439973920583725
+    },
+    "wholecell_contours": true,
+    "nuclear_contours": true,
+    "contour_source": "Frozen WholeCell v6 replay, all saved nuclear measurements reproduced within1e-7",
+    "fields_replayed": 16,
+    "displayed_nuclei": 3079,
+    "wholecell_rings": 3121,
+    "nuclear_rings": 3115,
+    "selection": "Image-reviewed dense coherent candidates; outcomes unused",
+    "HE_sha256": "f3207945303f26fae0fe82b09cdb79cd0b71fe84fd4c9050e52b4ddd02f5bba1"
+  },
+  {
+    "sample": "P5_B",
+    "patient": "TCGA-96-A4JK",
+    "file_id": "8dab7870-1805-4735-82e6-9a5efbc05ea7",
+    "candidate_id": 209,
+    "phenotype": 5,
+    "histology": "TCGA-LUSC",
+    "pathological_stage": "II",
+    "predicted_EPS": "P",
+    "assignment_probability": 0.9761121877624576,
+    "area_mm2": 0.17875,
+    "candidate_nuclei": 2374,
+    "B_cell_area_um2": 42.26624999999999,
+    "bounds_um": [
+      15775,
+      16950,
+      16350,
+      17600
+    ],
+    "detail_bounds_um": [
+      15982.62469512195,
+      17071.12743902439,
+      16132.62469512195,
+      17221.12743902439
+    ],
+    "original_mask_sha256": "2292fc2e5a4b47b23c82d5ee015cde8434cec4787cb941ebee564f39441ba7d9",
+    "display_boundary_rings": 1,
+    "display_holes": 0,
+    "display_outline": [
+      [
+        16087.5,
+        17012.5
+      ],
+      [
+        16062.5,
+        17037.5
+      ],
+      [
+        16012.5,
+        17037.5
+      ],
+      [
+        15962.5,
+        17087.5
+      ],
+      [
+        15937.5,
+        17087.5
+      ],
+      [
+        15912.5,
+        17112.5
+      ],
+      [
+        15887.5,
+        17112.5
+      ],
+      [
+        15862.5,
+        17137.5
+      ],
+      [
+        15862.5,
+        17162.5
+      ],
+      [
+        15837.5,
+        17187.5
+      ],
+      [
+        15862.5,
+        17212.5
+      ],
+      [
+        15862.5,
+        17337.5
+      ],
+      [
+        15887.5,
+        17362.5
+      ],
+      [
+        15887.5,
+        17387.5
+      ],
+      [
+        15912.5,
+        17412.5
+      ],
+      [
+        15937.5,
+        17412.5
+      ],
+      [
+        16037.5,
+        17512.5
+      ],
+      [
+        16062.5,
+        17512.5
+      ],
+      [
+        16087.5,
+        17537.5
+      ],
+      [
+        16137.5,
+        17537.5
+      ],
+      [
+        16162.5,
+        17512.5
+      ],
+      [
+        16237.5,
+        17512.5
+      ],
+      [
+        16287.5,
+        17462.5
+      ],
+      [
+        16287.5,
+        17287.5
+      ],
+      [
+        16262.5,
+        17262.5
+      ],
+      [
+        16262.5,
+        17237.5
+      ],
+      [
+        16237.5,
+        17212.5
+      ],
+      [
+        16237.5,
+        17187.5
+      ],
+      [
+        16162.5,
+        17112.5
+      ],
+      [
+        16162.5,
+        17087.5
+      ],
+      [
+        16137.5,
+        17062.5
+      ],
+      [
+        16137.5,
+        17037.5
+      ],
+      [
+        16112.5,
+        17037.5
+      ],
+      [
+        16087.5,
+        17012.5
+      ]
+    ],
+    "display_boundary_definition": "Largest component; two25um-grid radius closing (50um), including narrow exterior-connected inlets; hole-fill; Gaussian sigma0.65grid threshold0.5; exterior only. Not used for measurement.",
+    "composition_source": "Unchanged original frozen candidate pixels",
+    "composition": {
+      "B": 0.45772585272789,
+      "T": 0.3414609432220459,
+      "Plasma": 0.004575661383569241,
+      "MonoMac": 0.05230586230754852,
+      "DC": 0.011062011122703552,
+      "Neutrophil": 0.00010484576341696084,
+      "Endothelium": 0.08002785593271255,
+      "Stroma": 0.015299838036298752,
+      "Epithelial": 0.036384519189596176,
+      "Other": 0.0010526991682127118
+    },
+    "wholecell_contours": true,
+    "nuclear_contours": true,
+    "contour_source": "Frozen WholeCell v6 replay, all saved nuclear measurements reproduced within1e-7",
+    "fields_replayed": 25,
+    "displayed_nuclei": 3477,
+    "wholecell_rings": 3528,
+    "nuclear_rings": 3489,
+    "selection": "Image-reviewed dense coherent candidates; outcomes unused",
+    "HE_sha256": "c877ad3b2713448e2c08bd3e433b44027483b92ac2272faecc5b1259bdff266a"
+  },
+  {
+    "sample": "P6_A",
+    "patient": "TCGA-63-A5MJ",
+    "file_id": "1a23b078-10b4-43df-b17e-3a942dd903f2",
+    "candidate_id": 1,
+    "phenotype": 6,
+    "histology": "TCGA-LUSC",
+    "pathological_stage": "II",
+    "predicted_EPS": "P",
+    "assignment_probability": 0.9405034534250816,
+    "area_mm2": 0.338125,
+    "candidate_nuclei": 4967,
+    "B_cell_area_um2": 45.698125,
+    "bounds_um": [
+      6100,
+      1100,
+      7150,
+      1900
+    ],
+    "detail_bounds_um": [
+      6921.982348484848,
+      1216.115227272727,
+      7071.982348484848,
+      1366.115227272727
+    ],
+    "original_mask_sha256": "2291bb3569046a7cdb5a386e5a408aed351607a2642bfd9f3685c464de01cff7",
+    "display_boundary_rings": 1,
+    "display_holes": 0,
+    "display_outline": [
+      [
+        6587.5,
+        1162.5
+      ],
+      [
+        6562.5,
+        1187.5
+      ],
+      [
+        6537.5,
+        1187.5
+      ],
+      [
+        6512.5,
+        1212.5
+      ],
+      [
+        6487.5,
+        1212.5
+      ],
+      [
+        6437.5,
+        1262.5
+      ],
+      [
+        6412.5,
+        1262.5
+      ],
+      [
+        6387.5,
+        1287.5
+      ],
+      [
+        6362.5,
+        1287.5
+      ],
+      [
+        6212.5,
+        1437.5
+      ],
+      [
+        6212.5,
+        1462.5
+      ],
+      [
+        6187.5,
+        1487.5
+      ],
+      [
+        6187.5,
+        1512.5
+      ],
+      [
+        6162.5,
+        1537.5
+      ],
+      [
+        6162.5,
+        1662.5
+      ],
+      [
+        6187.5,
+        1687.5
+      ],
+      [
+        6187.5,
+        1712.5
+      ],
+      [
+        6262.5,
+        1787.5
+      ],
+      [
+        6287.5,
+        1787.5
+      ],
+      [
+        6312.5,
+        1812.5
+      ],
+      [
+        6362.5,
+        1812.5
+      ],
+      [
+        6387.5,
+        1837.5
+      ],
+      [
+        6412.5,
+        1812.5
+      ],
+      [
+        6437.5,
+        1812.5
+      ],
+      [
+        6462.5,
+        1787.5
+      ],
+      [
+        6537.5,
+        1787.5
+      ],
+      [
+        6587.5,
+        1737.5
+      ],
+      [
+        6587.5,
+        1712.5
+      ],
+      [
+        6737.5,
+        1562.5
+      ],
+      [
+        6862.5,
+        1562.5
+      ],
+      [
+        6912.5,
+        1512.5
+      ],
+      [
+        6912.5,
+        1487.5
+      ],
+      [
+        7012.5,
+        1387.5
+      ],
+      [
+        7037.5,
+        1387.5
+      ],
+      [
+        7087.5,
+        1337.5
+      ],
+      [
+        7087.5,
+        1237.5
+      ],
+      [
+        7037.5,
+        1187.5
+      ],
+      [
+        6987.5,
+        1187.5
+      ],
+      [
+        6962.5,
+        1162.5
+      ],
+      [
+        6912.5,
+        1162.5
+      ],
+      [
+        6887.5,
+        1187.5
+      ],
+      [
+        6787.5,
+        1187.5
+      ],
+      [
+        6762.5,
+        1162.5
+      ],
+      [
+        6587.5,
+        1162.5
+      ]
+    ],
+    "display_boundary_definition": "Largest component; two25um-grid radius closing (50um), including narrow exterior-connected inlets; hole-fill; Gaussian sigma0.65grid threshold0.5; exterior only. Not used for measurement.",
+    "composition_source": "Unchanged original frozen candidate pixels",
+    "composition": {
+      "B": 0.4899316728115082,
+      "T": 0.2774345874786377,
+      "Plasma": 0.1702800840139389,
+      "MonoMac": 0.015282304026186466,
+      "DC": 0.0034219881054013968,
+      "Neutrophil": 4.689272464020178e-05,
+      "Endothelium": 0.013174541294574738,
+      "Stroma": 0.028165675699710846,
+      "Epithelial": 0.0005416474305093288,
+      "Other": 0.001720651052892208
+    },
+    "wholecell_contours": true,
+    "nuclear_contours": true,
+    "contour_source": "Frozen WholeCell v6 replay, all saved nuclear measurements reproduced within1e-7",
+    "fields_replayed": 42,
+    "displayed_nuclei": 9131,
+    "wholecell_rings": 9265,
+    "nuclear_rings": 9162,
+    "selection": "Image-reviewed dense coherent candidates; outcomes unused",
+    "HE_sha256": "3cd8fcd157402bd75ddd71aee7eb611b9a26dc542310cd53888a4ec47e3f408f"
+  },
+  {
+    "sample": "P6_B",
+    "patient": "TCGA-97-8552",
+    "file_id": "1616d5de-a80a-47e8-9ad6-1e22097c5633",
+    "candidate_id": 41,
+    "phenotype": 6,
+    "histology": "TCGA-LUAD",
+    "pathological_stage": "I",
+    "predicted_EPS": "P",
+    "assignment_probability": 0.9243412175928352,
+    "area_mm2": 0.276875,
+    "candidate_nuclei": 3318,
+    "B_cell_area_um2": 49.85249999999999,
+    "bounds_um": [
+      6525,
+      14425,
+      7300,
+      15325
+    ],
+    "detail_bounds_um": [
+      6894.014,
+      14695.883499999998,
+      7044.014,
+      14845.883499999998
+    ],
+    "original_mask_sha256": "c0e5a5cbdfd9a47e3f7f9bc0ff987aec208fb0ef1d064443dd62ae3a39d9df60",
+    "display_boundary_rings": 1,
+    "display_holes": 0,
+    "display_outline": [
+      [
+        6887.5,
+        14487.5
+      ],
+      [
+        6862.5,
+        14512.5
+      ],
+      [
+        6837.5,
+        14512.5
+      ],
+      [
+        6787.5,
+        14562.5
+      ],
+      [
+        6787.5,
+        14637.5
+      ],
+      [
+        6762.5,
+        14662.5
+      ],
+      [
+        6762.5,
+        14687.5
+      ],
+      [
+        6737.5,
+        14712.5
+      ],
+      [
+        6737.5,
+        14737.5
+      ],
+      [
+        6712.5,
+        14762.5
+      ],
+      [
+        6712.5,
+        14787.5
+      ],
+      [
+        6637.5,
+        14862.5
+      ],
+      [
+        6612.5,
+        14862.5
+      ],
+      [
+        6612.5,
+        14887.5
+      ],
+      [
+        6587.5,
+        14912.5
+      ],
+      [
+        6612.5,
+        14937.5
+      ],
+      [
+        6612.5,
+        14987.5
+      ],
+      [
+        6787.5,
+        15162.5
+      ],
+      [
+        6812.5,
+        15162.5
+      ],
+      [
+        6887.5,
+        15237.5
+      ],
+      [
+        6962.5,
+        15237.5
+      ],
+      [
+        6987.5,
+        15262.5
+      ],
+      [
+        7037.5,
+        15262.5
+      ],
+      [
+        7062.5,
+        15237.5
+      ],
+      [
+        7087.5,
+        15237.5
+      ],
+      [
+        7137.5,
+        15187.5
+      ],
+      [
+        7137.5,
+        15162.5
+      ],
+      [
+        7162.5,
+        15137.5
+      ],
+      [
+        7162.5,
+        15012.5
+      ],
+      [
+        7212.5,
+        14962.5
+      ],
+      [
+        7212.5,
+        14937.5
+      ],
+      [
+        7187.5,
+        14912.5
+      ],
+      [
+        7187.5,
+        14837.5
+      ],
+      [
+        7212.5,
+        14812.5
+      ],
+      [
+        7212.5,
+        14787.5
+      ],
+      [
+        7137.5,
+        14712.5
+      ],
+      [
+        7112.5,
+        14712.5
+      ],
+      [
+        7037.5,
+        14637.5
+      ],
+      [
+        7037.5,
+        14612.5
+      ],
+      [
+        7012.5,
+        14587.5
+      ],
+      [
+        7012.5,
+        14562.5
+      ],
+      [
+        6962.5,
+        14512.5
+      ],
+      [
+        6937.5,
+        14512.5
+      ],
+      [
+        6912.5,
+        14487.5
+      ],
+      [
+        6887.5,
+        14487.5
+      ]
+    ],
+    "display_boundary_definition": "Largest component; two25um-grid radius closing (50um), including narrow exterior-connected inlets; hole-fill; Gaussian sigma0.65grid threshold0.5; exterior only. Not used for measurement.",
+    "composition_source": "Unchanged original frozen candidate pixels",
+    "composition": {
+      "B": 0.5262792706489563,
+      "T": 0.3324434161186218,
+      "Plasma": 0.0022976365871727467,
+      "MonoMac": 0.01974322833120823,
+      "DC": 0.011311294510960579,
+      "Neutrophil": 0.0001422739151166752,
+      "Endothelium": 0.027141688391566277,
+      "Stroma": 0.035909317433834076,
+      "Epithelial": 0.04424839839339256,
+      "Other": 0.00048345650429837406
+    },
+    "wholecell_contours": true,
+    "nuclear_contours": true,
+    "contour_source": "Frozen WholeCell v6 replay, all saved nuclear measurements reproduced within1e-7",
+    "fields_replayed": 36,
+    "displayed_nuclei": 5860,
+    "wholecell_rings": 6002,
+    "nuclear_rings": 5874,
+    "selection": "Image-reviewed dense coherent candidates; outcomes unused",
+    "HE_sha256": "32d7322ef5d4995f6fa2c351507f1f0165356e2c0337ec598c6f09c6b0194533"
+  }
+]

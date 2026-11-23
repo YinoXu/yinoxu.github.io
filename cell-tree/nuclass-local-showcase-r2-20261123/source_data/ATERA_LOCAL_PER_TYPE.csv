@@ -1,0 +1,41 @@
+sample,cell_type,reference,NuClass_prediction,NuClass_TP,NuClass_F1,CellSTP_F1
+colorectal_focus1,Epithelial,109,110,109,0.9954337899543378,0.990909090909091
+colorectal_focus1,T cells,0,0,0,,
+colorectal_focus1,B cells,0,0,0,,
+colorectal_focus1,Plasma,0,0,0,,
+colorectal_focus1,NK,0,0,0,,
+colorectal_focus1,Myeloid,4,4,1,0.25,0.0
+colorectal_focus1,Vascular,10,10,9,0.9,0.8181818181818182
+colorectal_focus1,Stromal,26,25,21,0.8235294117647058,0.8461538461538461
+colorectal_focus1,Neural,0,0,0,,
+colorectal_focus1,Other,0,0,0,,
+kidney_focus1,Epithelial,33,33,33,1.0,1.0
+kidney_focus1,T cells,0,0,0,,
+kidney_focus1,B cells,0,0,0,,
+kidney_focus1,Plasma,2,0,0,0.0,0.0
+kidney_focus1,NK,0,0,0,,
+kidney_focus1,Myeloid,7,7,4,0.5714285714285714,0.6153846153846154
+kidney_focus1,Vascular,16,16,16,1.0,1.0
+kidney_focus1,Stromal,50,52,48,0.9411764705882353,0.9607843137254902
+kidney_focus1,Neural,0,0,0,,
+kidney_focus1,Other,0,0,0,,
+kidney_focus2,Epithelial,60,60,60,1.0,0.9917355371900827
+kidney_focus2,T cells,0,0,0,,
+kidney_focus2,B cells,0,0,0,,
+kidney_focus2,Plasma,2,0,0,0.0,0.0
+kidney_focus2,NK,0,0,0,,
+kidney_focus2,Myeloid,3,1,1,0.5,0.6666666666666666
+kidney_focus2,Vascular,11,14,11,0.88,0.8571428571428571
+kidney_focus2,Stromal,58,59,55,0.9401709401709402,0.9491525423728814
+kidney_focus2,Neural,0,0,0,,
+kidney_focus2,Other,0,0,0,,
+kidney_focus3,Epithelial,184,187,184,0.9919137466307277,0.9945945945945946
+kidney_focus3,T cells,2,0,0,0.0,0.0
+kidney_focus3,B cells,0,0,0,,
+kidney_focus3,Plasma,6,0,0,0.0,0.0
+kidney_focus3,NK,0,0,0,,
+kidney_focus3,Myeloid,13,12,10,0.8,0.7407407407407407
+kidney_focus3,Vascular,25,28,24,0.9056603773584906,0.88
+kidney_focus3,Stromal,23,26,19,0.7755102040816326,0.7843137254901961
+kidney_focus3,Neural,0,0,0,,
+kidney_focus3,Other,0,0,0,,

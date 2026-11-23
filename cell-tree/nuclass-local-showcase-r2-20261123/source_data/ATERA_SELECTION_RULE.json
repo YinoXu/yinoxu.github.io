@@ -1,0 +1,301 @@
+{
+  "post_prediction_selection": true,
+  "purpose": "Illustrative local concordance, not an unbiased performance estimate",
+  "windows_um": [
+    128,
+    256
+  ],
+  "reference_support_min": 10,
+  "minimum_F1_every_supported_group": 0.75,
+  "minimum_local_accuracy": 0.9,
+  "minimum_supported_macro_F1": 0.85,
+  "minimum_resolved_fraction": 0.8,
+  "maximum_composition_total_variation": 0.1,
+  "minimum_supported_groups": 3,
+  "visual_review": "Dense interpretable tissue interfaces; genuine registered nuclei and whole-cell boundaries",
+  "selected_examples": 4,
+  "selected_organs": [
+    "colorectal",
+    "kidney"
+  ],
+  "not_selected": "No breast window passed the stated search criteria; rejected old breast and colorectal gallery examples are not displayed.",
+  "full_benchmark_unchanged": true,
+  "complete_per_type_metrics_retained": true,
+  "groups": {
+    "Epithelial": [
+      0,
+      1,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ],
+    "T cells": [
+      2,
+      3,
+      4
+    ],
+    "B cells": [
+      5
+    ],
+    "Plasma": [
+      15
+    ],
+    "NK": [
+      6
+    ],
+    "Myeloid": [
+      7,
+      8,
+      9,
+      10,
+      16,
+      17,
+      18
+    ],
+    "Vascular": [
+      11,
+      35
+    ],
+    "Stromal": [
+      12,
+      13,
+      31,
+      32,
+      33,
+      34,
+      36,
+      37
+    ],
+    "Neural": [
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "Other": [
+      14,
+      38
+    ]
+  },
+  "search_rules": {
+    "128um": {
+      "window_pixels": 256,
+      "stride_pixels": 64,
+      "canonical_mpp": 0.5,
+      "provided_cells": [
+        120,
+        800
+      ],
+      "resolved_fraction_min": 0.8,
+      "reference_groups_with_at_least10_cells_min": 3,
+      "groups_with_at_least8_truepositives_min": 3,
+      "dominant_reference_fraction_max": 0.82,
+      "supported_macro_F1_min": 0.85,
+      "accuracy_min": 0.9,
+      "minimum_F1_for_every_group_with_atleast10_reference_cells": 0.75,
+      "composition_total_variation_max": 0.1,
+      "score": ".5*supportedMacroF1+.25*accuracy+.15*normalizedReferenceEntropy+.1*min(resolvedN/700,1)",
+      "nonoverlap_min_origin_distance_px": 330,
+      "post_prediction_showcase_selection": true,
+      "not_representative_performance_estimate": true,
+      "full_benchmark_statistics_unchanged": true,
+      "groups": {
+        "Epithelial": [
+          0,
+          1,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "T cells": [
+          2,
+          3,
+          4
+        ],
+        "B cells": [
+          5
+        ],
+        "Plasma": [
+          15
+        ],
+        "NK": [
+          6
+        ],
+        "Myeloid": [
+          7,
+          8,
+          9,
+          10,
+          16,
+          17,
+          18
+        ],
+        "Vascular": [
+          11,
+          35
+        ],
+        "Stromal": [
+          12,
+          13,
+          31,
+          32,
+          33,
+          34,
+          36,
+          37
+        ],
+        "Neural": [
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "Other": [
+          14,
+          38
+        ]
+      },
+      "colors": [
+        "#10A6BF",
+        "#E65D50",
+        "#387CE0",
+        "#C337A2",
+        "#B79817",
+        "#EF9526",
+        "#299D65",
+        "#8E60C4",
+        "#A46940",
+        "#737D88"
+      ]
+    },
+    "256um": {
+      "window_pixels": 512,
+      "stride_pixels": 128,
+      "canonical_mpp": 0.5,
+      "provided_cells": [
+        300,
+        1500
+      ],
+      "resolved_fraction_min": 0.8,
+      "reference_groups_with_at_least15_cells_min": 3,
+      "groups_with_at_least15_truepositives_min": 3,
+      "dominant_reference_fraction_max": 0.82,
+      "supported_macro_F1_min": 0.8,
+      "accuracy_min": 0.9,
+      "minimum_F1_for_every_group_with_atleast15_reference_cells": 0.75,
+      "composition_total_variation_max": 0.1,
+      "score": ".5*supportedMacroF1+.25*accuracy+.15*normalizedReferenceEntropy+.1*min(resolvedN/700,1)",
+      "nonoverlap_min_origin_distance_px": 650,
+      "post_prediction_showcase_selection": true,
+      "not_representative_performance_estimate": true,
+      "full_benchmark_statistics_unchanged": true,
+      "groups": {
+        "Epithelial": [
+          0,
+          1,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "T cells": [
+          2,
+          3,
+          4
+        ],
+        "B cells": [
+          5
+        ],
+        "Plasma": [
+          15
+        ],
+        "NK": [
+          6
+        ],
+        "Myeloid": [
+          7,
+          8,
+          9,
+          10,
+          16,
+          17,
+          18
+        ],
+        "Vascular": [
+          11,
+          35
+        ],
+        "Stromal": [
+          12,
+          13,
+          31,
+          32,
+          33,
+          34,
+          36,
+          37
+        ],
+        "Neural": [
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "Other": [
+          14,
+          38
+        ]
+      },
+      "colors": [
+        "#10A6BF",
+        "#E65D50",
+        "#387CE0",
+        "#C337A2",
+        "#B79817",
+        "#EF9526",
+        "#299D65",
+        "#8E60C4",
+        "#A46940",
+        "#737D88"
+      ]
+    }
+  }
+}

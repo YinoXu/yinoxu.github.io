@@ -1,0 +1,34 @@
+{
+  "prior": {
+    "TLS_excluded_samples": [
+      "P4_A"
+    ],
+    "Atera_excluded_samples": [
+      "breast_2"
+    ],
+    "reasons": {
+      "P4_A": "User rejected: candidate boundary truncates a continuous lymphoid field; not a representative TLS showcase. Retained in original computational cohort.",
+      "breast_2": "User rejected this local display example; removed from selected-patch plots and tables."
+    },
+    "original_analysis_unchanged": true
+  },
+  "excluded_atera_gallery": [
+    "breast_1",
+    "breast_2",
+    "breast_3",
+    "colorectal_1",
+    "colorectal_2",
+    "colorectal_3",
+    "kidney_1",
+    "kidney_2",
+    "kidney_3"
+  ],
+  "reason": "Replaced gallery after user review; old high aggregate accuracy obscured important class disagreements. All current figures have new focus IDs.",
+  "rejected_TLS": "P4_A",
+  "new_selection": [
+    "colorectal_focus1",
+    "kidney_focus1",
+    "kidney_focus2",
+    "kidney_focus3"
+  ]
+}
