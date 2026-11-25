@@ -68,17 +68,17 @@ function updatePalette(){
   gl.useProgram(gpu.p);gl.uniform3fv(gpu.u.colors,new Float32Array(rgb));
   gl.uniform1fv(gpu.u.enabled,new Float32Array(taxonomy.leaves.map((_,i)=>S.selected.has(i)?1:0)));
 }
-function updateSelectedInfo(){if(S.cell){$('cell-info').innerHTML=`<h3 class="cell-name">${label(taxonomy.leaves[S.cell.leaf])}</h3><div class="cell-meta">NuClass v15 · step59712<br>${S.slide} · x ${fmt(S.cell.x)} · y ${fmt(S.cell.y)}<br>Displayed as ${label(nodeForCell(S.cell.i))}<br>Posterior support ≥ ${ (S.appliedStep/20).toFixed(2)}</div>`;}}
+function updateSelectedInfo(){if(S.cell){$('cell-info').innerHTML=`<h3 class="cell-name">${label(taxonomy.leaves[S.cell.leaf])}</h3><div class="cell-meta">NuClass v15 · step59712<br>${S.slide} · x ${fmt(S.cell.x)} · y ${fmt(S.cell.y)}<br>Displayed as ${label(nodeForCell(S.cell.i))}<br>Confidence threshold ${ (S.appliedStep/20).toFixed(2)}</div>`;}}
 function applyLabels(labels,mode,step){
   S.labels=labels;S.appliedMode=mode;S.appliedStep=step;S.resolving=false;
   uploadLabels();updateSelectedInfo();$('export').disabled=!S.ready;
-  $('support-status').textContent=step===0?'Full detail · no support cutoff':'Uncertain labels roll up · no cells removed';
+  $('support-status').textContent=step===0?'Confidence threshold off':'Confidence threshold applied';
   changed();
 }
 function supportError(message){resolverBusy=false;S.supportReady=false;S.resolving=false;$('support').disabled=true;$('retry-support').hidden=false;$('support-status').textContent=message+' Current overlay retained.';$('export').disabled=!S.ready;}
 function startResolver(){
   if(!S.data)return;resolver?.terminate();resolverBusy=false;S.supportReady=false;S.resolving=S.appliedMode!==S.mode||S.appliedStep!==S.step;$('export').disabled=!S.ready||S.resolving;
-  $('support').disabled=true;$('retry-support').hidden=true;$('support-status').textContent='Loading posterior controls…';
+  $('support').disabled=true;$('retry-support').hidden=true;$('support-status').textContent='Loading confidence data…';
   const epoch=S.epoch;
   try{
     resolver=new Worker(new URL('./resolution-worker.js?v=15',import.meta.url),{type:'module'});const owner=resolver;
@@ -89,11 +89,11 @@ function startResolver(){
         resolverBusy=false;
         if(data.version===resolutionVersion)applyLabels(new Uint8Array(data.buffer),data.mode,data.step);
         else dispatchResolution();
-      }else supportError('Posterior data could not load.');
+      }else supportError('Confidence data could not load.');
     };
-    resolver.onerror=()=>{if(epoch===S.epoch&&resolver===owner)supportError('Posterior controls could not start.');};
+    resolver.onerror=()=>{if(epoch===S.epoch&&resolver===owner)supportError('Confidence threshold could not initialize.');};
     const leaves=S.data.leaf.slice();resolver.postMessage({type:'init',leaves:leaves.buffer,taxonomy,descriptor:S.meta.point_support,base:manifest.point_base},[leaves.buffer]);
-  }catch{supportError('Posterior controls could not start.');}
+  }catch{supportError('Confidence threshold could not initialize.');}
 }
 function dispatchResolution(){
   if(!S.data||!S.supportReady||resolverBusy)return;
@@ -103,7 +103,7 @@ function requestResolution(){
   resolutionVersion++;$('support-value').textContent=(S.step/20).toFixed(2);$('support').value=S.step/20;
   if(!S.data)return;
   if(!S.supportReady&&S.step===0){applyLabels(resolveCells(S.data.leaf,null,resolutionTable,S.mode,0),S.mode,0);return;}
-  S.resolving=true;$('export').disabled=true;$('support-status').textContent=S.supportReady?'Updating labels…':'Loading posterior controls…';
+  S.resolving=true;$('export').disabled=true;$('support-status').textContent=S.supportReady?'Updating labels…':'Loading confidence data…';
   dispatchResolution();
 }
 function setThreshold(value){S.step=Math.max(0,Math.min(19,Math.round(Number(value)*20)));requestResolution();}
@@ -134,7 +134,7 @@ function makeImage(src,onload){const im=new Image();im.onload=()=>{onload?.();re
 async function selectSlide(id){
   if(!manifest.slides.some(x=>x.id===id))return;
   abortSlide?.abort();abortSlide=new AbortController();const signal=abortSlide.signal,epoch=++S.epoch;
-  resolver?.terminate();resolverBusy=false;resolutionVersion++;S.supportReady=false;S.resolving=false;S.labels=null;$('support').disabled=true;$('retry-support').hidden=true;$('support-status').textContent='Loading posterior controls…';
+  resolver?.terminate();resolverBusy=false;resolutionVersion++;S.supportReady=false;S.resolving=false;S.labels=null;$('support').disabled=true;$('retry-support').hidden=true;$('support-status').textContent='Loading confidence data…';
   selectedEpoch++;S.slide=id;S.meta=null;S.data=null;S.ready=false;S.cell=null;S.fit=true;visible=[];probabilities.clear();
   pointReader?.clear();
   wholeCell?.setSlide(id);

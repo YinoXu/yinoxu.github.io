@@ -2,7 +2,7 @@
 
 Embedded at `cell-tree/Nuclass_visual.html`; `index.html` is the full-window reviewer. GitHub Pages serves the interface and existing H&E tiles. Full-slide masks and v15 point data stream from a pinned immutable GitHub data commit. There is no application server, external image service, or model inference.
 
-The default is S07, fine resolution, every one of the 47 leaf classes selected, and posterior support set to 0.00 (no cutoff). The restored slider covers 0.00–0.95 in 0.05 steps; increasing it rolls uncertain labels up to their supported ancestors without hiding cells. S03 is the only other sample. The original combined label **Carcinoma / generic epithelium** is included; it is not a malignancy-only annotation. The interface uses NuClass branding, and `data/manifest-v15.json` identifies the default NuClass v15 checkpoint (step 59712). `data/manifest.json` and the original point files retain historical CellSTP provenance.
+The default is S07, fine resolution, every one of the 47 leaf classes selected, and the confidence threshold set to 0.00 (no cutoff). The slider covers 0.00–0.95 in 0.05 steps. Increasing it rolls labels below the threshold up to an ancestor based on the summed model probability for each branch. Cells stay visible. S03 is the only other sample. The original combined label **Carcinoma / generic epithelium** is included; it is not a malignancy-only annotation. The interface uses NuClass branding, and `data/manifest-v15.json` identifies the default NuClass v15 checkpoint (step 59712). `data/manifest.json` and the original point files retain historical CellSTP provenance.
 
 ## Delivery and interaction
 
