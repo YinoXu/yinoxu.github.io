@@ -1204,13 +1204,26 @@
         align-items: center;
       }
 
-      .header-photo img {
+      .header-portrait {
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
         width: 348px;
         height: 348px;
         border-radius: 28px;
-        object-fit: cover;
         border: 4px solid rgba(255, 255, 255, 0.96);
         box-shadow: 0 14px 30px rgba(40, 60, 104, 0.18);
+      }
+
+      /* Square crop of the original photo: (300, 240), 600 × 600 pixels. */
+      .header-portrait img {
+        position: absolute;
+        display: block;
+        width: 179.666667%;
+        height: 180%;
+        max-width: none;
+        left: -50%;
+        top: -40%;
       }
 
       /* --- Responsive Design --- */
@@ -1236,7 +1249,7 @@
         .header-photo {
           width: 238px;
         }
-        .header-photo img {
+        .header-portrait {
           width: 304px;
           height: 304px;
         }
@@ -1306,7 +1319,7 @@
           width: 100%;
           justify-content: center;
         }
-        .header-photo img {
+        .header-portrait {
           width: 248px;
           height: 248px;
         }
@@ -1413,7 +1426,7 @@
         .contact-icon-text.compact {
           font-size: 0.9rem;
         }
-        .header-photo img {
+        .header-portrait {
           width: 258px;
           height: 258px;
           border-radius: 24px;
@@ -1990,7 +2003,7 @@
         z-index: 3;
       }
 
-      .header-photo img {
+      .header-portrait {
         width: min(100%, 280px);
         height: 280px;
         border: 1px solid var(--braun-line-strong);
@@ -2480,7 +2493,7 @@
           width: 100%;
         }
 
-        .header-photo img {
+        .header-portrait {
           width: min(100%, 238px);
           height: 238px;
         }
@@ -2530,7 +2543,7 @@
           justify-content: center;
         }
 
-        .header-photo img {
+        .header-portrait {
           width: 210px;
           height: 210px;
           box-shadow: 6px 6px 0 var(--braun-line);
@@ -2739,7 +2752,7 @@
           justify-content: flex-end;
         }
 
-        .header-photo img {
+        .header-portrait {
           width: 88px;
           height: 88px;
           border-radius: 3px;
@@ -2962,7 +2975,9 @@
         display: none;
       }
 
-      .header-photo img {
+      .header-portrait {
+        height: auto;
+        aspect-ratio: 1;
         box-shadow: 4px 4px 0 var(--braun-line);
       }
 
@@ -3389,11 +3404,11 @@
           <h1>Yinuo Xu</h1>
           <div class="pronouns">She/Her</div>
           <div class="bio">
-            First-year Ph.D. Student in Computer and Information Science at Penn
+            Ph.D. Student in Computer and Information Science at Penn
           </div>
           <div class="header-about">
             <p>
-              I am a first-year Ph.D. student in CIS at the University of
+              I am a Ph.D. student in CIS at the University of
               Pennsylvania, advised by
               <a
                 href="https://www.med.upenn.edu/apps/faculty/index.php/g275/p8939931"
@@ -3581,7 +3596,14 @@
         </div>
         -->
         <div class="header-photo">
-          <img src="images/me.jpeg" alt="Photo of Yinuo Xu" />
+          <div class="header-portrait">
+            <img
+              src="images/yinuo-portrait.jpg"
+              alt="Photo of Yinuo Xu"
+              width="1078"
+              height="1080"
+            />
+          </div>
         </div>
       </header>
 
@@ -5159,7 +5181,7 @@
     <script>
       (function () {
         const butterfly = document.querySelector(".wandering-butterfly");
-        const photo = document.querySelector(".header-photo img");
+        const photo = document.querySelector(".header-portrait");
         const reducedMotion = window.matchMedia(
           "(prefers-reduced-motion: reduce)",
         );
